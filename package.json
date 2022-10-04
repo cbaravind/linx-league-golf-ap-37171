@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.5.0",
     "@screens/privacy-policy": "file:./screens/privacy-policy/",
     "@screens/profile": "file:./screens/profile/",
+    "@screens/signup": "file:./screens/signup/",
     "axios": "^0.21.1",
     "react": "17.0.1",
     "react-dom": "^18.2.0",
