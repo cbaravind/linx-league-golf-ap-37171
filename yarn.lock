@@ -1269,13 +1269,13 @@
 "@screens/messages-listing@file:./screens/messages-listing":
   version "1.0.0"
 
+"@screens/notifications@file:./screens/notifications/":
+  version "1.0.0"
+
 "@screens/privacy-policy@file:./screens/privacy-policy":
   version "1.0.0"
 
 "@screens/profile@file:./screens/profile":
-  version "1.0.0"
-
-"@screens/profile@file:./screens/profile/":
   version "1.0.0"
 
 "@screens/settings@file:./screens/settings":
