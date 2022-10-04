@@ -1266,13 +1266,16 @@
 "@screens/direct-messages@file:./screens/direct-messages":
   version "1.0.0"
 
-"@screens/messages-listing@file:./screens/messages-listing/":
+"@screens/messages-listing@file:./screens/messages-listing":
   version "1.0.0"
 
 "@screens/privacy-policy@file:./screens/privacy-policy":
   version "1.0.0"
 
 "@screens/profile@file:./screens/profile":
+  version "1.0.0"
+
+"@screens/settings@file:./screens/settings/":
   version "1.0.0"
 
 "@screens/signup@file:./screens/signup":
