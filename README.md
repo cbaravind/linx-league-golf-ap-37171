@@ -66,6 +66,7 @@ This section will show any installed modules you add from the Storyboard Modules
 - [react-native-splash](modules/splash)
 - [screen-support-send-feedback](screens/support-send-feedback)
 - [screen-direct-messages](screens/direct-messages)
+- [screen-messages-listing](screens/messages-listing)
 
 # Getting started: Frontend
 
