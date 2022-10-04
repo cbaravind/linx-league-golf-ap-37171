@@ -64,6 +64,7 @@ This section will show any installed modules you add from the Storyboard Modules
 - [screen-privacy-policy](screens/privacy-policy)
 - [screen-signup](screens/signup)
 - [react-native-splash](modules/splash)
+- [screen-support-send-feedback](screens/support-send-feedback)
 
 # Getting started: Frontend
 
