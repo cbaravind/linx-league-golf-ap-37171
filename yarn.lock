@@ -1275,7 +1275,10 @@
 "@screens/profile@file:./screens/profile":
   version "1.0.0"
 
-"@screens/settings@file:./screens/settings/":
+"@screens/profile@file:./screens/profile/":
+  version "1.0.0"
+
+"@screens/settings@file:./screens/settings":
   version "1.0.0"
 
 "@screens/signup@file:./screens/signup":
