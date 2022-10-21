@@ -1040,6 +1040,9 @@
 "@modules/splash@file:./modules/splash":
   version "1.0.0"
 
+"@modules/splash@file:./modules/splash/":
+  version "1.0.0"
+
 "@modules/terms-and-conditions@file:./modules/terms-and-conditions":
   version "1.0.1"
   dependencies:
@@ -1269,7 +1272,7 @@
 "@screens/messages-listing@file:./screens/messages-listing":
   version "1.0.0"
 
-"@screens/notifications@file:./screens/notifications/":
+"@screens/notifications@file:./screens/notifications":
   version "1.0.0"
 
 "@screens/privacy-policy@file:./screens/privacy-policy":
