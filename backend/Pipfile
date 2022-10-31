@@ -14,7 +14,6 @@ django = "~=2.2.26"
 "boto3" = "~=1.24.22"
 django-environ = "~=0.9.0"
 django-storages = "~=1.12"
-psycopg2 = "<2.9"
 waitress = "~=2.1.2"
 whitenoise = "~=6.0.0"
 djangorestframework = "~=3.13.1"
@@ -32,3 +31,12 @@ google-cloud-secret-manager = "==2.11.1"
 google-auth = "==2.9.0"
 google-cloud-storage = "==2.4.0"
 cb-terms-and-conditions = {editable = true, path = "./modules/terms_and_conditions"}
+django-filter = "*"
+werkzeug = "*"
+drf-writable-nested = "*"
+psycopg2-binary = "~=2.8.6"
+black = "*"
+drf-spectacular = "*"
+
+[pipenv]
+allow_prereleases = true
