@@ -5,6 +5,10 @@ class RoutesKey {
     static CREATEPROFILE = 'Create Profile';
     static TERMSANDCONDITIONS = 'Terms and Conditions';
     static PRIVACYPOLICY = 'Privacy Policy';
+    static HOME="Home"
+    static SETTINGS="Settings"
+    static STANDINGS = 'Standings'
+    static SCORECARD="ScoreCard"
    
 }
 
