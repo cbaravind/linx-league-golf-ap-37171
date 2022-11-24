@@ -131,11 +131,20 @@ android {
     }
 
     defaultConfig {
+        packagingOptions {    // <-----  ADD THIS in the defaultConfig section
+        pickFirst '**/libjsc.so'
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libfbjni.so'
+        // pickFirst '**/llibturbomodulejsijni.so'
+        // pickFirst '**/libturbomodulejsijni.so'
+        }
         applicationId "com.linx_league_golf_ap_37171"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     splits {
         abi {
@@ -144,6 +153,9 @@ android {
             universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
+    }
+    dexOptions {
+       javaMaxHeapSize "3g"
     }
     signingConfigs {
         debug {

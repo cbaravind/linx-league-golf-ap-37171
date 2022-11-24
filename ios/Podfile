@@ -12,6 +12,8 @@ target 'linx_league_golf_ap_37171' do
     :hermes_enabled => false
   )
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'linx_league_golf_ap_37171Tests' do
     inherit! :complete
     # Pods for testing
