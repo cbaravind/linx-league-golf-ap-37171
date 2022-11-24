@@ -1,12 +1,12 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+    // Top-level build file where you can add configuration options common to all sub-projects/modules.
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim()) 
 buildscript {
     ext {
         buildToolsVersion = "29.0.3"
         minSdkVersion = 21
         compileSdkVersion = 29
         targetSdkVersion = 29
-        ndkVersion = "20.1.5948944"
+        ndkVersion = "21.1.5948944"
     }
     repositories {
         google()
@@ -20,6 +20,10 @@ buildscript {
 }
 
 allprojects {
+    configurations.all {                // <------   Add object in repositories section
+        resolutionStrategy {
+        force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
+        }
     repositories {
         mavenLocal()
         maven {
@@ -35,4 +39,5 @@ allprojects {
         jcenter()
         maven { url 'https://www.jitpack.io' }
     }
+}
 }
