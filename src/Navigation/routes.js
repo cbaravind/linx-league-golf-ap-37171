@@ -155,11 +155,7 @@ const Routes = () => {
                 //     ),
                 // }}
                 >
-                    <Stack.Screen
-                        name={Routeskey.BOTTOMTAB}
-                        component={Tabs}
-                        options={{ headerShown: false }}
-                    />
+                  
                     <Stack.Screen
                         name={Routeskey.SPLASH}
                         component={Splash}
@@ -189,6 +185,11 @@ const Routes = () => {
                         name={Routeskey.TERMSANDCONDITIONS}
                         component={TermsAndConditions}
                         options={{ headerShown: false, }}
+                    />
+                      <Stack.Screen
+                        name={Routeskey.BOTTOMTAB}
+                        component={Tabs}
+                        options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
             ) :

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     container: {
         // height: 150,
         backgroundColor: colors.grey,
-        // paddingTop:50,
+        paddingTop:50,
         paddingHorizontal: 24,
         justifyContent: "flex-end",
         // paddingBottom:10

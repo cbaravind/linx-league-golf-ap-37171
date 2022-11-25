@@ -14,9 +14,9 @@ const Login = () => {
         <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
             <SafeAreaView >
                 <ScrollView>
-                    <Center px="1" >
+                    <Center px="0" >
                         <Box w="100%" p="10px">
-                            <Box ml='auto' >
+                            <Box  ml='auto' >
                                 <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
                             </Box>
                             <Box>
@@ -39,7 +39,7 @@ const Login = () => {
                                 </Box>
                                 <Link isUnderlined={false} alignSelf='center' onPress={() => navigation.navigate(RoutesKey.FORGET_PASSWORD)} ml='auto' mr='1' variant='link'>Forgot Password</Link>
                             </Box>
-                            <Button shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
+                            <Button onPress={() => navigation.navigate(RoutesKey.BOTTOMTAB)} shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
                                 <Link isUnderlined={false} onPress={() => navigation.navigate(RoutesKey.SIGNUP)} ml='1' variant='link'>Sign Up</Link>
