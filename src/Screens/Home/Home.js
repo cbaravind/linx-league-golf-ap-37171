@@ -5,11 +5,12 @@ import AppHeader from '../../Components/AppHeader'
 import { colors } from '../../theme'
 import { Center } from 'native-base'
 import RoundCard from './components/RoundCard'
+import DateTimePicker from './components/DateTimePicker'
 export default function Home() {
-    data=[
-        {title:'St Johns Golf & Country Club'},
-        {title:'St Johns Golf & Country Club'},
-        {title:'St Johns Golf & Country Club'},
+    data = [
+        {id:1, title: 'St Johns Golf & Country Club' },
+        {id:2, title: 'St Johns Golf & Country Club' },
+        // { title: 'St Johns Golf & Country Club' },
     ]
     return (
         <Container title={"Home"}>
@@ -18,16 +19,25 @@ export default function Home() {
             <View style={{ height: '100%', alignItems: "center" }}>
                 <ImageBackground
                     source={require('../../assets/images/bg.png')}
-                    style={{ width: '100%', height: "82%" }}
-                >
+                    style={{ width: '100%', height: "83%" }}>
                     <View style={{ paddingTop: 30 }}>
                         <Text style={styles.h3}>Welcome,</Text>
                         <Text style={[styles.h3, { fontWeight: '700' }]}>Dylan Thomas</Text>
-                        <View style={{marginTop:20}}>
-                            <Text style={[styles.h3, { fontWeight: "600", textAlign: "left", fontSize: 15 }]}>   Upcoming Rounds </Text>
+                        <View style={{ paddingHorizontal: 25, marginTop: 20 }}>
+                            <Text style={[styles.h4, { fontWeight: '700' }]}>Add Upcoming Round </Text>
+
+                            <DateTimePicker />
+                        </View>
+                        <View style={{ marginTop: 30 }}>
+                            <Text style={[styles.h4]}>   Upcoming Rounds </Text>
+                            <FlatList
+                                data={data}
+                                keyExtractor={(item)=>item.id}
+                                contentContainerStyle={{paddingBottom:20,height:'100%',paddingTop:5}}
+                                renderItem={({ item }) => (<RoundCard item={item} />)}
+                            />
                             
-                            <RoundCard />
-                            <RoundCard />
+                           
                         </View>
                     </View>
                 </ImageBackground>
@@ -40,5 +50,10 @@ const styles = StyleSheet.create({
     h3: {
         color: colors.white,
         fontSize: 20, textAlign: "center"
+    },
+    h4: {
+        color: colors.white,
+        fontSize: 16,
+        fontWeight: '700'
     }
 })

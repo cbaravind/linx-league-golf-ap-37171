@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import Row from '../../../Components/Row'
 import { colors } from '../../../theme'
-export default function RoundCard() {
+export default function RoundCard({item}) {
     return (
         <View style={styles.container}>
             <Row>
@@ -14,8 +14,8 @@ export default function RoundCard() {
                     </View>
                     <View style={{marginLeft:10}}>
 
-                        <Text style={styles.text}>dd/mm/yy     8:00 am</Text>
-                        <Text>St john Golf and country club</Text>
+                        <Text style={styles.text}>dd/mm/yyyy     8:00 am</Text>
+                        <Text style={[styles.text,{fontWeight:'700',fontSize:16}]}>{item.title}</Text>
                     </View>
                 </Row>
                 <View style={{ flexDirection: "row",marginRight:7 }}>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     text:{
-        fontSize:14,color:'#414042',
+        fontSize:14,color:colors.text1,
     },
     imgStyle:{
         width: 25, height: 25, borderRadius: 15
