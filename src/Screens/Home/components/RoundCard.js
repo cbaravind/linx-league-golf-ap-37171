@@ -9,7 +9,7 @@ export default function RoundCard({item}) {
                 <Row style={{justifyContent: 'flex-start',}}>
                     <View style={styles.numberContainer}>
                         <View style={[styles.numberContainer, { backgroundColor: 'rgba(192,192,192,1)', height: 22, width: 22 }]}>
-                            <Text style={styles.text}>1</Text>
+                            <Text style={[styles.text,{color:colors.white}]}>{item.id}</Text>
                         </View>
                     </View>
                     <View style={{marginLeft:10}}>

@@ -8,8 +8,8 @@ import RoundCard from './components/RoundCard'
 import DateTimePicker from './components/DateTimePicker'
 export default function Home() {
     data = [
-        {id:1, title: 'St Johns Golf & Country Club' },
-        {id:2, title: 'St Johns Golf & Country Club' },
+        { id: 1, title: 'St Johns Golf & Country Club' },
+        { id: 2, title: 'St Johns Golf & Country Club' },
         // { title: 'St Johns Golf & Country Club' },
     ]
     return (
@@ -29,15 +29,17 @@ export default function Home() {
                             <DateTimePicker />
                         </View>
                         <View style={{ marginTop: 30 }}>
-                            <Text style={[styles.h4]}>   Upcoming Rounds </Text>
+                            <View style={{ paddingStart: 25 }}>
+                                <Text style={[styles.h4]}>Upcoming Rounds </Text>
+                            </View>
                             <FlatList
                                 data={data}
-                                keyExtractor={(item)=>item.id}
-                                contentContainerStyle={{paddingBottom:20,height:'100%',paddingTop:5}}
+                                keyExtractor={(item) => item.id}
+                                contentContainerStyle={{ paddingBottom: 20, height: '100%', paddingTop: 5 }}
                                 renderItem={({ item }) => (<RoundCard item={item} />)}
                             />
-                            
-                           
+
+
                         </View>
                     </View>
                 </ImageBackground>
