@@ -18,7 +18,7 @@ const Signup = () => {
                     <Center px="1" >
                         <Box w="100%" p="10px">
                             <Box ml='auto' >
-                                <Image h='20' w='120' resizeMode='center' source={require('../../Assets/Images/SplashLogo.png')} alt='' />
+                                <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
                             </Box>
                             <Box>
                                 <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' > Sign Up</Text>
@@ -49,18 +49,18 @@ const Signup = () => {
                             <Box mt='8' alignSelf='center' flexDirection='row'>
                                 <Text fontSize='16' lineHeight='23' color='#7D9E49'>Or continue with</Text>
                             </Box>
-                            <Button mt='5' leftIcon={<Image style={{ height: 22, width: 20 }} source={require('../../Assets/Images/IOSSignUp/flat-color-icons_google.png')} alt='' />} bg='white'>
+                            <Button mt='5' leftIcon={<Image style={{ height: 22, width: 20 }} source={require('../../assets/images/IOSSignUp/flat-color-icons_google.png')} alt='' />} bg='white'>
                                 <Text color='black'>
                                     Sign In with Google
                                 </Text>
                             </Button>
-                            <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../Assets/Images/IOSSignUp/logos_facebook.png')} alt='' />} bg='white'>
+                            <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../assets/images/IOSSignUp/logos_facebook.png')} alt='' />} bg='white'>
                                 <Text color='black'>
                                     Sign In with Facebook
                                 </Text>
                             </Button>
                             {Platform.OS === 'ios' ?
-                                <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../Assets/Images/IOSSignUp/Vector.png')} alt='' />} bg='white'>
+                                <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../assets/images/IOSSignUp/Vector.png')} alt='' />} bg='white'>
                                     <Text color='black'>
                                         Sign In with Facebook
                                     </Text>

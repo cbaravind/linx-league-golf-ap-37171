@@ -46,7 +46,7 @@ const Splash = () => {
         <View style={styles.container}>
             <Image
                 style={styles.image}
-                source={require("../../Assets/Images/splash2.png")}
+                source={require("../../assets/images/splash2.png")}
 
             />
             <View style={styles.loader}>

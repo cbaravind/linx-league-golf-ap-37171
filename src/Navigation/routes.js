@@ -73,7 +73,7 @@ const Routes = () => {
                             style={{width:18,height:20}}
                             alt={''}
                             resizeMode={'contain'}
-                            source={focused ? require('../Assets/Images/scoreCardActive.png') : require('../Assets/Images/scoreCard.png')}
+                            source={focused ? require('../assets/images/scoreCardActive.png') : require('../assets/images/scoreCard.png')}
                         />
                     ),
                 }} />
@@ -87,7 +87,7 @@ const Routes = () => {
                             style={{width:19,height:20}}
                             alt={''}
                             resizeMode={'contain'}
-                            source={focused ? require('../Assets/Images/homeActive.png') : require('../Assets/Images/home.png')}
+                            source={focused ? require('../assets/images/homeActive.png') : require('../assets/images/home.png')}
                         />
                     ),
                 }} />
@@ -101,7 +101,7 @@ const Routes = () => {
                             style={{width:30,height:20}}
                             alt={''}
                             resizeMode={'contain'}
-                            source={focused ? require('../Assets/Images/standingsActive.png') : require('../Assets/Images/standings.png')}
+                            source={focused ? require('../assets/images/standingsActive.png') : require('../assets/images/standings.png')}
                         />
                     ),
                 }} />
@@ -116,7 +116,7 @@ const Routes = () => {
                         //     style={tabBarImageStyle}
                         //     alt={''}
                         //     resizeMode={'contain'}
-                        //     source={focused ? require('../Assets/Images/settingsActive.png') : require('../Assets/Images/scoreCa.png')}
+                        //     source={focused ? require('../assets/images/settingsActive.png') : require('../assets/imagesoreCa.png')}
                         // />
                     ),
                 }} />

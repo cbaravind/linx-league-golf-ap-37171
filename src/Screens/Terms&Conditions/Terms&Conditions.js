@@ -15,7 +15,7 @@ const TermsAndConditions = () => {
                         <Box w="100%" p="10px">
                             <Box flexDirection='row'>
                                 <IconButton onPress={() => navigation.goBack()} icon={<Icon color='#7D9E49' as={Ionicons} name='chevron-back' />} />
-                                <Image ml='auto' h='20' w='120' resizeMode='center' source={require('../../Assets/Images/SplashLogo.png')} alt='' />
+                                <Image ml='auto' h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
                             </Box>
                             <Box>
                                 <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Terms of Service</Text>

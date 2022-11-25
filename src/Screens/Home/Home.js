@@ -17,7 +17,7 @@ export default function Home() {
 
             <View style={{ height: '100%', alignItems: "center" }}>
                 <ImageBackground
-                    source={require('../../Assets/Images/bg.png')}
+                    source={require('../../assets/images/bg.png')}
                     style={{ width: '100%', height: "82%" }}
                 >
                     <View style={{ paddingTop: 30 }}>

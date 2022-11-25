@@ -28,13 +28,13 @@ const CreateProfile = () => {
           <Center px="1" >
             <Box w="100%" p="10px">
               <Box ml='auto' >
-                <Image h='20' w='120' resizeMode='center' source={require('../../Assets/Images/SplashLogo.png')} alt='' />
+                <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
               </Box>
               <Box>
                 <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Create your Profile</Text>
               </Box>
               <Box mt='5'>
-                <Avatar alignSelf='center' size='xl' bg="gray.300" source={require('../../Assets/Images/profileImg.png')} >
+                <Avatar alignSelf='center' size='xl' bg="gray.300" source={require('../../assets/images/profileImg.png')} >
                   <Avatar.Badge bg='#225529' >
                     <IconButton size='8' ml='-1.5' mt='-1.5' icon={<Icon size='3' color='white' as={AntDesign} name='edit' />} />
                   </Avatar.Badge>

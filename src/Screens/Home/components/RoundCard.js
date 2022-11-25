@@ -19,8 +19,8 @@ export default function RoundCard() {
                     </View>
                 </Row>
                 <View style={{ flexDirection: "row",marginRight:7 }}>
-                    <Image style={[styles.imgStyle,{zIndex:10,position:"absolute",left:-18,bottom:2}]} resizeMode={"contain"} source={require('../../../Assets/Images/user1.png')} />
-                    <Image style={[styles.imgStyle,{ zIndex:-10}]} source={require('../../../Assets/Images/user2.png')}  resizeMode={"contain"}  />
+                    <Image style={[styles.imgStyle,{zIndex:10,position:"absolute",left:-18,bottom:2}]} resizeMode={"contain"} source={require('../../../assets/images/user1.png')} />
+                    <Image style={[styles.imgStyle,{ zIndex:-10}]} source={require('../../../assets/images/user2.png')}  resizeMode={"contain"}  />
                 </View>
             </Row>
         </View>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     text:{
-        fontSize:14,color:'#414042'
+        fontSize:14,color:'#414042',
     },
     imgStyle:{
         width: 25, height: 25, borderRadius: 15
