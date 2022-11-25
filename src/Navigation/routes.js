@@ -48,13 +48,15 @@ const Routes = () => {
     }, []);
    
     const Tabs = () => (
-        <Tab.Navigator screenOptions={{
+        <Tab.Navigator initialRouteName={Routeskey.HOME} screenOptions={{
             headerShown: false,
             tabBarStyle: {
                 backgroundColor: '#414042',
-                borderRadius: 25,
-                height: 95,
+                borderTopLeftRadius: 25,
+                borderTopRightRadius: 25,
+                height: 80,
                 paddingTop: 12,
+                paddingBottom: 15,
                 position:"absolute"
             },
             tabBarInactiveTintColor:colors.white,
@@ -68,7 +70,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:18,height:22}}
+                            style={{width:18,height:20}}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../Assets/Images/scoreCardActive.png') : require('../Assets/Images/scoreCard.png')}
@@ -82,7 +84,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:19,height:24}}
+                            style={{width:19,height:20}}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../Assets/Images/homeActive.png') : require('../Assets/Images/home.png')}
@@ -96,7 +98,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:30,height:24}}
+                            style={{width:30,height:20}}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../Assets/Images/standingsActive.png') : require('../Assets/Images/standings.png')}
@@ -118,6 +120,14 @@ const Routes = () => {
                         // />
                     ),
                 }} />
+            {/* <Tab.Screen
+                name={'new'}
+                component={Settings}
+                options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
+                    tabBarIconStyle:{display:'none'},
+                }} /> */}
         </Tab.Navigator>
     )
 
@@ -146,7 +156,7 @@ const Routes = () => {
                 // }}
                 >
                     <Stack.Screen
-                        name={'Tabs'}
+                        name={Routeskey.BOTTOMTAB}
                         component={Tabs}
                         options={{ headerShown: false }}
                     />
