@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View } from 'native-base'
+import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View, Modal, FormControl } from 'native-base'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,12 +15,27 @@ const CreateProfile = () => {
   let [service, setService] = React.useState('');
   const [value, setValue] = React.useState("");
   const [valueGHIN, setValueGHIN] = React.useState("");
+  const [diableGHIN, setDisableGHIN] = React.useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     let SD = {};
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
+
+  useEffect(() => {
+    if (valueGHIN == "Yes") {
+      setDisableGHIN(false);
+    }
+    else {
+      setDisableGHIN(true);
+    }
+    if (valueGHIN == "No") {
+      setShowModal(true);
+    }
+  }, [valueGHIN])
+
   return (
     <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
       <SafeAreaView >
@@ -81,8 +96,8 @@ const CreateProfile = () => {
               <Box mt='3'>
                 <InputText keynum={true} bgcolor={false} greenColor={false} text='Zip Code' typeShow='text' />
               </Box>
-              <Box>
-                <Box flexDirection='row'>
+              <Box mt='5'>
+                <Box mb='5' flexDirection='row'>
                   <Text>Do you have</Text><Text color='#7D9E49' fontWeight='700'> GHIN?</Text>
                 </Box>
                 <Radio.Group colorScheme='green' name="myRadioGroup" accessibilityLabel="favorite number" value={valueGHIN} onChange={nextValue => {
@@ -98,10 +113,30 @@ const CreateProfile = () => {
                   </Box>
                 </Radio.Group>
               </Box>
+              <Box mt='3'>
+                <InputText disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
+              </Box>
+              <Button shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
             </Box>
+            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+              <Modal.Content maxWidth="400px">
+                <Modal.CloseButton />
+                <Modal.Body>
+                  <Box p='6'>
+                    <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
+                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
+                      <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
+                  <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                  <Button borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                  </Box>
+
+                </Modal.Body>
+              </Modal.Content>
+            </Modal>
           </Center>
         </ScrollView>
       </SafeAreaView>
+
       <CountryPicker
         initialState={'United States'}
         show={show}

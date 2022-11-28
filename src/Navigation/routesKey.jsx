@@ -13,6 +13,7 @@ class RoutesKey {
   static FINDFRIENDS= "FindFriends"
   static ADDFRIENDS= "AddFriends"
   static SENDREFERRAL= "SendReferral"
+  static FEEDBACK = "Feed Back"
 }
 
 export default RoutesKey
