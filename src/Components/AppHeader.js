@@ -9,7 +9,7 @@ export default function AppHeader({ title, rightIcon, showLogo, showBell }) {
         <View style={styles.container}>
             <Row >
                 {showBell ?
-                    <FontAwesome name='bell-o' size={30} color={colors.white} />
+                    <FontAwesome name='bell-o' size={20} color={colors.white} />
                     :
                     <></>
                 }
@@ -22,8 +22,8 @@ export default function AppHeader({ title, rightIcon, showLogo, showBell }) {
                     rightIcon
                     : title == 'Home' ?
                         <Row style={{ justifyContent: 'center',alignSelf:'flex-end' }}>
-                            <Icon name='comment-outline' size={30} color={colors.white} />
-                            <Image source={require('../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                            <Icon name='comment-outline' size={20} color={colors.white} />
+                            <Image source={require('../assets/images/profileImg.png')} style={{ width: 25, height: 25, marginLeft: 15 }} />
                         </Row>
                         :
                         <></>
