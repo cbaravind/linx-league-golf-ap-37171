@@ -11,7 +11,7 @@ const InputText = (props) => {
     return (
         <View keyboardShouldPersistTaps='always' style={props.style}>
             <Text fontWeight={props.fontWeight} mb='2' mt='2'>{props.text}</Text>
-            <Input keyboardType={props.keynum == true ? 'number-pad' : 'default'} autoFocus={props.autoFocus} h='10' borderColor={props.greenColor == true ? '#7D9E49' : '#BDBDBD'} backgroundColor={props.bgcolor == true ? '#FFFFFF' : '#BDBDBD'} placeholder={props.placeholder} onChangeText={props.onChangeText} value={props.value}
+            <Input isDisabled={props.disabled} keyboardType={props.keynum == true ? 'number-pad' : 'default'} autoFocus={props.autoFocus} h='10' borderColor={props.greenColor == true ? '#7D9E49' : '#BDBDBD'} backgroundColor={props.bgcolor == true ? '#FFFFFF' : '#BDBDBD'} placeholder={props.placeholder} onChangeText={props.onChangeText} value={props.value}
                 InputRightElement={props.icon == true ?
                     <TouchableOpacity
                         onPress={() => setShow(!show)}>

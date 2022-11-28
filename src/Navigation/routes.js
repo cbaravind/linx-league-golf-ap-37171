@@ -23,6 +23,7 @@ import ScoreCard from '../Screens/ScoreCard/ScoreCard';
 import Standings from '../Screens/Standings/Standings';
 // import Icon from 'react-native-vector-icons/Ionicons'
 import {colors} from '../theme'
+import FeedBack from '../Screens/feedBack/FeedBack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -189,6 +190,11 @@ const Routes = () => {
                       <Stack.Screen
                         name={Routeskey.BOTTOMTAB}
                         component={Tabs}
+                        options={{ headerShown: false }}
+                    />
+                      <Stack.Screen
+                        name={Routeskey.FEEDBACK}
+                        component={FeedBack}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

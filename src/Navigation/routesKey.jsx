@@ -10,6 +10,7 @@ class RoutesKey {
   static STANDINGS = "Standings"
   static SCORECARD = "ScoreCard"
   static BOTTOMTAB = "BottomTab"
+  static FEEDBACK = "Feed Back"
 }
 
 export default RoutesKey
