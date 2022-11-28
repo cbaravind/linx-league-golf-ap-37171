@@ -16,7 +16,7 @@ export default function Home() {
         <Container title={"Home"}>
             <AppHeader showBell showLogo title={"Home"} />
 
-            <View style={{ height: '100%', alignItems: "center" }}>
+            <View style={{flex:1, alignItems: "center" }}>
                 <ImageBackground
                     source={require('../../assets/images/bg.png')}
                     style={{ width: '100%', height: "83%" }}>

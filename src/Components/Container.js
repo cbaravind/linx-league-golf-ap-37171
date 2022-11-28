@@ -14,7 +14,7 @@ export default function Container({ children,title, style }) {
                 translucent={true}
             />
 
-            <View style={{ backgroundColor: colors.grey }}>
+            <View style={{ backgroundColor: colors.grey,flex:1 }}>
 
                 {/* <SafeAreaView style={{style}}  > */}
                    {/* {children} */}

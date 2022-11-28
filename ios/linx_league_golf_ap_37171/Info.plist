@@ -70,6 +70,12 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>proxima-Bold.otf</string>
+		<string>proxima-Regular.otf</string>
+		<string>proxima-Semi-Bold.otf</string>
+		<string>Proxima-Bold.otf</string>
+		<string>Proxima-Regular.otf</string>
+		<string>Proxima-Semi-Bold.otf</string>
 	</array>
 </dict>
 </plist>

@@ -3,16 +3,20 @@ import { Button, StyleSheet, TouchableOpacity, View } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 import { colors } from '../../../theme'
 import CalendarPicker from 'react-native-calendar-picker';
-import { Image, Text } from 'native-base';
+import { Image, Text, useNativeBase } from 'native-base';
 import Row from '../../../Components/Row'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal'
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/core';
+import RoutesKey from '../../../Navigation/routesKey';
 export default () => {
+
+    const navigation=useNavigation()
     const [date, setDate] = useState(new Date())
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [timePickerOpen, setTimePickerOpen] = useState(false)
-    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [selectedDate, setSelectedDate] = useState('')
     const [dateTimeSelected, setDateTimeSelected] = useState(false)
     const minDate = new Date(); // Today
     const maxDate = new Date(2023, 6, 3);
@@ -40,7 +44,7 @@ export default () => {
                         :
                         <View style={{width:7}} />
                     }
-                    <TouchableOpacity onPress={() => {dateTimeSelected? setDateTimeSelected(false) : setTimePickerOpen(true)}} style={[styles.button, dateTimeSelected ? { backgroundColor: colors.green } : {}]}>
+                    <TouchableOpacity onPress={() => {dateTimeSelected? navigation.navigate(RoutesKey.ADDFRIENDS) : setTimePickerOpen(true)}} style={[styles.button, dateTimeSelected ? { backgroundColor: colors.green } : {}]}>
                         {dateTimeSelected ?
                             <Text style={[styles.h2, { color: colors.white, }]}>Apply</Text>
                             :
@@ -59,7 +63,6 @@ export default () => {
                     style={styles.modal} >
                     <CalendarPicker
                         // startFromMonday={true}
-
                         // allowRangeSelection={true}
                         minDate={minDate}
                         maxDate={maxDate}
@@ -76,6 +79,7 @@ export default () => {
                         }}
                         enableDateChange
                         textStyle={{ color: colors.text2 }}
+                    
                         // selectedDayColor={colors.white}
                         selectedDayStyle={{ backgroundColor: colors.green }}
                         selectedDayTextColor={'#fff'}
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         backgroundColor: 'white',
-        height: '33%',
+        height: '35%',
         alignSelf: 'center',
         position: 'absolute',
         top: '32%',

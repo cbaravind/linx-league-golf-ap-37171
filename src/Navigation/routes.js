@@ -23,6 +23,9 @@ import ScoreCard from '../Screens/ScoreCard/ScoreCard';
 import Standings from '../Screens/Standings/Standings';
 // import Icon from 'react-native-vector-icons/Ionicons'
 import {colors} from '../theme'
+import AddFriends from '../Screens/Schedule/AddFriends/AddFriends';
+import FindFriends from '../Screens/Schedule/SearchFriends/FindFriends';
+import SendReferral from '../Screens/Schedule/SendReferral/SendReferral';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -46,7 +49,30 @@ const Routes = () => {
         //     }
         // });
     }, []);
-   
+   const HomeStack=()=>(
+       <Stack.Navigator>
+           <Stack.Screen
+                       name={Routeskey.ADDFRIENDS}
+                       component={AddFriends}
+                       options={{ headerShown: false }}
+                   />
+            <Stack.Screen
+                        name={Routeskey.BOTTOMTAB}
+                        component={Tabs}
+                        options={{ headerShown: false }}
+                    />
+            <Stack.Screen
+                        name={Routeskey.FINDFRIENDS}
+                        component={FindFriends}
+                        options={{ headerShown: false }}
+                    />
+            <Stack.Screen
+                        name={Routeskey.SENDREFERRAL}
+                        component={SendReferral}
+                        options={{ headerShown: false }}
+                    />
+       </Stack.Navigator>
+   )
     const Tabs = () => (
         <Tab.Navigator initialRouteName={Routeskey.HOME} screenOptions={{
             headerShown: false,
@@ -188,7 +214,7 @@ const Routes = () => {
                     />
                       <Stack.Screen
                         name={Routeskey.BOTTOMTAB}
-                        component={Tabs}
+                        component={HomeStack}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

@@ -10,6 +10,9 @@ class RoutesKey {
   static STANDINGS = "Standings"
   static SCORECARD = "ScoreCard"
   static BOTTOMTAB = "BottomTab"
+  static FINDFRIENDS= "FindFriends"
+  static ADDFRIENDS= "AddFriends"
+  static SENDREFERRAL= "SendReferral"
 }
 
 export default RoutesKey
