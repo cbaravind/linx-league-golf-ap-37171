@@ -8,7 +8,8 @@ const colors = {
     background:'#f1f2f2',
     borderColor:'#D8DAE5',
     text1:'#414042',
-    text2:'#4F4F4F'
+    text2:'#4F4F4F',
+    pink:'#FF355E'
 }
 const fonts={
     PROXIMA_REGULAR:'Proxima Nova Cond-Regular',

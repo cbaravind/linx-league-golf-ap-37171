@@ -8,12 +8,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 export default function AppModal({ heading, desc, onPress, onClose }) {
     return (
         <Modal style={{ backgroundColor: colors.white, paddingHorizontal: 20, position: "absolute", right: 0, left: 0, alignSelf: "center", marginTop: '50%', paddingVertical: 30, borderRadius: 8 }} isVisible={true} animationIn={'slideInUp'} >
-            <TouchableOpacity style={{ alignItems: "flex-end" }} onPress={onClose} >
+            <TouchableOpacity style={{ alignItems: "flex-end",marginBottom:25 }} onPress={onClose} >
                 <Icon name="close" size={25} color={colors.text1} />
             </TouchableOpacity>
             <Text style={styles.heading}>{heading}</Text>
-            <View style={{ height: 30 }} />
+            <View style={{ paddingTop: 30,paddingHorizontal:20 }} >
             <Text style={styles.desc}>{desc}</Text>
+            </View>
             <View style={{ padding: 20, }} >
             <AppButton label={'OK'} onPress={onPress} />
             </View>
