@@ -50,30 +50,6 @@ const Routes = () => {
         //     }
         // });
     }, []);
-    const HomeStack = () => (
-        <Stack.Navigator>
-            <Stack.Screen
-                name={Routeskey.BOTTOMTAB}
-                component={Tabs}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name={Routeskey.ADDFRIENDS}
-                component={AddFriends}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name={Routeskey.FINDFRIENDS}
-                component={FindFriends}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name={Routeskey.SENDREFERRAL}
-                component={SendReferral}
-                options={{ headerShown: false }}
-            />
-        </Stack.Navigator>
-    )
     const Tabs = () => (
         <Tab.Navigator initialRouteName={Routeskey.HOME} screenOptions={{
             headerShown: false,
@@ -214,13 +190,28 @@ const Routes = () => {
                         options={{ headerShown: false, }}
                     />
                     <Stack.Screen
-                        name={Routeskey.BOTTOMTAB}
-                        component={HomeStack}
+                        name={Routeskey.FEEDBACK}
+                        component={FeedBack}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                        name={Routeskey.FEEDBACK}
-                        component={FeedBack}
+                        name={Routeskey.BOTTOMTAB}
+                        component={Tabs}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.ADDFRIENDS}
+                        component={AddFriends}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.FINDFRIENDS}
+                        component={FindFriends}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.SENDREFERRAL}
+                        component={SendReferral}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
