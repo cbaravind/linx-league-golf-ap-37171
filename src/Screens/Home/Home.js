@@ -19,7 +19,7 @@ export default function Home() {
             <View style={{flex:1, alignItems: "center" }}>
                 <ImageBackground
                     source={require('../../assets/images/bg.png')}
-                    style={{ width: '100%', height: "83%" }}>
+                    style={{ width: '100%', height: "100%" }}>
                     <View style={{ paddingTop: 30 }}>
                         <Text style={styles.h3}>Welcome,</Text>
                         <Text style={[styles.h3, { fontWeight: '700' }]}>Dylan Thomas</Text>

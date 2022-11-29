@@ -22,7 +22,7 @@ import Settings from '../Screens/Settings/Settings';
 import ScoreCard from '../Screens/ScoreCard/ScoreCard';
 import Standings from '../Screens/Standings/Standings';
 // import Icon from 'react-native-vector-icons/Ionicons'
-import {colors} from '../theme'
+import { colors } from '../theme'
 import AddFriends from '../Screens/Schedule/AddFriends/AddFriends';
 import FindFriends from '../Screens/Schedule/SearchFriends/FindFriends';
 import SendReferral from '../Screens/Schedule/SendReferral/SendReferral';
@@ -50,30 +50,30 @@ const Routes = () => {
         //     }
         // });
     }, []);
-   const HomeStack=()=>(
-       <Stack.Navigator>
-           <Stack.Screen
-                       name={Routeskey.ADDFRIENDS}
-                       component={AddFriends}
-                       options={{ headerShown: false }}
-                   />
+    const HomeStack = () => (
+        <Stack.Navigator>
             <Stack.Screen
-                        name={Routeskey.BOTTOMTAB}
-                        component={Tabs}
-                        options={{ headerShown: false }}
-                    />
+                name={Routeskey.BOTTOMTAB}
+                component={Tabs}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
-                        name={Routeskey.FINDFRIENDS}
-                        component={FindFriends}
-                        options={{ headerShown: false }}
-                    />
+                name={Routeskey.ADDFRIENDS}
+                component={AddFriends}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
-                        name={Routeskey.SENDREFERRAL}
-                        component={SendReferral}
-                        options={{ headerShown: false }}
-                    />
-       </Stack.Navigator>
-   )
+                name={Routeskey.FINDFRIENDS}
+                component={FindFriends}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={Routeskey.SENDREFERRAL}
+                component={SendReferral}
+                options={{ headerShown: false }}
+            />
+        </Stack.Navigator>
+    )
     const Tabs = () => (
         <Tab.Navigator initialRouteName={Routeskey.HOME} screenOptions={{
             headerShown: false,
@@ -84,11 +84,11 @@ const Routes = () => {
                 height: 80,
                 paddingTop: 12,
                 paddingBottom: 15,
-                position:"absolute"
+                position: "absolute"
             },
-            tabBarInactiveTintColor:colors.white,
-            tabBarActiveTintColor:colors.green
-           
+            tabBarInactiveTintColor: colors.white,
+            tabBarActiveTintColor: colors.green
+
         }} >
             <Tab.Screen
                 name={Routeskey.SCORECARD}
@@ -97,7 +97,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:18,height:20}}
+                            style={{ width: 18, height: 20 }}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../assets/images/scoreCardActive.png') : require('../assets/images/scoreCard.png')}
@@ -111,7 +111,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:19,height:20}}
+                            style={{ width: 19, height: 20 }}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../assets/images/homeActive.png') : require('../assets/images/home.png')}
@@ -125,7 +125,7 @@ const Routes = () => {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            style={{width:30,height:20}}
+                            style={{ width: 30, height: 20 }}
                             alt={''}
                             resizeMode={'contain'}
                             source={focused ? require('../assets/images/standingsActive.png') : require('../assets/images/standings.png')}
@@ -138,7 +138,7 @@ const Routes = () => {
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
-                        <Ionicons name={'settings-outline'}  size={25} color={focused?colors.green:colors.white} />
+                        <Ionicons name={'settings-outline'} size={25} color={focused ? colors.green : colors.white} />
                         // <Image
                         //     style={tabBarImageStyle}
                         //     alt={''}
@@ -182,7 +182,7 @@ const Routes = () => {
                 //     ),
                 // }}
                 >
-                  
+
                     <Stack.Screen
                         name={Routeskey.SPLASH}
                         component={Splash}
@@ -213,12 +213,12 @@ const Routes = () => {
                         component={TermsAndConditions}
                         options={{ headerShown: false, }}
                     />
-                      <Stack.Screen
+                    <Stack.Screen
                         name={Routeskey.BOTTOMTAB}
                         component={HomeStack}
                         options={{ headerShown: false }}
                     />
-                      <Stack.Screen
+                    <Stack.Screen
                         name={Routeskey.FEEDBACK}
                         component={FeedBack}
                         options={{ headerShown: false }}
