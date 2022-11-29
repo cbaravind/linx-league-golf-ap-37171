@@ -14,13 +14,37 @@ import Row from '../../../Components/Row'
 import AppModal from '../../../Components/AppModal'
 import { friends } from '../../../assets/data'
 import RoutesKey from '../../../Navigation/routesKey'
+import Contacts from 'react-native-contacts'
+import { PermissionsAndroid } from 'react-native';
 
 export default function AddFriends() {
     const [modalVisible, setModalVisible] = useState(false)
     const [friendsList, setFriendsList] = useState(friends)
     const navigation = useNavigation()
 
-
+const fetchContacts=()=>{ 
+    Contacts.checkPermission().then(permission => {
+        // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+        console.log('permission',permission)
+        if (permission === 'undefined') {
+            Contacts.requestPermission().then(permission => {
+                // ...
+            })
+        }
+        if (permission === 'authorized') {
+            // yay!
+            Contacts .getAll().then(contacts => {
+              setModalVisible(false); 
+              navigation.navigate(modalVisible == 'find' ? RoutesKey.FINDFRIENDS : RoutesKey.SENDREFERRAL) 
+            
+            console.log(contacts)
+          })
+        }
+        if (permission === 'denied') {
+          // x.x
+        }
+      })
+}
     return (
         <Container >
             <AppHeader back title="Add Friends to your Tee time" rightIcon={<Text style={styles.text}>SKIP</Text>} />
@@ -77,7 +101,7 @@ export default function AddFriends() {
             {modalVisible ?
                 <AppModal
                     onClose={() => setModalVisible(false)}
-                    onPress={() => { setModalVisible(false); navigation.navigate(modalVisible == 'find' ? RoutesKey.FINDFRIENDS : RoutesKey.SENDREFERRAL) }}
+                    onPress={() => fetchContacts() }
                     heading={'Golf is better with Friends'}
                     desc={'and to be able to find friends Linx needs access to your phone contacts'} />
                 :

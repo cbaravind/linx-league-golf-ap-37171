@@ -12,7 +12,7 @@ export default function ScoreCard() {
     <>
     {/* // <Center px="1" mt='30' > */}
     {/* // <Container> */}
-      <AppHeader showLogo title={"ScoreCard"} rightIcon={<Icon name="ios-share-social" size={24} color={colors.white} />} />
+      <AppHeader showLogo  rightIcon={<Icon name="ios-share-social" size={24} color={colors.white} />} />
        {/* <ScrollView style={{ backgroundColor: colors.background, paddingTop: 20, flex: 1 }} > */}
         <TopTab/>
       {/* </ScrollView> */}
