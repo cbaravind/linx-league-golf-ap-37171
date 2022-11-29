@@ -1,12 +1,19 @@
-import { View, Text, ScrollView, ImageBackground, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
+import { View, Text, ImageBackground, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
 import Container from '../../Components/Container'
 import AppHeader from '../../Components/AppHeader'
 import { colors } from '../../theme'
 import { Center } from 'native-base'
 import RoundCard from './components/RoundCard'
 import DateTimePicker from './components/DateTimePicker'
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/core'
+import RoutesKey from '../../Navigation/routesKey'
+import Row from '../../Components/Row'
+
 export default function Home() {
+    const navigation = useNavigation()
     data = [
         { id: 1, title: 'St Johns Golf & Country Club' },
         { id: 2, title: 'St Johns Golf & Country Club' },
@@ -14,9 +21,22 @@ export default function Home() {
     ]
     return (
         <Container title={"Home"}>
-            <AppHeader showBell showLogo title={"Home"} />
+            <AppHeader
+                leftIcon={
+                    <TouchableOpacity onPress={() => navigation.navigate(RoutesKey.NOTIFICATIONS)}>
+                        <FontAwesome name='bell-o' size={30} color={colors.white} />
+                    </TouchableOpacity>
+                }
+                rightIcon={
+                    <Row style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
+                        <CommunityIcon name='comment-outline' size={30} color={colors.white} />
+                        <Image source={require('../../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                    </Row>}
+            />
+            <Image source={require('../../assets/images/logoWhite.png')} resizeMode="contain" style={{ width: 150, height: 60, alignSelf: "center", marginBottom: 4 }} />
 
-            <View style={{flex:1, alignItems: "center" }}>
+
+            <View style={{ flex: 1, alignItems: "center" }}>
                 <ImageBackground
                     source={require('../../assets/images/bg.png')}
                     style={{ width: '100%', height: "100%" }}>

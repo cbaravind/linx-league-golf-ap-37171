@@ -27,6 +27,7 @@ import AddFriends from '../Screens/Schedule/AddFriends/AddFriends';
 import FindFriends from '../Screens/Schedule/SearchFriends/FindFriends';
 import SendReferral from '../Screens/Schedule/SendReferral/SendReferral';
 import FeedBack from '../Screens/feedBack/FeedBack';
+import Notifications from '../Screens/Notifications/Notifications';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -212,6 +213,11 @@ const Routes = () => {
                     <Stack.Screen
                         name={Routeskey.SENDREFERRAL}
                         component={SendReferral}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.NOTIFICATIONS}
+                        component={Notifications}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

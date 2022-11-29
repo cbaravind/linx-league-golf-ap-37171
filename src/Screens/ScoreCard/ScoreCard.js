@@ -9,7 +9,7 @@ import { Center } from 'native-base'
 export default function ScoreCard() {
   return (
     <Container>
-      <AppHeader showLogo title={"ScoreCard"} rightIcon={<Icon name="ios-share-social" size={28} color={colors.white} />} />
+      <AppHeader showLogo rightIcon={<Icon name="ios-share-social" size={28} color={colors.white} />} />
        <ScrollView style={{ backgroundColor: colors.background, paddingTop: 20, flex: 1 }} >
         <Center px="1" >
 
