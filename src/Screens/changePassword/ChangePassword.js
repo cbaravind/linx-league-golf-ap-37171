@@ -5,41 +5,38 @@ import { SafeAreaView } from 'react-native'
 import { colors } from '../../theme'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputText from '../../Components/Input'
-import AppHeader from '../../Components/AppHeader'
 
-const FeedBack = () => {
+const ChangePassword = () => {
     const navigation = useNavigation()
     return (
-        <>
-            {/* <SafeAreaView > */}
+        <View >
             <ScrollView>
-            {/* <AppHeader showLogo={true} /> */}
                 <Box w="100%" style={{ backgroundColor: colors.grey }}>
                     <Box p='5' mt='10' flexDirection='row' >
                         <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
-                        <Text alignSelf='center' color={colors.background}>Feedback</Text>
+                        <Text alignSelf='center' color={colors.background}>Change Password</Text>
                     </Box>
                 </Box>
                 <Center px="1" >
                     <Box w="100%" p='10px'>
                         <Box mt='3'>
-                            <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='24' fontWeight='400' >Tell us what we could do better</Text>
+                            <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='24' fontWeight='400' >Change Password</Text>
                         </Box>
                         <Box mt='8'>
-                            <InputText bgcolor={true} greenColor={true} text='Email' typeShow='text' />
+                            <InputText icon={true} bgcolor={false} greenColor={false} text='Current Password ' />
                         </Box>
                         <Box mt='8'>
-                            <Text>Message</Text>
-                            <TextArea mt='2' placeholder='Enter a message...' placeholderTextColor='black' h='40' borderRadius={10} numberOfLines={20} backgroundColor='#BDBDBD' />
-                            {/* <InputText bgcolor={true} greenColor={true} text='Email' typeShow='text' /> */}
+                            <InputText icon={true} bgcolor={false} greenColor={false} text='New Password ' />
                         </Box>
-                        <Button shadow={5} mt='30%' bg='#7D9E49'>SUBMIT</Button>
+                        <Box mt='8'>
+                            <InputText icon={true} bgcolor={false} greenColor={false} text='Confirm Password ' />
+                        </Box>
+                        <Button shadow={5} mt='30%' bg='#7D9E49'>CHANGE PASSWORD</Button>
                     </Box>
                 </Center>
             </ScrollView>
-            {/* </SafeAreaView> */}
-        </>
+        </View>
     )
 }
 
-export default FeedBack
+export default ChangePassword

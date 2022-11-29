@@ -5,10 +5,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Row from './Row'
 import { useNavigation } from '@react-navigation/core'
-import { IconButton, Icon } from 'native-base'
+import { IconButton, Icon, Pressable } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import RoutesKey from '../Navigation/routesKey'
 
-export default function AppHeader({ title, rightIcon, showLogo, showBell,back }) {
+export default function AppHeader({ title, rightIcon, showLogo, showBell, back }) {
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
@@ -18,7 +19,7 @@ export default function AppHeader({ title, rightIcon, showLogo, showBell,back })
                         <FontAwesome name='bell-o' size={30} color={colors.white} />
                         :
                         back ?
-                            <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.white} as={Ionicons} name='chevron-back' />} style={{ marginRight: 10 }} size={30} color={colors.white} />
+                            <IconButton onPress={() => navigation.goBack()} icon={<Icon size={8} color={colors.white} as={Ionicons} name='chevron-back' />} style={{ marginRight: 8 }} size={30} color={colors.white} />
                             :
                             <></>
                     }
@@ -40,7 +41,9 @@ export default function AppHeader({ title, rightIcon, showLogo, showBell,back })
                     : title == 'Home' ?
                         <Row style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
                             <CommunityIcon name='comment-outline' size={30} color={colors.white} />
-                            <Image source={require('../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                            <Pressable onPress={() => navigation.navigate(RoutesKey.CREATEPROFILE, {setting: true})}>
+                                <Image source={require('../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                            </Pressable>
                         </Row>
                         :
                         <></>
