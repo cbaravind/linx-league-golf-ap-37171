@@ -3,7 +3,7 @@ import React from 'react'
 import { colors } from '../theme'
 import Row from './Row'
 import { useNavigation } from '@react-navigation/core'
-import { IconButton, Icon } from 'native-base'
+import { IconButton, Icon, Pressable } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RoutesKey from '../Navigation/routesKey'
 

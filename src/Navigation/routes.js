@@ -28,6 +28,8 @@ import FindFriends from '../Screens/Schedule/SearchFriends/FindFriends';
 import SendReferral from '../Screens/Schedule/SendReferral/SendReferral';
 import FeedBack from '../Screens/feedBack/FeedBack';
 import Notifications from '../Screens/Notifications/Notifications';
+import ChangePassword from '../Screens/changePassword/ChangePassword';
+import PostScore from '../Screens/ScoreCard/PostScore/PostScore';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -218,6 +220,16 @@ const Routes = () => {
                     <Stack.Screen
                         name={Routeskey.NOTIFICATIONS}
                         component={Notifications}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.CHANGEPASSWORD}
+                        component={ChangePassword}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.POSTSCORE}
+                        component={PostScore}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

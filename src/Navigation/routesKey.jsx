@@ -15,6 +15,8 @@ class RoutesKey {
   static SENDREFERRAL= "SendReferral"
   static FEEDBACK = "Feed Back"
   static NOTIFICATIONS="Notifications"
+  static CHANGEPASSWORD = "Change Password"
+  static POSTSCORE = "Post Score"
 }
 
 export default RoutesKey

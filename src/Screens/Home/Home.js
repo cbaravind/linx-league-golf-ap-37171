@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ImageBackground, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native'
 import Container from '../../Components/Container'
 import AppHeader from '../../Components/AppHeader'
 import { colors } from '../../theme'
@@ -30,7 +30,10 @@ export default function Home() {
                 rightIcon={
                     <Row style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
                         <CommunityIcon name='comment-outline' size={30} color={colors.white} />
-                        <Image source={require('../../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                        <Pressable onPress={() => navigation.navigate(RoutesKey.CREATEPROFILE, { setting: true })}>
+
+                            <Image source={require('../../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
+                        </Pressable>
                     </Row>}
             />
             <Image source={require('../../assets/images/logoWhite.png')} resizeMode="contain" style={{ width: 150, height: 60, alignSelf: "center", marginBottom: 4 }} />

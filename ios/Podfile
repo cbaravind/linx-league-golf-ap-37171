@@ -14,6 +14,8 @@ target 'linx_league_golf_ap_37171' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'react-native-pager-view', :path => '../node_modules/react-native-pager-view'
+
   target 'linx_league_golf_ap_37171Tests' do
     inherit! :complete
     # Pods for testing

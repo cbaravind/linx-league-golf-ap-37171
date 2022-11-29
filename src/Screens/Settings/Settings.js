@@ -23,11 +23,13 @@ export default function Settings() {
       <ScrollView nestedScrollEnabled={true}>
         <View style={{ height: '100%', backgroundColor: '#F1F2F2' }}>
           <Box mt='5' mb='5'>
+          <Pressable onPress={() => navigation.navigate(RoutesKey.CREATEPROFILE, {setting: true})}>
             <Box flexDirection='row' p='4' bg='#FFFFFF'>
               <Icon as={EvilIcons} name='user' size='10' />
               <Text ml='2' alignSelf='center' >Profile</Text>
               <Icon ml='auto' mr='2' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
             </Box>
+            </Pressable>
             <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
               <Icon as={Feather} name='user-plus' size='6' />
               <Text ml='3' alignSelf='center' >Invite a Friend</Text>
@@ -41,16 +43,20 @@ export default function Settings() {
                 onValueChange={(val) => setMute(val)}
               />
             </Box>
+            <Pressable onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)}>
             <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
               <Image h='5' w='5' source={require('../../assets/images/carbon_document-protected.png')} alt='' />
               <Text ml='3' alignSelf='center' >Privacy Policy</Text>
               <Icon ml='auto' mr='1' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
             </Box>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate(RoutesKey.TERMSANDCONDITIONS)}>
             <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
               <Image h='5' w='5' source={require('../../assets/images/carbon_policy.png')} alt='' />
               <Text ml='3' alignSelf='center' >Terms and Conditions</Text>
               <Icon ml='auto' mr='1' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
             </Box>
+            </Pressable>
             <Pressable onPress={() => navigation.navigate(RoutesKey.FEEDBACK)}>
               <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
                 <Icon as={MaterialCommunityIcons} name='message-alert-outline' size='6' />
@@ -58,11 +64,13 @@ export default function Settings() {
                 <Icon ml='auto' mr='1.2' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
               </Box>
             </Pressable>
+            <Pressable onPress={() => navigation.navigate(RoutesKey.CHANGEPASSWORD)}>
             <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
               <Icon as={Ionicons} name='ios-key-outline' size='6' />
               <Text ml='3' alignSelf='center' >Change Password</Text>
               <Icon ml='auto' mr='1.2' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
             </Box>
+            </Pressable>
             <Box mt='20' flexDirection='row' p='6' bg='#FFFFFF'>
               <Image h='5' w='5' source={require('../../assets/images/fluent_delete-dismiss-24-regular.png')} alt='' />
               <Text ml='3' alignSelf='center' >Delete Linx</Text>

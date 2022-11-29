@@ -6,6 +6,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import InputText from '../../Components/Input'
 import { CountryPicker } from "react-native-country-codes-picker";
 import DatePicker from '../../Components/datePicker';
+import { useRoute, useNavigation } from '@react-navigation/native'
+import { colors } from '../../theme'
 
 const CreateProfile = () => {
   const [show, setShow] = useState(false);
@@ -17,7 +19,8 @@ const CreateProfile = () => {
   const [valueGHIN, setValueGHIN] = React.useState("");
   const [diableGHIN, setDisableGHIN] = React.useState(true);
   const [showModal, setShowModal] = useState(false);
-
+  const route = useRoute();
+  const navigation = useNavigation();
   useEffect(() => {
     let SD = {};
     SD[service] = { selected: true, selectedColor: '#1C8739' };
@@ -35,19 +38,36 @@ const CreateProfile = () => {
       setShowModal(true);
     }
   }, [valueGHIN])
-
   return (
     <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
-      <SafeAreaView >
         <ScrollView>
+
+          {route?.params?.setting == true ?
+            <>
+              <Box w="100%" style={{ backgroundColor: colors.grey }}>
+                <Box p='5' mt='10' flexDirection='row' >
+                  <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
+                  <Text alignSelf='center' color={colors.background}>Edit Profile</Text>
+                <Button ml='auto' variant='link'><Text color='white'>Save</Text></Button>
+                </Box>
+              </Box>
+            </> : null
+          }
           <Center px="1" >
             <Box w="100%" p="10px">
-              <Box ml='auto' >
-                <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
-              </Box>
-              <Box>
-                <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Create your Profile</Text>
-              </Box>
+              {route?.params?.setting !== true ?
+                <Box mt='5'>
+                  <Box ml='auto' >
+                    <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
+                  </Box>
+                  <Box>
+                    <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Create your Profile</Text>
+                  </Box>
+                </Box>
+                :
+                null
+              }
+              <SafeAreaView>
               <Box mt='5'>
                 <Avatar alignSelf='center' size='xl' bg="gray.300" source={require('../../assets/images/profileImg.png')} >
                   <Avatar.Badge bg='#225529' >
@@ -116,7 +136,8 @@ const CreateProfile = () => {
               <Box mt='3'>
                 <InputText disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
-              <Button shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
+              <Button mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
+        </SafeAreaView>
             </Box>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
               <Modal.Content maxWidth="400px">
@@ -126,8 +147,8 @@ const CreateProfile = () => {
                     <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
                     <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
                       <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
-                  <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
-                  <Button borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                    <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                    <Button borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
                   </Box>
 
                 </Modal.Body>
@@ -135,7 +156,6 @@ const CreateProfile = () => {
             </Modal>
           </Center>
         </ScrollView>
-      </SafeAreaView>
 
       <CountryPicker
         initialState={'United States'}
