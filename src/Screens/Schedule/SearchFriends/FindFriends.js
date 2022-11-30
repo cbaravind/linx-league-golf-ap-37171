@@ -19,7 +19,7 @@ export default function FindFriends() {
                     data={friends}
                     contentContainerStyle={{ backgroundColor: colors.white, padding: 20, marginTop: 20, marginBottom: 12 }}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <UserProfile item={item} />}
+                    renderItem={({ item }) => <UserProfile name={item.name} image={item.image} />}
                 />
                 <AppButton  label='Request' style={{margin:25}} />
             </View>

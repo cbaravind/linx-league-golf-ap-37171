@@ -17,6 +17,8 @@ class RoutesKey {
   static NOTIFICATIONS="Notifications"
   static CHANGEPASSWORD = "Change Password"
   static POSTSCORE = "Post Score"
+  static PROFILE='Profile'
+  static RULESANDSCORING='Rules And Scoring'
 }
 
 export default RoutesKey

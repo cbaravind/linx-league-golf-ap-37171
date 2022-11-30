@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, TouchableHighlight,StyleSheet } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/core'
 import { colors, fonts } from '../../../theme'
@@ -22,29 +22,39 @@ export default function AddFriends() {
     const [friendsList, setFriendsList] = useState(friends)
     const navigation = useNavigation()
 
-const fetchContacts=()=>{ 
-    Contacts.checkPermission().then(permission => {
-        // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-        console.log('permission',permission)
-        if (permission === 'undefined') {
-            Contacts.requestPermission().then(permission => {
-                // ...
-            })
-        }
-        if (permission === 'authorized') {
-            // yay!
-            Contacts .getAll().then(contacts => {
-              setModalVisible(false); 
-              navigation.navigate(modalVisible == 'find' ? RoutesKey.FINDFRIENDS : RoutesKey.SENDREFERRAL) 
-            
-            console.log(contacts)
-          })
-        }
-        if (permission === 'denied') {
-          // x.x
-        }
-      })
-}
+    const fetchContacts = () => {
+        if(modalVisible=='refer'){
+
+        
+        Contacts.checkPermission().then(permission => {
+            // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+            console.log('permission', permission)
+            if (permission === 'undefined') {
+                Contacts.requestPermission().then(permission => {
+                    // ...
+                })
+            }
+            if (permission === 'authorized') {
+                // yay!
+                Contacts.getAll().then(contacts => {
+                    setModalVisible(false);
+                    if(contacts.length){
+
+                        navigation.navigate( RoutesKey.SENDREFERRAL,{contacts:contacts})
+                    }
+
+                    console.log(contacts)
+                })
+            }
+            if (permission === 'denied') {
+                // x.x
+            }
+        })
+    }else{
+        setModalVisible(false);
+        navigation.navigate( RoutesKey.FINDFRIENDS )
+    }
+    }
     return (
         <Container >
             <AppHeader back title="Add Friends to your Tee time" rightIcon={<Text style={styles.text}>SKIP</Text>} />
@@ -66,7 +76,10 @@ const fetchContacts=()=>{
                         keyExtractor={(item) => item.id}
                         renderItem={(data, rowMap) => (
                             <UserProfile
-                                item={data.item} />
+                            name={data.item.name}
+                            image={data.item.image}
+                                // item={}
+                                 />
                         )}
                         renderHiddenItem={(data, rowMap) => (
                             <TouchableHighlight onPress={() => setFriendsList(friendsList.filter(e => data.item.id != e.id))} style={styles.rowBack}>
@@ -77,7 +90,7 @@ const fetchContacts=()=>{
                         leftOpenValue={0}
                         rightOpenValue={-75}
                     />
-                  
+
                 </View>
                 <View style={{ paddingHorizontal: 20 }}>
                     <Text style={[styles.text, { fontWeight: '400', color: colors.text1, fontSize: 14 }]}>Remove players by swiping left</Text>
@@ -100,8 +113,9 @@ const fetchContacts=()=>{
             </View>
             {modalVisible ?
                 <AppModal
+                    button
                     onClose={() => setModalVisible(false)}
-                    onPress={() => fetchContacts() }
+                    onPress={() => fetchContacts()}
                     heading={'Golf is better with Friends'}
                     desc={'and to be able to find friends Linx needs access to your phone contacts'} />
                 :
@@ -139,7 +153,7 @@ const styles = StyleSheet.create({
     rowBack: {
         backgroundColor: colors.pink,
         paddingLeft: 20,
-        paddingRight:20,
+        paddingRight: 20,
         paddingVertical: 15, alignSelf: "flex-end"
     }
 })

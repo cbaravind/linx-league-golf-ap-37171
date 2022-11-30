@@ -1,24 +1,28 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Row from './Row'
 import { colors } from '../theme'
-export default function UserProfile({ item, onSwipe }) {
+export default function UserProfile({ name, image ,onPress}) {
 
 
     return (
-        <View >
+        // <View >
+        <TouchableOpacity  onPress={()=>onPress?onPress():null} >
+
+
             <Row
                 style={styles.container}>
                 <View style={styles.imgContainer}>
-                    {item.image ?
-                        <Image source={item.image} style={styles.img} />
+                    {image ?
+                        <Image source={image} resizeMode="contain" style={styles.img} />
                         :
                         <></>
                     }
                 </View>
-                <Text>{item.name}</Text>
+                <Text>{name}</Text>
             </Row>
-        </View>
+        </TouchableOpacity>
+        // </View>
 
     )
 }
@@ -30,15 +34,17 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 37, width: 37,
-        borderRadius: 20,
+        borderRadius: 22,
     },
     imgContainer: {
-        height: 37, width: 37,
+        height: 39, width: 39,
         borderWidth: 1,
         borderColor: colors.green,
         backgroundColor: colors.grey2,
         marginRight: 15,
         borderRadius: 20,
+        alignItems:"center",
+        justifyContent: 'center',
 
     }
 })
