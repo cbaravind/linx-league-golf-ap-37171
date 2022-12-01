@@ -7,7 +7,7 @@ import { colors } from '../../../theme'
 import { Box, Center, Icon, IconButton, ScrollView, Text, Divider, Avatar, Image, Button } from 'native-base'
 
 const PostScore = () => {
-    const data = [1, 2, 3, 4, 5]
+    const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     return (
         <>
             <AppHeader back showLogo rightIcon={<Ionicons name="ios-share-social" size={28} color={colors.white} />} />
@@ -15,8 +15,8 @@ const PostScore = () => {
                 <SafeAreaView >
                     <Center px="1" >
                         <Box w="100%" p="10px">
-                            <Box>
-                                <Box mt='2' flexDirection='row' alignSelf='center'>
+                            <Box mt='35%' mb='5'>
+                                <Box  flexDirection='row' alignSelf='center'>
                                     <IconButton size={10} icon={<Icon color='#225529' size='8' name='chevron-back' as={Ionicons} />} />
                                     <Text fontSize='24' color='#7D9E49'>Hole 1</Text>
                                     <IconButton size={10} icon={<Icon color='#225529' size='8' name='chevron-forward-outline' as={Ionicons} />} />
