@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     feedImg: { width: '100%', height: 185, borderRadius: 8, alignSelf: "center", marginVertical: 12 },
     text: { fontSize: 14, color: colors.text1, fontWeight: '400' },
     inputStyles: {
-        height: 30,
+        height: 40,
         borderBottomColor: colors.black,
         borderBottomWidth: 1,
         paddingLeft: 10,

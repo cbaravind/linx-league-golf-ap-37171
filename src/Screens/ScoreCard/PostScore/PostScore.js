@@ -33,6 +33,9 @@ const PostScore = () => {
                             </Box>
                             <ScrollView>
                                 <Box bg='white' p='2' borderRadius='10'>
+                                    <Box>
+                                        
+                                    </Box>
                                     <Box flexDirection='row'>
                                         <Box alignSelf='center' borderWidth={1} borderRadius='10' borderColor='gray.200' h='100%'>
                                             <Box mt='70' bg='#7D9E4980' pl='5' pr='9' pt='1' pb='1'>

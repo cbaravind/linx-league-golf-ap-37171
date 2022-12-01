@@ -10,19 +10,20 @@ export default function Feed() {
         { id: 3 }
     ]
     return (
-        <ScrollView style={{ flex: 1 }} >
-            <AppButton label={"INVITE A FRIEND"} style={{ marginHorizontal: 20 }} />
-            {/* <View style={{flex:1}}> */}
-
+        <>
+            <ScrollView nestedScrollEnabled={true} style={{ flex: 1 }} >
+                <AppButton label={"INVITE A FRIEND"} style={{ marginHorizontal: 20 }} />
+                {/* <View style={{flex:1}}> */}
                 <FlatList
-                    contentContainerStyle={{ paddingHorizontal: 20,paddingBottom:80,marginBottom:20 }}
+                    contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80, marginBottom: 20 }}
                     data={data}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) =>
                         <FeedCard />
                     }
                 />
-            {/* </View> */}
-        </ScrollView>
+                {/* </View> */}
+            </ScrollView>
+        </>
     )
 }

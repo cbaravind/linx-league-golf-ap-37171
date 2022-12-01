@@ -32,12 +32,11 @@ export default function Standings() {
         <Container>
             <AppHeader showLogo rightIcon={
                 <IconButton onPress={() => navigation.navigate(RoutesKey.RULESANDSCORING)} style={{ alignSelf: "flex-end" }} icon={<Icon as={Ionicons} name="information-circle-outline" color={colors.white} size={7} />} />
-
             } />
             <View style={{ backgroundColor: colors.background, flex: 1, }} >
                 <TabView
                     renderTabBar={renderTabBar}
-                    pagerStyle={{ marginTop: 25, backgroundColor: colors.background }}
+                    pagerStyle={{ marginTop: 25, backgroundColor: 'transparent' }}
                     navigationState={{ index, routes }}
                     onIndexChange={setIndex}
                     renderScene={SceneMap({
@@ -67,9 +66,9 @@ const styles = StyleSheet.create({
     },
     tabBar: {
         backgroundColor: colors.background,
-        paddingTop: 20,
-
-        marginHorizontal: 20
+        // paddingTop: 20,
+        width: '100%',
+        // marginHorizontal: 20
     },
     indicatorContainer: {
         backgroundColor: colors.white,
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 5,
         position: 'absolute',
-        top: 65,
+        top: 50,
         borderRadius: 5,
 
     }
