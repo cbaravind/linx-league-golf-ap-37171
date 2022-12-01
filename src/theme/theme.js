@@ -16,7 +16,7 @@ const theme = extendTheme({
             100: '#225529',
         },
         green: {
-            100: '#225529',
+            100: '#7D9E49',
         },
         
         
@@ -43,7 +43,7 @@ const theme = extendTheme({
                 _text: {
                     // color: '#1C8739'
                 },
-                // bg: '#1C8739'
+                bg: '#7D9E49'
             },
         },
        

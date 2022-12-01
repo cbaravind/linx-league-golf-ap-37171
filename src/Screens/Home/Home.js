@@ -31,7 +31,6 @@ export default function Home() {
                     <Row style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
                         <CommunityIcon name='comment-outline' size={30} color={colors.white} />
                         <Pressable onPress={() => navigation.navigate(RoutesKey.PROFILE)}>
-
                             <Image source={require('../../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
                         </Pressable>
                     </Row>}
