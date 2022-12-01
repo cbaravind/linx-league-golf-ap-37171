@@ -6,8 +6,8 @@ export default function UserProfile({ name, image ,onPress}) {
 
 
     return (
-        // <View >
-        <TouchableOpacity  onPress={()=>onPress?onPress():null} >
+        <View >
+         {/* <TouchableOpacity  onPress={()=>onPress?onPress():null} > */}
 
 
             <Row
@@ -21,8 +21,8 @@ export default function UserProfile({ name, image ,onPress}) {
                 </View>
                 <Text>{name}</Text>
             </Row>
-        </TouchableOpacity>
-        // </View>
+        {/* </TouchableOpacity> */}
+         </View>
 
     )
 }

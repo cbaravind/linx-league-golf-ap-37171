@@ -8,16 +8,28 @@ import { colors } from '../../../theme'
 import AppButton from '../../../Components/AppButton'
 import { useNavigation } from '@react-navigation/core'
 import SearchInput from '../components/SearchInput'
-import {Button} from 'native-base'
+import { Button } from 'native-base'
 export default function FindFriends() {
     const navigation = useNavigation()
+    const [friendsArray, setFriendsArray] = useState(friends)
+
+    const searchFriends = (searchText) => {
+        if (searchText.length && friends.length) {
+            const filtered = friendsArray.filter(e => e.name.includes(searchText))
+            setFriendsArray(filtered)
+        }
+    }
+    
+    const clearResults = () => {
+        setFriendsArray(friends)
+    }
     return (
         <Container>
             <AppHeader back title="Search Friends" />
             <View style={{ backgroundColor: colors.background, flex: 1 }} >
-                <SearchInput />
+                <SearchInput onSearchSubmit={searchFriends} clearResults={clearResults} />
                 <FlatList
-                    data={friends}
+                    data={friendsArray}
                     contentContainerStyle={{ backgroundColor: colors.white, padding: 20, marginTop: 20, marginBottom: 12 }}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => <UserProfile name={item.name} image={item.image} />}

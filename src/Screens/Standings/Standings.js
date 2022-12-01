@@ -10,6 +10,7 @@ import { Icon, IconButton } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/core'
 import RoutesKey from '../../Navigation/routesKey'
+
 export default function Standings() {
     const navigation = useNavigation();
     const [index, setIndex] = React.useState(0);
@@ -67,7 +68,9 @@ const styles = StyleSheet.create({
     tabBar: {
         backgroundColor: colors.background,
         // paddingTop: 20,
-        width: '100%',
+        width: '94%',
+        alignSelf:'center',
+        elevation:0,
         // marginHorizontal: 20
     },
     indicatorContainer: {

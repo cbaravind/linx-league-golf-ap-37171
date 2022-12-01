@@ -1,4 +1,5 @@
 import { extendTheme } from 'native-base';
+import { fonts } from '.';
 
 const theme = extendTheme({
 
@@ -42,7 +43,8 @@ const theme = extendTheme({
                 borderRadius: '10px',
                 _text: {
                     fontWeight:'700',
-                    fontSize:16
+                    fontSize:16,
+                    fontFamily:fonts.PROXIMA_BOLD
                     // color: '#1C8739'
                 },
                 bg: '#7D9E49'

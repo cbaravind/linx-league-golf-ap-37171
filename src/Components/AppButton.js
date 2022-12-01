@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import { colors } from '../theme'
+import { colors, fonts } from '../theme'
 import { Button } from 'native-base'
 export default function AppButton({ label,style,labelStyle,onPress }) {
   return (
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     color: colors.white,
-    fontSize: 14,
-    fontWeight: '700'
+    fontSize: 16,
+    fontWeight: '700',
+    fontFamily:fonts.PROXIMA_BOLD
   }
 })

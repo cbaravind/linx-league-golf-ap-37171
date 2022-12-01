@@ -1,17 +1,55 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { colors, fonts } from '../../../theme'
 import Row from '../../../Components/Row'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-export default function SearchInput() {
+export default function SearchInput({ onSearchSubmit, clearResults }) {
+    const [term, setTerm] = useState('');
+    const [debouncedTerm, setDebouncedTerm] = useState(term);
+    const [loading, setLoading] = useState(false)
+
+    // update 'term' value after 1 second from the last update of 'debouncedTerm'
+    useEffect(() => {
+        const timer = setTimeout(() => setTerm(debouncedTerm), 1000);
+        return () => clearTimeout(timer);
+    }, [debouncedTerm])
+
+    // submit a new search
+    useEffect(() => {
+        if (term !== '') {
+            onSearchSubmit(term);
+        }
+        else {
+            clearResults();
+        }
+    }, [term]);
+
+
     return (
         <View style={{ padding: 20 }}>
 
             <Row style={styles.container}>
                 <Icon name="search" size={20} color={colors.green} />
-                <TextInput placeholder={'Add or Invite a friend to play'} style={styles.input} placeholderTextColor={'#828282'} />
+                <TextInput value={debouncedTerm}
+                    onChangeText={(val) => setDebouncedTerm(val)}
+                    placeholder={'Add or Invite a friend to play'}
+                    // onChangeText={onChangeText} 
+                    placeholderTextColor={'#828282'}
+                    style={styles.input}
+                />
+                {debouncedTerm.length > 0 && (
+                    <TouchableOpacity
+                        onPress={() => { clearResults(); setDebouncedTerm('') }}>
+                        <Icon
+                            name={'close-circle'}
+                            size={23}
+                            style={{marginRight:5}}
+                            color={colors.grey4}
+                        />
+                    </TouchableOpacity>
+                )}
                 <TouchableOpacity>
                     <Icon name="mic" size={20} color={colors.green} />
                 </TouchableOpacity>

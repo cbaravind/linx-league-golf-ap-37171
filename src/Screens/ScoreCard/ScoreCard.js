@@ -14,8 +14,8 @@ export default function ScoreCard() {
   const navigation = useNavigation();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Standing' },
-    { key: 'second', title: 'Feed' },
+    { key: 'first', title: 'Upcoming' },
+    { key: 'second', title: 'Previous' },
   ]);
   const renderTabBar = props => (
     <TabBar
@@ -34,7 +34,7 @@ export default function ScoreCard() {
       <View style={{ backgroundColor: colors.background, flex: 1, }} >
         <TabView
           renderTabBar={renderTabBar}
-          pagerStyle={{ marginTop: 25, backgroundColor: 'transparent' }}
+          pagerStyle={{ marginTop: 25,backgroundColor: 'transparent' }}
           navigationState={{ index, routes }}
           onIndexChange={setIndex}
           renderScene={SceneMap({
@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.background,
     // paddingTop: 20,
-    width: '100%',
+    width: '94%',
+    alignSelf:'center',
+    elevation:0,
     // marginHorizontal: 20
   },
   indicatorContainer: {

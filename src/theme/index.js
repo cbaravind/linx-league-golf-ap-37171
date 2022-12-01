@@ -16,9 +16,9 @@ const colors = {
     black:'#000'
 }
 const fonts={
-    PROXIMA_REGULAR:'Proxima Nova Cond-Regular',
-    PROXIMA_SEMI_BOLD:'Proxima-Semi-Bold',
-    // PROXIMA_BOLD:'FONTSPRINGDEMO Proxima Nova Cond-Bold'
+    PROXIMA_REGULAR:'Proxima Nova Condensed',
+    // PROXIMA_BOLD:'Proxima Nova Extra Condensed',
+    PROXIMA_BOLD:'Proxima Nova Condensed'
 }
 const globalStyles=StyleSheet.create({
     cardStyle:{

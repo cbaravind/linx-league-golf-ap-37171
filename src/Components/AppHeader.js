@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { colors } from '../theme'
+import { colors, fonts } from '../theme'
 import Row from './Row'
 import { useNavigation } from '@react-navigation/core'
 import { IconButton, Icon, Pressable } from 'native-base'
@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     title: {
         color: colors.white,
         fontSize: 14,
-        fontWeight: '700'
+        fontWeight: '700',
+        fontFamily:fonts.PROXIMA_BOLD
     }
 
 })

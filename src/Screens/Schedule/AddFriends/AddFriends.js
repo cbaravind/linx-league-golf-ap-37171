@@ -110,7 +110,7 @@ export default function AddFriends() {
                             labelStyle={{ color: colors.darkGreen }}
                             label={"SEND REFERRAL"} />
                     </Row>
-                    <Text style={styles.desc}>Earn <Text style={{ color: colors.green, fontWeight: '700' }}>free seasons</Text> and more
+                    <Text style={styles.desc}>Earn <Text style={{ color: colors.green, fontWeight: '700',fontFamily:fonts.PROXIMA_REGULAR,fontSize:16 }}>free seasons</Text> and more
                         {"\n"} by referring your friends to Linx League</Text>
                 </View>
             </View>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: colors.white,
-        // fontFamily: fonts.PROXIMA_BOLD,
+        fontFamily: fonts.PROXIMA_BOLD,
         fontWeight: '700',
     },
     button: {
@@ -142,9 +142,9 @@ const styles = StyleSheet.create({
     },
     desc: {
         fontSize: 14,
-        // fontFamily: fonts.PROXIMA_REGULAR,
+        fontFamily: fonts.PROXIMA_REGULAR,
         textAlign: 'center',
-        fontWeight: '400'
+        // fontWeight: '400'
     },
     bottom: {
 

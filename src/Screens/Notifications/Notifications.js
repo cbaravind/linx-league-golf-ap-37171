@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     tabBar: {
-        backgroundColor: colors.background,
+        backgroundColor:colors.background,
         paddingTop: 20,
-
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        elevation:0,
     },
     indicatorContainer:{
         backgroundColor: colors.white,
