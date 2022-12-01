@@ -2,6 +2,7 @@ import { View, Text, FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import FeedCard from './components/FeedCard'
 import AppButton from '../../Components/AppButton'
+import { Button } from 'native-base'
 
 export default function Feed() {
     data = [
@@ -12,8 +13,9 @@ export default function Feed() {
     return (
         <>
             <ScrollView nestedScrollEnabled={true} style={{ flex: 1 }} >
-                <AppButton label={"INVITE A FRIEND"} style={{ marginHorizontal: 20 }} />
-                {/* <View style={{flex:1}}> */}
+                <Button marginX={'6'} marginY={'2'} shadow={5} bg='#7D9E49'>{"INVITE A FRIEND"}</Button>
+
+
                 <FlatList
                     contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80, marginBottom: 20 }}
                     data={data}
@@ -22,7 +24,7 @@ export default function Feed() {
                         <FeedCard />
                     }
                 />
-                {/* </View> */}
+
             </ScrollView>
         </>
     )

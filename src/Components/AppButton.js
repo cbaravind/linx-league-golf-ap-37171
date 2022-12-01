@@ -1,11 +1,13 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors } from '../theme'
+import { Button } from 'native-base'
 export default function AppButton({ label,style,labelStyle,onPress }) {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container,styles.shadow,style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container,style]}>
       <Text style={[styles.btnLabel,labelStyle]}>{label}</Text>
     </TouchableOpacity>
+
   )
 }
 const styles = StyleSheet.create({

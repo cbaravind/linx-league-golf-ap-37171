@@ -41,6 +41,8 @@ const theme = extendTheme({
                 colorScheme: 'green',
                 borderRadius: '10px',
                 _text: {
+                    fontWeight:'700',
+                    fontSize:16
                     // color: '#1C8739'
                 },
                 bg: '#7D9E49'

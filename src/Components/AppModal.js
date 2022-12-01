@@ -4,6 +4,7 @@ import { colors, fonts } from '../theme'
 import Modal from 'react-native-modal'
 import AppButton from './AppButton'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Button } from 'native-base'
 
 export default function AppModal({ heading, desc, button, onPress, onClose }) {
     return (
@@ -18,7 +19,7 @@ export default function AppModal({ heading, desc, button, onPress, onClose }) {
             }
             {
                 desc ?
-                    <View style={{ paddingTop:heading? 30:0, paddingHorizontal: 20,paddingBottom:button?0:20 }} >
+                    <View style={{ paddingTop: heading ? 30 : 0, paddingHorizontal: 20, paddingBottom: button ? 0 : 20 }} >
                         <Text style={styles.desc}>{desc}</Text>
                     </View>
                     :
@@ -28,7 +29,8 @@ export default function AppModal({ heading, desc, button, onPress, onClose }) {
                 button ?
 
                     <View style={{ padding: 20, }} >
-                        <AppButton label={'OK'} onPress={onPress} />
+                        <Button shadow={5} mt={4} onPress={onPress} variant={'solid'} bg='#7D9E49'>{"OK"}</Button>
+
                     </View>
                     :
                     <></>

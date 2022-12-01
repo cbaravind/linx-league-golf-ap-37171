@@ -16,6 +16,7 @@ import { friends } from '../../../assets/data'
 import RoutesKey from '../../../Navigation/routesKey'
 import Contacts from 'react-native-contacts'
 import { PermissionsAndroid } from 'react-native';
+import { Button } from 'native-base';
 
 export default function AddFriends() {
     const [modalVisible, setModalVisible] = useState(false)
@@ -23,37 +24,37 @@ export default function AddFriends() {
     const navigation = useNavigation()
 
     const fetchContacts = () => {
-        if(modalVisible=='refer'){
+        if (modalVisible == 'refer') {
 
-        
-        Contacts.checkPermission().then(permission => {
-            // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-            console.log('permission', permission)
-            if (permission === 'undefined') {
-                Contacts.requestPermission().then(permission => {
-                    // ...
-                })
-            }
-            if (permission === 'authorized') {
-                // yay!
-                Contacts.getAll().then(contacts => {
-                    setModalVisible(false);
-                    if(contacts.length){
 
-                        navigation.navigate( RoutesKey.SENDREFERRAL,{contacts:contacts})
-                    }
+            Contacts.checkPermission().then(permission => {
+                // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+                console.log('permission', permission)
+                if (permission === 'undefined') {
+                    Contacts.requestPermission().then(permission => {
+                        // ...
+                    })
+                }
+                if (permission === 'authorized') {
+                    // yay!
+                    Contacts.getAll().then(contacts => {
+                        setModalVisible(false);
+                        if (contacts.length) {
 
-                    console.log(contacts)
-                })
-            }
-            if (permission === 'denied') {
-                // x.x
-            }
-        })
-    }else{
-        setModalVisible(false);
-        navigation.navigate( RoutesKey.FINDFRIENDS )
-    }
+                            navigation.navigate(RoutesKey.SENDREFERRAL, { contacts: contacts })
+                        }
+
+                        console.log(contacts)
+                    })
+                }
+                if (permission === 'denied') {
+                    // x.x
+                }
+            })
+        } else {
+            setModalVisible(false);
+            navigation.navigate(RoutesKey.FINDFRIENDS)
+        }
     }
     return (
         <Container >
@@ -76,10 +77,10 @@ export default function AddFriends() {
                         keyExtractor={(item) => item.id}
                         renderItem={(data, rowMap) => (
                             <UserProfile
-                            name={data.item.name}
-                            image={data.item.image}
-                                // item={}
-                                 />
+                                name={data.item.name}
+                                image={data.item.image}
+                            // item={}
+                            />
                         )}
                         renderHiddenItem={(data, rowMap) => (
                             <TouchableHighlight onPress={() => setFriendsList(friendsList.filter(e => data.item.id != e.id))} style={styles.rowBack}>
@@ -97,11 +98,13 @@ export default function AddFriends() {
                 </View>
                 <View style={styles.bottom} >
                     <Row style={{ marginBottom: 15 }} >
-                        <AppButton
-                            style={{ flex: 1 }}
+                        <Button style={{ flex: 1 }} mt={4}
                             onPress={() => setModalVisible('find')}
-                            label={"FIND FRIENDS"} />
+                            bg='#7D9E49'>{"FIND FRIENDS"}</Button>
+
+                       
                         <View style={{ width: 20 }} />
+
                         <AppButton style={styles.button}
                             onPress={() => setModalVisible('refer')}
                             labelStyle={{ color: colors.darkGreen }}
