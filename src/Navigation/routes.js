@@ -32,6 +32,7 @@ import ChangePassword from '../Screens/changePassword/ChangePassword';
 import PostScore from '../Screens/ScoreCard/PostScore/PostScore';
 import ProfileScreen from '../Screens/Profile/ProfileScreen';
 import RulesAndScroing from '../Screens/RulesAndScoring/RulesAndScoring';
+import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -177,6 +178,11 @@ const Routes = () => {
                     <Stack.Screen
                         name={Routeskey.SIGNUP}
                         component={Signup}
+                        options={{ headerShown: false, }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.FORGOTPASSWORD}
+                        component={ForgotPassword}
                         options={{ headerShown: false, }}
                     />
                     <Stack.Screen

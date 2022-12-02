@@ -29,15 +29,16 @@ const Signup = () => {
                             <Box mt='3'>
                                 <InputText icon={true} bgcolor={false} greenColor={false} text='Password' />
                             </Box>
-                            <Box flexDirection='row'>
-                                <Box ml='-2' mt='1' flexDirection='row'>
+                            <Box flexDirection='row' padding={'3'} >
+                                <Box mt='3' flexDirection='row'>
                                     <CheckBox
+                                        containerStyle={{padding:0}}
                                         checked={groupValues}
                                         checkedColor='#7D9E49'
                                         onPress={() => setGroupValues(!groupValues)}
                                     />
-                                    <Box ml='-4' mt='4'>
-                                        <Text fontSize={13} > I have read the <Link onPress={() => navigation.navigate(RoutesKey.TERMSANDCONDITIONS)}><Text color='#7D9E49' fontSize={13} style={{ marginBottom: -4, textDecorationLine: 'underline' }}>Terms and Conditions</Text></Link> and <Link onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)} ><Text color='#7D9E49' fontSize={13} style={{ marginBottom: -4, textDecorationLine: 'underline' }}>Privacy Policy</Text></Link></Text>
+                                    <Box>
+                                        <Text fontSize={13} > I have read the <Link onPress={() => navigation.navigate(RoutesKey.TERMSANDCONDITIONS)}><Text color='#7D9E49' fontSize={13} style={{textDecorationLine: 'underline' }}>Terms and Conditions</Text></Link> and <Link onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)} ><Text color='#7D9E49' fontSize={13} style={{  textDecorationLine: 'underline' }}>Privacy Policy</Text></Link></Text>
                                     </Box>
                                 </Box>
                             </Box>

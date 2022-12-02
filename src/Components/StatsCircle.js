@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { colors } from '../theme'
+import { colors, fonts } from '../theme'
 // import { Icon, IconButton } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-export default function StatsCircle({ title, value, style, dark, info, onPressInfo }) {
+export default function StatsCircle({ title, value, style, dark, info, onPressInfo, titleInside }) {
     return (
         <View style={{ marginHorizontal: 6, }}>
             {
@@ -19,8 +19,17 @@ export default function StatsCircle({ title, value, style, dark, info, onPressIn
             }
             <View style={[styles.circle, { borderColor: dark ? colors.darkGreen : colors.green }, style]}>
                 <Text style={[styles.text, { color: dark ? colors.darkGreen : colors.green, fontSize: 18 }]}>{value}</Text>
+                {titleInside ?
+                    <Text style={[styles.text,{fontSize:10,}]} >{title}</Text>
+                    :
+                    <></>
+                }
             </View>
-            <Text style={styles.text} >{title}</Text>
+            {!titleInside ?
+                <Text style={styles.text} >{title}</Text>
+                :
+                <></>
+            }
         </View>
     )
 }
@@ -43,6 +52,7 @@ const styles = StyleSheet.create({
         color: colors.text1,
         fontSize: 14,
         fontWeight: '400',
-        textAlign:'center'
+        textAlign: 'center',
+        fontFamily:fonts.PROXIMA_REGULAR
     }
 })

@@ -37,9 +37,9 @@ const Login = () => {
                                     />
                                     <Text ml='-4' mt='3.5' textAlign='center'>Remember Me</Text>
                                 </Box>
-                                <Link isUnderlined={false} alignSelf='center' onPress={() => navigation.navigate(RoutesKey.FORGET_PASSWORD)} ml='auto' mr='1' variant='link'>Forgot Password</Link>
+                                <Link isUnderlined={false} alignSelf='center' onPress={() => navigation.navigate(RoutesKey.FORGOTPASSWORD)} ml='auto' mr='1' variant='link'>Forgot Password</Link>
                             </Box>
-                            <Button onPress={() => navigation.navigate(RoutesKey.BOTTOMTAB)} shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
+                            <Button onPress={() => navigation.replace(RoutesKey.BOTTOMTAB)} shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
                                 <Link isUnderlined={false} onPress={() => navigation.navigate(RoutesKey.SIGNUP)} ml='1' variant='link'>Sign Up</Link>

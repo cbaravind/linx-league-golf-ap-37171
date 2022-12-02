@@ -2,6 +2,7 @@ class RoutesKey {
   static SPLASH = "Splash"
   static LOGIN = "Login"
   static SIGNUP = "Signup"
+  static FORGOTPASSWORD="Forgot Password"
   static CREATEPROFILE = "Create Profile"
   static TERMSANDCONDITIONS = "Terms and Conditions"
   static PRIVACYPOLICY = "Privacy Policy"

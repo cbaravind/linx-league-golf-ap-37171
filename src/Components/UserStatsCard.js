@@ -20,11 +20,14 @@ export default function UserStatsCard({ image, name, city, stats }) {
                 <Text style={[styles.text, { fontWeight: '700', fontSize: 20 }]}>{name}</Text>
                 <Text style={styles.text}>{city}</Text>
                 <Row style={{ paddingTop: 20, justifyContent: 'center' }} >
-                    <StatsCircle title={'Handicap'} value={stats.handicap} dark />
-                    <StatsCircle title={'Attested'} value={stats.attested} />
+                    {stats.map((item,index)=>(
+
+                        <StatsCircle title={item.title} value={item.value} dark= {index/2==0?true:false} info={index==4}  onPressInfo={index==4? () => setInfoModalVisible(true):null}  />
+                    ))}
+                    {/* <StatsCircle title={'Attested'} value={stats.attested} />
                     <StatsCircle title={'League'} value={stats.league} dark />
                     <StatsCircle title={'Ranking'} value={stats.ranking} />
-                    <StatsCircle title={'Referrals'} value={stats.referrals} dark info onPressInfo={() => setInfoModalVisible(true)} />
+                    <StatsCircle title={'Referrals'} value={stats.referrals} dark info onPressInfo={() => setInfoModalVisible(true)} /> */}
                 </Row>
             </View>
             {infoModalVisible ?

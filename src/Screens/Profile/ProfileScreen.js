@@ -10,15 +10,10 @@ import RoutesKey from '../../Navigation/routesKey'
 import UserStatsCard from '../../Components/UserStatsCard'
 import SeasonStats from '../../Components/SeasonStats'
 import AppButton from '../../Components/AppButton'
+import { stats } from '../../assets/data'
 export default function ProfileScreen() {
     const navigation = useNavigation()
-    const stats = {
-        handicap: '18-20',
-        attested: '95%',
-        league: '1',
-        ranking: '2nd',
-        referrals: '1'
-    }
+   
     return (
         <Container >
             <AppHeader back title="Profile"
