@@ -20,5 +20,5 @@ try:
             urlpatterns += [
                 path(f"{module_url}/", include(f"modules.{module_name}.urls"))  # noqa
             ]
-except (ImportError, IndexError, ProgrammingError):
-    pass
+except (ImportError, IndexError, ProgrammingError) as e:
+    print(e)
