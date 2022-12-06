@@ -1,16 +1,46 @@
 import { Box, Button, Center, Icon, Image, Link, Pressable, ScrollView, Text, View } from 'native-base'
 import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import InputText from '../../Components/Input'
 import { CheckBox } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
 import RoutesKey from '../../Navigation/routesKey'
-
+import { fonts, colors } from '../../theme'
+import { signup } from '../../../api'
 const Signup = () => {
-    const [groupValues, setGroupValues] = useState(false);
     const navigation = useNavigation()
+    const [groupValues, setGroupValues] = useState(false);
+    const [errors, setErrors] = useState(false)
+    const [btnLoading, setBtnLoading] = useState(false)
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+    })
+    const signUpHandler = () => {
+        setBtnLoading(true)
+        if (!formData.name || !formData.email || !formData.password || !groupValues) {
+            // const empty
+            setBtnLoading(false)
+            return;
+        }
+        signup(formData, (res) => {
+            setBtnLoading(false)
+            // console.log(res)
+            if (res.key) {
+                setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                })
+                navigation.navigate(RoutesKey.CREATEPROFILE)
+            } else {
+                console.log(res)
+            }
 
+        })
+    }
     return (
         <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
             <SafeAreaView >
@@ -24,25 +54,45 @@ const Signup = () => {
                                 <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' > Sign Up</Text>
                             </Box>
                             <Box mt='2'>
-                                <InputText bgcolor={true} greenColor={true} text='Email' typeShow='text' />
+                                <InputText
+                                    value={formData.name}
+                                    onChangeText={(val) => setFormData({ ...formData, name: val })}
+                                    bgcolor={true} greenColor={true} text='Name' typeShow='text' />
                             </Box>
-                            <Box mt='3'>
-                                <InputText icon={true} bgcolor={false} greenColor={false} text='Password' />
+                            <Box mt='2'>
+                                <InputText
+                                    value={formData.email}
+                                    onChangeText={(val) => setFormData({ ...formData, email: val })}
+                                    bgcolor={true} greenColor={true} text='Email' typeShow='text' />
                             </Box>
-                            <Box flexDirection='row' padding={'3'} >
+                            <Box mt='2'>
+                                <InputText
+                                    value={formData.password}
+                                    onChangeText={(val) => setFormData({ ...formData, password: val })}
+                                    icon={true} bgcolor={false} greenColor={false} text='Password' />
+                            </Box>
+                            <Box flexDirection='row' paddingY={'1'} >
                                 <Box mt='3' flexDirection='row'>
                                     <CheckBox
-                                        containerStyle={{padding:0}}
+                                        containerStyle={{ padding: 0 }}
                                         checked={groupValues}
                                         checkedColor='#7D9E49'
                                         onPress={() => setGroupValues(!groupValues)}
                                     />
-                                    <Box>
-                                        <Text fontSize={13} > I have read the <Link onPress={() => navigation.navigate(RoutesKey.TERMSANDCONDITIONS)}><Text color='#7D9E49' fontSize={13} style={{textDecorationLine: 'underline' }}>Terms and Conditions</Text></Link> and <Link onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)} ><Text color='#7D9E49' fontSize={13} style={{  textDecorationLine: 'underline' }}>Privacy Policy</Text></Link></Text>
+                                    <Box mt={'1.5'}>
+                                        <Text fontSize={14} fontWeight={'400'} fontFamily={fonts.PROXIMA_REGULAR} > I have read the
+                                            <Link onPress={() => navigation.navigate(RoutesKey.TERMSANDCONDITIONS)}>
+                                                <Text mt={'0.5'} style={styles.greenText}> Terms and Conditions</Text>
+                                            </Link>
+                                            {'  and'}
+                                            <Link onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)} >
+                                                <Text mt={'0.5'} style={styles.greenText}>{' '} Privacy Policy</Text>
+                                            </Link>
+                                        </Text>
                                     </Box>
                                 </Box>
                             </Box>
-                            <Button onPress={() => navigation.navigate(RoutesKey.CREATEPROFILE)} shadow={5} mt='7' bg='#7D9E49'>SIGN UP</Button>
+                            <Button onPress={() => signUpHandler()} isLoading={btnLoading} shadow={5} mt='7' bg='#7D9E49'>SIGN UP</Button>
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
                                 <Link isUnderlined={false} onPress={() => navigation.navigate(RoutesKey.LOGIN)} ml='1' variant='link'>Sign In</Link>
@@ -55,13 +105,13 @@ const Signup = () => {
                                     Sign In with Google
                                 </Text>
                             </Button>
-                            <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../assets/images/IOSSignUp/logos_facebook.png')} alt='' />} bg='white'>
+                            <Button mt='5' leftIcon={<Image style={styles.imgStyle} source={require('../../assets/images/IOSSignUp/logos_facebook.png')} alt='' />} bg='white'>
                                 <Text color='black'>
                                     Sign In with Facebook
                                 </Text>
                             </Button>
                             {Platform.OS === 'ios' ?
-                                <Button mt='5' leftIcon={<Image style={{ height: 20, width: 20 }} source={require('../../assets/images/IOSSignUp/Vector.png')} alt='' />} bg='white'>
+                                <Button mt='5' leftIcon={<Image style={styles.imgStyle} source={require('../../assets/images/IOSSignUp/Vector.png')} alt='' />} bg='white'>
                                     <Text color='black'>
                                         Sign In with Facebook
                                     </Text>
@@ -76,3 +126,12 @@ const Signup = () => {
 }
 
 export default Signup
+const styles = StyleSheet.create({
+    imgStyle: { height: 20, width: 20 },
+    greenText: {
+        color: colors.green,
+        fontSize: 15,
+        fontFamily: fonts.PROXIMA_REGULAR,
+        textDecorationLine: 'underline'
+    }
+})

@@ -2,32 +2,42 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import * as Progress from 'react-native-progress';
+import { useDispatch, useSelector } from "react-redux";
 import RoutesKey from "../../Navigation/routesKey";
+import { saveUser } from "../../redux/reducers/auth";
 // import { getDataFromPhone } from "../../utils/localStore";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const Splash = () => {
     const navigation = useNavigation();
     const [progress, setProgress] = useState(0);
-
+    const { user } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
     useEffect(() => {
         perist()
     }, []);
 
     const perist = async () => {
+        const token = await AsyncStorage.getItem('user')
         // let token = await getDataFromPhone("loginKey");
-        // if (token) {
-        //   navigation.navigate(RoutesKey.BOTTOMTAB);
-        // }
-        // if (token == null) {
-        let newProgress = 0;
-        setInterval(() => {
-            newProgress += Math.random() / 5;
-            if (newProgress > 1) {
-                newProgress = 1;
+        console.log()
+        if (token) {
+            if (!user) {
+                dispatch(saveUser(token))
             }
-            setProgress(newProgress)
-        }, 500)
-        // }
+            navigation.navigate(RoutesKey.BOTTOMTAB);
+        }
+        if (token == null) {
+            // 
+            let newProgress = 0;
+            setInterval(() => {
+                newProgress += Math.random() / 5;
+                if (newProgress > 1) {
+                    newProgress = 1;
+                }
+                setProgress(newProgress)
+            }, 500)
+        }
     }
     useEffect(() => {
         if (progress == 1) {

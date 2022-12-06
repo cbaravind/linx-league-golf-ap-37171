@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ImageBackground, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native'
 import Container from '../../Components/Container'
 import AppHeader from '../../Components/AppHeader'
@@ -11,14 +11,22 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/core'
 import RoutesKey from '../../Navigation/routesKey'
 import Row from '../../Components/Row'
-
+import { useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Home() {
     const navigation = useNavigation()
+    const { user } = useSelector(state => state.auth)
     data = [
         { id: 1, title: 'St Johns Golf & Country Club' },
         { id: 2, title: 'St Johns Golf & Country Club' },
         // { title: 'St Johns Golf & Country Club' },
     ]
+    useEffect(() => {
+        getData
+    }, [])
+    const getData = async () => {
+       
+    }
     return (
         <Container title={"Home"}>
             <AppHeader

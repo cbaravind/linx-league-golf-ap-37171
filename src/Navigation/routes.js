@@ -33,29 +33,25 @@ import PostScore from '../Screens/ScoreCard/PostScore/PostScore';
 import ProfileScreen from '../Screens/Profile/ProfileScreen';
 import RulesAndScroing from '../Screens/RulesAndScoring/RulesAndScoring';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
-
+import { useDispatch, useSelector } from 'react-redux';
+// import RoutesKey from './routesKey';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { saveUser } from '../redux/reducers/auth';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const Routes = () => {
     const [isloading, setIsloading] = useState(true);
-    const [firstScreen, setFirstScreen] = useState('');
+    const [firstScreen, setFirstScreen] = useState(false);
+  
     // const navigation = useNavigation()
     useEffect(() => {
         setIsloading(false);
-        // getDataFromPhone('loginKey').then(token => {
-        //     if (token !== null) {
-        //         console.log(token, 'token');
-        //         setFirstScreen(Routeskey.BOTTOMTAB);
-        //         setIsloading(false);
-        //         // props.navigation.navigate(Routeskey.BOTTOMNAV);
-        //     } else {
-        //         setFirstScreen(Routeskey.SPLASH);
-        //         setIsloading(false);
-        //         // props.navigation.navigate(Routeskey.WELCOME);
-        //     }
-        // });
-    }, []);
+        setFirstScreen(Routeskey.SPLASH);
+        // getUser()
+        
+    }, [firstScreen]);
+  
     const Tabs = () => (
         <Tab.Navigator initialRouteName={Routeskey.HOME} screenOptions={{
             headerShown: false,
@@ -139,10 +135,10 @@ const Routes = () => {
                 }} /> */}
         </Tab.Navigator>
     )
-
+   
     return (
         <>
-            {isloading == false ? (
+            {firstScreen ? (
                 <Stack.Navigator
                     initialRouteName={firstScreen}
                 // {...this.props}
@@ -164,12 +160,12 @@ const Routes = () => {
                 //     ),
                 // }}
                 >
+<Stack.Screen
+                    name={Routeskey.SPLASH}
+                    component={Splash}
+                    options={{ headerShown: false, }}
+                />
 
-                    <Stack.Screen
-                        name={Routeskey.SPLASH}
-                        component={Splash}
-                        options={{ headerShown: false }}
-                    />
                     <Stack.Screen
                         name={Routeskey.LOGIN}
                         component={Login}
@@ -251,11 +247,11 @@ const Routes = () => {
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
-            ) :
+             ) :
                 <Box>
                     <ActivityIndicator />
                 </Box>
-            }
+            } 
         </>
     );
 };
