@@ -36,9 +36,9 @@
 		</dict>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>Linx League requires to access your contacts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Linx League requires to access your location.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>beloved.ttf</string>
