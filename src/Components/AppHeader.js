@@ -17,13 +17,18 @@ export default function AppHeader({ title, rightIcon, showLogo, leftIcon, back }
 
                 <Row>
                     <Row style={{ justifyContent: "flex-start" }}>
-                        {leftIcon ?
-                            leftIcon
-                            :
+                        {
                             back ?
+
                                 <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.white} as={Ionicons} name='chevron-back' />} style={{ marginRight: 10 }} size={30} color={colors.white} />
                                 :
                                 <></>
+                        }
+                        {leftIcon ?
+                            leftIcon
+                            :
+
+                            <></>
                         }
                         {title ?
                             <Text style={styles.title} >{title}</Text>
@@ -53,7 +58,8 @@ const styles = StyleSheet.create({
         // height: 150,
         backgroundColor: colors.grey,
         paddingTop: 55,
-        paddingHorizontal: 24,
+        paddingLeft:20,
+        paddingRight: 24,
         justifyContent: "flex-end",
         paddingBottom: 10
     },
@@ -61,7 +67,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 14,
         fontWeight: '700',
-        fontFamily:fonts.PROXIMA_BOLD
+        fontFamily: fonts.PROXIMA_BOLD
     }
 
 })

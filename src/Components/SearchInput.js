@@ -1,8 +1,8 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { colors, fonts } from '../../../theme'
-import Row from '../../../Components/Row'
+import { colors, fonts } from '../theme'
+import Row from './Row'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 export default function SearchInput({ onSearchSubmit, clearResults }) {

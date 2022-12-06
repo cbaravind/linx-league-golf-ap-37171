@@ -67,11 +67,42 @@ export const confirmResetPassword = (data, cb) => {
         .then(result => cb(JSON.parse(result)))
         .catch(error => console.log('error++=', error));
 };
-
-export const logout = async () => {
-
+export const logout = (cb) => {
     const requestOptions = {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        redirect: 'follow',
+        // body: JSON.stringify(data)
+    };
+    fetch(`${API_URL}/rest-auth/logout/`, requestOptions)
+        .then(response => response.text())
+        .then(result => cb(JSON.parse(result)))
+        .catch(error => console.log('error++=', error));
+   
+};
+export const createProfile = (data,cb) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        redirect: 'follow',
+        body: JSON.stringify(data)
+    };
+    fetch(`${API_URL}/api/v1/profile/`, requestOptions)
+        .then(response => response.text())
+        .then(result => cb(JSON.parse(result)))
+        .catch(error => console.log('error++=', error));
+   
+};
+export const getUser = async () => {
+
+    const requestOptions = {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
@@ -81,9 +112,10 @@ export const logout = async () => {
         redirect: 'follow',
     };
 
-    const url = `${API_URL}/rest-auth/logout/`
+    const url = `${API_URL}/rest-auth/user/`
 
     const response = await fetch(url, requestOptions)
+    // console.log(response)
     return response.text()
     // .then(response => )
     // .then(result => cb(JSON.parse(result)))

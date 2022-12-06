@@ -16,16 +16,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Home() {
     const navigation = useNavigation()
     const { user } = useSelector(state => state.auth)
+    // const userObj = JSON.parse(user)
     data = [
         { id: 1, title: 'St Johns Golf & Country Club' },
         { id: 2, title: 'St Johns Golf & Country Club' },
         // { title: 'St Johns Golf & Country Club' },
     ]
     useEffect(() => {
-        getData
+        getData()
     }, [])
+    console.log(user.email)
     const getData = async () => {
-       
+        //    const user = await AsyncStorage.getItem('user')
     }
     return (
         <Container title={"Home"}>
@@ -37,13 +39,17 @@ export default function Home() {
                 }
                 rightIcon={
                     <Row style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
-                        <CommunityIcon name='comment-outline' size={30} color={colors.white} />
+                        <Pressable onPress={() => navigation.navigate(RoutesKey.INBOX)}>
+
+                            <CommunityIcon name='comment-outline' size={30} color={colors.white} />
+                        </Pressable>
                         <Pressable onPress={() => navigation.navigate(RoutesKey.PROFILE)}>
                             <Image source={require('../../assets/images/profileImg.png')} style={{ width: 30, height: 30, marginLeft: 15 }} />
                         </Pressable>
                     </Row>}
             />
-            <Image source={require('../../assets/images/logoWhite.png')} resizeMode="contain" style={{ width: 150, height: 60, alignSelf: "center", marginBottom: 4 }} />
+            <Image source={require('../../assets/images/logoWhite.png')} resizeMode="contain"
+                style={styles.logo} />
 
 
             <View style={{ flex: 1, alignItems: "center" }}>
@@ -52,7 +58,7 @@ export default function Home() {
                     style={{ width: '100%', height: "100%" }}>
                     <View style={{ paddingTop: 30 }}>
                         <Text style={styles.h3}>Welcome,</Text>
-                        <Text style={[styles.h3, { fontWeight: '700' }]}>Dylan Thomas</Text>
+                        <Text style={[styles.h3, { fontWeight: '700' }]}>{user?.first_name}</Text>
                         <View style={{ paddingHorizontal: 25, marginTop: 20 }}>
                             <Text style={[styles.h4, { fontWeight: '700' }]}>Add Upcoming Round </Text>
 
@@ -87,5 +93,11 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 16,
         fontWeight: '700'
+    },
+    logo: {
+        width: 150,
+        height: 60,
+        alignSelf: "center",
+        marginBottom: 4
     }
 })

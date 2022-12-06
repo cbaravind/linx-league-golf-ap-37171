@@ -8,10 +8,18 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import DatePicker from '../../Components/datePicker';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
+import { createProfile } from '../../../api';
 
 const CreateProfile = () => {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    ghin: '',
+    zipCode: ''
+  })
   let [phoneNumber, setPhoneNumber] = useState("");
   const [startDate, setStartDate] = React.useState('');
   let [service, setService] = React.useState('');
@@ -38,36 +46,53 @@ const CreateProfile = () => {
       setShowModal(true);
     }
   }, [valueGHIN])
+  const submitHandler = () => {
+    const data = {
+      user: {
+        email: formData.email,
+        name: formData.firstName + formData.lastName,
+
+      },
+      phone_number: phoneNumber,
+      gender: value,
+      ghin: formData.ghin,
+      has_ghin: valueGHIN
+    }
+    console.log(data)
+    createProfile(data, (res) => {
+      console.log(res,'res')
+    })
+  }
   return (
     <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
-        <ScrollView>
+      {route?.params?.setting == true ?
+        <>
+          <Box w="100%" style={{ backgroundColor: colors.grey }}>
+            <Box p='5' mt='10' flexDirection='row' >
+              <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
+              <Text alignSelf='center' color={colors.background}>Edit Profile</Text>
+              <Button bg={colors.grey} ml='auto' variant='link'><Text color='white'>Save</Text></Button>
+            </Box>
+          </Box>
+        </> : null
+      }
+      <ScrollView>
 
-          {route?.params?.setting == true ?
-            <>
-              <Box w="100%" style={{ backgroundColor: colors.grey }}>
-                <Box p='5' mt='10' flexDirection='row' >
-                  <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
-                  <Text alignSelf='center' color={colors.background}>Edit Profile</Text>
-                <Button ml='auto' variant='link'><Text color='white'>Save</Text></Button>
+        <Center px="1" >
+          <Box w="100%" p="10px">
+            {route?.params?.setting !== true ?
+              <Box mt='5'>
+                <Box ml='auto' >
+                  <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
+                </Box>
+                <Box>
+                  <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Create your Profile</Text>
                 </Box>
               </Box>
-            </> : null
-          }
-          <Center px="1" >
-            <Box w="100%" p="10px">
-              {route?.params?.setting !== true ?
-                <Box mt='5'>
-                  <Box ml='auto' >
-                    <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
-                  </Box>
-                  <Box>
-                    <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' >Create your Profile</Text>
-                  </Box>
-                </Box>
-                :
-                null
-              }
-              <SafeAreaView>
+              :
+              null
+            }
+            <SafeAreaView>
               <Box mt='5'>
                 <Avatar alignSelf='center' size='xl' bg="gray.300" source={require('../../assets/images/profileImg.png')} >
                   <Avatar.Badge bg='#225529' >
@@ -76,12 +101,23 @@ const CreateProfile = () => {
                 </Avatar>
               </Box>
               <Box mt='1'>
-                <InputText bgcolor={true} greenColor={true} text='First Name' typeShow='text' />
+                <InputText
+                  value={formData.firstName}
+                  onChangeText={(val) => setFormData({ ...formData, firstName: val })}
+                  bgcolor={true} greenColor={true} text='First Name' typeShow='text' />
               </Box>
               <Box mt='3'>
-                <InputText bgcolor={false} greenColor={false} text='Last Name' typeShow='text' />
+                <InputText
+                  value={formData.lastName}
+                  onChangeText={(val) => setFormData({ ...formData, lastName: val })}
+                  bgcolor={false} greenColor={false} text='Last Name' typeShow='text' />
               </Box>
-
+              <Box mt='3'>
+                <InputText
+                  value={formData.email}
+                  onChangeText={(val) => setFormData({ ...formData, email: val })}
+                  keynum={true} bgcolor={false} greenColor={false} text='Email' typeShow='text' />
+              </Box>
               <Text mt='5'>Phone number</Text>
               <Box flexDirection='row' mt='2'>
                 <TouchableOpacity
@@ -114,7 +150,10 @@ const CreateProfile = () => {
                 </Radio.Group>
               </Box>
               <Box mt='3'>
-                <InputText keynum={true} bgcolor={false} greenColor={false} text='Zip Code' typeShow='text' />
+                <InputText
+                  value={formData.zipCode}
+                  onChangeText={(val) => setFormData({ ...formData, zipCode: val })}
+                  keynum={true} bgcolor={false} greenColor={false} text='Zip Code' typeShow='text' />
               </Box>
               <Box mt='5'>
                 <Box mb='5' flexDirection='row'>
@@ -134,28 +173,29 @@ const CreateProfile = () => {
                 </Radio.Group>
               </Box>
               <Box mt='3'>
-                <InputText disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
+                <InputText value={formData.ghin}
+                  onChangeText={(val) => setFormData({ ...formData, ghin: val })} disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
-              <Button mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
-        </SafeAreaView>
-            </Box>
-            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-              <Modal.Content maxWidth="400px">
-                <Modal.CloseButton />
-                <Modal.Body>
-                  <Box p='6'>
-                    <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
-                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
-                      <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
-                    <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
-                    <Button borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
-                  </Box>
+              <Button onPress={submitHandler} mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
+            </SafeAreaView>
+          </Box>
+          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+            <Modal.Content maxWidth="400px">
+              <Modal.CloseButton />
+              <Modal.Body>
+                <Box p='6'>
+                  <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
+                  <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
+                    <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
+                  <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                  <Button bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                </Box>
 
-                </Modal.Body>
-              </Modal.Content>
-            </Modal>
-          </Center>
-        </ScrollView>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+        </Center>
+      </ScrollView>
 
       <CountryPicker
         initialState={'United States'}

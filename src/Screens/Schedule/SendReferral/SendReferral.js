@@ -6,7 +6,7 @@ import { colors } from '../../../theme'
 import { friends } from '../../../assets/data'
 import UserProfile from '../../../Components/UserProfile'
 import AppButton from '../../../Components/AppButton'
-import SearchInput from '../components/SearchInput'
+import SearchInput from '../../../Components/SearchInput'
 import { Button, KeyboardAvoidingView } from 'native-base'
 export default function SendReferral({ route }) {
   const contacts = route?.params?.contacts
