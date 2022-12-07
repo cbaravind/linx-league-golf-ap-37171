@@ -62,81 +62,81 @@ SECURE_SSL_REDIRECT = env.bool("SECURE_REDIRECT", default=False)
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 LOCAL_APPS = [
-    'home',
-    'users.apps.UsersConfig',
+    "home",
+    "users.apps.UsersConfig",
 ]
 THIRD_PARTY_APPS = [
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'rest_auth.registration',
-    'bootstrap4',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'django_extensions',
-    'drf_yasg',
-    'storages',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_auth",
+    "rest_auth.registration",
+    "bootstrap4",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "django_extensions",
+    "drf_yasg",
+    "storages",
+    "django_filters",
+    "drf_spectacular",
 ]
 MODULES_APPS = get_modules()
 
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS + MODULES_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'linx_league_golf_ap_37171.urls'
+ROOT_URLCONF = "linx_league_golf_ap_37171.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'web_build')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "web_build")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'linx_league_golf_ap_37171.wsgi.application'
+WSGI_APPLICATION = "linx_league_golf_ap_37171.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
 if env.str("DATABASE_URL", default=None):
-    DATABASES = {
-        'default': env.db()
-    }
+    DATABASES = {"default": env.db()}
 
 
 # Password validation
@@ -144,16 +144,16 @@ if env.str("DATABASE_URL", default=None):
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -161,8 +161,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -171,24 +171,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
+MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'web_build/static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "web_build/static"),
+]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = '/mediafiles/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 # allauth / users
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
@@ -204,6 +207,7 @@ SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", 
 REST_AUTH_SERIALIZERS = {
     # Replace password reset serializer to fix 500 error
     "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
+    "TOKEN_SERIALIZER": "home.api.v1.serializers.TokenSerializer",
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     # Use custom serializer that has no username and matches web signup
@@ -227,10 +231,10 @@ AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", "")
 AWS_STORAGE_REGION = env.str("AWS_STORAGE_REGION", "")
 
 USE_S3 = (
-    AWS_ACCESS_KEY_ID and
-    AWS_SECRET_ACCESS_KEY and
-    AWS_STORAGE_BUCKET_NAME and
-    AWS_STORAGE_REGION
+    AWS_ACCESS_KEY_ID
+    and AWS_SECRET_ACCESS_KEY
+    and AWS_STORAGE_BUCKET_NAME
+    and AWS_STORAGE_REGION
 )
 
 if USE_S3:
@@ -242,6 +246,8 @@ if USE_S3:
     DEFAULT_FILE_STORAGE = env.str(
         "DEFAULT_FILE_STORAGE", "home.storage_backends.MediaStorage"
     )
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_S3_REGION_NAME = "us-east-2"
 
 # Swagger settings for api docs
 SWAGGER_SETTINGS = {
@@ -251,11 +257,13 @@ SWAGGER_SETTINGS = {
 if DEBUG or not (EMAIL_HOST_USER and EMAIL_HOST_PASSWORD):
     # output email to console instead of sending
     if not DEBUG:
-        logging.warning("You should setup `SENDGRID_USERNAME` and `SENDGRID_PASSWORD` env vars to send emails.")
+        logging.warning(
+            "You should setup `SENDGRID_USERNAME` and `SENDGRID_PASSWORD` env vars to send emails."
+        )
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
-# GCP config 
+# GCP config
 def google_service_account_config():
     # base64 encoded service_account.json file
     service_account_config = env.str("GS_CREDENTIALS", "")
@@ -265,11 +273,40 @@ def google_service_account_config():
         return json.loads(base64.b64decode(service_account_config))
     except (binascii.Error, ValueError):
         return {}
+
+
 GOOGLE_SERVICE_ACCOUNT_CONFIG = google_service_account_config()
 if GOOGLE_SERVICE_ACCOUNT_CONFIG:
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_info(GOOGLE_SERVICE_ACCOUNT_CONFIG)
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+        GOOGLE_SERVICE_ACCOUNT_CONFIG
+    )
 GS_BUCKET_NAME = env.str("GS_BUCKET_NAME", "")
 if GS_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
+
+SPECTACULAR_SETTINGS = {
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
+}
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ),
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "EXCEPTION_HANDLER": "utils.exceptions.custom_exception_handler",
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 25,
+}
+
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
