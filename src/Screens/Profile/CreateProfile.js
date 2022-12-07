@@ -9,8 +9,11 @@ import DatePicker from '../../Components/datePicker';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
 import { createProfile } from '../../../api';
+import { useSelector } from 'react-redux';
 
 const CreateProfile = () => {
+  const { user } = useSelector(state => state.auth)
+
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState({
@@ -29,6 +32,7 @@ const CreateProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const route = useRoute();
   const navigation = useNavigation();
+
   useEffect(() => {
     let SD = {};
     SD[service] = { selected: true, selectedColor: '#1C8739' };
@@ -46,21 +50,21 @@ const CreateProfile = () => {
       setShowModal(true);
     }
   }, [valueGHIN])
+
   const submitHandler = () => {
     const data = {
       user: {
-        email: formData.email,
-        name: formData.firstName + formData.lastName,
-
+        email: user?.email,
+        name: formData.firstName
+        // formData.firstName + formData.lastName,
       },
       phone_number: phoneNumber,
       gender: value,
       ghin: formData.ghin,
       has_ghin: valueGHIN
     }
-    console.log(data)
     createProfile(data, (res) => {
-      console.log(res,'res')
+      console.log(res, 'res')
     })
   }
   return (
@@ -112,12 +116,12 @@ const CreateProfile = () => {
                   onChangeText={(val) => setFormData({ ...formData, lastName: val })}
                   bgcolor={false} greenColor={false} text='Last Name' typeShow='text' />
               </Box>
-              <Box mt='3'>
+              {/* <Box mt='3'>
                 <InputText
                   value={formData.email}
                   onChangeText={(val) => setFormData({ ...formData, email: val })}
                   keynum={true} bgcolor={false} greenColor={false} text='Email' typeShow='text' />
-              </Box>
+              </Box> */}
               <Text mt='5'>Phone number</Text>
               <Box flexDirection='row' mt='2'>
                 <TouchableOpacity

@@ -22,6 +22,7 @@ class RoutesKey {
   static RULESANDSCORING='Rules And Scoring'
   static INBOX = 'Inbox'
   static CHAT = 'Chat'
+  static SCOREDETAIL = 'Score Detail'
 }
 
 export default RoutesKey

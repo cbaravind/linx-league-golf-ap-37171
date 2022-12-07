@@ -26,6 +26,7 @@ export const login = (data, cb) => {
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
+          
         },
         redirect: 'follow',
         body: JSON.stringify(data)
@@ -83,12 +84,35 @@ export const logout = (cb) => {
         .catch(error => console.log('error++=', error));
    
 };
-export const createProfile = (data,cb) => {
+export const getPrivacyPolicy = async () => {
+
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            // apikey: API_KEY,
+            // Authorization: `Bearer ${token}`,
+        },
+        redirect: 'follow',
+    };
+
+    const url = `${API_URL}/modules/privacy-policy/`
+
+    const response = await fetch(url, requestOptions)
+    // console.log(response,'====')
+    return response.text()
+    // .then(response => )
+    // .then(result => cb(JSON.parse(result)))
+    // .catch(error => console.log('error++=', error));
+};
+export const createProfile = async (data,cb) => {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
+            'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
         },
         redirect: 'follow',
         body: JSON.stringify(data)
