@@ -8,7 +8,7 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import DatePicker from '../../Components/datePicker';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
-import { createProfile } from '../../../api';
+import { createProfile, getUserProfile } from '../../../api';
 import { useSelector } from 'react-redux';
 
 const CreateProfile = () => {
@@ -35,10 +35,15 @@ const CreateProfile = () => {
 
   useEffect(() => {
     let SD = {};
+    getProfile()
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
-
+const getProfile=()=>{
+  getUserProfile((res)=>{
+    console.log(res)
+  })
+}
   useEffect(() => {
     if (valueGHIN == "Yes") {
       setDisableGHIN(false);

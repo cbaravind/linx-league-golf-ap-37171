@@ -106,16 +106,33 @@ export const getPrivacyPolicy = async () => {
     // .then(result => cb(JSON.parse(result)))
     // .catch(error => console.log('error++=', error));
 };
-export const createProfile = async (data,cb) => {
+export const createProfile = (data,cb) => {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
+            // 'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
+        },
+        body: JSON.stringify(data),
+        redirect: 'follow',
+    };
+    fetch(`${API_URL}/api/v1/profile/`, requestOptions)
+        .then(response => response.text())
+        .then(result => cb(JSON.parse(result)))
+        .catch(error => console.log('error++=', error));
+   
+};
+export const getUserProfile = async (cb) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            // 'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
         },
         redirect: 'follow',
-        body: JSON.stringify(data)
+        // body: JSON.stringify(data)
     };
     fetch(`${API_URL}/api/v1/profile/`, requestOptions)
         .then(response => response.text())
