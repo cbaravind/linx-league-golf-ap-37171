@@ -308,5 +308,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 25,
 }
+    REST_SESSION_LOGIN = False
 
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
