@@ -39,6 +39,8 @@
 	<string>Linx League requires to access your contacts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Linx League requires to access your location.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Linx League requires to access your photo gallery to upload profile picture.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>beloved.ttf</string>
