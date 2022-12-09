@@ -155,7 +155,7 @@ export const getUserProfile = async (id,token,cb) => {
         redirect: 'follow',
         // body: JSON.stringify(data)
     };
-    fetch(`${API_URL}/api/v1/profile/user_id=${id}`, requestOptions)
+    fetch(`${API_URL}/api/v1/profile/?user_id=${id}`, requestOptions)
         .then(response => response.text())
         .then(result => cb(JSON.parse(result)))
         .catch(error => console.log('error++=', error));
@@ -174,7 +174,7 @@ export const getUser = async () => {
         redirect: 'follow',
     };
 
-    const url = `${API_URL}/rest-auth/user/`
+    const url = `${API_URL}/api/v1/get-user-profile/`
 
     const response = await fetch(url, requestOptions)
     // console.log(response)

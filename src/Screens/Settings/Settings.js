@@ -26,6 +26,7 @@ export default function Settings() {
 
   const logoutHandler = async () => {
     logout(token,async(res) => {
+      console.log(token)
       if(res.detail.includes('logged out')){
         disaptch(saveUser(''))
         navigation.navigate(RoutesKey.LOGIN)

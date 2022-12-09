@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View, Modal, FormControl } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { SafeAreaView, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import InputText from '../../Components/Input'
@@ -10,23 +10,23 @@ import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
 import { createProfile, getUserProfile } from '../../../api';
 import { useSelector } from 'react-redux';
-import { upLoadImage } from '../../helper';
 import { imagePickerOptions, IMAGE_PLACEHOLDER } from '../../constants';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import Row from '../../Components/Row';
 
 const CreateProfile = () => {
-  const { token,user } = useSelector(state => state?.auth?.user)
-console.log(token,'=====')
+  const { token, user } = useSelector(state => state?.auth?.user)
+  console.log(token, '=====')
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    ghin: '',
-    zipCode: '',
+    firstName: user?.user?.first_name ? user?.user?.first_name : '',
+    lastName: user?.user?.last_name ? user?.user?.last_name : '',
+    email: user?.user?.email ? user?.user?.email : '',
+    ghin: user?.ghin ? user.ghin : '',
+    // zipCode: '',
     imageUploading: false,
-    image:''
+    image: user?.profile_image ? user?.profile_image : ''
   })
   let [phoneNumber, setPhoneNumber] = useState("");
   const [startDate, setStartDate] = React.useState('');
@@ -36,9 +36,10 @@ console.log(token,'=====')
   const [diableGHIN, setDisableGHIN] = React.useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showPickerModal, setShowPickerModal] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false)
   const route = useRoute();
   const navigation = useNavigation();
-  console.log(user)
+  console.log(user.profile_image, '===')
 
   useEffect(() => {
     let SD = {};
@@ -48,10 +49,12 @@ console.log(token,'=====')
   }, [service])
 
   const getProfile = () => {
-    getUserProfile(user?.pk,token,(res) => {
-      console.log(res.results)
-      if(res.results.length){
-        const profile= res.resuts[0]
+    // const ext=JSON.parse(user)
+    console.log(user?.id, 'id--')
+    getUserProfile(user?.id, token, (res) => {
+      console.log(res)
+      if (res.results.length) {
+        const profile = res.resuts[0]
         // setFormData({})
       }
     })
@@ -70,18 +73,23 @@ console.log(token,'=====')
   }, [valueGHIN])
 
   const submitHandler = () => {
+    setBtnLoading(true)
     const data = {
       user: {
         email: user?.email,
-        name: formData.firstName
-        // formData.firstName + formData.lastName,
+        // first_name: formData.firstName,
+        // last_name: formData.lastName
+        name: formData.lastName,
       },
       phone_number: phoneNumber,
       gender: value,
       ghin: formData.ghin,
-      has_ghin: valueGHIN
+      has_ghin: valueGHIN,
+      profile_image:formData.image
     }
-    createProfile(data,token, (res) => {
+    console.log(data, 'res')
+    createProfile(data, token, (res) => {
+      setBtnLoading(false)
       console.log(res, 'res')
     })
   }
@@ -91,8 +99,8 @@ console.log(token,'=====')
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
-          const uploadedImage = await upLoadImage(res.assets[0].base64)
-          setFormData({ ...formData, image: uploadedImage, imageUploading: false })
+          console.log(res)
+          setFormData({ ...formData, image: res.assets[0].base64, imageUploading: false })
         }
       }
     })
@@ -103,8 +111,7 @@ console.log(token,'=====')
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
-          const uploadedImage = await upLoadImage(res.assets[0].base64)
-          setFormData({ ...formData, image: uploadedImage, imageUploading: false })
+          setFormData({ ...formData, image: res.assets[0].base64, imageUploading: false })
         }
       }
     })
@@ -117,7 +124,7 @@ console.log(token,'=====')
             <Box p='5' mt='10' flexDirection='row' >
               <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
               <Text alignSelf='center' color={colors.background}>Edit Profile</Text>
-              <Button bg={colors.grey} ml='auto' variant='link'><Text color='white'>Save</Text></Button>
+              <Button isLoading={btnLoading} onPress={submitHandler} bg={colors.grey} ml='auto' variant='link'><Text color='white'>Save</Text></Button>
             </Box>
           </Box>
         </> : null
@@ -142,11 +149,11 @@ console.log(token,'=====')
             <SafeAreaView>
               <Box mt='5'>
                 {formData.imageUploading ?
-                  <ActivityIndicator color={colors.darkGreen} style={{marginVertical:20}} />
+                  <ActivityIndicator color={colors.darkGreen} style={{ marginVertical: 20 }} />
                   :
 
                   <Avatar alignSelf='center' size='xl' bg="gray.300"
-                    source={{ uri:formData.image ? formData.image:IMAGE_PLACEHOLDER }} >
+                    source={{ uri: formData.image ? formData.image : IMAGE_PLACEHOLDER }} >
                     <Avatar.Badge bg='#225529' >
                       <IconButton onPress={() => setShowPickerModal(true)} size='8' ml='-1.5' mt='-1.5' icon={<Icon size='3' color='white' as={AntDesign} name='edit' />} />
                     </Avatar.Badge>
@@ -193,10 +200,10 @@ console.log(token,'=====')
                   setValue(nextValue);
                 }}>
                   <Box flexDirection='row'>
-                    <Radio value="Male" my={1}>
+                    <Radio value="MALE" my={1}>
                       Male
                     </Radio>
-                    <Radio ml='2' value="Female" my={1}>
+                    <Radio ml='2' value="FEMALE" my={1}>
                       Female
                     </Radio>
                   </Box>
@@ -229,7 +236,11 @@ console.log(token,'=====')
                 <InputText value={formData.ghin}
                   onChangeText={(val) => setFormData({ ...formData, ghin: val })} disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
+              {route?.params?.setting !== true ?
               <Button onPress={submitHandler} mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
+            :
+            <></>
+            }
             </SafeAreaView>
           </Box>
           <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -248,15 +259,25 @@ console.log(token,'=====')
             </Modal.Content>
           </Modal>
           <Modal isOpen={showPickerModal} onClose={() => setShowPickerModal(false)}>
-            <Modal.Content style={{ position: 'absolute', bottom: 0 }} width={'100%'} maxWidth="400px">
+            <Modal.Content style={{ position: 'absolute', bottom: 0, borderRadius: 30 }} width={'100%'} maxWidth="400px">
               <Modal.CloseButton />
               <Modal.Body>
                 <Box p='6'>
                   <TouchableOpacity onPress={openCamera} >
-                    <Text fontSize='20' color='#7D9E49' fontWeight='700'>Camera </Text>
+                    <Row style={{ justifyContent: 'flex-start', }}>
+                      <View style={styles.iconContainer}>
+                        <Icon size='6' color={colors.green} as={Ionicons} name='camera-outline' />
+                      </View>
+                      <Text fontSize='17' color='#414042' fontWeight='500'>Camera </Text>
+                    </Row>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={launchLibrary} >
-                    <Text fontSize='20' color='#7D9E49' fontWeight='700'>Gallery </Text>
+                    <Row style={{ justifyContent: 'flex-start', }}>
+                      <View style={styles.iconContainer}>
+                        <Icon size='6' color={colors.green} as={AntDesign} name='picture' />
+                      </View>
+                      <Text fontSize='17' color='#414042' fontWeight='500'>Gallery </Text>
+                    </Row>
                   </TouchableOpacity>
                   {/* <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
                     <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
@@ -281,5 +302,18 @@ console.log(token,'=====')
     </View>
   )
 }
+const styles = StyleSheet.create({
+  iconContainer: {
+    height:40,width:40,
+    alignItems:"center",
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor:'#BdBdBd',
+    borderRadius: 30,
+    // padding: 8,
+    marginVertical:8,
+    marginRight:10
+  }
+})
 
 export default CreateProfile
