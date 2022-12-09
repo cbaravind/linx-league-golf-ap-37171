@@ -37,10 +37,11 @@ const Splash = () => {
 
     const perist = async () => {
         const userObj = await AsyncStorage.getItem('user')
+        const token = await AsyncStorage.getItem('token')
         if (userObj) {
             // const newUser=JSON.parse(userObj)
             // console.log(userObj.email,'=====')
-            dispatch(saveUser(JSON.parse(userObj)))
+            dispatch(saveUser(JSON.parse({user:userObj,token:token})))
             if (!user) {
             }
             navigation.navigate(RoutesKey.BOTTOMTAB);

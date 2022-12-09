@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View, Modal, FormControl } from 'native-base'
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, TouchableOpacity } from 'react-native'
+import { SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import InputText from '../../Components/Input'
@@ -10,10 +10,13 @@ import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
 import { createProfile, getUserProfile } from '../../../api';
 import { useSelector } from 'react-redux';
+import { upLoadImage } from '../../helper';
+import { imagePickerOptions, IMAGE_PLACEHOLDER } from '../../constants';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const CreateProfile = () => {
-  const { user } = useSelector(state => state.auth)
-
+  const { token,user } = useSelector(state => state?.auth?.user)
+console.log(token,'=====')
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState({
@@ -21,7 +24,9 @@ const CreateProfile = () => {
     lastName: '',
     email: '',
     ghin: '',
-    zipCode: ''
+    zipCode: '',
+    imageUploading: false,
+    image:''
   })
   let [phoneNumber, setPhoneNumber] = useState("");
   const [startDate, setStartDate] = React.useState('');
@@ -30,8 +35,10 @@ const CreateProfile = () => {
   const [valueGHIN, setValueGHIN] = React.useState("");
   const [diableGHIN, setDisableGHIN] = React.useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showPickerModal, setShowPickerModal] = useState(false)
   const route = useRoute();
   const navigation = useNavigation();
+  console.log(user)
 
   useEffect(() => {
     let SD = {};
@@ -39,11 +46,17 @@ const CreateProfile = () => {
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
-const getProfile=()=>{
-  getUserProfile((res)=>{
-    console.log(res)
-  })
-}
+
+  const getProfile = () => {
+    getUserProfile(user?.pk,token,(res) => {
+      console.log(res.results)
+      if(res.results.length){
+        const profile= res.resuts[0]
+        // setFormData({})
+      }
+    })
+  }
+
   useEffect(() => {
     if (valueGHIN == "Yes") {
       setDisableGHIN(false);
@@ -68,8 +81,32 @@ const getProfile=()=>{
       ghin: formData.ghin,
       has_ghin: valueGHIN
     }
-    createProfile(data, (res) => {
+    createProfile(data,token, (res) => {
       console.log(res, 'res')
+    })
+  }
+  const launchLibrary = () => {
+    setShowPickerModal(false)
+    launchImageLibrary(imagePickerOptions, async (res) => {
+      if (res.assets) {
+        setFormData({ ...formData, imageUploading: true })
+        if (res.assets[0] && res.assets[0].base64) {
+          const uploadedImage = await upLoadImage(res.assets[0].base64)
+          setFormData({ ...formData, image: uploadedImage, imageUploading: false })
+        }
+      }
+    })
+  }
+  const openCamera = () => {
+    setShowPickerModal(false)
+    launchCamera(imagePickerOptions, async (res) => {
+      if (res.assets) {
+        setFormData({ ...formData, imageUploading: true })
+        if (res.assets[0] && res.assets[0].base64) {
+          const uploadedImage = await upLoadImage(res.assets[0].base64)
+          setFormData({ ...formData, image: uploadedImage, imageUploading: false })
+        }
+      }
     })
   }
   return (
@@ -92,6 +129,7 @@ const getProfile=()=>{
             {route?.params?.setting !== true ?
               <Box mt='5'>
                 <Box ml='auto' >
+
                   <Image h='20' w='120' resizeMode='center' source={require('../../assets/images/SplashLogo.png')} alt='' />
                 </Box>
                 <Box>
@@ -103,11 +141,17 @@ const getProfile=()=>{
             }
             <SafeAreaView>
               <Box mt='5'>
-                <Avatar alignSelf='center' size='xl' bg="gray.300" source={require('../../assets/images/profileImg.png')} >
-                  <Avatar.Badge bg='#225529' >
-                    <IconButton size='8' ml='-1.5' mt='-1.5' icon={<Icon size='3' color='white' as={AntDesign} name='edit' />} />
-                  </Avatar.Badge>
-                </Avatar>
+                {formData.imageUploading ?
+                  <ActivityIndicator color={colors.darkGreen} style={{marginVertical:20}} />
+                  :
+
+                  <Avatar alignSelf='center' size='xl' bg="gray.300"
+                    source={{ uri:formData.image ? formData.image:IMAGE_PLACEHOLDER }} >
+                    <Avatar.Badge bg='#225529' >
+                      <IconButton onPress={() => setShowPickerModal(true)} size='8' ml='-1.5' mt='-1.5' icon={<Icon size='3' color='white' as={AntDesign} name='edit' />} />
+                    </Avatar.Badge>
+                  </Avatar>
+                }
               </Box>
               <Box mt='1'>
                 <InputText
@@ -198,6 +242,26 @@ const getProfile=()=>{
                     <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
                   <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
                   <Button bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                </Box>
+
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+          <Modal isOpen={showPickerModal} onClose={() => setShowPickerModal(false)}>
+            <Modal.Content style={{ position: 'absolute', bottom: 0 }} width={'100%'} maxWidth="400px">
+              <Modal.CloseButton />
+              <Modal.Body>
+                <Box p='6'>
+                  <TouchableOpacity onPress={openCamera} >
+                    <Text fontSize='20' color='#7D9E49' fontWeight='700'>Camera </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={launchLibrary} >
+                    <Text fontSize='20' color='#7D9E49' fontWeight='700'>Gallery </Text>
+                  </TouchableOpacity>
+                  {/* <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
+                    <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
+                  <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                  <Button bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button> */}
                 </Box>
 
               </Modal.Body>

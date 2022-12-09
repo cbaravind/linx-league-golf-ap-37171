@@ -11,7 +11,7 @@ import { colors } from '../../theme'
 import { useNavigation } from '@react-navigation/native'
 import RoutesKey from '../../Navigation/routesKey'
 import { logout } from '../../../api'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { saveUser } from '../../redux/reducers/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 // import { Switch } from 'react-native-switch'
@@ -19,12 +19,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Settings() {
 
   const [mute, setMute] = useState(false)
+  const { token,user } = useSelector(state => state?.auth?.user)
+
   const navigation = useNavigation()
   const disaptch = useDispatch()
 
   const logoutHandler = async () => {
-    logout(async(res) => {
-      console.log(res, '----res')
+    logout(token,async(res) => {
       if(res.detail.includes('logged out')){
         disaptch(saveUser(''))
         navigation.navigate(RoutesKey.LOGIN)

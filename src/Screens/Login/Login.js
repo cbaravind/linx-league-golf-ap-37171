@@ -36,7 +36,8 @@ const Login = () => {
             if (res.key) {
                const userObj=await getUser()
                 await AsyncStorage.setItem('user',userObj)
-                dispatch(saveUser(userObj))
+                await AsyncStorage.setItem('token',res.key)
+                dispatch(saveUser({user:userObj,token:res.key}))
                 setFormData({
                     email: '',
                     password: '',

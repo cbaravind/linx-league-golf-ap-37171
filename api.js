@@ -1,5 +1,5 @@
-import { API_URL, CSRF_Token } from "./src/constants";
-
+import { API_URL} from "./src/constants";
+// const token='b99348f27007ad94779fc94fb3f06a84d0aa3710'
 export const signup = (data, cb) => {
 
     const requestOptions = {
@@ -68,12 +68,32 @@ export const confirmResetPassword = (data, cb) => {
         .then(result => cb(JSON.parse(result)))
         .catch(error => console.log('error++=', error));
 };
-export const logout = (cb) => {
+export const changePassword = (data,token, cb) => {
+
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
+            Authorization: `Token ${token}`
+        },
+
+        redirect: 'follow',
+        body: JSON.stringify(data)
+    };
+    fetch(`${API_URL}/rest-auth/password/change/`, requestOptions)
+        .then(response => response.text())
+        .then(result => cb(JSON.parse(result)))
+        .catch(error => console.log('error++=', error));
+};
+export const logout = (token,cb) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Token ${token}`
+
         },
         redirect: 'follow',
         // body: JSON.stringify(data)
@@ -106,13 +126,13 @@ export const getPrivacyPolicy = async () => {
     // .then(result => cb(JSON.parse(result)))
     // .catch(error => console.log('error++=', error));
 };
-export const createProfile = (data,cb) => {
-    const requestOptions = {
+export const createProfile = (data,token,cb) => {
+  const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            // 'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
+            Authorization: `Token ${token}`
         },
         body: JSON.stringify(data),
         redirect: 'follow',
@@ -123,18 +143,19 @@ export const createProfile = (data,cb) => {
         .catch(error => console.log('error++=', error));
    
 };
-export const getUserProfile = async (cb) => {
+export const getUserProfile = async (id,token,cb) => {
     const requestOptions = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            // 'X-CSRFTOKEN':'5cwFtkBPDEb8YvKb6et7rsm8MAkbgwulrPIPhKVkja9jsWPDNbhWh75C7xNFt54Z'
+            Authorization: `Token ${token}`
+
         },
         redirect: 'follow',
         // body: JSON.stringify(data)
     };
-    fetch(`${API_URL}/api/v1/profile/`, requestOptions)
+    fetch(`${API_URL}/api/v1/profile/user_id=${id}`, requestOptions)
         .then(response => response.text())
         .then(result => cb(JSON.parse(result)))
         .catch(error => console.log('error++=', error));
@@ -148,7 +169,7 @@ export const getUser = async () => {
             'Content-Type': 'application/json',
             Accept: 'application/json',
             // apikey: API_KEY,
-            // Authorization: `Bearer ${token}`,
+            // Authorization: `Token ${token}`,
         },
         redirect: 'follow',
     };

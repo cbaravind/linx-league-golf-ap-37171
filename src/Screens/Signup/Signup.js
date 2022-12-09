@@ -12,6 +12,7 @@ const Signup = () => {
     const navigation = useNavigation()
     const [groupValues, setGroupValues] = useState(false);
     const [errors, setErrors] = useState(false)
+    const [checkBoxEmpty, setCheckBoxEmpty] = useState(false)
     const [btnLoading, setBtnLoading] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
@@ -20,8 +21,10 @@ const Signup = () => {
     })
     const signUpHandler = () => {
         setBtnLoading(true)
-        if (!formData.name || !formData.email || !formData.password || !groupValues) {
+        if (!groupValues) {
             // const empty
+            setCheckBoxEmpty(true)
+            // setErrors({terms:['Please Agree to the terms and Conditions']})
             setBtnLoading(false)
             return;
         }
@@ -34,8 +37,11 @@ const Signup = () => {
                     email: '',
                     password: '',
                 })
-                navigation.navigate(RoutesKey.CREATEPROFILE)
+                navigation.navigate(RoutesKey.LOGIN)
+                // navigation.navigate(RoutesKey.CREATEPROFILE)
             } else {
+                setErrors(res)
+                console.log(res)
                 console.log(res)
             }
 
@@ -55,29 +61,48 @@ const Signup = () => {
                             </Box>
                             <Box mt='2'>
                                 <InputText
+                                    error={errors?.name ? errors?.name[0] : ''}
                                     value={formData.name}
-                                    onChangeText={(val) => setFormData({ ...formData, name: val })}
+                                    onChangeText={(val) => {
+                                        const _errors = errors
+                                        delete _errors["name"]
+                                        setErrors(_errors)
+                                        setFormData({ ...formData, name: val })
+                                    }}
                                     bgcolor={true} greenColor={true} text='Name' typeShow='text' />
                             </Box>
                             <Box mt='2'>
                                 <InputText
+                                    error={errors?.email ? errors?.email[0] : ''}
                                     value={formData.email}
-                                    onChangeText={(val) => setFormData({ ...formData, email: val })}
+                                    onChangeText={(val) => {
+                                        const _errors = errors
+                                        delete _errors["email"]
+                                        setErrors(_errors)
+                                        setFormData({ ...formData, email: val })
+                                    }
+                                    }
                                     bgcolor={true} greenColor={true} text='Email' typeShow='text' />
                             </Box>
                             <Box mt='2'>
                                 <InputText
+                                    error={errors?.password ? errors?.password[0] : ''}
                                     value={formData.password}
-                                    onChangeText={(val) => setFormData({ ...formData, password: val })}
+                                    onChangeText={(val) => {
+                                        const _errors = errors
+                                        delete _errors["password"]
+                                        setErrors(_errors)
+                                        setFormData({ ...formData, password: val })
+                                    }}
                                     icon={true} bgcolor={false} greenColor={false} text='Password' />
                             </Box>
-                            <Box flexDirection='row' paddingY={'1'} >
+                            <Box flexDirection='row' pt={'1'} >
                                 <Box mt='3' flexDirection='row'>
                                     <CheckBox
                                         containerStyle={{ padding: 0 }}
                                         checked={groupValues}
                                         checkedColor='#7D9E49'
-                                        onPress={() => setGroupValues(!groupValues)}
+                                        onPress={() => {checkBoxEmpty && !groupValues && setCheckBoxEmpty(false);setGroupValues(!groupValues)}}
                                     />
                                     <Box mt={'1.5'}>
                                         <Text fontSize={14} fontWeight={'400'} fontFamily={fonts.PROXIMA_REGULAR} > I have read the
@@ -90,8 +115,14 @@ const Signup = () => {
                                             </Link>
                                         </Text>
                                     </Box>
+
                                 </Box>
                             </Box>
+                            {checkBoxEmpty ?
+                                <Text  color="red.600"  style={styles.text}>Please Agree to the terms and Conditions</Text>
+                                :
+                                <></>
+                            }
                             <Button onPress={() => signUpHandler()} isLoading={btnLoading} shadow={5} mt='7' bg='#7D9E49'>SIGN UP</Button>
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
@@ -133,5 +164,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: fonts.PROXIMA_REGULAR,
         textDecorationLine: 'underline'
+    },
+    text: {
+        fontSize: 12,
+        fontWeight: '500',
+        // color: "red",
     }
 })
