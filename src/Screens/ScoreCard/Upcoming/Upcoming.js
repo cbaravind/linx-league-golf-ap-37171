@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
+import { View, Text ,FlatList,ScrollView} from 'react-native'
 import React from 'react'
 import RoundCard from '../../Home/components/RoundCard'
-import { FlatList, ScrollView } from 'native-base'
 
 const Upcoming = () => {
     data = [

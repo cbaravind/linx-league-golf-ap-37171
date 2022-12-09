@@ -5,9 +5,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { colors } from '../../../theme'
 import { Box, Center, Icon, IconButton, ScrollView, Text, Divider, Avatar, Image, Button } from 'native-base'
+import ScoreDetail from '../components/ScoreDetail'
+import { useNavigation } from '@react-navigation/core'
+import RoutesKey from '../../../Navigation/routesKey'
 
 const PostScore = () => {
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const navigation= useNavigation()
     return (
         <>
             <AppHeader back showLogo rightIcon={<Ionicons name="ios-share-social" size={28} color={colors.white} />} />
@@ -34,80 +38,17 @@ const PostScore = () => {
                                     <Text>Round: 08:17</Text>
                                 </Box>
                             </Box>
-                            <Box mb='2' h={data.length == 9 ? '500' : '550'}>
+                            <Box mb='2' px={'3'} h={data.length == 9 ? '500' : '550'}>
                                 <ScrollView showsVerticalScrollIndicator={false}>
                                     {data.map((item, index) => (
-                                        <Box bg='white' p='2' borderRadius='10' mt='4'>
-                                            <Box flexDirection='row'>
-                                                <Avatar source={require('../../../assets/images/profileImg.png')} />
-                                                <Box ml='2'>
-                                                    <Text fontWeight='700' fontSize='16'>Dylan Thomas</Text>
-                                                    <Box flexDirection='row'>
-                                                        <Image mr='1' mt='1.5' h='2.5' w='17%' source={require('../../../assets/images/lineVector.png')} alt='' />
-                                                        <Text fontSize='14'>23(+7)</Text>
-                                                    </Box>
-                                                </Box>
-                                                <Text fontSize='14' mt='0.5' ml='20%'>[21]</Text>
-                                                <Button ml='auto' mt='-1' colorScheme='green' w='20' alignContent='center'><Text textAlign='center' color={colors.white}>ADD Score</Text></Button>
-                                            </Box>
-                                            <Text fontWeight='700' fontSize='16' alignSelf='center' mt='6' mb='2'>Hole Stats History</Text>
-                                            <Box flexDirection='row'>
-                                                <Box alignSelf='center' borderWidth={1} borderRadius='10' borderColor='gray.200' h='100%'>
-                                                    <Box mt='70' bg='#7D9E4980' pl='5' pr='9' pt='1' pb='1'>
-                                                        <Text>Recorded Plays 4</Text>
-                                                    </Box>
-                                                    <Box pl='5' pr='5' pt='1' pb='1'>
-                                                        <Text>Av. Score 3.4</Text>
-                                                    </Box>
-                                                    <Box bg='#7D9E4980' pl='5' pr='5' pt='1' pb='1'>
-                                                        <Text>Av. Putts 1.2</Text>
-                                                    </Box>
-                                                    <Box pl='5' pr='5' pt='1' pb='1'>
-                                                        <Text>FIR% -</Text>
-                                                    </Box>
-                                                </Box>
-                                                <Box alignSelf='center' borderWidth={1} borderRadius='10' borderColor='gray.200' p='7' ml='auto'>
-                                                    <Text textAlign='center'>Tee Accuracy</Text>
-                                                    <Box alignSelf='center' ml='1' pr='-10'>
-                                                        <ImageBackground style={{ height: 55, width: 110, marginRight: 4 }} source={require('../../../assets/images/topChart.png')}>
-                                                            <Box mt='1' alignSelf='center'>
-                                                                <Text color='black'>Left</Text>
-                                                                <Text alignSelf='center'>-</Text>
-                                                            </Box>
-                                                        </ImageBackground>
-                                                        <ImageBackground style={{ height: 110, width: 55, marginTop: -27, marginLeft: -28, }} source={require('../../../assets/images/leftChart.png')}>
-                                                            <Box mt='7' alignSelf='center'>
-                                                                <Text color='black'>Left</Text>
-                                                                <Text alignSelf='center'>-</Text>
-                                                            </Box>
-                                                        </ImageBackground>
-                                                        <Box zIndex={1} bg='#7D9E49' h='85' w='85' borderRadius='50' ml='3' mt='-99'>
-                                                            <Text ml='8' mt='7' >Hit</Text>
-                                                            <Text ml='10' >-</Text>
-                                                        </Box>
-                                                        <ImageBackground style={{ height: 110, width: 55, marginLeft: 'auto', marginTop: -95, marginRight: -24 }} source={require('../../../assets/images/rightChart.png')}>
-                                                            <Box mt='7' alignSelf='center'>
-                                                                <Text color='black'>Left</Text>
-                                                                <Text alignSelf='center'>-</Text>
-                                                            </Box>
-                                                        </ImageBackground>
-                                                        <ImageBackground style={{ height: 55, width: 110, marginTop: -26 }} source={require('../../../assets/images/bottomChart.png')}>
-                                                            <Box mt='2' alignSelf='center'>
-                                                                <Text color='black'>Bottom</Text>
-                                                                <Text alignSelf='center'>-</Text>
-                                                            </Box>
-                                                        </ImageBackground>
-                                                    </Box>
-                                                </Box>
-                                            </Box>
-                                        </Box>
+                                        <ScoreDetail item={item} />
                                     ))}
                                 </ScrollView>
                             </Box>
                         </Box>
                         {
                             data.length == 9 ?
-                                <Button>SCORECARD</Button>
+                                <Button onPress={()=>navigation.navigate(RoutesKey.SCOREDETAIL)} >SCORECARD</Button>
                                 :
                                 null
                         }

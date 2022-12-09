@@ -7,7 +7,7 @@ import UserProfile from '../../../Components/UserProfile'
 import { colors } from '../../../theme'
 import AppButton from '../../../Components/AppButton'
 import { useNavigation } from '@react-navigation/core'
-import SearchInput from '../components/SearchInput'
+import SearchInput from '../../../Components/SearchInput'
 import { Button } from 'native-base'
 export default function FindFriends() {
     const navigation = useNavigation()

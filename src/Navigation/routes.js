@@ -37,6 +37,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // import RoutesKey from './routesKey';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { saveUser } from '../redux/reducers/auth';
+import Inbox from '../Screens/Chat/Inbox';
+import Chat from '../Screens/Chat/Chat';
+import ScoreDetailScreen from '../Screens/ScoreCard/ScoreDetailScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -244,6 +247,21 @@ const Routes = () => {
                     <Stack.Screen
                         name={Routeskey.PROFILE}
                         component={ProfileScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.INBOX}
+                        component={Inbox}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.CHAT}
+                        component={Chat}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routeskey.SCOREDETAIL}
+                        component={ScoreDetailScreen}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

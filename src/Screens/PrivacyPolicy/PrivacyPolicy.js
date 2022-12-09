@@ -1,11 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import { Box, Center, Icon, Image, ScrollView, Text, View, IconButton } from 'native-base'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getPrivacyPolicy } from '../../../api';
 const PrivacyPolicy = () => {
   const navigation = useNavigation()
 
+  useEffect(() => {
+    getPolicyData()
+  }, [])
+  
+  const getPolicyData = async () => {
+    const res = await getPrivacyPolicy()
+    console.log(res)
+  }
   return (
     <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
       <SafeAreaView >

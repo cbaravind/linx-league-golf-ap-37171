@@ -1,6 +1,5 @@
 import { ScrollView, TouchableOpacity, View, } from 'react-native'
 import React, { useState } from 'react'
-import Container from '../../Components/Container'
 import AppHeader from '../../Components/AppHeader'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -12,15 +11,28 @@ import { colors } from '../../theme'
 import { useNavigation } from '@react-navigation/native'
 import RoutesKey from '../../Navigation/routesKey'
 import { logout } from '../../../api'
+import { useDispatch } from 'react-redux'
+import { saveUser } from '../../redux/reducers/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // import { Switch } from 'react-native-switch'
 
 export default function Settings() {
+
   const [mute, setMute] = useState(false)
   const navigation = useNavigation()
-  const logoutHandler=async()=>{
-    const res= await logout()
-    console.log(res)
+  const disaptch = useDispatch()
+
+  const logoutHandler = async () => {
+    logout(async(res) => {
+      console.log(res, '----res')
+      if(res.detail.includes('logged out')){
+        disaptch(saveUser(''))
+        navigation.navigate(RoutesKey.LOGIN)
+        await AsyncStorage.removeItem('user')
+      }
+    })
   }
+
   return (
     <>
       {/* // <Container style={{flex:1}}> */}
@@ -76,12 +88,12 @@ export default function Settings() {
                 <Icon ml='auto' mr='1.2' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
               </Box>
             </Pressable>
-            <Box mt='20' flexDirection='row' p='6' bg='#FFFFFF'>
+            <Box mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
               <Image h='5' w='5' source={require('../../assets/images/fluent_delete-dismiss-24-regular.png')} alt='' />
               <Text ml='3' alignSelf='center' >Delete Linx</Text>
               <Icon ml='auto' mr='1' alignSelf='center' as={Ionicons} name='chevron-forward-outline' size='4' color={colors.green} />
             </Box>
-            <TouchableOpacity onPress={() =>logoutHandler()}>
+            <TouchableOpacity onPress={() => logoutHandler()}>
               <Box mb='20' mt='2' flexDirection='row' p='6' bg='#FFFFFF'>
                 <Icon as={MaterialIcons} name='login' size='6' />
                 <Text ml='3' alignSelf='center' >Log Out</Text>
