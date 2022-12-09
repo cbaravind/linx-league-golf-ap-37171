@@ -23,6 +23,8 @@ const ForgotPassword = () => {
             if (!res.email) {
 
                 setEmailSent(true)
+                alert('Email has been Sent')
+                navigation.navigate(RoutesKey.LOGIN)
             } else {
                 setErrors(res)
             }
@@ -73,7 +75,7 @@ const ForgotPassword = () => {
                                 </>
                                 :
                                 <>
-                                    <Box>
+                                    {/* <Box>
                                         <Text letterSpacing='5' color='#225529' fontFamily='beloved' fontSize='28' fontWeight='400' > Reset Password</Text>
                                     </Box>
 
@@ -92,7 +94,7 @@ const ForgotPassword = () => {
                                     </Box>
                                     <Box mt='3'  >
                                         <InputText value={passwords.confirmPassword} onChangeText={val => setPasswords({ ...passwords, confirmPassword: val })} icon={true} bgcolor={false} greenColor={false} text='Password' />
-                                    </Box>
+                                    </Box> */}
                                 </>
 
                             }
