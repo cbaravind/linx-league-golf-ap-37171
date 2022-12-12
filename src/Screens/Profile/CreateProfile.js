@@ -8,7 +8,7 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import DatePicker from '../../Components/datePicker';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
-import { createProfile, getUserProfile } from '../../../api';
+import { createProfile } from '../../../api';
 import { useSelector } from 'react-redux';
 import { imagePickerOptions, IMAGE_PLACEHOLDER } from '../../constants';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -39,26 +39,16 @@ const CreateProfile = () => {
   const [btnLoading, setBtnLoading] = useState(false)
   const route = useRoute();
   const navigation = useNavigation();
-  console.log(user.profile_image, '===')
+  // console.log(formData.image, '===',)
 
   useEffect(() => {
     let SD = {};
-    getProfile()
+   
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
 
-  const getProfile = () => {
-    // const ext=JSON.parse(user)
-    console.log(user?.id, 'id--')
-    getUserProfile(user?.id, token, (res) => {
-      console.log(res)
-      if (res.results.length) {
-        const profile = res.resuts[0]
-        // setFormData({})
-      }
-    })
-  }
+ 
 
   useEffect(() => {
     if (valueGHIN == "Yes") {
@@ -72,26 +62,41 @@ const CreateProfile = () => {
     }
   }, [valueGHIN])
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     setBtnLoading(true)
+    const form = new FormData();
+    form.append('user',{
+      email: user?.user?.email,
+      first_name: formData.firstName,
+      last_name: formData.lastName
+    })
+    form.append('profile_image',{
+      'type':formData?.image?.type,
+      'uri':formData?.image?.uri,
+      'name':formData?.image?.fileName
+    })
+    form.append('phone_number',phoneNumber)
+    form.append('has_ghin',valueGHIN)
+    form.append('ghin',formData?.ghin)
+
+  
     const data = {
-      user: {
-        email: user?.email,
-        // first_name: formData.firstName,
-        // last_name: formData.lastName
-        name: formData.lastName,
-      },
+    
       phone_number: phoneNumber,
       gender: value,
       ghin: formData.ghin,
       has_ghin: valueGHIN,
-      profile_image:formData.image
+      // ...form._parts[0]
+      // profile_image: form
     }
-    console.log(data, 'res')
-    createProfile(data, token, (res) => {
-      setBtnLoading(false)
-      console.log(res, 'res')
-    })
+    console.log('data')
+    // , (res) => {
+    //   setBtnLoading(false)
+    //   console.log(res, 'res')
+    // }
+    const res = await createProfile(form,formData.image, token)
+    setBtnLoading(false)
+    console.log('res', res)
   }
   const launchLibrary = () => {
     setShowPickerModal(false)
@@ -99,8 +104,8 @@ const CreateProfile = () => {
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
-          console.log(res)
-          setFormData({ ...formData, image: res.assets[0].base64, imageUploading: false })
+          console.log(res.assets[0])
+          setFormData({ ...formData, image: res.assets[0], imageUploading: false })
         }
       }
     })
@@ -153,7 +158,7 @@ const CreateProfile = () => {
                   :
 
                   <Avatar alignSelf='center' size='xl' bg="gray.300"
-                    source={{ uri: formData.image ? formData.image : IMAGE_PLACEHOLDER }} >
+                    source={{ uri: formData.image ? formData.image?.uri : IMAGE_PLACEHOLDER }} >
                     <Avatar.Badge bg='#225529' >
                       <IconButton onPress={() => setShowPickerModal(true)} size='8' ml='-1.5' mt='-1.5' icon={<Icon size='3' color='white' as={AntDesign} name='edit' />} />
                     </Avatar.Badge>
@@ -237,10 +242,10 @@ const CreateProfile = () => {
                   onChangeText={(val) => setFormData({ ...formData, ghin: val })} disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
               {route?.params?.setting !== true ?
-              <Button onPress={submitHandler} mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
-            :
-            <></>
-            }
+                <Button onPress={submitHandler} mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
+                :
+                <></>
+              }
             </SafeAreaView>
           </Box>
           <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -304,15 +309,15 @@ const CreateProfile = () => {
 }
 const styles = StyleSheet.create({
   iconContainer: {
-    height:40,width:40,
-    alignItems:"center",
+    height: 40, width: 40,
+    alignItems: "center",
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor:'#BdBdBd',
+    borderColor: '#BdBdBd',
     borderRadius: 30,
     // padding: 8,
-    marginVertical:8,
-    marginRight:10
+    marginVertical: 8,
+    marginRight: 10
   }
 })
 

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { Box, Center, Icon, IconButton, ScrollView, Text, View, TextArea, Button } from 'native-base'
+import { Box, Center, Icon, IconButton, ScrollView, Text, View, TextArea, Button, Toast } from 'native-base'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import { colors } from '../../theme'
@@ -7,26 +7,34 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputText from '../../Components/Input'
 import { changePassword } from '../../../api'
 import { useSelector } from 'react-redux'
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const ChangePassword = () => {
     const navigation = useNavigation()
-    const { token,user } = useSelector(state => state?.auth?.user)
+    const { token, user } = useSelector(state => state?.auth?.user)
 
     const [errors, setErrors] = useState(false)
     const [formData, setFormData] = useState({
         currentPassword: '',
         newPassword: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        btnLoading: false
     })
     const submitHandler = () => {
+
+        setFormData({ ...formData, btnLoading: true })
         const data = {
             new_password1: formData.newPassword,
             new_password2: formData.confirmPassword
         }
-        changePassword(data,token, (res) => {
-            console.log(res)
+        changePassword(data, token, (res) => {
+            setFormData({ ...formData, btnLoading: false })
             if (res.detail) {
-
+                showMessage({
+                    message: res.detail,
+                    type: 'success',
+                });
+                navigation.goBack()
             } else {
                 setErrors(res)
             }
@@ -77,7 +85,7 @@ const ChangePassword = () => {
                                 }
                                 icon={true} bgcolor={false} greenColor={false} text='Confirm Password ' />
                         </Box>
-                        <Button onPress={submitHandler} shadow={5} mt='30%' bg='#7D9E49'>CHANGE PASSWORD</Button>
+                        <Button isLoading={formData.btnLoading} onPress={submitHandler} shadow={5} mt='30%' bg='#7D9E49'>CHANGE PASSWORD</Button>
                     </Box>
                 </Center>
             </ScrollView>

@@ -6,6 +6,7 @@ import { NativeBaseProvider } from 'native-base'
 import theme from './src/theme/theme'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
+import FlashMessage from "react-native-flash-message";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <NavigationContainer>
         <NativeBaseProvider theme={theme}>
           <Routes />
+          <FlashMessage statusBarHeight={50} position="top"/>
         </NativeBaseProvider>
       </NavigationContainer>
     </Provider>

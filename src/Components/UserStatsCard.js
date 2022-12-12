@@ -22,7 +22,7 @@ export default function UserStatsCard({ image, name, city, stats }) {
                 <Row style={{ paddingTop: 20, justifyContent: 'center' }} >
                     {stats.map((item,index)=>(
 
-                        <StatsCircle title={item.title} value={item.value} dark= {index/2==0?true:false} info={index==4}  onPressInfo={index==4? () => setInfoModalVisible(true):null}  />
+                        <StatsCircle title={item.title} value={item.value} dark= {index%2==0?true:false} info={index==4}  onPressInfo={index==4? () => setInfoModalVisible(true):null}  />
                     ))}
                     {/* <StatsCircle title={'Attested'} value={stats.attested} />
                     <StatsCircle title={'League'} value={stats.league} dark />
