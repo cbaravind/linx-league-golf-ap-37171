@@ -80,20 +80,13 @@ const CreateProfile = () => {
     form.append('ghin',formData?.ghin)
 
   
-    const data = {
-    
-      phone_number: phoneNumber,
-      gender: value,
-      ghin: formData.ghin,
-      has_ghin: valueGHIN,
-      // ...form._parts[0]
-      // profile_image: form
-    }
-    console.log('data')
-    // , (res) => {
-    //   setBtnLoading(false)
-    //   console.log(res, 'res')
+    // const data = {
+    //   phone_number: phoneNumber,
+    //   gender: value,
+    //   ghin: formData.ghin,
+    //   has_ghin: valueGHIN,
     // }
+   
     const res = await createProfile(form,formData.image, token)
     setBtnLoading(false)
     console.log('res', res)

@@ -11,7 +11,7 @@ export default function Inbox() {
     const data = [
         { id: 1, isRead: true, time: '7:08 AM', name: 'Thomas', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...' },
         { id: 2, isRead: true, time: '7:08 AM', name: 'Betty', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...' },
-        { id: 3, isRead: true, time: '7:08 AM', name: 'Thomas', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...' },
+        { id: 4, isRead: true, time: '7:08 AM', name: 'Thomas', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...' },
     ]
     const searchChats = () => {
 
