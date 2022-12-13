@@ -1,6 +1,5 @@
-import { View, Text, FlatList, Image } from 'react-native'
 import React from 'react'
-import { Chat, MessageList, MessageInput } from "@pubnub/react-native-chat-components";
+import { View, Text, FlatList, Image } from 'react-native'
 import { StyleSheet } from 'react-native';
 import { colors, fonts } from '../../../theme'
 import { useSelector } from 'react-redux';
@@ -9,10 +8,9 @@ const MessageItem = ({ message }) => {
     const { user, token } = useSelector(state => state.auth.user)
     const isSender = message.sender == user?.id
 
-    // false
     return (
         <View style={[styles.messageContainer, { backgroundColor: isSender ? colors.green : colors.darkGreen }]}>
-            <Text style={styles.text}> {message.description}</Text>
+            <Text style={styles.text}>{message.description}</Text>
             <Image style={[styles.tail, isSender ? { right: -3 } : { left: -3 }]} source={isSender ? require('../../../assets/images/lightTail.png') : require('../../../assets/images/darkTail.png')} />
         </View>
     )

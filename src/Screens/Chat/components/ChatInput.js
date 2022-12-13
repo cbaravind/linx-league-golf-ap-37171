@@ -5,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import { colors } from '../../../theme'
 import Row from '../../../Components/Row'
-import { Chat, MessageList, MessageInput } from "@pubnub/react-native-chat-components";
 
 export default function ChatInput({ onSend, value, onChangeText }) {
     return (
