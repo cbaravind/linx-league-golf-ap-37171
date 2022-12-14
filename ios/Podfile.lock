@@ -209,7 +209,7 @@ PODS:
     - React-Core
   - react-native-date-picker (4.2.6):
     - React-Core
-  - react-native-image-picker (4.10.2):
+  - react-native-image-picker (4.4.0):
     - React-Core
   - react-native-pager-view (6.1.2):
     - React-Core
@@ -459,7 +459,7 @@ SPEC CHECKSUMS:
   BVLinearGradient: 34a999fda29036898a09c6a6b728b0b4189e1a44
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: 3558efc28c50b9d4cd023a289786e7414e6793a5
+  FBReactNativeSpec: 0e121e5babdc67e8eb4df8426e2cf91fc90e2c71
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 2f8cb5b7533219bf4218a045f92768129cf7050a
@@ -474,7 +474,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-contacts: 0aa99963d8f29099d4725cd0d2f8b6ef5f0d9a2d
   react-native-date-picker: 93e43b3084cea595b4d68b1405d6d99849663bd6
-  react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
+  react-native-image-picker: 14910ea6b6a38bd45d1a69cb643b157e6ac142cb
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af

@@ -8,9 +8,6 @@ import RoutesKey from "../../Navigation/routesKey";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { saveUser } from "../../redux/reducers/auth";
 import LinearGradient from "react-native-linear-gradient";
-import AnimatedLinearGradient, { presetColors } from 'react-native-animated-linear-gradient'
-import { getUser } from "../../../api";
-// import { Easing } from "react-native-reanimated";
 
 const Splash = () => {
     const navigation = useNavigation();
@@ -44,7 +41,11 @@ const Splash = () => {
             dispatch(saveUser({user:newUser,token:token}))
             if (!user) {
             }
-            navigation.navigate(RoutesKey.BOTTOMTAB);
+            navigation.reset({
+                index: 0,
+                routes: [{ name: RoutesKey.BOTTOMTAB }],
+            })
+            // navigation.navigate(RoutesKey.BOTTOMTAB);
         }
         if (userObj == null) {
             let newProgress = 0;

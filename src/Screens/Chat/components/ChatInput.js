@@ -5,11 +5,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import { colors } from '../../../theme'
 import Row from '../../../Components/Row'
-export default function MessageInput() {
+
+export default function ChatInput({ onSend, value, onChangeText }) {
     return (
+
         <Row >
             <Row style={styles.inputStyles} >
-                <TextInput placeholder="Message" placeholderTextColor={colors.grey4} style={styles.input} />
+                <TextInput value={value} onChangeText={onChangeText} placeholder="Message" placeholderTextColor={colors.grey4} style={styles.input} />
                 <IconButton
 
                     icon={<Icon name="paperclip" as={Feather} color={colors.text1} size={5} />} />
@@ -17,7 +19,7 @@ export default function MessageInput() {
                     <Image style={{ width: 20, height: 20 }} source={require('../../../assets/images/emoji.png')} />
                 </TouchableOpacity>
             </Row>
-            <TouchableOpacity style={{ paddingRight: 6, paddingLeft: 10 }} >
+            <TouchableOpacity onPress={onSend} style={{ paddingRight: 6, paddingLeft: 10 }} >
                 <Image style={{ width: 20, height: 20 }} source={require('../../../assets/images/sendIcon.png')} />
             </TouchableOpacity>
         </Row>

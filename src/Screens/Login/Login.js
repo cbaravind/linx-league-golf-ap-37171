@@ -6,7 +6,7 @@ import { CheckBox } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RoutesKey from '../../Navigation/routesKey'
 import { useNavigation } from '@react-navigation/native'
-import { getUser, login } from '../../../api'
+import { getUserProfile, login } from '../../../api'
 import { useDispatch } from 'react-redux'
 import { saveUser } from '../../redux/reducers/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,7 +34,7 @@ const Login = () => {
             setBtnLoading(false)
             console.log(res)
             if (res.key) {
-               const userObj=await getUser()
+               const userObj=await getUserProfile()
                 await AsyncStorage.setItem('user',userObj)
                 await AsyncStorage.setItem('token',res.key)
                 dispatch(saveUser({user:userObj,token:res.key}))
