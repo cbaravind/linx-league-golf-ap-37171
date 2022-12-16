@@ -25,7 +25,7 @@ export default function Home() {
     useEffect(() => {
         getData()
     }, [])
-    console.log(user.email)
+    console.log(user)
     const getData = async () => {
         //    const user = await AsyncStorage.getItem('user')
     }
@@ -58,7 +58,7 @@ export default function Home() {
                     style={{ width: '100%', height: "100%" }}>
                     <View style={{ paddingTop: 30 }}>
                         <Text style={styles.h3}>Welcome,</Text>
-                        <Text style={[styles.h3, { fontWeight: '700' }]}>{user?.first_name}</Text>
+                        <Text style={[styles.h3, { fontWeight: '700' }]}>{user?.user?.name}</Text>
                         <View style={{ paddingHorizontal: 25, marginTop: 20 }}>
                             <Text style={[styles.h4, { fontWeight: '700' }]}>Add Upcoming Round </Text>
 

@@ -6,8 +6,8 @@ import { CheckBox } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RoutesKey from '../../Navigation/routesKey'
 import { useNavigation } from '@react-navigation/native'
-import { getUserProfile, login } from '../../../api'
-import { useDispatch } from 'react-redux'
+import { getUserProfile, login, logout } from '../../../api'
+import { useDispatch, useSelector } from 'react-redux'
 import { saveUser } from '../../redux/reducers/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -23,32 +23,32 @@ const Login = () => {
 
     })
     const navigation = useNavigation()
-    const loginHandler = () => {
+    const loginHandler = async () => {
         setBtnLoading(true)
-        // if (!formData.email || !formData.password) {
-        //     // const empty
-        //     setBtnLoading(false)
-        //     return;
-        // }
-        login(formData, async (res) => {
-            setBtnLoading(false)
+     
+        // const token = await AsyncStorage.getItem('token')
+        const result = await login(formData)
+        const res = JSON.parse(result)
+
+        // , async (res) => {
+        setBtnLoading(false)
+        console.log(res)
+        if (res.key) {
+            const userObj = await getUserProfile()
+            await AsyncStorage.setItem('user', userObj)
+            await AsyncStorage.setItem('token', res.key)
+            dispatch(saveUser({ user: userObj, token: res.key }))
+            setFormData({
+                email: '',
+                password: '',
+                btnLoading: false
+            })
+            navigation.replace(RoutesKey.BOTTOMTAB)
+        } else {
+            setErrors(res)
             console.log(res)
-            if (res.key) {
-               const userObj=await getUserProfile()
-                await AsyncStorage.setItem('user',userObj)
-                await AsyncStorage.setItem('token',res.key)
-                dispatch(saveUser({user:userObj,token:res.key}))
-                setFormData({
-                    email: '',
-                    password: '',
-                    btnLoading: false
-                })
-                navigation.replace(RoutesKey.BOTTOMTAB)
-            } else {
-                setErrors(res)
-                console.log(res)
-            }
-        })
+        }
+        // })
     }
     return (
         <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
@@ -105,9 +105,11 @@ const Login = () => {
                                     isUnderlined={false}
                                     alignSelf='center'
                                     onPress={() => navigation.navigate(RoutesKey.FORGOTPASSWORD)}
-                                    ml='auto' mr='1' variant='link'>Forgot Password</Link>
+                                    ml='auto' mr='1' variant='link'>Forgot Password ?</Link>
                             </Box>
-                            <Button onPress={loginHandler} isLoading={btnLoading} shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
+                            <Button
+                                isDisabled={btnLoading || !formData.email || !formData.password}
+                                onPress={loginHandler} isLoading={btnLoading} shadow={5} mt='7' bg='#7D9E49'>SIGN IN</Button>
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
                                 <Link isUnderlined={false} onPress={() => navigation.navigate(RoutesKey.SIGNUP)} ml='1' variant='link'>Sign Up</Link>
