@@ -1,6 +1,6 @@
 import { API_URL } from "./src/constants";
 // const token='b99348f27007ad94779fc94fb3f06a84d0aa3710'
-export const signup = (data, cb) => {
+export const signup = async (data) => {
 
     const requestOptions = {
         method: 'POST',
@@ -13,28 +13,36 @@ export const signup = (data, cb) => {
         redirect: 'follow',
         body: JSON.stringify(data)
     };
-    fetch(`${API_URL}/rest-auth/registration/`, requestOptions)
-        .then(response => response.text())
-        .then(result => cb(JSON.parse(result)))
-        .catch(error => console.log('error++=', error));
+    const url = `${API_URL}/rest-auth/registration/`
+    const response = await fetch(url, requestOptions)
+    return response.text()
+
+    // fetch(`${API_URL}/rest-auth/registration/`, requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => cb(JSON.parse(result)))
+    //     .catch(error => console.log('error++=', error));
 };
 
-export const login = (data, cb) => {
-
+export const login = async (data) => {
+console.log(token)
     const requestOptions = {
         method: 'POST',
+
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-
         },
         redirect: 'follow',
         body: JSON.stringify(data)
     };
-    fetch(`${API_URL}/rest-auth/login/`, requestOptions)
-        .then(response => response.text())
-        .then(result => cb(JSON.parse(result)))
-        .catch(error => console.log('error++=', error));
+    const url = `${API_URL}/rest-auth/login/`
+    const response = await fetch(url, requestOptions)
+    return response.text()
+
+    // fetch(`${API_URL}/rest-auth/login/`, requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => cb(JSON.parse(result)))
+    //     .catch(error => console.log('error++=', error));
 };
 export const resetPassword = (data, cb) => {
 

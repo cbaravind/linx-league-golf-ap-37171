@@ -7,9 +7,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
 import RoutesKey from '../../Navigation/routesKey'
 import { fonts, colors } from '../../theme'
-import { signup } from '../../../api'
+import { getUserProfile, signup } from '../../../api'
+import { showMessage, hideMessage } from "react-native-flash-message";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux'
+import { saveUser } from '../../redux/reducers/auth'
+
 const Signup = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     const [groupValues, setGroupValues] = useState(false);
     const [errors, setErrors] = useState(false)
     const [checkBoxEmpty, setCheckBoxEmpty] = useState(false)
@@ -19,7 +25,7 @@ const Signup = () => {
         email: '',
         password: '',
     })
-    const signUpHandler = () => {
+    const signUpHandler = async () => {
         setBtnLoading(true)
         if (!groupValues) {
             // const empty
@@ -28,24 +34,44 @@ const Signup = () => {
             setBtnLoading(false)
             return;
         }
-        signup(formData, (res) => {
-            setBtnLoading(false)
-            // console.log(res)
-            if (res.key) {
-                setFormData({
-                    name: '',
-                    email: '',
-                    password: '',
-                })
-                navigation.navigate(RoutesKey.LOGIN)
-                // navigation.navigate(RoutesKey.CREATEPROFILE)
-            } else {
-                setErrors(res)
-                console.log(res)
-                console.log(res)
-            }
+        const result = await signup(formData)
+      const  res = JSON.parse(result)
+        // (res) => {
+        setBtnLoading(false)
+        console.log(res.key)
+        if (res.key) {
+            const userObj = await getUserProfile()
+            await AsyncStorage.setItem('user', userObj)
+            await AsyncStorage.setItem('token', res.key)
+            dispatch(saveUser({ user: userObj, token: res.key }))
+            // await AsyncStorage.setItem('token', res.key)
+            navigation.navigate(RoutesKey.BOTTOMTAB)
 
-        })
+            setFormData({
+                name: '',
+                email: '',
+                password: '',
+            })
+            // showMessage({
+            //     message: "Registered Successfuly",
+            //     type: 'success'
+            // });
+            // navigation.navigate(RoutesKey.LOGIN)
+            // navigation.navigate(RoutesKey.CREATEPROFILE)
+        } else {
+            // if (res.detail) {
+
+            //     showMessage({
+            //         message: res.detail,
+            //         type: 'warning'
+            //     });
+            // }
+            setErrors(res)
+            console.log(res)
+            console.log(res)
+        }
+
+        //  })
     }
     return (
         <View style={{ flex: 0, backgroundColor: '#F1F2F2', height: '100%' }}>
@@ -96,13 +122,13 @@ const Signup = () => {
                                     }}
                                     icon={true} bgcolor={false} greenColor={false} text='Password' />
                             </Box>
-                            <Box flexDirection='row' pt={'1'} >
+                            <Box flexDirection='row' pt={'1'} overflow={"hidden"} >
                                 <Box mt='3' flexDirection='row'>
                                     <CheckBox
                                         containerStyle={{ padding: 0 }}
                                         checked={groupValues}
                                         checkedColor='#7D9E49'
-                                        onPress={() => {checkBoxEmpty && !groupValues && setCheckBoxEmpty(false);setGroupValues(!groupValues)}}
+                                        onPress={() => { checkBoxEmpty && !groupValues && setCheckBoxEmpty(false); setGroupValues(!groupValues) }}
                                     />
                                     <Box mt={'1.5'}>
                                         <Text fontSize={14} fontWeight={'400'} fontFamily={fonts.PROXIMA_REGULAR} > I have read the
@@ -119,11 +145,16 @@ const Signup = () => {
                                 </Box>
                             </Box>
                             {checkBoxEmpty ?
-                                <Text  color="red.600"  style={styles.text}>Please Agree to the terms and Conditions</Text>
+                                <Text color="red.600" style={styles.text}>Please Agree to the terms and Conditions</Text>
                                 :
                                 <></>
                             }
-                            <Button onPress={() => signUpHandler()} isLoading={btnLoading} shadow={5} mt='7' bg='#7D9E49'>SIGN UP</Button>
+                            <Button
+                                isDisabled={btnLoading || !formData.email || !formData.name || !formData.password}
+                                onPress={() => signUpHandler()}
+                                isLoading={btnLoading}
+                                shadow={5} mt='7' bg='#7D9E49'>SIGN UP</Button>
+
                             <Box mt='5' alignSelf='center' flexDirection='row'>
                                 <Text>Don’t have an account?</Text>
                                 <Link isUnderlined={false} onPress={() => navigation.navigate(RoutesKey.LOGIN)} ml='1' variant='link'>Sign In</Link>
