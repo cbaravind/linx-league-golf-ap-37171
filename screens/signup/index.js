@@ -1,9 +1,17 @@
-import React from "react";
-import { Text, View, TouchableOpacity, Image, StyleSheet, TextInput, TouchableHighlight } from "react-native";
+import React from "react"
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableHighlight
+} from "react-native"
 
 const pressed = () => {
-  console.log("pressed");
-};
+  console.log("pressed")
+}
 
 const Signup = () => {
   return (
@@ -14,21 +22,15 @@ const Signup = () => {
       <View>
         <View style={styles.emailContainer}>
           <Text style={styles.mr10}>Email address</Text>
-          <Input
-            placeholder='Email'
-          />
+          <Input placeholder="Email" />
         </View>
         <View style={styles.mb20}>
           <Text style={styles.mr10}>Password</Text>
-          <Input
-            placeholder='Enter'
-          />
+          <Input placeholder="Enter" />
         </View>
         <View style={styles.mb20}>
           <Text style={styles.mr10}>Confirm password</Text>
-          <Input
-            placeholder='Enter'
-          />
+          <Input placeholder="Enter" />
         </View>
 
         <View style={styles.loginContainer}>
@@ -67,8 +69,8 @@ const Signup = () => {
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -153,24 +155,38 @@ const styles = StyleSheet.create({
   footerText: {
     color: "#6B6B6B"
   }
-});
+})
 
-export default Signup;
+export default Signup
 
-const Button = (props) => {
+const Button = props => {
   return (
-    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
-      <View style={[btnStyles.button, {
-        backgroundColor: props.backgroundColor ? props.backgroundColor : "#000000",
-        height: props.height ? props.height : 49,
-        borderWidth: props.borderWidth ? props.borderWidth : 0,
-        borderColor: props.borderColor ? props.borderColor : "#000000"
-      }]}>
-        <Text style={[btnStyles.text, { color: props.color ? props.color : "#ffffff" }]}>{props.children}</Text>
+    <TouchableHighlight onPress={props.onPress} underlayColor="#DDDDDD">
+      <View
+        style={[
+          btnStyles.button,
+          {
+            backgroundColor: props.backgroundColor
+              ? props.backgroundColor
+              : "#000000",
+            height: props.height ? props.height : 49,
+            borderWidth: props.borderWidth ? props.borderWidth : 0,
+            borderColor: props.borderColor ? props.borderColor : "#000000"
+          }
+        ]}
+      >
+        <Text
+          style={[
+            btnStyles.text,
+            { color: props.color ? props.color : "#ffffff" }
+          ]}
+        >
+          {props.children}
+        </Text>
       </View>
     </TouchableHighlight>
-  );
-};
+  )
+}
 
 const btnStyles = StyleSheet.create({
   button: {
@@ -183,23 +199,25 @@ const btnStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15
   }
-});
+})
 
-const Input = (props) => {
+const Input = props => {
   return (
     <View>
       <TextInput
         style={textStyles.input}
         placeholder={props.placeholder}
         value={props.value}
-        onChangeText={(num) => props.setValue(num)}
-        placeholderTextColor='#ddd'
+        onChangeText={num => props.setValue(num)}
+        placeholderTextColor="#ddd"
         editable={props.editable !== false}
       />
-      {props.errorText ? <Text style={textStyles.error}>{props.errorText}</Text> : null}
+      {props.errorText ? (
+        <Text style={textStyles.error}>{props.errorText}</Text>
+      ) : null}
     </View>
-  );
-};
+  )
+}
 
 const textStyles = StyleSheet.create({
   input: {
@@ -217,4 +235,4 @@ const textStyles = StyleSheet.create({
     color: "#FA060D",
     paddingTop: 8
   }
-});
+})

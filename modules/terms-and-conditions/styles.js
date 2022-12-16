@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
   heading: {
@@ -18,4 +18,4 @@ export const styles = StyleSheet.create({
   touchableopacity: { padding: 5 },
   scrollview: { flex: 1, padding: 20 },
   header: { color: "#fff", fontSize: 16 }
-});
+})

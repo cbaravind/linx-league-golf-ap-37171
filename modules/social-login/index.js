@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   View,
   ImageBackground,
@@ -6,27 +6,27 @@ import {
   Text,
   TouchableOpacity,
   ScrollView
-} from "react-native";
+} from "react-native"
 import {
   NavigationHelpersContext,
   useNavigationBuilder,
   TabRouter,
   TabActions,
   createNavigatorFactory
-} from "@react-navigation/native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { createStackNavigator } from "@react-navigation/stack";
-import { BACKGROUND_URL, LOGO_URL } from "./screens/constants.js";
-import { slice } from "./auth";
-import { styles } from "./screens/styles";
-import { SignInTab, SignupTab } from "./screens/loginsignup";
-import PasswordReset from "./screens/reset";
+} from "@react-navigation/native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { createStackNavigator } from "@react-navigation/stack"
+import { BACKGROUND_URL, LOGO_URL } from "./screens/constants.js"
+import { slice } from "./auth"
+import { styles } from "./screens/styles"
+import { SignInTab, SignupTab } from "./screens/loginsignup"
+import PasswordReset from "./screens/reset"
 
 const LoginTabBar = ({ navigation, state, descriptors }) => {
-  const currentTab = state.routes[state.index];
+  const currentTab = state.routes[state.index]
   return (
     <View style={styles.tabStyle}>
-      {state.routes.map((route) => (
+      {state.routes.map(route => (
         <View
           key={route.key}
           style={route.key === currentTab.key ? styles.activeTabStyle : null}
@@ -37,12 +37,12 @@ const LoginTabBar = ({ navigation, state, descriptors }) => {
                 type: "tabPress",
                 target: route.key,
                 canPreventDefault: true
-              });
+              })
               if (!event.defaultPrevented) {
                 navigation.dispatch({
                   ...TabActions.jumpTo(route.name),
                   target: state.key
-                });
+                })
               }
             }}
           >
@@ -53,15 +53,15 @@ const LoginTabBar = ({ navigation, state, descriptors }) => {
         </View>
       ))}
     </View>
-  );
-};
+  )
+}
 
 function LoginSignupTabs({ initialRouteName, children, screenOptions }) {
   const { state, navigation, descriptors } = useNavigationBuilder(TabRouter, {
     children,
     screenOptions,
     initialRouteName
-  });
+  })
 
   return (
     <NavigationHelpersContext.Provider value={navigation}>
@@ -108,12 +108,12 @@ function LoginSignupTabs({ initialRouteName, children, screenOptions }) {
         </ScrollView>
       </KeyboardAwareScrollView>
     </NavigationHelpersContext.Provider>
-  );
+  )
 }
 
-const createLoginNavigator = createNavigatorFactory(LoginSignupTabs);
+const createLoginNavigator = createNavigatorFactory(LoginSignupTabs)
 
-const LoginStack = createLoginNavigator();
+const LoginStack = createLoginNavigator()
 
 const LoginScreen = () => {
   return (
@@ -129,10 +129,10 @@ const LoginScreen = () => {
         options={{ title: "Sign Up" }}
       />
     </LoginStack.Navigator>
-  );
-};
+  )
+}
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 const LoginSignup = () => {
   return (
@@ -140,11 +140,11 @@ const LoginSignup = () => {
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="PasswordReset" component={PasswordReset} />
     </Stack.Navigator>
-  );
-};
+  )
+}
 
 export default {
   title: "login",
   navigator: LoginSignup,
   slice: slice
-};
+}

@@ -1,13 +1,13 @@
-import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React from "react"
+import { Text, StyleSheet, View } from "react-native"
 
-const PrivacyPolicyScreen = (params) => {
+const PrivacyPolicyScreen = params => {
   return (
     <View style={styles.container}>
       <Text style={styles.headingTxt}>Privacy Policy Screen</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     padding: 2,
     marginVertical: 12
   }
-});
+})
 
-export default PrivacyPolicyScreen;
+export default PrivacyPolicyScreen

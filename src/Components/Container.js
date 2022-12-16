@@ -1,32 +1,40 @@
-import { Box, Button, Center, Icon, Image, Link, Pressable, ScrollView, Text, View } from 'native-base'
+import {
+  Box,
+  Button,
+  Center,
+  Icon,
+  Image,
+  Link,
+  Pressable,
+  ScrollView,
+  Text,
+  View
+} from "native-base"
 
-import { SafeAreaView, StatusBar } from 'react-native'
-import React from 'react'
-import { colors } from '../theme'
-import AppHeader from './AppHeader'
-export default function Container({ children,title, style }) {
-    return (
-        <>
-            <StatusBar
-                barStyle={'light-content'}
-                backgroundColor={colors.grey}
-                hidden={false}
-                translucent={true}
-            />
+import { SafeAreaView, StatusBar } from "react-native"
+import React from "react"
+import { colors } from "../theme"
+import AppHeader from "./AppHeader"
+export default function Container({ children, title, style }) {
+  return (
+    <>
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={colors.grey}
+        hidden={false}
+        translucent={true}
+      />
 
-            <View style={{ backgroundColor: colors.grey,flex:1 }}>
-
-                {/* <SafeAreaView style={{style}}  > */}
-                   {/* {children} */}
-                    {/* <ScrollView > */}
-                        {/* <Center px="1" > */}
-                            {children}
-                        {/* </Center> */}
-                    {/* </ScrollView> */}
-                {/* </SafeAreaView> */}
-
-
-            </View>
-        </>
-    )
+      <View style={{ backgroundColor: colors.grey, flex: 1 }}>
+        {/* <SafeAreaView style={{style}}  > */}
+        {/* {children} */}
+        {/* <ScrollView > */}
+        {/* <Center px="1" > */}
+        {children}
+        {/* </Center> */}
+        {/* </ScrollView> */}
+        {/* </SafeAreaView> */}
+      </View>
+    </>
+  )
 }
