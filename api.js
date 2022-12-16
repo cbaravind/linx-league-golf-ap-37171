@@ -24,7 +24,6 @@ export const signup = async (data) => {
 };
 
 export const login = async (data) => {
-console.log(token)
     const requestOptions = {
         method: 'POST',
 
