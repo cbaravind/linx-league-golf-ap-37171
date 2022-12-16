@@ -1,13 +1,13 @@
-import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React from "react"
+import { Text, StyleSheet, View } from "react-native"
 
-const DirectMessagesScreen = (params) => {
+const DirectMessagesScreen = params => {
   return (
     <View style={styles.container}>
       <Text style={styles.headingTxt}>Direct Messages Screen</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     padding: 2,
     marginVertical: 12
   }
-});
+})
 
-export default DirectMessagesScreen;
+export default DirectMessagesScreen

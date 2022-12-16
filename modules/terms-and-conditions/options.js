@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from "react-native"
 
 // to configure this module, edit the base url in options/options.js
-const path = "/modules/terms-and-conditions/";
+const path = "/modules/terms-and-conditions/"
 
-const title = "Terms And Conditions";
+const title = "Terms And Conditions"
 
 const styles = StyleSheet.create({
   heading: {
@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
   touchableopacity: { padding: 5 },
   scrollview: { flex: 1, padding: 20 },
   header: { color: "#fff", fontSize: 16 }
-});
+})
 
 export default {
   title: title,
   path: path,
   styles: styles
-};
+}

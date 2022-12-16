@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React from "react"
+import { StyleSheet, View, Text } from "react-native"
 
 const YourApp = () => {
   return (
@@ -7,7 +7,7 @@ const YourApp = () => {
       <Text style={styles.text}>Welcome to your brand new app!</Text>
     </View>
   )
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20
-  },
+  }
 })
 
 export const YourAppModule = {

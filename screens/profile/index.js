@@ -1,9 +1,17 @@
-import React from "react";
-import { ScrollView, Text, View, StyleSheet, TouchableHighlight, Image, TextInput } from "react-native";
+import React from "react"
+import {
+  ScrollView,
+  Text,
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Image,
+  TextInput
+} from "react-native"
 
 const pressed = () => {
-  console.log("pressed");
-};
+  console.log("pressed")
+}
 
 const Profile = () => {
   return (
@@ -39,12 +47,14 @@ const Profile = () => {
           </View>
         </View>
         <View style={styles.btnSave}>
-          <Button onPress={pressed} height={49}>Save</Button>
+          <Button onPress={pressed} height={49}>
+            Save
+          </Button>
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   mainContainer: {
     padding: 10,
@@ -107,24 +117,38 @@ const styles = StyleSheet.create({
     marginTop: 50,
     width: "80%"
   }
-});
+})
 
-export default Profile;
+export default Profile
 
-const Button = (props) => {
+const Button = props => {
   return (
-    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
-      <View style={[btnStyles.button, {
-        backgroundColor: props.backgroundColor ? props.backgroundColor : "#000000",
-        height: props.height ? props.height : 49,
-        borderWidth: props.borderWidth ? props.borderWidth : 0,
-        borderColor: props.borderColor ? props.borderColor : "#000000"
-      }]}>
-        <Text style={[btnStyles.text, { color: props.color ? props.color : "#ffffff" }]}>{props.children}</Text>
+    <TouchableHighlight onPress={props.onPress} underlayColor="#DDDDDD">
+      <View
+        style={[
+          btnStyles.button,
+          {
+            backgroundColor: props.backgroundColor
+              ? props.backgroundColor
+              : "#000000",
+            height: props.height ? props.height : 49,
+            borderWidth: props.borderWidth ? props.borderWidth : 0,
+            borderColor: props.borderColor ? props.borderColor : "#000000"
+          }
+        ]}
+      >
+        <Text
+          style={[
+            btnStyles.text,
+            { color: props.color ? props.color : "#ffffff" }
+          ]}
+        >
+          {props.children}
+        </Text>
       </View>
     </TouchableHighlight>
-  );
-};
+  )
+}
 
 const btnStyles = StyleSheet.create({
   button: {
@@ -137,17 +161,21 @@ const btnStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15
   }
-});
+})
 
-const ProfileImage = (props) => {
+const ProfileImage = props => {
   return (
-    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
+    <TouchableHighlight onPress={props.onPress} underlayColor="#DDDDDD">
       <View style={profileStyles.container}>
-        <Image style={profileStyles.image} resizeMode="contain" source={require("./assets/edit.png")} />
+        <Image
+          style={profileStyles.image}
+          resizeMode="contain"
+          source={require("./assets/edit.png")}
+        />
       </View>
     </TouchableHighlight>
-  );
-};
+  )
+}
 const profileStyles = StyleSheet.create({
   container: {
     backgroundColor: "#DADADA",
@@ -161,23 +189,25 @@ const profileStyles = StyleSheet.create({
     width: 43,
     marginTop: 21
   }
-});
+})
 
-const Input = (props) => {
+const Input = props => {
   return (
     <View>
       <TextInput
         style={inputStyles.input}
         placeholder={props.placeholder}
         value={props.value}
-        onChangeText={(num) => props.setValue(num)}
-        placeholderTextColor='#ddd'
+        onChangeText={num => props.setValue(num)}
+        placeholderTextColor="#ddd"
         editable={props.editable !== false}
       />
-      {props.errorText ? <Text style={inputStyles.error}>{props.errorText}</Text> : null}
+      {props.errorText ? (
+        <Text style={inputStyles.error}>{props.errorText}</Text>
+      ) : null}
     </View>
-  );
-};
+  )
+}
 
 const inputStyles = StyleSheet.create({
   input: {
@@ -195,4 +225,4 @@ const inputStyles = StyleSheet.create({
     color: "#FA060D",
     paddingTop: 8
   }
-});
+})

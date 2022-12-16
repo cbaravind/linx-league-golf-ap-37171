@@ -1,26 +1,27 @@
-import React from "react";
-import { Text, View, StyleSheet, TouchableHighlight, TextInput } from "react-native";
+import React from "react"
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  TextInput
+} from "react-native"
 
 const SupportSendFeedbackScreen = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.labelText}>
-          Email address
-        </Text>
-        <Input
-          placeholder='Enter'
-        />
+        <Text style={styles.labelText}>Email address</Text>
+        <Input placeholder="Enter" />
       </View>
       <View style={styles.Textarea}>
-        <Text style={styles.labelText}>
-          Message
-        </Text>
-        <TextInput style={styles.TextAreaInput}
+        <Text style={styles.labelText}>Message</Text>
+        <TextInput
+          style={styles.TextAreaInput}
           numberOfLines={5}
           multiline={true}
-          placeholder='Enter'
-          placeholderTextColor='#ddd'
+          placeholder="Enter"
+          placeholderTextColor="#ddd"
         />
       </View>
 
@@ -28,8 +29,8 @@ const SupportSendFeedbackScreen = () => {
         <Button>Submit</Button>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -58,24 +59,38 @@ const styles = StyleSheet.create({
   SubmitBtn: {
     marginTop: 100
   }
-});
+})
 
-export default SupportSendFeedbackScreen;
+export default SupportSendFeedbackScreen
 
-const Button = (props) => {
+const Button = props => {
   return (
-    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
-      <View style={[btnStyles.button, {
-        backgroundColor: props.backgroundColor ? props.backgroundColor : "#000000",
-        height: props.height ? props.height : 49,
-        borderWidth: props.borderWidth ? props.borderWidth : 0,
-        borderColor: props.borderColor ? props.borderColor : "#000000"
-      }]}>
-        <Text style={[btnStyles.text, { color: props.color ? props.color : "#ffffff" }]}>{props.children}</Text>
+    <TouchableHighlight onPress={props.onPress} underlayColor="#DDDDDD">
+      <View
+        style={[
+          btnStyles.button,
+          {
+            backgroundColor: props.backgroundColor
+              ? props.backgroundColor
+              : "#000000",
+            height: props.height ? props.height : 49,
+            borderWidth: props.borderWidth ? props.borderWidth : 0,
+            borderColor: props.borderColor ? props.borderColor : "#000000"
+          }
+        ]}
+      >
+        <Text
+          style={[
+            btnStyles.text,
+            { color: props.color ? props.color : "#ffffff" }
+          ]}
+        >
+          {props.children}
+        </Text>
       </View>
     </TouchableHighlight>
-  );
-};
+  )
+}
 
 const btnStyles = StyleSheet.create({
   button: {
@@ -88,23 +103,25 @@ const btnStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15
   }
-});
+})
 
-const Input = (props) => {
+const Input = props => {
   return (
     <View>
       <TextInput
         style={textStyles.input}
         placeholder={props.placeholder}
         value={props.value}
-        onChangeText={(num) => props.setValue(num)}
-        placeholderTextColor='#ddd'
+        onChangeText={num => props.setValue(num)}
+        placeholderTextColor="#ddd"
         editable={props.editable !== false}
       />
-      {props.errorText ? <Text style={textStyles.error}>{props.errorText}</Text> : null}
+      {props.errorText ? (
+        <Text style={textStyles.error}>{props.errorText}</Text>
+      ) : null}
     </View>
-  );
-};
+  )
+}
 
 const textStyles = StyleSheet.create({
   input: {
@@ -122,4 +139,4 @@ const textStyles = StyleSheet.create({
     color: "#FA060D",
     paddingTop: 8
   }
-});
+})

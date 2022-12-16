@@ -16,7 +16,6 @@ import Row from '../../Components/Row';
 
 const CreateProfile = () => {
   const { token, user } = useSelector(state => state?.auth?.user)
-  console.log(token, '=====')
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState({
@@ -39,7 +38,6 @@ const CreateProfile = () => {
   const [btnLoading, setBtnLoading] = useState(false)
   const route = useRoute();
   const navigation = useNavigation();
-  // console.log(formData.image, '===',)
 
   useEffect(() => {
     let SD = {};
@@ -89,7 +87,7 @@ const CreateProfile = () => {
    
     const res = await createProfile(form,formData.image, token)
     setBtnLoading(false)
-    console.log('res', res)
+    console.log('response of profile API', res)
   }
   const launchLibrary = () => {
     setShowPickerModal(false)
