@@ -18,3 +18,7 @@ export const pubnub = new Pubnub({
   subscribeKey: subscribekey,
   userId: "User"
 })
+export const shareOptions={
+  message: 'This is nessage',
+  title: 'Title'
+}

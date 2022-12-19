@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native"
+import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native"
 import React from "react"
 import Container from "../../Components/Container"
 import AppHeader from "../../Components/AppHeader"
@@ -9,6 +9,8 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view"
 import { useNavigation } from "@react-navigation/core"
 import Previous from "./Previous/Previous"
 import Upcoming from "./Upcoming/Upcoming"
+import Share from 'react-native-share';
+import { shareOptions } from "../../constants"
 
 export default function ScoreCard() {
   const navigation = useNavigation()
@@ -28,12 +30,24 @@ export default function ScoreCard() {
       indicatorContainerStyle={styles.indicatorContainer}
     />
   )
+  const onShare = () => {
+    
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      })
+  }
   return (
     <>
       <AppHeader
         showLogo
         rightIcon={
-          <Icon name="ios-share-social" size={24} color={colors.white} />
+          <Pressable onPress={onShare}>
+            <Icon name="ios-share-social" size={24} color={colors.white} />
+          </Pressable>
         }
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>

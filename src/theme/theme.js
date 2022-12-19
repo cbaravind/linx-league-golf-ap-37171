@@ -81,11 +81,22 @@ const theme = extendTheme({
     Select: {
       defaultProps: {
         borderColor: "green",
-        borderRadius: "10px",
+        borderWidth:0,
+        color:'#7D9E49',
+        fontSize:20,
+        fontWeight:'700',
+        fontFamily:fonts.PROXIMA_BOLD,
+        // borderRadius: "10px",
         colorScheme: "green",
         _focus: {
           borderColor: "green"
-        }
+        },
+        _customDropdownIconProps: {
+          color: '#7D9E49',
+          // mr: '3',
+          size: '4',
+          // p: '1',
+        },
       }
     }
   },

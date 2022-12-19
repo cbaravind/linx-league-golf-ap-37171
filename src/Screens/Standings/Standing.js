@@ -2,12 +2,14 @@ import { View, FlatList, ScrollView } from "react-native"
 import React from "react"
 import { standings, stats } from "../../assets/data"
 import StandingCard from "./components/StandingCard"
-import { Icon, IconButton, Text } from "native-base"
+import { CheckIcon, Icon, IconButton, Select, Text } from "native-base"
 import { colors, fonts } from "../../theme"
 import Row from "../../Components/Row"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import RankCard from "./components/RankCard"
 export default function Standing() {
+  let [league, setLeague] = React.useState('linxleague');
+
   const data = [
     {
       id: 1,
@@ -38,29 +40,21 @@ export default function Standing() {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
-        <Row style={{ justifyContent: "center", marginBottom: 7 }}>
-          <Text
-            textAlign="center"
-            color={colors.green}
-            fontSize={"20"}
-            fontWeight={"700"}
-            fontFamily={fonts.PROXIMA_REGULAR}
-          >
-            Linx League
-          </Text>
-          <IconButton
-            ml={-1}
-            mt={1}
-            icon={
-              <Icon
-                as={Ionicons}
-                name={"chevron-down"}
-                size={6}
-                color={colors.green}
-              />
-            }
-          />
-        </Row>
+        <View style={{ alignItems: "center",paddingBottom:15 }}>
+          <Select
+            selectedValue={league} minWidth={150}
+            onValueChange={itemValue => setLeague(itemValue)}
+            _selectedItem={{
+              bg: colors.white,
+              endIcon: <CheckIcon size={4} />
+            }}>
+            <Select.Item label="Linx League" value="linxleague" />
+            <Select.Item label="League" value="League" />
+            <Select.Item label="League 1" value="League1" />
+
+          </Select>
+        </View>
+
         <View>
           <FlatList
             horizontal
@@ -73,6 +67,7 @@ export default function Standing() {
             contentContainerStyle={{ paddingHorizontal: 12 }}
           />
         </View>
+
 
         <Text
           m={"3"}

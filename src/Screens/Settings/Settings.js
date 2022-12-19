@@ -1,4 +1,4 @@
-import { ScrollView, TouchableOpacity, View } from "react-native"
+import { ScrollView,  TouchableOpacity, View } from "react-native"
 import React, { useState } from "react"
 import AppHeader from "../../Components/AppHeader"
 import EvilIcons from "react-native-vector-icons/EvilIcons"
@@ -14,7 +14,9 @@ import { logout } from "../../../api"
 import { useDispatch, useSelector } from "react-redux"
 import { saveUser } from "../../redux/reducers/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { shareOptions } from "../../constants"
 // import { Switch } from 'react-native-switch'
+import Share from 'react-native-share';
 
 export default function Settings() {
   const [mute, setMute] = useState(false)
@@ -32,7 +34,16 @@ export default function Settings() {
       }
     })
   }
-
+  const onShare = () => {
+    
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      })
+  }
   return (
     <>
       {/* // <Container style={{flex:1}}> */}
@@ -61,6 +72,9 @@ export default function Settings() {
                 />
               </Box>
             </Pressable>
+            <Pressable
+              onPress={() => onShare()}
+            >
             <Box mt="2" flexDirection="row" p="6" bg="#FFFFFF">
               <Icon as={Feather} name="user-plus" size="6" />
               <Text ml="3" alignSelf="center">
@@ -76,6 +90,7 @@ export default function Settings() {
                 color={colors.green}
               />
             </Box>
+            </Pressable>
             <Box mt="2" flexDirection="row" p="6" bg="#FFFFFF">
               <Text alignSelf="center">Mute Notifications</Text>
               <Switch

@@ -118,9 +118,11 @@ export default function SendReferral({ route }) {
                       )}
                     />
                   </>
-                ) : (
-                  <></>
-                )}
+                ) :
+                <View style={{alignItems:"center",marginVertical:50}} >
+                  <Text>No Contacts found</Text>
+                </View>
+              }
               </ScrollView>
               <Button marginY={"3"} marginX={"7"} shadow={5} bg="#7D9E49">
                 {"Send"}

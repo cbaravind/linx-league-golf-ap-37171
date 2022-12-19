@@ -18,6 +18,7 @@ export default function FindFriends() {
       const filtered = friendsArray.filter(e => e.name.includes(searchText))
       setFriendsArray(filtered)
     }
+
   }
 
   const clearResults = () => {
@@ -31,19 +32,26 @@ export default function FindFriends() {
           onSearchSubmit={searchFriends}
           clearResults={clearResults}
         />
-        <FlatList
-          data={friendsArray}
-          contentContainerStyle={{
-            backgroundColor: colors.white,
-            padding: 20,
-            marginTop: 20,
-            marginBottom: 12
-          }}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <UserProfile name={item.name} image={item.image} />
-          )}
-        />
+        {friendsArray.length ?
+
+          <FlatList
+            data={friendsArray}
+            contentContainerStyle={{
+              backgroundColor: colors.white,
+              padding: 20,
+              marginTop: 20,
+              marginBottom: 12
+            }}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <UserProfile name={item.name} image={item.image} />
+            )}
+          />
+          :
+          <View style={{alignItems:"center",flex:1,justifyContent:'center'}} >
+            <Text>No Records found</Text>
+          </View>
+        }
         <Button m={"7"} shadow={5} bg="#7D9E49">
           {"Request"}
         </Button>

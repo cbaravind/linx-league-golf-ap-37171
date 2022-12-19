@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native"
 import React, { useEffect, useState } from "react"
 import AppHeader from "../../Components/AppHeader"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -8,13 +8,26 @@ import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
 
 export default function ScoreDetailScreen() {
+  const onShare = () => {
+
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      })
+  }
+
   return (
     <>
       <AppHeader
         showLogo
         back
         rightIcon={
-          <Icon name="ios-share-social" size={24} color={colors.white} />
+          <Pressable onPress={onShare}>
+            <Icon name="ios-share-social" size={24} color={colors.white} />
+          </Pressable>
         }
       />
       <View

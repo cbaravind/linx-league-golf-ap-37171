@@ -25,11 +25,12 @@ import Contacts from "react-native-contacts"
 import { PermissionsAndroid } from "react-native"
 import { Button } from "native-base"
 
-export default function AddFriends() {
+export default function AddFriends({route}) {
   const [modalVisible, setModalVisible] = useState(false)
   const [friendsList, setFriendsList] = useState(friends)
   const navigation = useNavigation()
-
+  const {date,time} = route?.params
+  console.log(date,time,'======')
   const fetchContacts = () => {
     if (modalVisible == "refer") {
       Contacts.checkPermission().then(permission => {
@@ -70,7 +71,7 @@ export default function AddFriends() {
         rightIcon={<Text style={styles.text}>SKIP</Text>}
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
-        <CityInput />
+        <CityInput date={date} time={time} />
         <View
           style={{
             backgroundColor: colors.white,

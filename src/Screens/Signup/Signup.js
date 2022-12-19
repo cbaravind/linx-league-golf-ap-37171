@@ -32,7 +32,6 @@ const Signup = () => {
   const [checkBoxEmpty, setCheckBoxEmpty] = useState(false)
   const [btnLoading, setBtnLoading] = useState(false)
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: ""
   })
@@ -55,7 +54,6 @@ const Signup = () => {
       navigation.navigate(RoutesKey.BOTTOMTAB)
 
       setFormData({
-        name: "",
         email: "",
         password: ""
       })
@@ -98,22 +96,7 @@ const Signup = () => {
                   Sign Up
                 </Text>
               </Box>
-              <Box mt="2">
-                <InputText
-                  error={errors?.name ? errors?.name[0] : ""}
-                  value={formData.name}
-                  onChangeText={val => {
-                    const _errors = errors
-                    delete _errors["name"]
-                    setErrors(_errors)
-                    setFormData({ ...formData, name: val })
-                  }}
-                  bgcolor={true}
-                  greenColor={true}
-                  text="Name"
-                  typeShow="text"
-                />
-              </Box>
+             
               <Box mt="2">
                 <InputText
                   error={errors?.email ? errors?.email[0] : ""}
@@ -182,7 +165,7 @@ const Signup = () => {
                         }
                       >
                         <Text mt={"0.5"} style={styles.greenText}>
-                          {" "}
+                          {"  "}
                           Privacy Policy
                         </Text>
                       </Link>
@@ -201,7 +184,6 @@ const Signup = () => {
                 isDisabled={
                   btnLoading ||
                   !formData.email ||
-                  !formData.name ||
                   !formData.password
                 }
                 onPress={() => signUpHandler()}
@@ -214,7 +196,7 @@ const Signup = () => {
               </Button>
 
               <Box mt="5" alignSelf="center" flexDirection="row">
-                <Text>Don’t have an account?</Text>
+                <Text>Already have an account? </Text>
                 <Link
                   isUnderlined={false}
                   onPress={() => navigation.navigate(RoutesKey.LOGIN)}

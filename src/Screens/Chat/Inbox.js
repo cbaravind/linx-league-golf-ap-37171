@@ -34,18 +34,24 @@ export default function Inbox() {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor..."
     }
   ]
-  const searchChats = () => {}
-  const clearResults = () => {}
+  const searchChats = () => { }
+  const clearResults = () => { }
   return (
     <Container>
       <AppHeader back title="Messages" />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <SearchInput onSearchSubmit={searchChats} clearResults={clearResults} />
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <ChatCard chat={item} />}
-          keyExtractor={item => item.id}
-        />
+        {data ?
+          <FlatList
+            data={data}
+            renderItem={({ item }) => <ChatCard chat={item} />}
+            keyExtractor={item => item.id}
+          />
+          :
+          <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }} >
+            <Text>No Records found</Text>
+          </View>
+        }
       </View>
     </Container>
   )

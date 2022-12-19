@@ -4,8 +4,9 @@ import { StyleSheet } from "react-native"
 import { colors, fonts } from "../../../theme"
 import Row from "../../../Components/Row"
 import Icon from "react-native-vector-icons/Ionicons"
+import moment from "moment"
 
-export default function CityInput() {
+export default function CityInput({date,time}) {
   return (
     <View style={{ padding: 20 }}>
       <Row style={styles.container}>
@@ -16,7 +17,7 @@ export default function CityInput() {
           placeholderTextColor={colors.text1}
         />
       </Row>
-      <Text style={[styles.text]}>dd/mm/yyyy, 08:00am</Text>
+      <Text style={[styles.text]}>{moment(date).format('DD/MM/YYYY')}, {moment(time).format('HH:mm a')}</Text>
     </View>
   )
 }

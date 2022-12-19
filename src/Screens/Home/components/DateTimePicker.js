@@ -58,7 +58,7 @@ export default () => {
           <TouchableOpacity
             onPress={() => {
               dateTimeSelected
-                ? navigation.navigate(RoutesKey.ADDFRIENDS)
+                ? navigation.navigate(RoutesKey.ADDFRIENDS,{time:date,date:selectedDate})
                 : setTimePickerOpen(true)
             }}
             style={[
@@ -67,7 +67,7 @@ export default () => {
             ]}
           >
             {dateTimeSelected ? (
-              <Text style={[styles.h2, { color: colors.white }]}>Apply</Text>
+              <Text style={[styles.h2, { color: colors.white }]}>Confirm</Text>
             ) : (
               <Row>
                 <Text style={styles.text}>HH:MM:SS</Text>
