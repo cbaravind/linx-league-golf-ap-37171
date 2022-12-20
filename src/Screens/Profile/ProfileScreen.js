@@ -3,7 +3,7 @@ import React from "react"
 import Container from "../../Components/Container"
 import { colors } from "../../theme"
 import AppHeader from "../../Components/AppHeader"
-import { Button, Icon, IconButton } from "native-base"
+import { Button, Icon, IconButton, Tooltip } from "native-base"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../Navigation/routesKey"
@@ -11,9 +11,20 @@ import UserStatsCard from "../../Components/UserStatsCard"
 import SeasonStats from "../../Components/SeasonStats"
 import AppButton from "../../Components/AppButton"
 import { stats } from "../../assets/data"
+import Share from 'react-native-share'
+import { shareOptions } from "../../constants"
 export default function ProfileScreen() {
   const navigation = useNavigation()
-
+  const onShare = () => {
+    
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      })
+  }
   return (
     <Container>
       <AppHeader
@@ -49,9 +60,10 @@ export default function ProfileScreen() {
           city={"LA, California"}
           stats={stats}
         />
-        <Button shadow={5} mt={4} variant={"solid"} bg="#7D9E49">
-          {"INVITE A FRIEND"}
-        </Button>
+          <Button onPress={onShare} shadow={5} mt={4} variant={"solid"} bg="#7D9E49">
+            {"INVITE A FRIEND"}
+          </Button>
+       
 
         <SeasonStats />
       </View>

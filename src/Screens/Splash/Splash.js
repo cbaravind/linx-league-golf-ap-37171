@@ -11,7 +11,7 @@ import LinearGradient from "react-native-linear-gradient"
 const Splash = () => {
   const navigation = useNavigation()
   const [progress, setProgress] = useState(0)
-  const { user, token } = useSelector(state => state.auth.user)
+  const { user, token } = useSelector(state => state?.auth?.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Splash = () => {
     setTimeout(() => {
       navigation.reset({
         index: 0,
-        routes: [{ name: RoutesKey.LOGIN }]
+        routes: [{ name: RoutesKey.BOTTOMTAB }]
       })
     }, 1000)
   }

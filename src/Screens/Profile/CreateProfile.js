@@ -36,17 +36,18 @@ const CreateProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [showPickerModal, setShowPickerModal] = useState(false)
   const [btnLoading, setBtnLoading] = useState(false)
+  const [continueWithoutGHIN, setContinueWithoutGHIN] = useState(false)
   const route = useRoute();
   const navigation = useNavigation();
 
   useEffect(() => {
     let SD = {};
-   
+
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
 
- 
+
 
   useEffect(() => {
     if (valueGHIN == "Yes") {
@@ -63,29 +64,29 @@ const CreateProfile = () => {
   const submitHandler = async () => {
     setBtnLoading(true)
     const form = new FormData();
-    form.append('user',{
+    form.append('user', {
       email: user?.user?.email,
       first_name: formData.firstName,
       last_name: formData.lastName
     })
-    form.append('profile_image',{
-      'type':formData?.image?.type,
-      'uri':formData?.image?.uri,
-      'name':formData?.image?.fileName
+    form.append('profile_image', {
+      'type': formData?.image?.type,
+      'uri': formData?.image?.uri,
+      'name': formData?.image?.fileName
     })
-    form.append('phone_number',phoneNumber)
-    form.append('has_ghin',valueGHIN)
-    form.append('ghin',formData?.ghin)
+    form.append('phone_number', phoneNumber)
+    form.append('has_ghin', valueGHIN)
+    form.append('ghin', formData?.ghin)
 
-  
+
     // const data = {
     //   phone_number: phoneNumber,
     //   gender: value,
     //   ghin: formData.ghin,
     //   has_ghin: valueGHIN,
     // }
-   
-    const res = await createProfile(form,formData.image, token)
+
+    const res = await createProfile(form, formData.image, token)
     setBtnLoading(false)
     console.log('response of profile API', res)
   }
@@ -244,11 +245,23 @@ const CreateProfile = () => {
               <Modal.CloseButton />
               <Modal.Body>
                 <Box p='6'>
-                  <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
-                  <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to
-                    <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
-                  <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
-                  <Button bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                  {continueWithoutGHIN ?
+                    <>
+                      <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>You can still enjoy the
+                        Linx League app with no GHIN</Text>
+                      <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>but when you’re ready to compete
+                        for cash & prizes, please sign up for yours!</Text>
+                        <Button shadow={5} mt='5' bg='#7D9E49'>INVITE YOUR FRIENDS</Button>
+                    </>
+                    :
+                    <>
+                      <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
+                      <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to</Text>
+                      <Text> <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
+                      <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                      <Button onPress={() => setContinueWithoutGHIN(true)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                    </>
+                  }
                 </Box>
 
               </Modal.Body>

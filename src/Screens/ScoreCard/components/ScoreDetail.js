@@ -1,22 +1,19 @@
 import { View, ImageBackground, StyleSheet } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { colors, fonts } from "../../../theme"
 import {
   Box,
-  Center,
-  Icon,
-  IconButton,
-  ScrollView,
   Text,
-  Divider,
   Avatar,
   Image,
   Button
 } from "native-base"
 import Row from "../../../Components/Row"
+import Counter from "../../../Components/Counter"
 export default function ScoreDetail({ item }) {
+  const [addScoreClicked, setAddStoreClicked] = useState(false)
   return (
     <View>
       <View
@@ -31,6 +28,7 @@ export default function ScoreDetail({ item }) {
         }}
       >
         <Button
+          onPress={() => setAddStoreClicked(true)}
           style={{
             alignContent: "center",
             borderTopRightRadius: 0,
@@ -76,39 +74,57 @@ export default function ScoreDetail({ item }) {
           Hole Stats History
         </Text>
         <Box style={styles.row}>
-          <Box style={styles.box} h="80%">
-            <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
-              <Row>
-                <Text style={styles.text}>Recorded Plays </Text>
-                <Text style={styles.text}> 4</Text>
+          {addScoreClicked ?
+            <Box style={styles.box} h="80%">
+              <Row style={{ justifyContent: 'center' }}>
+                <View style={{alignItems:"center"}}>
+                  <Text>Score</Text>
+                  <Counter />
+                </View>
+                <View style={{alignItems:"center"}}>
+                  <Text>Putts</Text>
+                  <Counter />
+                </View>
               </Row>
+
             </Box>
-            <Box pl="5" pr="5" pt="1" pb="1">
-              <Row>
-                <Text style={styles.text}>Av. Score</Text>
-                <Text style={styles.text}>3.4</Text>
-              </Row>
+            :
+            <Box style={styles.box} h="80%">
+              <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
+                <Row>
+                  <Text style={styles.text}>Recorded Plays </Text>
+                  <Text style={styles.text}> 4</Text>
+                </Row>
+              </Box>
+              <Box pl="5" pr="5" pt="1" pb="1">
+                <Row>
+                  <Text style={styles.text}>Av. Score</Text>
+                  <Text style={styles.text}>3.4</Text>
+                </Row>
+              </Box>
+              <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
+                <Row>
+                  <Text style={styles.text}>Av. Putts </Text>
+                  <Text style={styles.text}>1.2</Text>
+                </Row>
+              </Box>
+              <Box pl="5" pr="5" pt="1" pb="1">
+                <Row>
+                  <Text style={styles.text}>FIR% </Text>
+                  <Text style={styles.text}>-</Text>
+                </Row>
+              </Box>
             </Box>
-            <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
-              <Row>
-                <Text style={styles.text}>Av. Putts </Text>
-                <Text style={styles.text}>1.2</Text>
-              </Row>
-            </Box>
-            <Box pl="5" pr="5" pt="1" pb="1">
-              <Row>
-                <Text style={styles.text}>FIR% </Text>
-                <Text style={styles.text}>-</Text>
-              </Row>
-            </Box>
-          </Box>
+
+
+          }
           <Box
-            style={styles.box}
+            style={[styles.box]}
             // alignSelf='center'
             p="7"
             ml="auto"
           >
-            <Text style={[styles.text, { fontSize: 12 }]}>Tee Accuracy</Text>
+            <Text style={[styles.text, { fontSize: 12, }]}>Tee Accuracy</Text>
             <Box alignSelf="center" ml="1" pr="-10">
               <ImageBackground
                 style={[styles.verticalImg, { top: 2, right: -21 }]}
@@ -218,11 +234,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   smallText: {
-    fontSize: 7,
+    fontSize: 5,
     color: colors.text1,
     fontFamily: fonts.PROXIMA_REGULAR,
     textAlign: "center",
     fontWeight: "400",
-    lineHeight: 7.5
+    lineHeight: 5.5
   }
 })

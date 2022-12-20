@@ -3,6 +3,7 @@ import React from "react"
 import { colors, fonts } from "../theme"
 // import { Icon, IconButton } from 'native-base'
 import Ionicons from "react-native-vector-icons/Ionicons"
+import { Tooltip } from "react-native-elements"
 
 export default function StatsCircle({
   title,
@@ -16,19 +17,29 @@ export default function StatsCircle({
   return (
     <View style={{ marginHorizontal: 6 }}>
       {info ? (
-        <TouchableOpacity onPress={onPressInfo}>
-          <Ionicons
-            name="information-circle-outline"
-            color={colors.green}
-            style={{
-              alignSelf: "flex-end",
-              position: "absolute",
-              right: 0,
-              top: -11
-            }}
-            size={17}
-          />
-        </TouchableOpacity>
+         <Tooltip
+         width={200}
+         backgroundColor={colors.white}
+         popover={<Text>Info goes here</Text>}
+         withPointer={false}
+       >
+         {/* <Text>without caret</Text> */}
+     
+         <Ionicons
+           name="information-circle-outline"
+           color={colors.green}
+           style={{
+             alignSelf: "flex-end",
+             position: "absolute",
+             right: 0,
+             top: -11
+           }}
+           size={17}
+         />
+        {/* <TouchableOpacity >
+        </TouchableOpacity> */}
+        </Tooltip>
+
       ) : (
         <></>
       )}

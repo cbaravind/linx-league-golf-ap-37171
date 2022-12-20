@@ -266,8 +266,9 @@ const styles = StyleSheet.create({
   greenText: {
     color: colors.green,
     fontSize: 14,
-    fontFamily: fonts.PROXIMA_REGULAR,
-    textDecorationLine: "underline"
+    fontFamily:'Roboto',
+    textDecorationLine: "underline",
+    fontWeight:'400'
   },
   text: {
     fontSize: 12,
