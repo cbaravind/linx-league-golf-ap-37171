@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c7ec3132.css",
+    "main.js": "/static/js/main.56710dd9.js",
+    "static/js/787.fa7856e8.chunk.js": "/static/js/787.fa7856e8.chunk.js",
+    "static/media/DemoProfile.png": "/static/media/DemoProfile.a86846693150628b9eee.png",
+    "static/media/DeleteContentIcon.svg": "/static/media/DeleteContentIcon.f9acd1d78fe42d04651e05ecdc6154e7.svg",
+    "static/media/logo.svg": "/static/media/logo.c5004e46cf3d0cc8f180a41b529d3916.svg",
+    "static/media/DeleteUserIcon.svg": "/static/media/DeleteUserIcon.b85dbdaec1971e9b13139cfcc230a7a8.svg",
+    "static/media/BanUserIcon.svg": "/static/media/BanUserIcon.63eddc9f4d856c00f291f304f3fc7393.svg",
+    "static/media/toggleOn.svg": "/static/media/toggleOn.3c4bf55d0523204277f6d3944c24b166.svg",
+    "static/media/toggleOff.svg": "/static/media/toggleOff.7eb5e8ff190ba46974124ef22c4f8105.svg",
+    "static/media/WarnIcon.svg": "/static/media/WarnIcon.949619034187b281e240797d5fb7357b.svg",
+    "static/media/EmojOpenerIcon.svg": "/static/media/EmojOpenerIcon.a52ff5796f266580352a50f2329b8894.svg",
+    "static/media/usersIcon.svg": "/static/media/usersIcon.67ec05ce8c7d309dc541367986377a1f.svg",
+    "static/media/GolfBallIcon.svg": "/static/media/GolfBallIcon.506586a88762788dc341af777a84bea2.svg",
+    "static/media/flagIcon.svg": "/static/media/flagIcon.ace23d49e4a5f8830a6682358ee4bcc6.svg",
+    "static/media/AttachFileIcon.svg": "/static/media/AttachFileIcon.381bb54d365a9f6c1a59305c7273a97c.svg",
+    "static/media/AnalyticsIcon.svg": "/static/media/AnalyticsIcon.5f0a01ca5aa444c702a725201db6f36c.svg",
+    "static/media/EditIcon.svg": "/static/media/EditIcon.3e321c3bf8fff833bbf25273a32db3e6.svg",
+    "static/media/LogoutIcon.svg": "/static/media/LogoutIcon.4b03861a881f6bedbf709589b58ae937.svg",
+    "static/media/DeleteIcon.svg": "/static/media/DeleteIcon.fc850205fa4fb3167041d2ddf84f12c4.svg",
+    "index.html": "/index.html",
+    "static/media/nortificationIcon.svg": "/static/media/nortificationIcon.b52e7e69ca110e4540151412194d5e24.svg",
+    "static/media/NortificationbellIcon.svg": "/static/media/NortificationbellIcon.326b7b7f4b2e90d0d478019af84558ee.svg",
+    "static/media/feedbackIcon.svg": "/static/media/feedbackIcon.9b3b0c04c57affe03f5f5f45baf46e07.svg",
+    "main.c7ec3132.css.map": "/static/css/main.c7ec3132.css.map",
+    "main.56710dd9.js.map": "/static/js/main.56710dd9.js.map",
+    "787.fa7856e8.chunk.js.map": "/static/js/787.fa7856e8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c7ec3132.css",
+    "static/js/main.56710dd9.js"
+  ]
+}
