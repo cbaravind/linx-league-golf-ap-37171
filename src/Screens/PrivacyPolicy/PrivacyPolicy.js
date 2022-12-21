@@ -37,25 +37,25 @@ const PrivacyPolicy = () => {
   return (
     <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
       <SafeAreaView>
+        <Box px={2} flexDirection="row">
+          <IconButton
+            onPress={() => navigation.goBack()}
+            icon={
+              <Icon color="#7D9E49" as={Ionicons} name="chevron-back" />
+            }
+          />
+          <Image
+            ml="auto"
+            h="20"
+            w="130"
+            resizeMode="center"
+            source={require("../../assets/images/SplashLogo.png")}
+            alt=""
+          />
+        </Box>
         <ScrollView>
           <Center px="1">
-            <Box w="100%" p="10px">
-              <Box flexDirection="row">
-                <IconButton
-                  onPress={() => navigation.goBack()}
-                  icon={
-                    <Icon color="#7D9E49" as={Ionicons} name="chevron-back" />
-                  }
-                />
-                <Image
-                  ml="auto"
-                  h="20"
-                  w="120"
-                  resizeMode="center"
-                  source={require("../../assets/images/SplashLogo.png")}
-                  alt=""
-                />
-              </Box>
+            <Box w="100%" pt={4} p="10px">
               <Box>
                 <Text
                   letterSpacing="5"

@@ -22,7 +22,7 @@ export default function UserProfile({ name, image, onPress }) {
             <></>
           )}
         </View>
-        <Text>{name}</Text>
+        <Text style={styles.text}>{name}</Text>
       </Row>
       {/* </TouchableOpacity> */}
     </View>
@@ -49,5 +49,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center"
+  },
+  text:{
+    color:colors.text1,
+    fontWeight:'700',
+    fontSize:16
   }
 })

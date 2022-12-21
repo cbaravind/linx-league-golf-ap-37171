@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import AppHeader from "../../Components/AppHeader"
 import { colors } from "../../theme"
 import Container from "../../Components/Container"
@@ -8,6 +8,7 @@ import ChatCard from "./components/ChatCard"
 import { FlatList } from "react-native"
 import ProfileImage from "../../Components/ProfileImage"
 export default function Inbox() {
+  const [chats, setChats] = useState(data)
   const data = [
     {
       id: 1,
@@ -29,21 +30,30 @@ export default function Inbox() {
       id: 4,
       isRead: true,
       time: "7:08 AM",
-      name: "Thomas",
+      name: "Player",
       message:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor..."
     }
   ]
-  const searchChats = () => { }
-  const clearResults = () => { }
+  const searchChats = (searchText) => { 
+    if (searchText.length && chats.length) {
+      const filtered = chats.filter(e => e.name.includes(searchText))
+      setChats(filtered)
+    }
+
+  }
+  const clearResults = () => {
+    setChats(data)
+    
+   }
   return (
     <Container>
       <AppHeader back title="Messages" />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <SearchInput onSearchSubmit={searchChats} clearResults={clearResults} />
-        {data ?
+        {chats ?
           <FlatList
-            data={data}
+            data={chats}
             renderItem={({ item }) => <ChatCard chat={item} />}
             keyExtractor={item => item.id}
           />

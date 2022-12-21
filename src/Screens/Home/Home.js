@@ -28,7 +28,7 @@ export default function Home() {
   // const userObj = JSON.parse(user)
   data = [
     { id: 1, title: "St Johns Golf & Country Club" },
-    { id: 2, title: "St Johns Golf & Country Club" }
+    { id: 2, title: "Johns & Country Club" }
     // { title: 'St Johns Golf & Country Club' },
   ]
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function Home() {
                   height: "100%",
                   paddingTop: 5
                 }}
-                renderItem={({ item }) => <RoundCard item={item} />}
+                renderItem={({ item }) => <RoundCard item={item} containerStyle={{marginTop:5}} />}
               />
             </View>
           </View>

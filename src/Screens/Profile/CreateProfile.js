@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { imagePickerOptions, IMAGE_PLACEHOLDER } from '../../constants';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Row from '../../Components/Row';
+import RoutesKey from '../../Navigation/routesKey';
 
 const CreateProfile = () => {
   const { token, user } = useSelector(state => state?.auth?.user)
@@ -52,6 +53,7 @@ const CreateProfile = () => {
   useEffect(() => {
     if (valueGHIN == "Yes") {
       setDisableGHIN(false);
+      setShowModal(true);
     }
     else {
       setDisableGHIN(true);
@@ -244,7 +246,7 @@ const CreateProfile = () => {
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
               <Modal.Body>
-                <Box p='6'>
+                <Box p='5'>
                   {continueWithoutGHIN ?
                     <>
                       <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>You can still enjoy the
@@ -253,7 +255,7 @@ const CreateProfile = () => {
                         for cash & prizes, please sign up for yours!</Text>
                         <Button shadow={5} mt='5' bg='#7D9E49'>INVITE YOUR FRIENDS</Button>
                     </>
-                    :
+                    :diableGHIN ?
                     <>
                       <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
                       <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to</Text>
@@ -261,6 +263,13 @@ const CreateProfile = () => {
                       <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
                       <Button onPress={() => setContinueWithoutGHIN(true)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
                     </>
+                    :
+                    <>
+                    <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>It’s time to join your League </Text>
+                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>It’s time to compete for cash & prizes!</Text>
+                    <Button shadow={5} mt='5' bg='#7D9E49'>FIND MY LEAGUE</Button>
+                    <Button onPress={() => navigation.navigate(RoutesKey.HOME)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>SKIP TO HOME</Text></Button>
+                  </>
                   }
                 </Box>
 

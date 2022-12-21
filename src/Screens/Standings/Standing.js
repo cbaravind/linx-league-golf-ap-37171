@@ -19,7 +19,7 @@ export default function Standing() {
     },
     {
       id: 2,
-      city: "Saint Augustine, FL",
+      city: "Saint Augustine",
       rank: 2,
       color: "rgba(190, 190, 190, 0.5)"
     },

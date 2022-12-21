@@ -14,7 +14,7 @@ export default function CityInput({date,time}) {
         <TextInput
           placeholder={"Course, City"}
           style={styles.input}
-          placeholderTextColor={colors.text1}
+          placeholderTextColor={'#828282'}
         />
       </Row>
       <Text style={[styles.text]}>{moment(date).format('DD/MM/YYYY')}, {moment(time).format('HH:mm a')}</Text>

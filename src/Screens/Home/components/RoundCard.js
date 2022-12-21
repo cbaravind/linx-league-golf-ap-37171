@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Image } from "react-native"
 import React from "react"
 import Row from "../../../Components/Row"
 import { colors } from "../../../theme"
-export default function RoundCard({ item }) {
+export default function RoundCard({ item ,containerStyle}) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,containerStyle]}>
       <Row>
         <Row style={{ justifyContent: "flex-start" }}>
           <View style={styles.numberContainer}>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     paddingBottom: 20,
-    marginTop: 5
+    // marginTop: 5
   },
   numberContainer: {
     backgroundColor: "rgba(192,192,192,0.5)",

@@ -1,5 +1,5 @@
 import { View, SafeAreaView, StyleSheet, ImageBackground } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import AppHeader from "../../../Components/AppHeader"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
@@ -19,18 +19,33 @@ import {
 import ScoreDetail from "../components/ScoreDetail"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
+import Share from "react-native-share"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { shareOptions } from "../../../constants"
 
 const PostScore = () => {
+  const [holeNumber, setHoleNumber] = useState(1)
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
-  
+  const onShare = () => {
+
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      })
+  }
   return (
     <>
       <AppHeader
         back
         showLogo
         rightIcon={
-          <Ionicons name="ios-share-social" size={28} color={colors.white} />
+          <TouchableOpacity onPress={onShare}>
+            <Ionicons name="ios-share-social" size={28} color={colors.white} />
+          </TouchableOpacity>
         }
       />
       <Box mb="30%">
@@ -40,6 +55,7 @@ const PostScore = () => {
               <Box mt="5" mb="3">
                 <Box flexDirection="row" alignSelf="center">
                   <IconButton
+                    onPress={() => { holeNumber > 1 ? setHoleNumber(holeNumber - 1) : null }}
                     size={10}
                     icon={
                       <Icon
@@ -51,9 +67,10 @@ const PostScore = () => {
                     }
                   />
                   <Text fontSize="24" color="#7D9E49">
-                    Hole 1
+                    Hole {holeNumber}
                   </Text>
                   <IconButton
+                    onPress={() => {setHoleNumber(holeNumber + 1)}}
                     size={10}
                     icon={
                       <Icon

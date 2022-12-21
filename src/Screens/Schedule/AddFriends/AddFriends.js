@@ -25,12 +25,12 @@ import Contacts from "react-native-contacts"
 import { PermissionsAndroid } from "react-native"
 import { Button } from "native-base"
 
-export default function AddFriends({route}) {
+export default function AddFriends({ route }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [friendsList, setFriendsList] = useState(friends)
   const navigation = useNavigation()
-  const {date,time} = route?.params
-  console.log(date,time,'======')
+  const { date, time } = route?.params
+  console.log(date, time, '======')
   const fetchContacts = () => {
     if (modalVisible == "refer") {
       Contacts.checkPermission().then(permission => {
@@ -68,7 +68,11 @@ export default function AddFriends({route}) {
       <AppHeader
         back
         title="Add Friends to your Tee time"
-        rightIcon={<Text style={styles.text}>SKIP</Text>}
+        rightIcon={
+          <TouchableOpacity onPress={()=>navigation.navigate(RoutesKey.FINDFRIENDS)} >
+            <Text style={styles.text}>SKIP</Text>
+          </TouchableOpacity>
+        }
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
@@ -90,7 +94,7 @@ export default function AddFriends({route}) {
               <UserProfile
                 name={data.item.name}
                 image={data.item.image}
-                // item={}
+              // item={}
               />
             )}
             renderHiddenItem={(data, rowMap) => (
@@ -161,7 +165,7 @@ export default function AddFriends({route}) {
           onPress={() => fetchContacts()}
           heading={"Golf is better with Friends"}
           desc={
-            "and to be able to find friends Linx needs access to your phone contacts"
+            "and to be able to invite friends Linx needs access to your phone contacts"
           }
         />
       ) : (

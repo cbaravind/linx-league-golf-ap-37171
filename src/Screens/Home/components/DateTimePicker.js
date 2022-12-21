@@ -93,10 +93,10 @@ export default () => {
             maxDate={maxDate}
             selectedStartDate={selectedDate}
             weekdays={["S", "M", "T", "W", "T", "F", "S"]}
-            // todayBackgroundColor={"#fff"}
-            // todayTextStyle={{
-            //   color: colors.green
-            // }}
+            todayBackgroundColor={"#fff"}
+            todayTextStyle={{
+              color: colors.green
+            }}
             headerWrapperStyle={{ height: 0 }}
             dayLabelsWrapper={{
               borderWidth: 0,

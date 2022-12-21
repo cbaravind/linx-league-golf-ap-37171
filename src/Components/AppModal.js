@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.green,
     fontWeight: "700",
-    // fontFamily: fonts.PROXIMA_BOLD,
+    fontFamily: fonts.PROXIMA_BOLD,
     textAlign: "center"
   },
   desc: {
-    // fontFamily: fonts.PROXIMA_REGULAR,
+    fontFamily: fonts.PROXIMA_REGULAR,
     fontSize: 14,
     color: colors.text1,
     textAlign: "center",

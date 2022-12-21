@@ -19,26 +19,28 @@ const RulesAndScroing = () => {
   return (
     <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
       <SafeAreaView>
+        <Box px={2} flexDirection="row">
+          <IconButton
+            onPress={() => navigation.goBack()}
+            icon={
+              <Icon color="#7D9E49" as={Ionicons} name="chevron-back" />
+            }
+          />
+          <Image
+            ml="auto"
+            h="20"
+            w="120"
+            resizeMode="center"
+            source={require("../../assets/images/SplashLogo.png")}
+            alt=""
+          />
+        </Box>
         <ScrollView>
           <Center px="1">
-            <Box w="100%" p="10px">
-              <Box flexDirection="row">
-                <IconButton
-                  onPress={() => navigation.goBack()}
-                  icon={
-                    <Icon color="#7D9E49" as={Ionicons} name="chevron-back" />
-                  }
-                />
-                <Image
-                  ml="auto"
-                  h="20"
-                  w="120"
-                  resizeMode="center"
-                  source={require("../../assets/images/SplashLogo.png")}
-                  alt=""
-                />
-              </Box>
-              <Box>
+            <Box w="100%" pt={4} p="10px">
+
+
+              <Box ml={2}>
                 <Text
                   letterSpacing="5"
                   color="#225529"
@@ -49,7 +51,7 @@ const RulesAndScroing = () => {
                   Rules and Scoring
                 </Text>
               </Box>
-              <Box ml="5">
+              <Box ml={2}>
                 <Text mb="5" mt="3">
                   Last Updated: October 3, 2022
                 </Text>

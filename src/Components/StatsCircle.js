@@ -17,27 +17,25 @@ export default function StatsCircle({
   return (
     <View style={{ marginHorizontal: 6 }}>
       {info ? (
-         <Tooltip
-         width={200}
-         backgroundColor={colors.white}
-         popover={<Text>Info goes here</Text>}
-         withPointer={false}
-       >
-         {/* <Text>without caret</Text> */}
-     
-         <Ionicons
-           name="information-circle-outline"
-           color={colors.green}
-           style={{
-             alignSelf: "flex-end",
-             position: "absolute",
-             right: 0,
-             top: -11
-           }}
-           size={17}
-         />
-        {/* <TouchableOpacity >
-        </TouchableOpacity> */}
+        <Tooltip
+          width={200}
+          backgroundColor={colors.white}
+          placement={'bottom'}
+          popover={<Text>Info goes here</Text>}
+          // withPointer={false}
+
+        >
+          <Ionicons
+            name="information-circle-outline"
+            color={colors.green}
+            style={{
+              alignSelf: "flex-end",
+              position: "absolute",
+              right: 0,
+              top: -11
+            }}
+            size={17}
+          />
         </Tooltip>
 
       ) : (

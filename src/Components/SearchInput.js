@@ -52,9 +52,9 @@ export default function SearchInput({ onSearchSubmit, clearResults }) {
             />
           </TouchableOpacity>
         )}
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Icon name="mic" size={20} color={colors.green} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Row>
     </View>
   )
