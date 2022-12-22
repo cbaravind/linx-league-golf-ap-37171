@@ -1,5 +1,5 @@
-import { View, FlatList, ScrollView } from "react-native"
-import React from "react"
+import { View, FlatList, ScrollView, StyleSheet } from "react-native"
+import React, { useState } from "react"
 import { standings, stats } from "../../assets/data"
 import StandingCard from "./components/StandingCard"
 import { CheckIcon, Icon, IconButton, Select, Text } from "native-base"
@@ -9,7 +9,8 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import RankCard from "./components/RankCard"
 export default function Standing() {
   let [league, setLeague] = React.useState('linxleague');
-
+  const [score, setScore] = useState(12)
+  const [holes, setHoles] = useState(9)
   const data = [
     {
       id: 1,
@@ -37,10 +38,19 @@ export default function Standing() {
     },
     { id: 5, city: "LA, California", rank: 3, color: "rgba(205, 127, 50, 0.5)" }
   ]
+  const scoreData = [
+    { label: '10 score', value: 10 },
+    { label: '12 score', value: 12 },
+    { label: '15 score', value: 15 },
+  ]
+  const holesData = [
+    { label: '9 Holes', value: 9 },
+    { label: '18 Holes', value: 18 },
+  ]
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
-        <View style={{ alignItems: "center",paddingBottom:15 }}>
+        <View style={{ alignItems: "center", paddingBottom: 15 }}>
           <Select
             selectedValue={league} minWidth={150}
             onValueChange={itemValue => setLeague(itemValue)}
@@ -67,7 +77,38 @@ export default function Standing() {
             contentContainerStyle={{ paddingHorizontal: 12 }}
           />
         </View>
-
+        <Row style={{padding:20}} >
+          <View style={styles.picker}>
+            <Select
+              selectedValue={score}
+              minWidth={150}
+              style={styles.text}
+              onValueChange={itemValue => setScore(itemValue)}
+              _selectedItem={{
+                bg: colors.white,
+                endIcon: <CheckIcon size={4} />
+              }}>
+              {scoreData.map((score) => (
+                <Select.Item label={score.label} value={score.value} />
+              ))}
+            </Select>
+          </View>
+          <View style={styles.picker}>
+            <Select
+              selectedValue={holes}
+              minWidth={150}
+              style={styles.text}
+              onValueChange={itemValue => setHoles(itemValue)}
+              _selectedItem={{
+                bg: colors.white,
+                endIcon: <CheckIcon size={4} />
+              }}>
+              {holesData.map((hole) => (
+                <Select.Item label={hole.label} value={hole.value} />
+              ))}
+            </Select>
+          </View>
+        </Row>
 
         <Text
           m={"3"}
@@ -102,3 +143,13 @@ export default function Standing() {
     </View>
   )
 }
+const styles = StyleSheet.create({
+  picker: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: colors.grey4,
+    flex:1,
+    marginHorizontal:5
+  },
+  text:{ color: colors.text1,fontWeight:'400',fontSize:17 }
+})

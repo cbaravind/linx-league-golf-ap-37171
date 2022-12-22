@@ -13,13 +13,15 @@ import {
 import Row from "../../../Components/Row"
 import Counter from "../../../Components/Counter"
 export default function ScoreDetail({ item }) {
-  const [addScoreClicked, setAddStoreClicked] = useState(false)
+  const [addScoreClicked, setAddScoreClicked] = useState(false)
+  const [putts, setPutts] = useState(1)
+  const [score, setScore] = useState(1)
   return (
-    <View>
+    <View style={styles.container}>
       <View
         style={{
           position: "absolute",
-          top: 10,
+          top: 0,
           right: 0,
           backgroundColor: colors.background,
           padding: 5,
@@ -28,14 +30,16 @@ export default function ScoreDetail({ item }) {
         }}
       >
         <Button
-          onPress={() => setAddStoreClicked(true)}
+          onPress={() => {addScoreClicked? setAddScoreClicked(false): setAddScoreClicked(true)}}
           style={{
-            alignContent: "center",
+            backgroundColor:addScoreClicked?colors.darkGreen:colors.green,
             borderTopRightRadius: 0,
-            borderBottomRightRadius: 0
+            borderBottomRightRadius: 0,
+            height:68,
+            width:78
           }}
           colorScheme="green"
-          w="20"
+        
         >
           <Text
             textAlign="center"
@@ -43,11 +47,14 @@ export default function ScoreDetail({ item }) {
             fontWeight={"700"}
             color={colors.white}
           >
-            ADD Score
+            {addScoreClicked?
+            'Enter':
+            'ADD Score'
+          }
           </Text>
         </Button>
       </View>
-      <Box bg="white" p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
+      <Box p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
         <Box flexDirection="row">
           <Avatar source={require("../../../assets/images/profileImg.png")} />
           <Box ml="2">
@@ -70,45 +77,52 @@ export default function ScoreDetail({ item }) {
             [21]
           </Text>
         </Box>
-        <Text fontWeight="700" fontSize="16" textAlign={"center"} mt="6" mb="2">
-          Hole Stats History
-        </Text>
+        {!addScoreClicked ?
+          <Text fontWeight="700" fontSize="16" textAlign={"center"} mt="6" mb="2">
+            Hole Stats History
+          </Text>
+          :
+          <View style={{ height: 30 }} />
+        }
         <Box style={styles.row}>
           {addScoreClicked ?
-            <Box style={styles.box} h="80%">
-              <Row style={{ justifyContent: 'center' }}>
-                <View style={{alignItems:"center"}}>
-                  <Text>Score</Text>
-                  <Counter />
+            <Box style={styles.box} h="100%">
+              <Text fontWeight="400" fontSize="10" textAlign={"center"} mt="2" mb="2">
+                Scoretracker
+              </Text>
+              <Row >
+                <View style={{ alignItems: "center" }}>
+                  <Text style={styles.text}>Score</Text>
+                  <Counter value={score} setValue={setScore} />
                 </View>
-                <View style={{alignItems:"center"}}>
-                  <Text>Putts</Text>
-                  <Counter />
+                <View style={{ alignItems: "center" }}>
+                  <Text style={styles.text}>Putts</Text>
+                  <Counter value={putts} setValue={setPutts} />
                 </View>
               </Row>
 
             </Box>
             :
-            <Box style={styles.box} h="80%">
-              <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
+            <Box style={styles.box} h="100%">
+              <Box bg="#7D9E4950" pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Recorded Plays </Text>
                   <Text style={styles.text}> 4</Text>
                 </Row>
               </Box>
-              <Box pl="5" pr="5" pt="1" pb="1">
+              <Box pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Av. Score</Text>
                   <Text style={styles.text}>3.4</Text>
                 </Row>
               </Box>
-              <Box bg="#7D9E4950" pl="5" pr="5" pt="1" pb="1">
+              <Box bg="#7D9E4950" pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Av. Putts </Text>
                   <Text style={styles.text}>1.2</Text>
                 </Row>
               </Box>
-              <Box pl="5" pr="5" pt="1" pb="1">
+              <Box pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>FIR% </Text>
                   <Text style={styles.text}>-</Text>
@@ -121,11 +135,12 @@ export default function ScoreDetail({ item }) {
           <Box
             style={[styles.box]}
             // alignSelf='center'
-            p="7"
+            px="7"
+            py={2}
             ml="auto"
           >
             <Text style={[styles.text, { fontSize: 12, }]}>Tee Accuracy</Text>
-            <Box alignSelf="center" ml="1" pr="-10">
+            <Box alignSelf="center" ml="1" pt="5" pr="-10">
               <ImageBackground
                 style={[styles.verticalImg, { top: 2, right: -21 }]}
                 source={require("../../../assets/images/topChart.png")}
@@ -188,6 +203,16 @@ export default function ScoreDetail({ item }) {
   )
 }
 const styles = StyleSheet.create({
+  container:{
+    shadowColor:'rgba(125, 158, 73, 0.15)',
+    borderRadius: 8,
+    shadowOffset:{
+      width:0,
+      height:2
+    },
+    backgroundColor:'rgba(255, 255, 255, 0.5)',
+    marginBottom:10
+  },
   box: {
     borderWidth: 1,
     borderColor: colors.background,

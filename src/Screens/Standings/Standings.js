@@ -32,6 +32,7 @@ export default function Standings() {
   return (
     <Container>
       <AppHeader
+        leftIcon={<View style={{ width: 50 }} />}
         showLogo
         rightIcon={
           <IconButton

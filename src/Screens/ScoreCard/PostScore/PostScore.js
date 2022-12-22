@@ -97,7 +97,7 @@ const PostScore = () => {
                     mx="2"
                     orientation="vertical"
                   />
-                  <Text>144 Yards</Text>
+                  <Text>1</Text>
                 </Box>
                 <Box mt="3" flexDirection="row" alignSelf="center">
                   <Icon
@@ -122,6 +122,7 @@ const PostScore = () => {
             </Box>
             {data.length == 9 ? (
               <Button
+                width={'50%'}
                 onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL)}
               >
                 SCORECARD
