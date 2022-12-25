@@ -56,10 +56,10 @@ export default function ScoreDetail({ item }) {
       </View>
       <Box p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
         <Box flexDirection="row">
-          <Avatar source={require("../../../assets/images/profileImg.png")} />
+          <Avatar source={item.image} />
           <Box ml="2">
-            <Text fontWeight="700" fontSize="16">
-              Dylan Thomas
+            <Text fontWeight="700" fontSize="16" color={colors.text1}>
+             {item.name}
             </Text>
             <Box flexDirection="row">
               <Image
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     shadowOffset:{
       width:0,
-      height:2
+      height:4
     },
     backgroundColor:'rgba(255, 255, 255, 0.5)',
     marginBottom:10
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: fonts.PROXIMA_REGULAR,
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: "400",
     color: colors.text1,
     textAlign: "center"

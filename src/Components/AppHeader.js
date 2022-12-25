@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform } from "react-native"
 import React from "react"
 import { colors, fonts } from "../theme"
 import Row from "./Row"
@@ -16,7 +16,7 @@ export default function AppHeader({
 }) {
   const navigation = useNavigation()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{paddingTop:Platform.OS=='ios'?55:30}]}>
       {showLogo && !title && !rightIcon && !leftIcon ? (
         <Image
           source={require("../assets/images/logoWhite.png")}
@@ -24,7 +24,7 @@ export default function AppHeader({
           style={{ width: 150, height: 60, alignSelf: "center" }}
         />
       ) : (
-        <Row>
+        <Row style={{paddingTop:Platform.OS=='ios'?0:25,paddingBottom:5}}>
           <Row style={{ justifyContent: "flex-start" }}>
             {back ? (
               <IconButton
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   container: {
     // height: 150,
     backgroundColor: colors.grey,
-    paddingTop: 55,
+    // paddingTop: 55,
     paddingLeft: 20,
     paddingRight: 24,
     justifyContent: "flex-end",

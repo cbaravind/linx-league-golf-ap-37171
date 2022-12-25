@@ -16,7 +16,7 @@ export default function UserStatsCard({ image, name, city, stats }) {
         colors={["#225529", "#7D9E49"]}
         style={styles.linearGradient}
       >
-        <Image source={image} resizeMode="contain" style={styles.image} />
+        <Image source={image} resizeMode="cover" style={styles.image} />
       </LinearGradient>
       {/* </View> */}
       <View style={styles.card}>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   linearGradient: {
     height: 80,
     width: 80,
-    borderRadius: 40,
+    borderRadius: 75,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
     zIndex: 10
   },
   image: {
-    width: 75,
-    height: 75,
-    borderRadius: 30
+    width: 74,
+    height: 74,
+    borderRadius: 45,
   },
   card: {
     backgroundColor: colors.white,

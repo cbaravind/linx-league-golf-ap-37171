@@ -17,20 +17,34 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { shareOptions } from "../../constants"
 // import { Switch } from 'react-native-switch'
 import Share from 'react-native-share';
+import { showMessage } from "react-native-flash-message"
 
 export default function Settings() {
   const [mute, setMute] = useState(false)
   const { token, user } = useSelector(state => state?.auth?.user)
+  const [logoutLoading, setLogoutLoading] = useState(false)
 
   const navigation = useNavigation()
   const disaptch = useDispatch()
 
   const logoutHandler = async () => {
+    setLogoutLoading(true)
     logout(token, async res => {
+      setLogoutLoading(false)
+      // console.log(res)
       if (res.detail.includes("logged out")) {
         disaptch(saveUser(""))
         navigation.navigate(RoutesKey.LOGIN)
         await AsyncStorage.removeItem("user")
+        await AsyncStorage.removeItem("token")
+      }else{
+        if(res.detail){
+
+          showMessage({
+            type:'warning',
+            message:res.detail
+          })
+        }
       }
     })
   }
@@ -41,7 +55,7 @@ export default function Settings() {
         console.log(res);
       })
       .catch((err) => {
-        err && console.log(err);
+        err && console.log(err);""
       })
   }
   return (
@@ -195,7 +209,7 @@ export default function Settings() {
                 source={require("../../assets/images/fluent_delete-dismiss-24-regular.png")}
                 alt=""
               />
-              <Text ml="3" alignSelf="center">
+              <Text color={colors.pink} ml="3" alignSelf="center">
                 Delete Linx
               </Text>
               <Icon
@@ -208,8 +222,8 @@ export default function Settings() {
                 color={colors.green}
               />
             </Box>
-            <TouchableOpacity onPress={() => logoutHandler()}>
-              <Box mb="20" mt="2" flexDirection="row" p="6" bg="#FFFFFF">
+            <TouchableOpacity disabled={logoutLoading} onPress={() => logoutHandler()}>
+              <Box mb="20" mt="2" flexDirection="row" p="6" bg={logoutLoading?'#eee': "#FFFFFF"}>
                 <Icon as={MaterialIcons} name="login" size="6" />
                 <Text ml="3" alignSelf="center">
                   Log Out

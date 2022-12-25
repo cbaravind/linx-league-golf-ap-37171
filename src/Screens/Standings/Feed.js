@@ -5,6 +5,7 @@ import AppButton from "../../Components/AppButton"
 import { Button } from "native-base"
 import Share from 'react-native-share';
 import { shareOptions } from "../../constants"
+import { friends } from "../../assets/data"
 
 export default function Feed() {
   data = [{ id: 1 }, { id: 2 }, { id: 3 }]
@@ -31,9 +32,9 @@ export default function Feed() {
             paddingBottom: 80,
             marginBottom: 20
           }}
-          data={data}
+          data={friends}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => <FeedCard />}
+          renderItem={({ item }) => <FeedCard item={item} />}
         />
       </ScrollView>
     </>

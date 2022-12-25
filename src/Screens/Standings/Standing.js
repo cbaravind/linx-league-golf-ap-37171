@@ -16,27 +16,37 @@ export default function Standing() {
       id: 1,
       city: "Saint Augustine, FL",
       rank: 1,
-      color: "rgba(255, 215, 0, 0.5)"
+      color: "rgba(255, 215, 0, 0.5)",
+      name: 'Betty'
     },
     {
       id: 2,
       city: "Saint Augustine",
       rank: 2,
-      color: "rgba(190, 190, 190, 0.5)"
+      color: "rgba(190, 190, 190, 0.5)",
+      name: 'Dylan Thomas'
     },
     {
       id: 3,
       city: "LA, California",
       rank: 3,
-      color: "rgba(205, 127, 50, 0.5)"
+      color: "rgba(205, 127, 50, 0.5)",
+      name: 'Player 2'
     },
     {
       id: 4,
       city: "Saint Augustine, FL",
       rank: 4,
-      color: "rgba(255, 215, 0, 0.5)"
+      color: "rgba(255, 215, 0, 0.5)",
+      name: 'Player 3'
     },
-    { id: 5, city: "LA, California", rank: 3, color: "rgba(205, 127, 50, 0.5)" }
+    {
+      id: 5,
+      city: "LA, California",
+      rank: 3,
+      color: "rgba(205, 127, 50, 0.5)",
+      name: 'Allen'
+    }
   ]
   const scoreData = [
     { label: '10 score', value: 10 },
@@ -77,7 +87,7 @@ export default function Standing() {
             contentContainerStyle={{ paddingHorizontal: 12 }}
           />
         </View>
-        <Row style={{padding:20}} >
+        <Row style={{ padding: 20 }} >
           <View style={styles.picker}>
             <Select
               selectedValue={score}
@@ -148,8 +158,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.grey4,
-    flex:1,
-    marginHorizontal:5
+    flex: 1,
+    marginHorizontal: 5
   },
-  text:{ color: colors.text1,fontWeight:'400',fontSize:17 }
+  text: { color: colors.text1, fontWeight: '400', fontSize: 17 }
 })

@@ -63,7 +63,7 @@ const Login = () => {
     }
   }
   return (
-    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
+    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%",paddingTop:20 }}>
       <SafeAreaView>
         <ScrollView>
           <Center px="0">

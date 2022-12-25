@@ -17,9 +17,9 @@ const RulesAndScroing = () => {
   const navigation = useNavigation()
 
   return (
-    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
+    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%",paddingTop:20 }}>
       <SafeAreaView>
-        <Box px={2} flexDirection="row">
+        <Box px={3} flexDirection="row">
           <IconButton
             onPress={() => navigation.goBack()}
             icon={

@@ -19,6 +19,6 @@ export const pubnub = new Pubnub({
   userId: "User"
 })
 export const shareOptions={
-  message: 'This is nessage',
+  message: 'Invite a friend',
   title: 'Title'
 }

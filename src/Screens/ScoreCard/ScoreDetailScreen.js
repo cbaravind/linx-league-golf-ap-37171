@@ -6,7 +6,8 @@ import { colors, fonts } from "../../theme"
 import ScoreTable from "./components/ScoreTable"
 import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
-
+import { shareOptions } from "../../constants"
+import Share from 'react-native-share'
 export default function ScoreDetailScreen() {
   const onShare = () => {
 

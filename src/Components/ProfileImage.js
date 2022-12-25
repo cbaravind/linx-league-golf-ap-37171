@@ -4,6 +4,7 @@ import LinearGradient from "react-native-linear-gradient"
 import { colors } from "../theme"
 export default function ProfileImage({ image, style, height, width }) {
   return (
+    
     <LinearGradient
       colors={["#225529", "#7D9E49"]}
       style={[
@@ -30,8 +31,9 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   image: {
-    width: "94%",
-    height: "94%"
+    width: "93%",
+    height: "93%",
+    //alignSelf:'center'
     // borderRadius: 30,
   }
 })

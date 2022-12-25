@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import { globalStyles } from "../../../theme"
 import Row from "../../../Components/Row"
 import ProfileImage from "../../../Components/ProfileImage"
@@ -8,23 +8,31 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import Feather from "react-native-vector-icons/Feather"
 import { colors } from "../../../theme"
 import { TextInput } from "react-native"
+import ReportModal from "./ReportModal"
+import { useNavigation } from "@react-navigation/core"
+import RoutesKey from "../../../Navigation/routesKey"
 
-export default function FeedCard() {
+export default function FeedCard({ item }) {
+  const [showModal, setShowModal] = useState(false)
+const navigation = useNavigation()
   return (
     <View style={[globalStyles.cardStyle, { padding: 10, paddingBottom: 30 }]}>
       <Row>
-        <Row style={{ justifyContent: "flex-start" }}>
-          <ProfileImage
-            height={30}
-            width={30}
-            style={{ marginRight: 14 }}
-            image={require("../../../assets/images/profileImg.png")}
-          />
-          <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
-            Betty
-          </Text>
-        </Row>
+        <TouchableOpacity onPress={()=>navigation.navigate(RoutesKey.PROFILE,{user:item})} >
+          <Row style={{ justifyContent: "flex-start" }}>
+            <ProfileImage
+              height={30}
+              width={30}
+              style={{ marginRight: 14 }}
+              image={item.image}
+            />
+            <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
+              {item.name}
+            </Text>
+          </Row>
+        </TouchableOpacity>
         <IconButton
+          onPress={() => setShowModal(true)}
           icon={
             <Icon
               name="ellipsis-vertical-sharp"
@@ -78,6 +86,8 @@ export default function FeedCard() {
           />
         </TouchableOpacity>
       </Row>
+      <ReportModal isVisible={showModal} setVisible={setShowModal} />
+
     </View>
   )
 }

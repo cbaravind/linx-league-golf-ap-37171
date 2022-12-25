@@ -91,8 +91,8 @@ export default function Chat({ route }) {
         title={otherUser?.name}
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
-          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss}>
+        {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss}> */}
             <>
               <ChatList messages={messages} />
 
@@ -100,7 +100,8 @@ export default function Chat({ route }) {
                 style={{
                   flex: 1,
                   justifyContent: "flex-end",
-                  marginBottom: 40
+                  marginBottom: 40,
+                  paddingHorizontal:7
                 }}
               >
                 <ChatInput
@@ -113,8 +114,8 @@ export default function Chat({ route }) {
                 />
               </View>
             </>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+          {/* </TouchableWithoutFeedback>
+        </KeyboardAvoidingView> */}
       </View>
     </Container>
   )

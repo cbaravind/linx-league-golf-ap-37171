@@ -1,18 +1,18 @@
 const friends = [
   {
     id: 1,
-    name: "Dylan Thomas",
+    name: "Dylan",
     image: require("../assets/images/profileImg.png")
   },
   {
     id: 2,
-    name: "Player 2",
-    image: require("../assets/images/profileImg.png")
+    name: "Betty",
+    image: require("../assets/images/user1.png")
   },
   {
     id: 3,
     name: "Player 3",
-    image: require("../assets/images/profileImg.png")
+    image: require("../assets/images/user2.png")
   },
   { id: 4, name: "Player 4", image: "" }
 ]

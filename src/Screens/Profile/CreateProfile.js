@@ -120,7 +120,7 @@ const CreateProfile = () => {
       {route?.params?.setting == true ?
         <>
           <Box w="100%" style={{ backgroundColor: colors.grey }}>
-            <Box p='5' mt='10' flexDirection='row' >
+            <Box p='2' mt='10' flexDirection='row' >
               <IconButton onPress={() => navigation.goBack()} icon={<Icon color={colors.background} as={Ionicons} name='chevron-back' />} />
               <Text alignSelf='center' color={colors.background}>Edit Profile</Text>
               <Button isLoading={btnLoading} onPress={submitHandler} bg={colors.grey} ml='auto' variant='link'><Text color='white'>Save</Text></Button>
@@ -272,7 +272,6 @@ const CreateProfile = () => {
                   </>
                   }
                 </Box>
-
               </Modal.Body>
             </Modal.Content>
           </Modal>

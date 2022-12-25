@@ -62,7 +62,7 @@ const Splash = () => {
     setTimeout(() => {
       navigation.reset({
         index: 0,
-        routes: [{ name: RoutesKey.BOTTOMTAB }]
+        routes: [{ name: RoutesKey.LOGIN }]
       })
     }, 1000)
   }

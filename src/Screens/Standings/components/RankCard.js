@@ -41,7 +41,7 @@ export default function RankCard({
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
-              {"Dylan Thomas"}
+              {item.name}
             </Text>
             <Text style={styles.text}>Handicap: 2-4</Text>
             <Text style={styles.text}>{item.city}</Text>

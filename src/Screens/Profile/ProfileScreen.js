@@ -14,8 +14,9 @@ import { stats } from "../../assets/data"
 import Share from 'react-native-share'
 import { shareOptions } from "../../constants"
 
-export default function ProfileScreen() {
+export default function ProfileScreen({route}) {
   const navigation = useNavigation()
+  const otherUser = route?.params?.user
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -54,8 +55,8 @@ export default function ProfileScreen() {
           <Text style={{color:colors.white,fontWeight:'700',fontFamily:fonts.PROXIMA_BOLD,fontSize:14}}>JOIN LEAGUE</Text>
         </TouchableOpacity>
         <UserStatsCard
-          image={require("../../assets/images/profileImg.png")}
-          name={"Dylan Thomas"}
+          image={otherUser?otherUser?.image: require("../../assets/images/profileImg.png")}
+          name={otherUser?otherUser.name: "Dylan Thomas"}
           city={"LA, California"}
           stats={stats}
         />

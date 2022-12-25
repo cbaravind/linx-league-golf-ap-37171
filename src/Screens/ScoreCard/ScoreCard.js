@@ -31,7 +31,7 @@ export default function ScoreCard() {
     />
   )
   const onShare = () => {
-    
+
     Share.open(shareOptions)
       .then((res) => {
         console.log(res);
@@ -43,6 +43,7 @@ export default function ScoreCard() {
   return (
     <>
       <AppHeader
+        leftIcon={<View style={{ width: 40 }} />}
         showLogo
         rightIcon={
           <Pressable onPress={onShare}>
