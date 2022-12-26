@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.c7ec3132.css",
-    "main.js": "/static/js/main.56710dd9.js",
+    "main.css": "/static/css/main.4f2482c8.css",
+    "main.js": "/static/js/main.a8c4733e.js",
     "static/js/787.fa7856e8.chunk.js": "/static/js/787.fa7856e8.chunk.js",
     "static/media/DemoProfile.png": "/static/media/DemoProfile.a86846693150628b9eee.png",
     "static/media/DeleteContentIcon.svg": "/static/media/DeleteContentIcon.f9acd1d78fe42d04651e05ecdc6154e7.svg",
@@ -12,24 +12,30 @@
     "static/media/toggleOff.svg": "/static/media/toggleOff.7eb5e8ff190ba46974124ef22c4f8105.svg",
     "static/media/WarnIcon.svg": "/static/media/WarnIcon.949619034187b281e240797d5fb7357b.svg",
     "static/media/EmojOpenerIcon.svg": "/static/media/EmojOpenerIcon.a52ff5796f266580352a50f2329b8894.svg",
+    "static/media/SendIcon.svg": "/static/media/SendIcon.8c6d6f4dd06d1a8930f52c15e7c9a1ae.svg",
     "static/media/usersIcon.svg": "/static/media/usersIcon.67ec05ce8c7d309dc541367986377a1f.svg",
     "static/media/GolfBallIcon.svg": "/static/media/GolfBallIcon.506586a88762788dc341af777a84bea2.svg",
+    "static/media/LinkIcon.svg": "/static/media/LinkIcon.4da48e9ae1e902b45061f7d69874648c.svg",
     "static/media/flagIcon.svg": "/static/media/flagIcon.ace23d49e4a5f8830a6682358ee4bcc6.svg",
+    "static/media/MaximizeIcon.svg": "/static/media/MaximizeIcon.6691ca750d81e7068a92e7ae95b4e0c1.svg",
     "static/media/AttachFileIcon.svg": "/static/media/AttachFileIcon.381bb54d365a9f6c1a59305c7273a97c.svg",
     "static/media/AnalyticsIcon.svg": "/static/media/AnalyticsIcon.5f0a01ca5aa444c702a725201db6f36c.svg",
+    "static/media/CrossIcon.svg": "/static/media/CrossIcon.84c6c38739776d3b8eb28a01a3380d6a.svg",
     "static/media/EditIcon.svg": "/static/media/EditIcon.3e321c3bf8fff833bbf25273a32db3e6.svg",
+    "static/media/BackArrow.svg": "/static/media/BackArrow.228352b6e8a7ad6e335163dca946e7de.svg",
     "static/media/LogoutIcon.svg": "/static/media/LogoutIcon.4b03861a881f6bedbf709589b58ae937.svg",
-    "static/media/DeleteIcon.svg": "/static/media/DeleteIcon.fc850205fa4fb3167041d2ddf84f12c4.svg",
+    "static/media/DeleteIconBin.svg": "/static/media/DeleteIconBin.fc850205fa4fb3167041d2ddf84f12c4.svg",
     "index.html": "/index.html",
     "static/media/nortificationIcon.svg": "/static/media/nortificationIcon.b52e7e69ca110e4540151412194d5e24.svg",
     "static/media/NortificationbellIcon.svg": "/static/media/NortificationbellIcon.326b7b7f4b2e90d0d478019af84558ee.svg",
     "static/media/feedbackIcon.svg": "/static/media/feedbackIcon.9b3b0c04c57affe03f5f5f45baf46e07.svg",
-    "main.c7ec3132.css.map": "/static/css/main.c7ec3132.css.map",
-    "main.56710dd9.js.map": "/static/js/main.56710dd9.js.map",
+    "static/media/MinimizeIcon.svg": "/static/media/MinimizeIcon.684b70e42129a9eb5a4bb85f75c34051.svg",
+    "main.4f2482c8.css.map": "/static/css/main.4f2482c8.css.map",
+    "main.a8c4733e.js.map": "/static/js/main.a8c4733e.js.map",
     "787.fa7856e8.chunk.js.map": "/static/js/787.fa7856e8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7ec3132.css",
-    "static/js/main.56710dd9.js"
+    "static/css/main.4f2482c8.css",
+    "static/js/main.a8c4733e.js"
   ]
 }
