@@ -30,16 +30,16 @@ export default function ScoreDetail({ item }) {
         }}
       >
         <Button
-          onPress={() => {addScoreClicked? setAddScoreClicked(false): setAddScoreClicked(true)}}
+          onPress={() => { addScoreClicked ? setAddScoreClicked(false) : setAddScoreClicked(true) }}
           style={{
-            backgroundColor:addScoreClicked?colors.darkGreen:colors.green,
+            backgroundColor: addScoreClicked ? colors.darkGreen : colors.green,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
-            height:68,
-            width:78
+            height: 68,
+            width: 78
           }}
           colorScheme="green"
-        
+
         >
           <Text
             textAlign="center"
@@ -47,10 +47,10 @@ export default function ScoreDetail({ item }) {
             fontWeight={"700"}
             color={colors.white}
           >
-            {addScoreClicked?
-            'Enter':
-            'ADD Score'
-          }
+            {addScoreClicked ?
+              'Enter' :
+              'ADD Score'
+            }
           </Text>
         </Button>
       </View>
@@ -59,7 +59,7 @@ export default function ScoreDetail({ item }) {
           <Avatar source={item.image} />
           <Box ml="2">
             <Text fontWeight="700" fontSize="16" color={colors.text1}>
-             {item.name}
+              {item.name}
             </Text>
             <Box flexDirection="row">
               <Image
@@ -140,7 +140,9 @@ export default function ScoreDetail({ item }) {
             ml="auto"
           >
             <Text style={[styles.text, { fontSize: 12, }]}>Tee Accuracy</Text>
-            <Box alignSelf="center" ml="1" pt="5" pr="-10">
+            <Image source={require('../../../assets/images/chart.png')} style={{ width: 80, height: 80 }} />
+
+            {/*   <Box alignSelf="center" ml="1" pt="5" pr="-10">
               <ImageBackground
                 style={[styles.verticalImg, { top: 2, right: -21 }]}
                 source={require("../../../assets/images/topChart.png")}
@@ -195,7 +197,7 @@ export default function ScoreDetail({ item }) {
                   <Text style={styles.smallText}>-</Text>
                 </Box>
               </ImageBackground>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Box>
@@ -203,15 +205,15 @@ export default function ScoreDetail({ item }) {
   )
 }
 const styles = StyleSheet.create({
-  container:{
-    shadowColor:'rgba(125, 158, 73, 0.15)',
+  container: {
+    shadowColor: 'rgba(125, 158, 73, 0.15)',
     borderRadius: 8,
-    shadowOffset:{
-      width:0,
-      height:4
+    shadowOffset: {
+      width: 0,
+      height: 4
     },
-    backgroundColor:'rgba(255, 255, 255, 0.5)',
-    marginBottom:10
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginBottom: 10
   },
   box: {
     borderWidth: 1,
