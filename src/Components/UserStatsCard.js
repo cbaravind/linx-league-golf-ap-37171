@@ -30,8 +30,15 @@ export default function UserStatsCard({ image, name, city, stats }) {
               title={item.title}
               value={item.value}
               dark={index % 2 == 0 ? true : false}
-              info={index == 4}
-              onPressInfo={index == 4 ? () => setInfoModalVisible(true) : null}
+              info={index == 4  ?
+                `When you refer 3 friends who join Linx
+                 League, you get a season free!`
+                : index == 1 ?
+                  'This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score.'
+                  :
+                  false
+              }
+            // onPressInfo={() =>{index == 4 ?  setInfoModalVisible(4) : index == 1 ? setInfoModalVisible(1) : null}}
             />
           ))}
           {/* <StatsCircle title={'Attested'} value={stats.attested} />
@@ -42,8 +49,13 @@ export default function UserStatsCard({ image, name, city, stats }) {
       </View>
       {infoModalVisible ? (
         <AppModal
-          desc="When you refer 3 friends who join Linx
-                      League, you get a season free!"
+          desc={infoModalVisible == 4 ?
+            `When you refer 3 friends who join Linx
+               League, you get a season free!`
+            :
+            'This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score.'
+
+          }
           onClose={() => setInfoModalVisible(false)}
         />
       ) : (

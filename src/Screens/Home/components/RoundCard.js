@@ -24,7 +24,7 @@ export default function RoundCard({ item ,containerStyle}) {
             </View>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text}>dd/mm/yyyy 8:00 am</Text>
+            <Text style={styles.text}>{item.date}</Text>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
               {item.title}
             </Text>
@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     paddingBottom: 20,
+    borderRadius:8,
+    marginHorizontal:5
     // marginTop: 5
   },
   numberContainer: {

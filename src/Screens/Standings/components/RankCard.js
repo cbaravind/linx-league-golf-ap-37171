@@ -37,7 +37,7 @@ export default function RankCard({
           <ProfileImage
             height={40}
             width={40}
-            image={require("../../../assets/images/profileImg.png")}
+            image={item.image}
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
@@ -47,7 +47,7 @@ export default function RankCard({
             <Text style={styles.text}>{item.city}</Text>
           </View>
         </Row>
-        <StatsCircle title={"Estimate"} value={"2-4"} titleInside dark />
+        <StatsCircle title={"Estimate"} value={item.score} titleInside dark />
       </Row>
     </View>
   )

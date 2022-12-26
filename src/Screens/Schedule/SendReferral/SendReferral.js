@@ -77,16 +77,15 @@ export default function SendReferral({ route }) {
                 </Text>
                 <View style={{ height: 18 }} />
                 <Text style={[styles.text, styles.h2]}>
-                  Invite a Friend to Play
+                  Invite Friends to Play
                 </Text>
                 <View style={{ padding: 10, paddingHorizontal: 35 }}>
                   <Text style={[styles.text, { fontSize: 16 }]}>
-                    Dip your opponents grips in sticky paste, Taking a practise
-                    swing, Pull out your 3-wood and
-                    <Text style={{ color: colors.green }}>
+                  When your friends play in Linx League with you, you both win!
+                    {/* <Text style={{ color: colors.green }}>
                       {" "}
                       https://www.linxleagueapp.com/app-download/6803u
-                    </Text>
+                    </Text> */}
                   </Text>
                 </View>
                 <SearchInput

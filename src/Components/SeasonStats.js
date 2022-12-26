@@ -7,13 +7,37 @@ import { Icon, IconButton } from "native-base"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { colors } from "../theme"
 import AppModal from "./AppModal"
+import { Tooltip } from "react-native-elements"
+
 export default function SeasonStats() {
   const [infoModalVisible, setInfoModalVisible] = useState(false)
 
   return (
     <View style={[globalStyles.cardStyle]}>
-      <IconButton
-        onPress={() => setInfoModalVisible(true)}
+      <Tooltip
+        width={350}
+        backgroundColor={colors.white}
+        placement={'bottom'}
+        height={100}
+        overlayColor={'transparent'}
+        popover={<Text>Stats are per 9 hole round.</Text>}
+      // withPointer={false}
+
+      >
+        <Ionicons
+          name="information-circle-outline"
+          color={colors.green}
+          style={{
+            alignSelf: "flex-end",
+            // position: "absolute",
+            right: 4,
+            top: 5
+          }}
+          size={17}
+        />
+      </Tooltip>
+      {/* <IconButton
+      onPress={() => setInfoModalVisible(true)}
         style={{ alignSelf: "flex-end" }}
         icon={
           <Icon
@@ -23,27 +47,27 @@ export default function SeasonStats() {
             size={5}
           />
         }
-      />
+      /> */}
       <View style={styles.card}>
         <Row>
           <View>
-            <Text style={styles.text}>dd/mm/yyyy</Text>
+            <Text style={styles.text}>20/02/2023</Text>
             <View style={{ height: 4 }} />
-            <Text style={styles.h2}>Linx golf club league</Text>
+            <Text style={styles.h2}>Arizona Tier 3</Text>
             <Text style={styles.h1}>Season Stats</Text>
           </View>
-          <StatsCircle title={"Rounds"} dark value={"1/6"} />
+          <StatsCircle title={"Rounds"} dark value={"3/6"} />
         </Row>
         <View style={styles.border} />
         <Row style={{ justifyContent: "center" }}>
-          <StatsCircle title={"Av. Score"} value={33} />
+          <StatsCircle title={"Av. Score"} value={41} />
           <StatsCircle
             title={"Av. Putts"}
             dark
-            value={72.1}
+            value={15.5}
             style={{ marginHorizontal: 20 }}
           />
-          <StatsCircle title={"FIR %"} value={68.6} />
+          <StatsCircle title={"FIR %"} value={56.4} />
         </Row>
       </View>
       {infoModalVisible ? (

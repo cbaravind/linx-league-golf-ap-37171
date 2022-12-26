@@ -30,7 +30,7 @@ export default function Inbox() {
       id: 4,
       isRead: true,
       time: "7:08 AM",
-      name: "Player",
+      name: "Tom",
       message:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor..."
     }

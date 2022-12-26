@@ -216,7 +216,7 @@ const CreateProfile = () => {
               </Box>
               <Box mt='5'>
                 <Box mb='5' flexDirection='row'>
-                  <Text>Do you have</Text><Text color='#7D9E49' fontWeight='700'> GHIN?</Text>
+                  <Text>Do you have your</Text><Text color='#7D9E49' fontWeight='700'> GHIN?</Text>
                 </Box>
                 <Radio.Group colorScheme='green' name="myRadioGroup" accessibilityLabel="favorite number" value={valueGHIN} onChange={nextValue => {
                   setValueGHIN(nextValue);
@@ -233,7 +233,9 @@ const CreateProfile = () => {
               </Box>
               <Box mt='3'>
                 <InputText value={formData.ghin}
-                  onChangeText={(val) => setFormData({ ...formData, ghin: val })} disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
+                  onChangeText={(val) => setFormData({ ...formData, ghin: val })}
+                  placeholder={'GHIN Number'} 
+                  disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
               {route?.params?.setting !== true ?
                 <Button onPress={submitHandler} mb='5' shadow={5} mt='20' bg='#7D9E49'>CREATE PROFILE</Button>
@@ -266,7 +268,7 @@ const CreateProfile = () => {
                     :
                     <>
                     <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>It’s time to join your League </Text>
-                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>It’s time to compete for cash & prizes!</Text>
+                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Find a local league to compete in!</Text>
                     <Button shadow={5} mt='5' bg='#7D9E49'>FIND MY LEAGUE</Button>
                     <Button onPress={() => navigation.navigate(RoutesKey.HOME)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>SKIP TO HOME</Text></Button>
                   </>

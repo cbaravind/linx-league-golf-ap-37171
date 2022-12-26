@@ -56,7 +56,7 @@ export default function ProfileScreen({route}) {
         </TouchableOpacity>
         <UserStatsCard
           image={otherUser?otherUser?.image: require("../../assets/images/profileImg.png")}
-          name={otherUser?otherUser.name: "Dylan Thomas"}
+          name={otherUser?otherUser.name: "Tom"}
           city={"LA, California"}
           stats={stats}
         />

@@ -98,6 +98,12 @@ const theme = extendTheme({
           // p: '1',
         },
       }
+    },
+    Tooltip:{
+      defaultProps:{
+        borderColor:'#eee',
+        borderWidth:1
+      }
     }
   },
 

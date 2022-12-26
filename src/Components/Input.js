@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native"
 import React, { useRef } from "react"
 import { Icon, Input, Text } from "native-base"
 import Ionicons from "react-native-vector-icons/Ionicons"
-
+import {colors} from '../theme'
 const InputText = props => {
   const [show, setShow] = React.useState(false)
 
@@ -21,6 +21,7 @@ const InputText = props => {
         backgroundColor={props.bgcolor == true ? "#FFFFFF" : "#BDBDBD"}
         onChangeText={props.onChangeText}
         value={props.value}
+        placeholderTextColor={colors.text1}
         InputRightElement={
           props.icon == true ? (
             <TouchableOpacity onPress={() => setShow(!show)}>

@@ -1,20 +1,20 @@
 const friends = [
   {
     id: 1,
-    name: "Dylan",
+    name: "Allen",
     image: require("../assets/images/profileImg.png")
   },
   {
     id: 2,
     name: "Betty",
-    image: require("../assets/images/user1.png")
+    image: require("../assets/images/user3.png")
   },
   {
     id: 3,
-    name: "Player 3",
-    image: require("../assets/images/user2.png")
+    name: "Tom",
+    image: require("../assets/images/user1.png")
   },
-  { id: 4, name: "Player 4", image: "" }
+  { id: 4, name: "Zak", image: "" }
 ]
 const notifications = [
   {
@@ -27,23 +27,23 @@ const notifications = [
   {
     id: 2,
     title:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...",
+      "Michael invited you to play!",
     time: "3h",
     isRead: true,
-    image: require("../assets/images/profileImg.png")
+    image: require("../assets/images/user1.png")
   }
 ]
 const stats = [
-  { id: 1, title: "handicap ", value: "18-20" },
+  { id: 1, title: "handicap ", value: "12.9" },
   { id: 2, title: "attested ", value: "95%" },
   { id: 3, title: "league   ", value: "1" },
   { id: 4, title: "ranking  ", value: "2nd" },
   { id: 5, title: "referrals", value: "1" }
 ]
 const standings = [
-  { id: 1, title: "handicap ", value: "18-20" },
-  { id: 2, title: "score ", value: "92.0" },
-  { id: 3, title: "FIR%", value: "40.0" },
-  { id: 4, title: "Av. Putts  ", value: "22.2" }
+  { id: 1, title: "handicap ", value: "12-16" },
+  { id: 2, title: "score ", value: "37" },
+  { id: 3, title: "FIR%", value: "68.5" },
+  { id: 4, title: "Av. Putts  ", value: "15" }
 ]
 export { friends, notifications, stats, standings }

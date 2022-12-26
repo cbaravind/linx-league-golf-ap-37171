@@ -27,8 +27,8 @@ export default function Home() {
   const { user } = useSelector(state => state.auth)
   // const userObj = JSON.parse(user)
   data = [
-    { id: 1, title: "St Johns Golf & Country Club" },
-    { id: 2, title: "Johns & Country Club" }
+    { id: 1, title: "St Johns Golf & Country Club",date:'18/05/2022 8:00 am' },
+    { id: 2, title: "Johns & Country Club",date:'18/07/2022 8:00 am'  }
     // { title: 'St Johns Golf & Country Club' },
   ]
   useEffect(() => {

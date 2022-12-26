@@ -74,9 +74,9 @@ const ChangePassword = () => {
           <Box w="100%" p="10px">
             <Box mt="3">
               <Text
-                letterSpacing="5"
+                // letterSpacing="1"
                 color="#225529"
-                fontFamily="beloved"
+                fontFamily="Proxima Nova Condensed"
                 fontSize="24"
                 fontWeight="400"
               >

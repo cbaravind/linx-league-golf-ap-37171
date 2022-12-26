@@ -59,9 +59,9 @@ const ForgotPassword = () => {
 
               <Box>
                 <Text
-                  letterSpacing="5"
+                  // letterSpacing="5"
                   color="#225529"
-                  fontFamily="beloved"
+                  fontFamily="Proxima Nova Condensed"
                   fontSize="28"
                   fontWeight="400"
                 >

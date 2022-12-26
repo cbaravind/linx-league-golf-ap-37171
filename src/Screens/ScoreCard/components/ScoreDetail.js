@@ -14,7 +14,7 @@ import Row from "../../../Components/Row"
 import Counter from "../../../Components/Counter"
 export default function ScoreDetail({ item }) {
   const [addScoreClicked, setAddScoreClicked] = useState(false)
-  const [putts, setPutts] = useState(1)
+  const [putts, setPutts] = useState(0)
   const [score, setScore] = useState(1)
   return (
     <View style={styles.container}>

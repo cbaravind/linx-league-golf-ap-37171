@@ -42,9 +42,9 @@ const RulesAndScroing = () => {
 
               <Box ml={2}>
                 <Text
-                  letterSpacing="5"
+                  // letterSpacing="5"
                   color="#225529"
-                  fontFamily="beloved"
+                  fontFamily="Proxima Nova Condensed"
                   fontSize="28"
                   fontWeight="400"
                 >

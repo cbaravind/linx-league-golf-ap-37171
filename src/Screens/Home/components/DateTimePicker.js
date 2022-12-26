@@ -42,7 +42,7 @@ export default () => {
             {dateTimeSelected ? (
               <Text style={styles.h2}>Cancel</Text>
             ) : (
-              <Text style={styles.text}>MM.DD.YY</Text>
+              <Text style={styles.text}>DATE</Text>
             )}
           </TouchableOpacity>
           {!dateTimeSelected ? (
@@ -70,7 +70,7 @@ export default () => {
               <Text style={[styles.h2, { color: colors.white }]}>Confirm</Text>
             ) : (
               <Row>
-                <Text style={styles.text}>HH:MM:SS</Text>
+                <Text style={styles.text}>TIME</Text>
                 <Image
                   alt={""}
                   source={require("../../../assets/images/clock.png")}

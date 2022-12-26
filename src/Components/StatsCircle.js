@@ -12,16 +12,18 @@ export default function StatsCircle({
   dark,
   info,
   onPressInfo,
-  titleInside
+  titleInside,
 }) {
   return (
     <View style={{ marginHorizontal: 6 }}>
       {info ? (
         <Tooltip
-          width={200}
+          width={350}
           backgroundColor={colors.white}
           placement={'bottom'}
-          popover={<Text>Info goes here</Text>}
+          height={100}
+          overlayColor={'transparent'}
+          popover={<Text>{info} </Text>}
           // withPointer={false}
 
         >

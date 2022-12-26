@@ -17,35 +17,49 @@ export default function Standing() {
       city: "Saint Augustine, FL",
       rank: 1,
       color: "rgba(255, 215, 0, 0.5)",
-      name: 'Betty'
+      name: 'Betty',
+      score:'-2.3',
+      image:require('../../assets/images/profileImg.png')
     },
     {
       id: 2,
       city: "Saint Augustine",
       rank: 2,
       color: "rgba(190, 190, 190, 0.5)",
-      name: 'Dylan Thomas'
+      name: 'Henrey',
+      score:'-1.8',
+      image:require('../../assets/images/user1.png')
+
     },
     {
       id: 3,
       city: "LA, California",
       rank: 3,
       color: "rgba(205, 127, 50, 0.5)",
-      name: 'Player 2'
+      name: 'Tom',
+      score:'1.3',
+      image:require('../../assets/images/user3.png')
+
     },
     {
       id: 4,
       city: "Saint Augustine, FL",
       rank: 4,
       color: "rgba(255, 215, 0, 0.5)",
-      name: 'Player 3'
+      name: 'Zak',
+      score:'1.6',
+      image:require('../../assets/images/profileImg.png')
+
     },
     {
       id: 5,
       city: "LA, California",
       rank: 3,
       color: "rgba(205, 127, 50, 0.5)",
-      name: 'Allen'
+      name: 'Allen',
+      score:'1.9',
+      image:require('../../assets/images/user1.png')
+
     }
   ]
   const scoreData = [
@@ -69,7 +83,7 @@ export default function Standing() {
               endIcon: <CheckIcon size={4} />
             }}>
             <Select.Item label="Linx League" value="linxleague" />
-            <Select.Item label="League" value="League" />
+            <Select.Item label="Arizona C" value="ArizonaC" />
             <Select.Item label="League 1" value="League1" />
 
           </Select>
