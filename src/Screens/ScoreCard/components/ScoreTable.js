@@ -21,7 +21,15 @@ export default function ScoreTable() {
     for (let i = 0; i < 4; i += 1) {
       const rowData = []
       for (let j = 0; j < 10; j += 1) {
-        rowData.push(`${i}${j}`)
+        if (i == 3) {
+          rowData.push(j%2==0?'5': '4')
+        }else if(i==2){
+          rowData.push(j+1)
+        }else
+        {
+
+          rowData.push(`${i}${j}`)
+        }
       }
       // const updated
       updated.push(rowData)
@@ -55,10 +63,10 @@ export default function ScoreTable() {
                               index == 0
                                 ? colors.grey3
                                 : index == 1
-                                ? colors.pink
-                                : index == 2
-                                ? colors.white
-                                : colors.darkGreen
+                                  ? colors.pink
+                                  : index == 2
+                                    ? colors.white
+                                    : colors.darkGreen
                           }
                         ]}
                         textStyle={[
@@ -83,10 +91,10 @@ export default function ScoreTable() {
                               index == 0
                                 ? colors.grey3
                                 : index == 1
-                                ? colors.pink
-                                : index == 2
-                                ? colors.white
-                                : colors.darkGreen
+                                  ? colors.pink
+                                  : index == 2
+                                    ? colors.white
+                                    : colors.darkGreen
                           }
                         ]}
                         textStyle={[
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PROXIMA_REGULAR
   },
   dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: "#E7E6E1" },
+  row: { height: 40, backgroundColor: "#E7E6E1",paddingHorizontal:6 },
   title: { flex: 1 },
   wrapper: { flexDirection: "row" }
 })

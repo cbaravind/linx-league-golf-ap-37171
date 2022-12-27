@@ -105,15 +105,7 @@ export default function Settings() {
               />
             </Box>
             </Pressable>
-            <Box mt="2" flexDirection="row" p="6" bg="#FFFFFF">
-              <Text alignSelf="center">Mute Notifications</Text>
-              <Switch
-                value={mute}
-                ml="auto"
-                colorScheme="green"
-                onValueChange={val => setMute(val)}
-              />
-            </Box>
+           
             <Pressable
               onPress={() => navigation.navigate(RoutesKey.PRIVACYPOLICY)}
             >
@@ -202,6 +194,7 @@ export default function Settings() {
                 />
               </Box>
             </Pressable>
+          
             <Box mt="2" flexDirection="row" p="6" bg="#FFFFFF">
               <Image
                 h="5"
@@ -223,7 +216,7 @@ export default function Settings() {
               />
             </Box>
             <TouchableOpacity disabled={logoutLoading} onPress={() => logoutHandler()}>
-              <Box mb="20" mt="2" flexDirection="row" p="6" bg={logoutLoading?'#eee': "#FFFFFF"}>
+              <Box  mt="2" flexDirection="row" p="6" bg={logoutLoading?'#eee': "#FFFFFF"}>
                 <Icon as={MaterialIcons} name="login" size="6" />
                 <Text ml="3" alignSelf="center">
                   Log Out
@@ -239,6 +232,15 @@ export default function Settings() {
                 />
               </Box>
             </TouchableOpacity>
+            <Box mb="20" mt="2" flexDirection="row" p="6" bg="#FFFFFF">
+              <Text alignSelf="center">Mute Notifications</Text>
+              <Switch
+                value={mute}
+                ml="auto"
+                colorScheme="green"
+                onValueChange={val => setMute(val)}
+              />
+            </Box>
           </Box>
         </View>
       </ScrollView>

@@ -51,9 +51,13 @@ export default function ProfileScreen({route}) {
           paddingHorizontal: 15
         }}
       >
+        {otherUser?
         <TouchableOpacity style={styles.league}>
           <Text style={{color:colors.white,fontWeight:'700',fontFamily:fonts.PROXIMA_BOLD,fontSize:14}}>JOIN LEAGUE</Text>
         </TouchableOpacity>
+        :
+        <View style={[styles.league,{backgroundColor:colors.background}]} />
+        }
         <UserStatsCard
           image={otherUser?otherUser?.image: require("../../assets/images/profileImg.png")}
           name={otherUser?otherUser.name: "Tom"}
