@@ -22,11 +22,10 @@ export default function ScoreTable() {
       const rowData = []
       for (let j = 0; j < 10; j += 1) {
         if (i == 3) {
-          rowData.push(j%2==0?'5': '4')
-        }else if(i==2){
-          rowData.push(j+1)
-        }else
-        {
+          rowData.push(j % 2 == 0 ? '5' : '4')
+        } else if (i == 2) {
+          rowData.push(j + 1)
+        } else {
 
           rowData.push(`${i}${j}`)
         }
@@ -123,7 +122,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     marginHorizontal: 10
   },
-  header: { height: 50, backgroundColor: "#537791" },
+  header: {
+    height: 50,
+    backgroundColor: "#537791"
+  },
   text: {
     textAlign: "center",
     fontWeight: "400",
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PROXIMA_REGULAR
   },
   dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: "#E7E6E1",paddingHorizontal:6 },
+  row: { height: 40, backgroundColor: "#E7E6E1", paddingHorizontal: 6 },
   title: { flex: 1 },
   wrapper: { flexDirection: "row" }
 })
