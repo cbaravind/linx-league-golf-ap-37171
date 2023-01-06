@@ -4,7 +4,8 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Image
+  Image,
+  ActivityIndicator
 } from "react-native"
 import React from "react"
 import { Icon, IconButton } from "native-base"
@@ -13,7 +14,7 @@ import Feather from "react-native-vector-icons/Feather"
 import { colors } from "../../../theme"
 import Row from "../../../Components/Row"
 
-export default function ChatInput({ onSend, value, onChangeText }) {
+export default function ChatInput({ onSend, value, onChangeText, onAttach, fileLoading }) {
   return (
     <Row>
       <Row style={styles.inputStyles}>
@@ -24,11 +25,16 @@ export default function ChatInput({ onSend, value, onChangeText }) {
           placeholderTextColor={colors.grey4}
           style={styles.input}
         />
-        <IconButton
-          icon={
-            <Icon name="paperclip" as={Feather} color={colors.text1} size={5} />
-          }
-        />
+        {fileLoading ?
+        <ActivityIndicator color={colors.green} />
+        :
+          <IconButton
+            onPress={() => onAttach()}
+            icon={
+              <Icon name="paperclip" as={Feather} color={colors.text1} size={5} />
+            }
+          />
+      }
         <TouchableOpacity style={{ paddingRight: 4, paddingLeft: 10 }}>
           <Image
             style={{ width: 20, height: 20 }}
