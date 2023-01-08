@@ -11,7 +11,7 @@ export default function Inbox() {
   const [chats, setChats] = useState(data)
   const data = [
     {
-      id: 1,
+      id: 54,
       isRead: true,
       time: "7:08 AM",
       name: "Thomas",
@@ -19,7 +19,7 @@ export default function Inbox() {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor..."
     },
     {
-      id: 2,
+      id: 86,
       isRead: true,
       time: "7:08 AM",
       name: "Betty",
