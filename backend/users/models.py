@@ -32,7 +32,9 @@ class User(AbstractUser):
 
 class Profile(BaseModel):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_profile"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_profile",
     )
     profile_image = models.ImageField(
         upload_to=generate_file_name, null=True, blank=True
