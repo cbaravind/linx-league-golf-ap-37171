@@ -18,7 +18,7 @@ export default function Chat({ route }) {
   const otherUser = route?.params?.user
   const [text, setText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
-  const currentChannel = "linx"
+  const currentChannel = "test_channel"
   // const [files, setFiles] = useState(false)
   useEffect(() => {
     const showMessage = msg => {
@@ -101,20 +101,19 @@ export default function Chat({ route }) {
         },
         file: file,
       });
-      const result2 = await pubnub.listFiles({ channel: currentChannel });
+      const filesList = await pubnub.listFiles({ channel: currentChannel });
       const fileUrls = []
-      result2.data.map((res,i) => {
-        const result1 = pubnub.getFileUrl({ channel: currentChannel, id: res.id, name: res.name });
+      filesList.data.map((res,i) => {
+        const fileURL = pubnub.getFileUrl({ channel: currentChannel, id: res.id, name: res.name });
         const fileName=res.name.replace(/_/g, ' ');
-        //fileName == file.name && !fileUrls.includes(res.id)
-        if(fileName == file.name && !res.id==fileUrls['id']){
-          fileUrls.push({ url: result1,file:true, ...res,sender:user?.id,reciever:otherUser?.id })
+        if(fileName == file.name && messages.filter(e => e['id'] == res.id).length == 0){
+       
+          fileUrls.push({ url: fileURL,file:true, ...res,sender:user?.id,reciever:otherUser?.id })
         }
       })
       // setFiles(fileUrls)
       setMessages([...messages,...fileUrls])
       setFileLoading(false)
-      // console.log(result,'result')
     } catch (err) {
       setFileLoading(false)
       //Handling any exception (If any)

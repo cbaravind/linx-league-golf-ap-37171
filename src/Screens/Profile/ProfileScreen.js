@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
-import React from "react"
+import React, { useEffect } from "react"
 import Container from "../../Components/Container"
 import { colors, fonts } from "../../theme"
 import AppHeader from "../../Components/AppHeader"
@@ -13,10 +13,13 @@ import AppButton from "../../Components/AppButton"
 import { stats } from "../../assets/data"
 import Share from 'react-native-share'
 import { shareOptions } from "../../constants"
+import { useSelector } from "react-redux"
 
 export default function ProfileScreen({route}) {
   const navigation = useNavigation()
   const otherUser = route?.params?.user
+  const { token, user } = useSelector(state => state?.auth?.user)
+console.log(user?.profile_image)
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -27,6 +30,10 @@ export default function ProfileScreen({route}) {
         err && console.log(err);
       })
   }
+  useEffect(() => {
+    
+  }, [])
+  
   return (
     <Container>
       <AppHeader
@@ -59,8 +66,8 @@ export default function ProfileScreen({route}) {
         <View style={[styles.league,{backgroundColor:colors.background}]} />
         }
         <UserStatsCard
-          image={otherUser?otherUser?.image: require("../../assets/images/profileImg.png")}
-          name={otherUser?otherUser.name: "Tom"}
+          image={user?.profile_image?{uri: user?.profile_image }: otherUser?otherUser?.image:   require("../../assets/images/profileImg.png")}
+          name={user? user?.user?.name : otherUser ? otherUser.name: "Tom"}
           city={"LA, California"}
           stats={stats}
         />

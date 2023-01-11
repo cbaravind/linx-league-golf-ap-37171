@@ -132,9 +132,10 @@ export const getTermsAndConditions = async () => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const createProfile = async (params, fileURI, token) => {
+export const updateProfile = async (params,id, token) => {
+  console.log(params)
   const requestOptions = {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "multipart/form-data",
       Accept: "application/json",
@@ -143,7 +144,7 @@ export const createProfile = async (params, fileURI, token) => {
     body: params,
     redirect: "follow"
   }
-  const url = `${API_URL}/api/v1/profile/`
+  const url = `${API_URL}/api/v1/profile/${id}/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
