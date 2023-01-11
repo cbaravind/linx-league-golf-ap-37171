@@ -22,6 +22,7 @@ import RoutesKey from "../../Navigation/routesKey"
 import Row from "../../Components/Row"
 import { useSelector } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+
 export default function Home() {
   const navigation = useNavigation()
   const { user } = useSelector(state => state.auth)
@@ -34,9 +35,12 @@ export default function Home() {
   useEffect(() => {
     getData()
   }, [])
+
   const getData = async () => {
-    //    const user = await AsyncStorage.getItem('user')
+      //  const user = await AsyncStorage.getItem('user')
+       console.log(user)
   }
+
   return (
     <Container title={"Home"}>
       <AppHeader

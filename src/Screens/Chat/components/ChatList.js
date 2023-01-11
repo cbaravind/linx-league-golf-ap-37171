@@ -15,7 +15,7 @@ const MessageItem = ({ message, file }) => {
 
   const downloadFile = async () => {
     const file = await pubnub.downloadFile({
-      channel: 'linx',
+      channel: 'test_channel',
       id: message.id,
       name: message.name,
     });

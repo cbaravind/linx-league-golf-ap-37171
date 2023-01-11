@@ -73,6 +73,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     "home",
     "users.apps.UsersConfig",
+    "friends",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",

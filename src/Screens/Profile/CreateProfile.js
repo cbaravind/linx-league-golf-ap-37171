@@ -8,15 +8,22 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import DatePicker from '../../Components/datePicker';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { colors } from '../../theme'
-import { createProfile } from '../../../api';
-import { useSelector } from 'react-redux';
+import { updateProfile } from '../../../api';
+import { useDispatch, useSelector } from 'react-redux';
 import { imagePickerOptions, IMAGE_PLACEHOLDER } from '../../constants';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Row from '../../Components/Row';
 import RoutesKey from '../../Navigation/routesKey';
+import { showMessage } from 'react-native-flash-message';
+import { saveUser } from '../../redux/reducers/auth';
 
 const CreateProfile = () => {
+  
+  const route      = useRoute();
+  const navigation = useNavigation();
+  const dispatch   = useDispatch()
   const { token, user } = useSelector(state => state?.auth?.user)
+
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState({
@@ -26,20 +33,19 @@ const CreateProfile = () => {
     ghin: user?.ghin ? user.ghin : '',
     // zipCode: '',
     imageUploading: false,
-    image: user?.profile_image ? user?.profile_image : ''
+    image: user?.profile_image ? {uri: user?.profile_image} : ''
   })
-  let [phoneNumber, setPhoneNumber] = useState("");
-  const [startDate, setStartDate] = React.useState('');
-  let [service, setService] = React.useState('');
-  const [value, setValue] = React.useState("");
-  const [valueGHIN, setValueGHIN] = React.useState("");
-  const [diableGHIN, setDisableGHIN] = React.useState(true);
+  let [phoneNumber, setPhoneNumber]  = useState(user ? user?.phone_number : "");
+  const [startDate, setStartDate]    = useState('');
+  let   [service, setService]        = useState('');
+  const [value, setValue]            = useState(user?.gender);
+  const [valueGHIN, setValueGHIN]    = useState("");
+  const [diableGHIN, setDisableGHIN] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [showPickerModal, setShowPickerModal] = useState(false)
-  const [btnLoading, setBtnLoading] = useState(false)
-  const [continueWithoutGHIN, setContinueWithoutGHIN] = useState(false)
-  const route = useRoute();
-  const navigation = useNavigation();
+  const [showPickerModal, setShowPickerModal] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [continueWithoutGHIN, setContinueWithoutGHIN] = useState(false);
+
 
   useEffect(() => {
     let SD = {};
@@ -47,7 +53,6 @@ const CreateProfile = () => {
     SD[service] = { selected: true, selectedColor: '#1C8739' };
     setStartDate(SD);
   }, [service])
-
 
 
   useEffect(() => {
@@ -65,32 +70,40 @@ const CreateProfile = () => {
 
   const submitHandler = async () => {
     setBtnLoading(true)
-    const form = new FormData();
-    form.append('user', {
-      email: user?.user?.email,
-      first_name: formData.firstName,
-      last_name: formData.lastName
+ 
+    const id = user?.user?.id
+    const data = {
+      user: {
+        email: user?.user?.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      },
+      phone_number: phoneNumber,
+      gender: value,
+      ghin: formData.ghin,
+      has_ghin: valueGHIN,
+    }
+    console.log(formData.image,'image')
+    const params=new FormData()
+    params.append('profile_image',{
+      name:formData.image.fileName,
+      type:formData.image.type,
+      uri:formData.image.uri
+      
     })
-    form.append('profile_image', {
-      'type': formData?.image?.type,
-      'uri': formData?.image?.uri,
-      'name': formData?.image?.fileName
-    })
-    form.append('phone_number', phoneNumber)
-    form.append('has_ghin', valueGHIN)
-    form.append('ghin', formData?.ghin)
-
-
-    // const data = {
-    //   phone_number: phoneNumber,
-    //   gender: value,
-    //   ghin: formData.ghin,
-    //   has_ghin: valueGHIN,
-    // }
-
-    const res = await createProfile(form, formData.image, token)
+    const response = await updateProfile(params, id, token)
+    console.log(response,'===response of profile API')
+    const res= JSON.parse(response)
     setBtnLoading(false)
-    console.log('response of profile API', res)
+    if(res.id){
+
+      dispatch(saveUser({ user: res, token: token }))
+      navigation.goBack()
+      showMessage({
+        type:'success',
+        message:'Profile updated'
+      })
+    }
   }
   const launchLibrary = () => {
     setShowPickerModal(false)
@@ -98,7 +111,7 @@ const CreateProfile = () => {
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
-          console.log(res.assets[0])
+          // console.log(res.assets[0])
           setFormData({ ...formData, image: res.assets[0], imageUploading: false })
         }
       }
@@ -234,7 +247,7 @@ const CreateProfile = () => {
               <Box mt='3'>
                 <InputText value={formData.ghin}
                   onChangeText={(val) => setFormData({ ...formData, ghin: val })}
-                  placeholder={'GHIN Number'} 
+                  placeholder={'GHIN Number'}
                   disabled={diableGHIN} keynum={true} bgcolor={false} greenColor={false} text='GHIN' typeShow='text' />
               </Box>
               {route?.params?.setting !== true ?
@@ -255,23 +268,23 @@ const CreateProfile = () => {
                         Linx League app with no GHIN</Text>
                       <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>but when you’re ready to compete
                         for cash & prizes, please sign up for yours!</Text>
-                        <Button shadow={5} mt='5' bg='#7D9E49'>INVITE YOUR FRIENDS</Button>
+                      <Button shadow={5} mt='5' bg='#7D9E49'>INVITE YOUR FRIENDS</Button>
                     </>
-                    :diableGHIN ?
-                    <>
-                      <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
-                      <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to</Text>
-                      <Text> <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
-                      <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
-                      <Button onPress={() => setContinueWithoutGHIN(true)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
-                    </>
-                    :
-                    <>
-                    <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>It’s time to join your League </Text>
-                    <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Find a local league to compete in!</Text>
-                    <Button shadow={5} mt='5' bg='#7D9E49'>FIND MY LEAGUE</Button>
-                    <Button onPress={() => navigation.navigate(RoutesKey.HOME)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>SKIP TO HOME</Text></Button>
-                  </>
+                    : diableGHIN ?
+                      <>
+                        <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>We need your GHIN to enable your account </Text>
+                        <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Click OK to be redirected to</Text>
+                        <Text> <Text fontSize='14' textAlign='center' fontWeight='700'> USGA</Text> web app.</Text>
+                        <Button shadow={5} mt='5' bg='#7D9E49'>OK</Button>
+                        <Button onPress={() => setContinueWithoutGHIN(true)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>CONTINUE WITHOUT GHIN</Text></Button>
+                      </>
+                      :
+                      <>
+                        <Text fontSize='20' textAlign='center' color='#7D9E49' fontWeight='700'>It’s time to join your League </Text>
+                        <Text p='2' fontSize='14' textAlign='center' fontWeight='400'>Find a local league to compete in!</Text>
+                        <Button shadow={5} mt='5' bg='#7D9E49'>FIND MY LEAGUE</Button>
+                        <Button onPress={() => navigation.navigate(RoutesKey.HOME)} bg='#fff' borderColor='black' variant='outline' mt='5' ><Text color='black'>SKIP TO HOME</Text></Button>
+                      </>
                   }
                 </Box>
               </Modal.Body>
