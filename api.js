@@ -10,7 +10,8 @@ export const signup = async data => {
       // Authorization: `Bearer ${token}`,
     },
     redirect: "follow",
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    credentials: "omit"
   }
   const url = `${API_URL}/rest-auth/registration/`
   const response = await fetch(url, requestOptions)
@@ -132,7 +133,7 @@ export const getTermsAndConditions = async () => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const updateProfile = async (params,id, token) => {
+export const updateProfile = async (params, id, token) => {
   console.log(params)
   const requestOptions = {
     method: "PATCH",
@@ -149,14 +150,14 @@ export const updateProfile = async (params,id, token) => {
   return response.text()
 }
 
-export const getUserProfile = async () => {
+export const getUserProfile = async token => {
   const requestOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
       // apikey: API_KEY,
-      // Authorization: `Token ${token}`,
+      Authorization: `Token ${token}`
     },
     redirect: "follow"
   }
@@ -165,14 +166,14 @@ export const getUserProfile = async () => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const getAllUsers = async (token) => {
+export const getAllUsers = async token => {
   const requestOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
       // apikey: API_KEY,
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${token}`
     },
     redirect: "follow"
   }
@@ -181,4 +182,3 @@ export const getAllUsers = async (token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-

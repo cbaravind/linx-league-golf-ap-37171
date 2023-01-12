@@ -42,7 +42,7 @@ const Login = () => {
     setBtnLoading(false)
     console.log(res, "Response of Login API")
     if (res.key) {
-      const userObj = await getUserProfile()
+      const userObj = await getUserProfile(res.key)
       await AsyncStorage.setItem("user", userObj)
       await AsyncStorage.setItem("token", res.key)
       dispatch(saveUser({ user: userObj, token: res.key }))
@@ -63,7 +63,14 @@ const Login = () => {
     }
   }
   return (
-    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%",paddingTop:20 }}>
+    <View
+      style={{
+        flex: 0,
+        backgroundColor: "#F1F2F2",
+        height: "100%",
+        paddingTop: 20
+      }}
+    >
       <SafeAreaView>
         <ScrollView>
           <Center px="0">

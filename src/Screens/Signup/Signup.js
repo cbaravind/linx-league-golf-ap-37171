@@ -47,11 +47,12 @@ const Signup = () => {
     const res = JSON.parse(result)
     setBtnLoading(false)
     if (res.key) {
-      const userObj = await getUserProfile()
-      await AsyncStorage.setItem("user", userObj)
+      let userObj = await getUserProfile(res.key)
+      userObj = JSON.parse(userObj)
+      await AsyncStorage.setItem("user", JSON.stringify(userObj))
       await AsyncStorage.setItem("token", res.key)
       dispatch(saveUser({ user: userObj, token: res.key }))
-      navigation.navigate(RoutesKey.BOTTOMTAB)
+      // navigation.navigate(RoutesKey.BOTTOMTAB)
 
       setFormData({
         email: "",
@@ -62,7 +63,7 @@ const Signup = () => {
       //     type: 'success'
       // });
       // navigation.navigate(RoutesKey.LOGIN)
-      // navigation.navigate(RoutesKey.CREATEPROFILE)
+      navigation.navigate(RoutesKey.CREATEPROFILE)
     } else {
       setErrors(res)
     }
@@ -70,7 +71,14 @@ const Signup = () => {
     //  })
   }
   return (
-    <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%",paddingTop:20 }}>
+    <View
+      style={{
+        flex: 0,
+        backgroundColor: "#F1F2F2",
+        height: "100%",
+        paddingTop: 20
+      }}
+    >
       <SafeAreaView>
         <ScrollView>
           <Center px="1">
@@ -96,7 +104,7 @@ const Signup = () => {
                   Sign Up
                 </Text>
               </Box>
-             
+
               <Box mt="2">
                 <InputText
                   error={errors?.email ? errors?.email[0] : ""}
@@ -140,7 +148,7 @@ const Signup = () => {
                       setGroupValues(!groupValues)
                     }}
                   />
-                  <Box overflow={"hidden"} width={'90%'} mt={"1.5"}>
+                  <Box overflow={"hidden"} width={"90%"} mt={"1.5"}>
                     <Text
                       fontSize={14}
                       fontWeight={"400"}
@@ -181,11 +189,7 @@ const Signup = () => {
                 <></>
               )}
               <Button
-                isDisabled={
-                  btnLoading ||
-                  !formData.email ||
-                  !formData.password
-                }
+                isDisabled={btnLoading || !formData.email || !formData.password}
                 onPress={() => signUpHandler()}
                 isLoading={btnLoading}
                 shadow={5}
@@ -266,14 +270,14 @@ const styles = StyleSheet.create({
   greenText: {
     color: colors.green,
     fontSize: 14,
-    fontFamily:'Roboto',
+    fontFamily: "Roboto",
     textDecorationLine: "underline",
-    fontWeight:'400'
+    fontWeight: "400"
   },
   text: {
     fontSize: 12,
     fontWeight: "500",
-    fontFamily: fonts.PROXIMA_REGULAR,
+    fontFamily: fonts.PROXIMA_REGULAR
 
     // color: "red",
   }
