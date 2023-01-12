@@ -108,7 +108,7 @@ export default function SendReferral({ route }) {
                         <UserProfile
                           name={item.givenName}
                           image={
-                            item.hasThumbnail ? { uri: item.thumbnailPath } : ""
+                            item.hasThumbnail ? item.thumbnailPath  : null
                           }
                           onPress={() =>
                             setSelectedContacts([...selectedContacts, item])
