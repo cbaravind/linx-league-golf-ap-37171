@@ -22,15 +22,14 @@ import AppModal from "../../../Components/AppModal"
 import { friends } from "../../../assets/data"
 import RoutesKey from "../../../Navigation/routesKey"
 import Contacts from "react-native-contacts"
-import { PermissionsAndroid } from "react-native"
 import { Button } from "native-base"
 
 export default function AddFriends({ route }) {
+
   const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList] = useState(friends)
+  const [friendsList, setFriendsList]   = useState(friends)
   const navigation = useNavigation()
   const { date, time } = route?.params
-  console.log(date, time, '======')
   const fetchContacts = () => {
     if (modalVisible == "refer") {
       Contacts.checkPermission().then(permission => {
@@ -93,7 +92,7 @@ export default function AddFriends({ route }) {
             renderItem={(data, rowMap) => (
               <UserProfile
                 name={data.item.name}
-                image={data.item.image}
+                image={null}
               // item={}
               />
             )}

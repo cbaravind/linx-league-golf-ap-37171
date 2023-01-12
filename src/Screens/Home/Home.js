@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Pressable
 } from "react-native"
+import { useNavigation } from "@react-navigation/core"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Container from "../../Components/Container"
 import AppHeader from "../../Components/AppHeader"
 import { colors } from "../../theme"
@@ -16,16 +18,15 @@ import { Center } from "native-base"
 import RoundCard from "./components/RoundCard"
 import DateTimePicker from "./components/DateTimePicker"
 import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
-import FontAwesome from "react-native-vector-icons/FontAwesome"
-import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../Navigation/routesKey"
 import Row from "../../Components/Row"
 import { useSelector } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { IMAGE_PLACEHOLDER } from "../../constants"
 
 export default function Home() {
   const navigation = useNavigation()
-  const { user } = useSelector(state => state.auth)
+  const { user,token } = useSelector(state => state.auth?.user)
   // const userObj = JSON.parse(user)
   data = [
     { id: 1, title: "St Johns Golf & Country Club",date:'18/05/2022 8:00 am' },
@@ -38,7 +39,7 @@ export default function Home() {
 
   const getData = async () => {
       //  const user = await AsyncStorage.getItem('user')
-       console.log(user)
+       console.log(user,'user')
   }
 
   return (
@@ -46,8 +47,7 @@ export default function Home() {
       <AppHeader
         leftIcon={
           <TouchableOpacity
-            onPress={() => navigation.navigate(RoutesKey.NOTIFICATIONS)}
-          >
+            onPress={() => navigation.navigate(RoutesKey.NOTIFICATIONS)}>
             <FontAwesome name="bell-o" size={30} color={colors.white} />
           </TouchableOpacity>
         }
@@ -62,8 +62,8 @@ export default function Home() {
             </Pressable>
             <Pressable onPress={() => navigation.navigate(RoutesKey.PROFILE)}>
               <Image
-                source={require("../../assets/images/profileImg.png")}
-                style={{ width: 30, height: 30, marginLeft: 15 }}
+                source={{uri:user?.profile_image ? user?.profile_image : IMAGE_PLACEHOLDER}}
+                style={{ width: 30, height: 30, marginLeft: 15,borderRadius:20 }}
               />
             </Pressable>
           </Row>

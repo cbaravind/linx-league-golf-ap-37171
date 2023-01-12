@@ -1,5 +1,5 @@
-import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View, Modal, FormControl } from 'native-base'
 import React, { useState, useEffect } from 'react'
+import { Avatar, Box, Button, Center, Icon, IconButton, Image, Input, InputLeftAddon, Link, Pressable, Radio, ScrollView, Text, View, Modal, FormControl } from 'native-base'
 import { SafeAreaView, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -41,7 +41,7 @@ const CreateProfile = () => {
   const [value, setValue]            = useState(user?.gender);
   const [valueGHIN, setValueGHIN]    = useState("");
   const [diableGHIN, setDisableGHIN] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal]    = useState(false);
   const [showPickerModal, setShowPickerModal] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [continueWithoutGHIN, setContinueWithoutGHIN] = useState(false);
@@ -83,28 +83,32 @@ const CreateProfile = () => {
       ghin: formData.ghin,
       has_ghin: valueGHIN,
     }
-    console.log(formData.image,'image')
     const params=new FormData()
     params.append('profile_image',{
       name:formData.image.fileName,
       type:formData.image.type,
       uri:formData.image.uri
-      
     })
     const response = await updateProfile(params, id, token)
     console.log(response,'===response of profile API')
     const res= JSON.parse(response)
     setBtnLoading(false)
     if(res.id){
-
       dispatch(saveUser({ user: res, token: token }))
       navigation.goBack()
       showMessage({
         type:'success',
         message:'Profile updated'
       })
-    }
+    }else if(res.detail){
+        showMessage({
+          type:'warning',
+          message:res.detail
+        })
+      }
+    
   }
+
   const launchLibrary = () => {
     setShowPickerModal(false)
     launchImageLibrary(imagePickerOptions, async (res) => {
@@ -117,6 +121,7 @@ const CreateProfile = () => {
       }
     })
   }
+  
   const openCamera = () => {
     setShowPickerModal(false)
     launchCamera(imagePickerOptions, async (res) => {
@@ -291,7 +296,7 @@ const CreateProfile = () => {
             </Modal.Content>
           </Modal>
           <Modal isOpen={showPickerModal} onClose={() => setShowPickerModal(false)}>
-            <Modal.Content style={{ position: 'absolute', bottom: 0, borderRadius: 30 }} width={'100%'} maxWidth="400px">
+            <Modal.Content style={{ position: 'absolute', bottom: 0, borderTopLeftRadius: 30,borderTopRightRadius:30 }} width={'100%'} maxWidth="400px">
               <Modal.CloseButton />
               <Modal.Body>
                 <Box p='6'>

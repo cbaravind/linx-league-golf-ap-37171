@@ -9,6 +9,7 @@ import {
 import React from "react"
 import Row from "./Row"
 import { colors } from "../theme"
+import { IMAGE_PLACEHOLDER } from "../constants"
 export default function UserProfile({ name, image, onPress }) {
   return (
     <View>
@@ -16,11 +17,9 @@ export default function UserProfile({ name, image, onPress }) {
 
       <Row style={styles.container}>
         <View style={styles.imgContainer}>
-          {image ? (
-            <Image source={image} resizeMode="contain" style={styles.img} />
-          ) : (
-            <></>
-          )}
+
+          <Image source={{ uri: image ? image : IMAGE_PLACEHOLDER }} resizeMode="cover" style={styles.img} />
+
         </View>
         <Text style={styles.text}>{name}</Text>
       </Row>
@@ -50,9 +49,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  text:{
-    color:colors.text1,
-    fontWeight:'700',
-    fontSize:16
+  text: {
+    color: colors.text1,
+    fontWeight: '700',
+    fontSize: 16
   }
 })

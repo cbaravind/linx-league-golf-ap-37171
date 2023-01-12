@@ -165,3 +165,20 @@ export const getUserProfile = async () => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+export const getAllUsers = async (token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`,
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/profile/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+
