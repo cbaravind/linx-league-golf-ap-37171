@@ -32,6 +32,7 @@ export default function Settings() {
     logout(token, async res => {
       setLogoutLoading(false)
       // console.log(res)
+      
       if (res.detail.includes("logged out")) {
         disaptch(saveUser(""))
         navigation.navigate(RoutesKey.LOGIN)

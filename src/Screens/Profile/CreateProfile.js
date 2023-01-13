@@ -31,7 +31,7 @@ import { CountryPicker } from "react-native-country-codes-picker"
 import DatePicker from "../../Components/datePicker"
 import { useRoute, useNavigation } from "@react-navigation/native"
 import { colors } from "../../theme"
-import { updateProfile } from "../../../api"
+import { updateProfile, updateProfilePicture } from "../../../api"
 import { useDispatch, useSelector } from "react-redux"
 import { imagePickerOptions, IMAGE_PLACEHOLDER } from "../../constants"
 import { launchCamera, launchImageLibrary } from "react-native-image-picker"
@@ -55,7 +55,8 @@ const CreateProfile = () => {
     ghin: user?.ghin ? user.ghin : "",
     // zipCode: '',
     imageUploading: false,
-    image: user?.profile_image ? { uri: user?.profile_image } : ""
+    image: user?.profile_image ? { uri: user?.profile_image } : "",
+    imgUploadStatus: false
   })
   let [phoneNumber, setPhoneNumber] = useState(user ? user?.phone_number : "")
   const [startDate, setStartDate] = useState("")
@@ -70,7 +71,6 @@ const CreateProfile = () => {
 
   useEffect(() => {
     let SD = {}
-
     SD[service] = { selected: true, selectedColor: "#1C8739" }
     setStartDate(SD)
   }, [service])
@@ -86,6 +86,33 @@ const CreateProfile = () => {
       setShowModal(true)
     }
   }, [valueGHIN])
+
+  useEffect(() => {
+    if(formData.image){
+
+      updateProfileImgHandler()
+    }
+  }, [formData.image])
+
+  const updateProfileImgHandler = async () => {
+    const id = user?.user?.id
+
+    const params = new FormData()
+    params.append("profile_image", {
+      name: formData.image.fileName,
+      type: formData.image.type,
+      uri: formData.image.uri
+    })
+    const response = await updateProfilePicture(params, id, token)
+    const res = JSON.parse(response)
+    console.log('response of uploading image', res)
+    if (res.id) {
+      setFormData({ ...formData, imgUploadStatus: 200 })
+    } else if (res.detail) {
+      setFormData({ ...formData, imgUploadStatus: res.detail })
+    }
+  }
+
   const submitHandler = async () => {
     setBtnLoading(true)
 
@@ -101,17 +128,10 @@ const CreateProfile = () => {
       ghin: formData.ghin,
       has_ghin: valueGHIN
     }
-    const params = new FormData()
-    params.append("profile_image", {
-      name: formData.image.fileName,
-      type: formData.image.type,
-      uri: formData.image.uri
-    })
-    const response = await updateProfile(params, id, token)
-    console.log(response, "===response of profile API")
+    const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
     setBtnLoading(false)
-    if (res.id) {
+    if (res.id ) {
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
       navigation.navigate(RoutesKey.BOTTOMTAB)
@@ -119,11 +139,18 @@ const CreateProfile = () => {
         type: "success",
         message: "Profile updated"
       })
-    } else if (res.detail) {
-      showMessage({
-        type: "warning",
-        message: res.detail
-      })
+    } else {
+      if(res.detail){
+        showMessage({
+          type: "warning",
+          message: res.detail ? res.detail : formData.imgUploadStatus
+        })
+      }else if(formData.imgUploadStatus && formData.imgUploadStatus !=200){
+        showMessage({
+          type: "warning",
+          message: res.detail ? res.detail : formData.imgUploadStatus
+        })
+      }
     }
   }
 

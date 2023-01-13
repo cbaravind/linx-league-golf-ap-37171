@@ -39,7 +39,7 @@ export default function Home() {
 
   const getData = async () => {
       //  const user = await AsyncStorage.getItem('user')
-       console.log(user,'user')
+       console.log(user.profile_image,'user')
   }
 
   return (
@@ -83,7 +83,7 @@ export default function Home() {
           <View style={{ paddingTop: 30 }}>
             <Text style={styles.h3}>Welcome,</Text>
             <Text style={[styles.h3, { fontWeight: "700" }]}>
-              {user?.user?.name}
+              {user?.user?.first_name}
             </Text>
             <View style={{ paddingHorizontal: 25, marginTop: 20 }}>
               <Text style={[styles.h4, { fontWeight: "700" }]}>

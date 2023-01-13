@@ -67,7 +67,7 @@ console.log(user?.profile_image)
         }
         <UserStatsCard
           image={user?.profile_image?{uri: user?.profile_image }: otherUser?otherUser?.image:   require("../../assets/images/profileImg.png")}
-          name={user? user?.user?.name : otherUser ? otherUser.name: "Tom"}
+          name={user? user?.user?.first_name : otherUser ? otherUser.name: "Tom"}
           city={"LA, California"}
           stats={stats}
         />

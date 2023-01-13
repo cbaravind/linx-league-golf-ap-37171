@@ -133,8 +133,8 @@ export const getTermsAndConditions = async () => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const updateProfile = async (params, id, token) => {
-  console.log(params)
+export const updateProfilePicture = async (params, id, token) => {
+  console.log(id,'user id')
   const requestOptions = {
     method: "PATCH",
     headers: {
@@ -143,6 +143,22 @@ export const updateProfile = async (params, id, token) => {
       Authorization: `Token ${token}`
     },
     body: params,
+    redirect: "follow"
+  }
+  const url = `${API_URL}/api/v1/profile/${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+
+export const updateProfile = async (params, id, token) => {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type":"application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(params),
     redirect: "follow"
   }
   const url = `${API_URL}/api/v1/profile/${id}/`
