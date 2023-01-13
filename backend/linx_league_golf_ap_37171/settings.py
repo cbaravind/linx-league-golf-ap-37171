@@ -74,6 +74,7 @@ LOCAL_APPS = [
     "home",
     "users.apps.UsersConfig",
     "friends",
+    "schedules",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
