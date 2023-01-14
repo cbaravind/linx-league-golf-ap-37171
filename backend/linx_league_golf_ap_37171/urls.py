@@ -39,6 +39,9 @@ urlpatterns = [
     path("rest-auth/registration/account-confirm-email/<str:key>/", confirm_email),
     path("rest-auth/registration/", include("rest_auth.registration.urls")),
     path("api/v1/", include("friends.urls", namespace="friends")),
+    path("schedules/", include("schedules.urls", namespace="schedules")),
+    path("invite/", include("invite_users.urls", namespace="invite-users")),
+    path("feedbacks/", include("feedbacks.urls", namespace="feedbacks")),
 ]
 
 admin.site.site_header = "Linx League Golf App"
