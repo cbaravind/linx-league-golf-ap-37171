@@ -7,8 +7,6 @@ from home.api.v1.serializers import UserSerializer
 
 
 class CreateFriendSerializer(WritableNestedModelSerializer):
-    friends = UserSerializer(many=True)
-
     class Meta:
         model = Friend
         fields = "__all__"
