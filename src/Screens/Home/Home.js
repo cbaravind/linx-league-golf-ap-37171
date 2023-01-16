@@ -39,8 +39,7 @@ export default function Home() {
 
   const getData = async () => {
       //  const user = await AsyncStorage.getItem('user')
-       console.log(user.profile_image,'user')
-  }
+    }
 
   return (
     <Container title={"Home"}>

@@ -198,3 +198,36 @@ export const getAllUsers = async token => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+export const makeFriends =async (id,data,token) => {
+  const params={friends:data,user:id}
+  console.log(params)
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(params),
+    redirect: "follow"
+  }
+  const url=`${API_URL}/api/v1/friends/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const getFriends = async (id,token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/friends/${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}

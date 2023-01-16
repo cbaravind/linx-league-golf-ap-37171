@@ -4,9 +4,10 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/core"
 import { colors, fonts } from "../../../theme"
 import { SwipeListView } from "react-native-swipe-list-view"
@@ -23,44 +24,65 @@ import { friends } from "../../../assets/data"
 import RoutesKey from "../../../Navigation/routesKey"
 import Contacts from "react-native-contacts"
 import { Button } from "native-base"
+import { getFriends } from "../../../../api"
+import { useSelector } from "react-redux"
 
 export default function AddFriends({ route }) {
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList]   = useState(friends)
+  const [friendsList, setFriendsList] = useState([])
+  const [loading, setLoading] = useState(false)
+  const { user, token } = useSelector(state => state.auth?.user)
   const navigation = useNavigation()
   const { date, time } = route?.params
+
+  useEffect(() => {
+    getFriendsHandler()
+  }, [])
+
   const fetchContacts = () => {
-    if (modalVisible == "refer") {
-      Contacts.checkPermission().then(permission => {
-        // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-        console.log("permission", permission)
-        if (permission === "undefined") {
-          Contacts.requestPermission().then(permission => {
-            // ...
-          })
-        }
-        if (permission === "authorized") {
-          // yay!
-          Contacts.getAll().then(contacts => {
-            setModalVisible(false)
-            if (contacts.length) {
+
+    Contacts.checkPermission().then(permission => {
+      // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+      console.log("permission", permission)
+      if (permission === "undefined") {
+        Contacts.requestPermission().then(permission => {
+          // ...
+        })
+      }
+      if (permission === "authorized") {
+        // yay!
+        Contacts.getAll().then(contacts => {
+          setModalVisible(false)
+          if (contacts.length) {
+            if (modalVisible && modalVisible == "refer") {
               navigation.navigate(RoutesKey.SENDREFERRAL, {
                 contacts: contacts
               })
+            } else {
+              // setModalVisible(false)
+              navigation.navigate(RoutesKey.FINDFRIENDS, {
+                contacts: contacts
+              })
             }
-
-            console.log(contacts, "Contacts")
-          })
-        }
-        if (permission === "denied") {
-          // x.x
-        }
-      })
-    } else {
-      setModalVisible(false)
-      navigation.navigate(RoutesKey.FINDFRIENDS)
+          }
+        })
+      }
+      if (permission === "denied") {
+        // x.x
+      }
+    })
+  }
+  const getFriendsHandler = async () => {
+    setLoading(true)
+    const response = await getFriends(user?.user?.id, token)
+    const res = JSON.parse(response)
+    if (res.id) {
+      if (res.friends.length) {
+        setFriendsList(res.friends)
+      }
     }
+    setLoading(false)
   }
   return (
     <Container>
@@ -68,58 +90,71 @@ export default function AddFriends({ route }) {
         back
         title="Add Friends to your Tee time"
         rightIcon={
-          <TouchableOpacity onPress={()=>navigation.navigate(RoutesKey.FINDFRIENDS)} >
+          <TouchableOpacity onPress={() => fetchContacts()} >
             <Text style={styles.text}>SKIP</Text>
           </TouchableOpacity>
         }
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
-        <View
-          style={{
-            backgroundColor: colors.white,
-            marginTop: 30,
-            marginBottom: 12
-          }}
-        >
-          <SwipeListView
-            style={{
-              paddingTop: 20,
-              paddingLeft: 20
-            }}
-            data={friendsList}
-            keyExtractor={item => item.id}
-            renderItem={(data, rowMap) => (
-              <UserProfile
-                name={data.item.name}
-                image={null}
-              // item={}
-              />
-            )}
-            renderHiddenItem={(data, rowMap) => (
-              <TouchableHighlight
-                onPress={() =>
-                  setFriendsList(friendsList.filter(e => data.item.id != e.id))
-                }
-                style={styles.rowBack}
+        {loading ?
+          <View style={{ marginVertical: 40 }}>
+            <ActivityIndicator />
+          </View>
+          :
+          friendsList.length ?
+            <>
+              <View
+                style={{
+                  backgroundColor: colors.white,
+                  marginTop: 30,
+                  marginBottom: 12
+                }}
               >
-                <Icon name="trash-outline" size={25} color={colors.white} />
-              </TouchableHighlight>
-            )}
-            leftOpenValue={0}
-            rightOpenValue={-75}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Text
-            style={[
-              styles.text,
-              { fontWeight: "400", color: colors.text1, fontSize: 14 }
-            ]}
-          >
-            Remove players by swiping left
-          </Text>
-        </View>
+                <SwipeListView
+                  style={{
+                    paddingTop: 20,
+                    paddingLeft: 20
+                  }}
+                  data={friendsList}
+                  keyExtractor={item => item.id}
+                  renderItem={(data, rowMap) => (
+                    <UserProfile
+                      name={data.item.name}
+                      image={null}
+                    // item={}
+                    />
+                  )}
+                  renderHiddenItem={(data, rowMap) => (
+                    <TouchableHighlight
+                      onPress={() =>
+                        setFriendsList(friendsList.filter(e => data.item.id != e.id))
+                      }
+                      style={styles.rowBack}
+                    >
+                      <Icon name="trash-outline" size={25} color={colors.white} />
+                    </TouchableHighlight>
+                  )}
+                  leftOpenValue={0}
+                  rightOpenValue={-75}
+                />
+              </View>
+              <View style={{ paddingHorizontal: 20 }}>
+                <Text
+                  style={[
+                    styles.text,
+                    { fontWeight: "400", color: colors.text1, fontSize: 14 }
+                  ]}
+                >
+                  Remove players by swiping left
+                </Text>
+              </View>
+            </>
+            :
+            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }} >
+              <Text >No Friends to Show</Text>
+            </View>
+        }
         <View style={styles.bottom}>
           <Row style={{ marginBottom: 15 }}>
             <Button
