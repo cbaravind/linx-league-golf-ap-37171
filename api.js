@@ -231,3 +231,37 @@ export const getFriends = async (id,token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+export const postLeague = async (data,token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/schedules/leagues/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const sendFeedback = async (data,token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/feedbacks/data/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}

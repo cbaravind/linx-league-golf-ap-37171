@@ -26,19 +26,24 @@ import Contacts from "react-native-contacts"
 import { Button } from "native-base"
 import { getFriends } from "../../../../api"
 import { useSelector } from "react-redux"
+import moment from "moment"
 
 export default function AddFriends({ route }) {
 
-  const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList] = useState([])
-  const [loading, setLoading] = useState(false)
+  const { date, time }  = route?.params
+  const selectedPlayers = route?.params?.players
   const { user, token } = useSelector(state => state.auth?.user)
-  const navigation = useNavigation()
-  const { date, time } = route?.params
+  const navigation      = useNavigation()
+
+  const [modalVisible, setModalVisible]  = useState(false)
+  const [friendsList, setFriendsList]    = useState(selectedPlayers)
+
 
   useEffect(() => {
-    getFriendsHandler()
-  }, [])
+    if (selectedPlayers) {
+      setFriendsList(selectedPlayers)
+    }
+  }, [selectedPlayers])
 
   const fetchContacts = () => {
 
@@ -73,17 +78,19 @@ export default function AddFriends({ route }) {
       }
     })
   }
-  const getFriendsHandler = async () => {
-    setLoading(true)
-    const response = await getFriends(user?.user?.id, token)
-    const res = JSON.parse(response)
-    if (res.id) {
-      if (res.friends.length) {
-        setFriendsList(res.friends)
-      }
+
+  const leagueHandler = async () => {
+    const data = {
+      when: '2022',
+      course_name: 'string',
+      city: 'city',
+      course_address: 'address',
+      user: 99,
+      players: [46, 49]
     }
-    setLoading(false)
   }
+
+
   return (
     <Container>
       <AppHeader
@@ -97,63 +104,67 @@ export default function AddFriends({ route }) {
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
-        {loading ?
-          <View style={{ marginVertical: 40 }}>
-            <ActivityIndicator />
+        {!selectedPlayers ?
+          <View style={{ justifyContent: 'center', flex: 1 }}>
+            <Button
+              style={{ margin: 20 }}
+              mt={4}
+              onPress={() => navigation.navigate(RoutesKey.PLAYERS)}
+              bg="#7D9E49"
+            >
+              {"ADD PLAYERS"}
+            </Button>
           </View>
           :
-          friendsList.length ?
-            <>
-              <View
+          <>
+
+            <View
+              style={{
+                backgroundColor: colors.white,
+                marginTop: 30,
+                marginBottom: 12
+              }}
+            >
+              <SwipeListView
                 style={{
-                  backgroundColor: colors.white,
-                  marginTop: 30,
-                  marginBottom: 12
+                  paddingTop: 20,
+                  paddingLeft: 20
                 }}
-              >
-                <SwipeListView
-                  style={{
-                    paddingTop: 20,
-                    paddingLeft: 20
-                  }}
-                  data={friendsList}
-                  keyExtractor={item => item.id}
-                  renderItem={(data, rowMap) => (
-                    <UserProfile
-                      name={data.item.name}
-                      image={null}
-                    // item={}
-                    />
-                  )}
-                  renderHiddenItem={(data, rowMap) => (
-                    <TouchableHighlight
-                      onPress={() =>
-                        setFriendsList(friendsList.filter(e => data.item.id != e.id))
-                      }
-                      style={styles.rowBack}
-                    >
-                      <Icon name="trash-outline" size={25} color={colors.white} />
-                    </TouchableHighlight>
-                  )}
-                  leftOpenValue={0}
-                  rightOpenValue={-75}
-                />
-              </View>
-              <View style={{ paddingHorizontal: 20 }}>
-                <Text
-                  style={[
-                    styles.text,
-                    { fontWeight: "400", color: colors.text1, fontSize: 14 }
-                  ]}
-                >
-                  Remove players by swiping left
-                </Text>
-              </View>
-            </>
-            :
-            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }} >
-              <Text >No Friends to Show</Text>
+                data={friendsList}
+                keyExtractor={item => item.id}
+                renderItem={(data, rowMap) => (
+                  <UserProfile
+                    name={data.item.name}
+                    image={null}
+                  // item={}
+                  />
+                )}
+                renderHiddenItem={(data, rowMap) => (
+                  <TouchableHighlight
+                    onPress={() =>
+                      setFriendsList(friendsList.filter(e => data.item.id != e.id))
+                    }
+                    style={styles.rowBack}
+                  >
+                    <Icon name="trash-outline" size={25} color={colors.white} />
+                  </TouchableHighlight>
+                )}
+                leftOpenValue={0}
+                rightOpenValue={-75}
+              />
             </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <Text
+                style={[
+                  styles.text,
+                  { fontWeight: "400", color: colors.text1, fontSize: 14 }
+                ]}
+              >
+                Remove players by swiping left
+              </Text>
+            </View>
+          </>
+
         }
         <View style={styles.bottom}>
           <Row style={{ marginBottom: 15 }}>

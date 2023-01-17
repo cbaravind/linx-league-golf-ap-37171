@@ -9,91 +9,54 @@ import AppButton from "../../../Components/AppButton"
 import { useNavigation } from "@react-navigation/core"
 import SearchInput from "../../../Components/SearchInput"
 import { Button } from "native-base"
-import { getAllUsers, makeFriends } from "../../../../api"
+import { getAllUsers, getFriends, makeFriends } from "../../../../api"
 import { useSelector } from "react-redux"
 import { showMessage } from "react-native-flash-message"
+import RoutesKey from "../../../Navigation/routesKey"
 
-export default function FindFriends({ route }) {
+export default function Players({ route }) {
   
-  const contacts        = route?.params?.contacts
   const navigation      = useNavigation()
   const { user, token } = useSelector(state => state.auth?.user)
 
-  const [friendsArray, setFriendsArray] = useState([])
-  const [knownUsers, setKnownUsers] = useState(false)
   const [loading, setLoading]       = useState(false)
   const [selected, setSelected]     = useState([])
   const [btnLoading, setbtnLoading] = useState(false)
+  const [friendsList, setFriendsList] = useState([])
 
-  const searchFriends = searchText => {
-    if (searchText.length && friends.length) {
-      const filtered = friendsArray.filter(e => e.user?.name.includes(searchText))
-      setFriendsArray(filtered)
-    }
-  }
+ 
 
   useEffect(() => {
-    getUsersList()
+    getFriendsHandler()
   }, [])
-
-  const getUsersList = async () => {
-    setLoading(true)
-    const response = await getAllUsers(token)
-    const res = JSON.parse(response)
-    if (res.count) {
-      setFriendsArray(res.results)
-      let friends = []
-      contacts?.map(((item) => {
-        const number = item.phoneNumbers.length ? item.phoneNumbers[0]['number'] : 0
-        const filtered = res.results.filter(e => e.phone_number == number)
-        if (filtered.length) {
-          friends = [...friends, ...filtered]
+    const getFriendsHandler = async () => {
+      setLoading(true)
+      const response = await getFriends(29, token)
+      const res = JSON.parse(response)
+      console.log('==',res)
+      if (res.id) {
+        if (res.friends.length) {
+          setFriendsList(res.friends)
         }
-      }))
-      setKnownUsers(friends)
-      setFriendsArray(friends)
-    }
-    setLoading(false)
-  }
-
-  const requestHandler = async () => {
-    setbtnLoading(true)
-    const filteredData = selected.map((item) => (item.user?.id))
-    const response = await makeFriends(user?.user?.id,filteredData, token)
-    const res = JSON.parse(response)
-    setbtnLoading(false)
-    if(res.id){
-      navigation.goBack()
-    }else {
-      if(res.detail){
-        showMessage({
-          type:'warning',
-          message:res.detail
-        })
       }
+      setLoading(false)
     }
-  }
-
-  const clearResults = () => {
-    setFriendsArray(knownUsers)
-  }
+  
+ 
   return (
     <Container>
-      <AppHeader back title="Search Friends" />
+      <AppHeader back title="Add Players" />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
-        <SearchInput
-          onSearchSubmit={searchFriends}
-          clearResults={clearResults}
-        />
+       
         {loading ?
           <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <ActivityIndicator color={colors.green} />
           </View>
           :
-          friendsArray.length ?
+          friendsList.length ?
 
             <FlatList
-              data={friendsArray}
+              data={friendsList}
               contentContainerStyle={{
                 backgroundColor: colors.white,
                 padding: 20,
@@ -103,7 +66,7 @@ export default function FindFriends({ route }) {
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
                 <UserProfile 
-                name={item?.user?.name} 
+                name={item?.name} 
                 selected={selected.includes(item)} 
                 onPress={() => { selected.includes(item) ? setSelected(selected.filter(e => e.id != item.id)) : setSelected([...selected, item]) }} 
                 image={item.profile_image} />
@@ -114,8 +77,8 @@ export default function FindFriends({ route }) {
               <Text>No Records found</Text>
             </View>
         }
-        <Button isLoading={btnLoading} onPress={requestHandler} m={"7"} shadow={5} bg="#7D9E49">
-          {"Request"}
+        <Button isDisabled={!selected.length} isLoading={btnLoading} onPress={()=>navigation.navigate(RoutesKey.ADDFRIENDS,{players:selected})} m={"7"} shadow={5} bg="#7D9E49">
+          {"Done"}
         </Button>
 
         {/* <AppButton label='Request' style={{}} /> */}
