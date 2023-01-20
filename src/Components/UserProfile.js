@@ -11,21 +11,23 @@ import Row from "./Row"
 import { colors } from "../theme"
 import { IMAGE_PLACEHOLDER } from "../constants"
 import { CheckIcon } from "native-base"
+
 export default function UserProfile({ name, image, onPress, selected }) {
   return (
     <View>
       <TouchableOpacity onPress={() => onPress ? onPress() : null} >
-
         <Row style={styles.container}>
+
           <View style={styles.imgContainer}>
-
-            <Image source={{ uri: image ? image : IMAGE_PLACEHOLDER }} resizeMode="cover" style={styles.img} />
-
+            <Image
+              source={{ uri: image ? image : IMAGE_PLACEHOLDER }}
+              resizeMode="cover" style={styles.img}
+            />
           </View>
           <Text style={styles.text}>{name}</Text>
           {selected ?
-          <View style={{flex:1, alignItems:'flex-end',}}>
-            <CheckIcon size={6}  />
+            <View style={{ flex: 1, alignItems: 'flex-end', }}>
+              <CheckIcon size={6} />
             </View>
             :
             <></>

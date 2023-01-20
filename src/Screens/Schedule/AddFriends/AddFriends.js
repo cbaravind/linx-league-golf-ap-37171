@@ -24,20 +24,21 @@ import { friends } from "../../../assets/data"
 import RoutesKey from "../../../Navigation/routesKey"
 import Contacts from "react-native-contacts"
 import { Button } from "native-base"
-import { getFriends } from "../../../../api"
+import { getFriends, postLeague } from "../../../../api"
 import { useSelector } from "react-redux"
 import moment from "moment"
+import { showMessage } from "react-native-flash-message"
 
 export default function AddFriends({ route }) {
 
-  const { date, time }  = route?.params
+  const { date, time } = route?.params
   const selectedPlayers = route?.params?.players
   const { user, token } = useSelector(state => state.auth?.user)
-  const navigation      = useNavigation()
+  const navigation = useNavigation()
 
-  const [modalVisible, setModalVisible]  = useState(false)
-  const [friendsList, setFriendsList]    = useState(selectedPlayers)
-
+  const [modalVisible, setModalVisible] = useState(false)
+  const [friendsList, setFriendsList] = useState(selectedPlayers)
+  const [btnLoading, setBtnLoading] = useState(false)
 
   useEffect(() => {
     if (selectedPlayers) {
@@ -48,7 +49,6 @@ export default function AddFriends({ route }) {
   const fetchContacts = () => {
 
     Contacts.checkPermission().then(permission => {
-      // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
       console.log("permission", permission)
       if (permission === "undefined") {
         Contacts.requestPermission().then(permission => {
@@ -80,14 +80,35 @@ export default function AddFriends({ route }) {
   }
 
   const leagueHandler = async () => {
+    setBtnLoading(true)
+    const selected = friendsList.map((i) => (i?.id))
+    // console.log(friendsList[0])
+    const leagueDate = ` ${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
     const data = {
-      when: '2022',
+      when: moment(leagueDate),
       course_name: 'string',
       city: 'city',
       course_address: 'address',
-      user: 99,
-      players: [46, 49]
+      user: user?.user?.id,
+      players: selected
     }
+    const result = await postLeague(data, token)
+    const res= JSON.parse(result)
+    setBtnLoading(false)
+    if(res.id){
+      showMessage({
+        type:'success',
+        message:'Game Created'
+      })
+      navigation.navigate(RoutesKey.HOME)
+    }else{
+      showMessage({
+        type:'warning',
+        message:'Could not create game'
+      })
+    }
+
+    console.log(moment(leagueDate),'list')
   }
 
 
@@ -105,16 +126,21 @@ export default function AddFriends({ route }) {
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
         {!selectedPlayers ?
-          <View style={{ justifyContent: 'center', flex: 1 }}>
-            <Button
-              style={{ margin: 20 }}
-              mt={4}
-              onPress={() => navigation.navigate(RoutesKey.PLAYERS)}
-              bg="#7D9E49"
-            >
-              {"ADD PLAYERS"}
-            </Button>
-          </View>
+          <>
+          <Text style={{textAlign:'center',alignItems:'center',justifyContent:'space-between'}} >
+            No Friends added yet
+          </Text>
+          </>
+          // <View style={{ justifyContent: 'center', flex: 1 }}>
+          //   <Button
+          //     style={{ margin: 20 }}
+          //     mt={4}
+          //     onPress={() => navigation.navigate(RoutesKey.PLAYERS)}
+          //     bg="#7D9E49"
+          //   >
+          //     {"ADD PLAYERS"}
+          //   </Button>
+          // </View>
           :
           <>
 
@@ -123,8 +149,7 @@ export default function AddFriends({ route }) {
                 backgroundColor: colors.white,
                 marginTop: 30,
                 marginBottom: 12
-              }}
-            >
+              }} >
               <SwipeListView
                 style={{
                   paddingTop: 20,
@@ -136,6 +161,7 @@ export default function AddFriends({ route }) {
                   <UserProfile
                     name={data.item.name}
                     image={null}
+                    onPress={()=>navigation.navigate(RoutesKey.PROFILE,{user:data.item})}
                   // item={}
                   />
                 )}
@@ -167,6 +193,27 @@ export default function AddFriends({ route }) {
 
         }
         <View style={styles.bottom}>
+
+          <Row style={{ marginBottom: 5 }}>
+            <Button
+              style={{ flex: 1 }}
+              mt={4}
+              onPress={() => navigation.navigate(RoutesKey.PLAYERS, { selected: selectedPlayers })}
+              bg="#7D9E49"
+            >
+              {"ADD PLAYERS"}
+            </Button>
+            <View style={{ width: 20 }} />
+
+            <AppButton
+              disabled={friendsList?.length?false:true}
+              isLoading={btnLoading}
+              style={[styles.button,{borderColor:friendsList?.length ? colors.darkGreen:colors.grey3 }]}
+              onPress={() => leagueHandler()}
+              labelStyle={{ color:friendsList?.length? colors.darkGreen:colors.grey3 }}
+              label={"CREATE GAME"}
+            />
+          </Row>
           <Row style={{ marginBottom: 15 }}>
             <Button
               style={{ flex: 1 }}

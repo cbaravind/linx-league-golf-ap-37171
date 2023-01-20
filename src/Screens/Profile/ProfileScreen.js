@@ -1,5 +1,5 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
+import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native"
 import Container from "../../Components/Container"
 import { colors, fonts } from "../../theme"
 import AppHeader from "../../Components/AppHeader"
@@ -9,19 +9,23 @@ import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../Navigation/routesKey"
 import UserStatsCard from "../../Components/UserStatsCard"
 import SeasonStats from "../../Components/SeasonStats"
-import AppButton from "../../Components/AppButton"
+import AppButton   from "../../Components/AppButton"
 import { stats } from "../../assets/data"
 import Share from 'react-native-share'
 import { shareOptions } from "../../constants"
 import { useSelector } from "react-redux"
+import { getProfile } from "../../../api"
 
-export default function ProfileScreen({route}) {
+export default function ProfileScreen({ route }) {
+
   const navigation = useNavigation()
-  const otherUser = route?.params?.user
+  const otherUser  = route?.params?.user
   const { token, user } = useSelector(state => state?.auth?.user)
-console.log(user?.profile_image)
-  const onShare = () => {
 
+  const [loading, setLoading]   = useState(false)
+  const [userInfo, setUserInfo] = useState(false)
+
+  const onShare = () => {
     Share.open(shareOptions)
       .then((res) => {
         console.log(res);
@@ -30,10 +34,24 @@ console.log(user?.profile_image)
         err && console.log(err);
       })
   }
+
   useEffect(() => {
-    
-  }, [])
-  
+    if (otherUser) {
+      getProfileInfo()
+    }
+  }, [otherUser])
+
+  const getProfileInfo = async () => {
+    setLoading(true)
+    const response = await getProfile(otherUser?.id, token)
+    const res = JSON.parse(response)
+    setLoading(false)
+    if (res.id) {
+      setUserInfo(res)
+    }
+
+  }
+ 
   return (
     <Container>
       <AppHeader
@@ -50,49 +68,55 @@ console.log(user?.profile_image)
           />
         }
       />
-      <View
-        style={{
-          backgroundColor: colors.background,
-          flex: 1,
-          paddingTop: 10,
-          paddingHorizontal: 15
-        }}
-      >
-        {otherUser?
-        <TouchableOpacity style={styles.league}>
-          <Text style={{color:colors.white,fontWeight:'700',fontFamily:fonts.PROXIMA_BOLD,fontSize:14}}>JOIN LEAGUE</Text>
-        </TouchableOpacity>
+      {loading ?
+        <View style={{ flex: 1, backgroundColor: colors.background, alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator color={colors.green} size={'large'} />
+        </View>
         :
-        <View style={[styles.league,{backgroundColor:colors.background}]} />
-        }
-        <UserStatsCard
-          image={user?.profile_image?{uri: user?.profile_image }: otherUser?otherUser?.image:   require("../../assets/images/profileImg.png")}
-          name={user? user?.user?.first_name : otherUser ? otherUser.name: "Tom"}
-          city={"LA, California"}
-          stats={stats}
-        />
-        <Button onPress={onShare} shadow={5} mt={4} variant={"solid"} bg="#7D9E49">
-          {"INVITE A FRIEND"}
-        </Button>
 
+        <View
+          style={{
+            backgroundColor: colors.background,
+            flex: 1,
+            paddingTop: 10,
+            paddingHorizontal: 15
+          }}
+        >
+          {otherUser ?
+            <TouchableOpacity style={styles.league}>
+              <Text style={{ color: colors.white, fontWeight: '700', fontFamily: fonts.PROXIMA_BOLD, fontSize: 14 }}>JOIN LEAGUE</Text>
+            </TouchableOpacity>
+            :
+            <View style={[styles.league, { backgroundColor: colors.background }]} />
+          }
+          <UserStatsCard
+            image={otherUser ? userInfo?.profile_image : user?.profile_image ? { uri: user?.profile_image } : require("../../assets/images/profileImg.png")}
+            name= {otherUser ? otherUser ? otherUser.name : user?.user?.first_name : "Tom"}
+            city= {otherUser ? otherUser?.city : user?.city}
+            stats={stats}
+          />
+          <Button onPress={onShare} shadow={5} mt={4} variant={"solid"} bg="#7D9E49">
+            {"INVITE A FRIEND"}
+          </Button>
 
-        <SeasonStats />
-      </View>
+          <SeasonStats />
+        </View>
+      }
     </Container>
   )
 }
-const styles=StyleSheet.create({
-  league:{
-    backgroundColor:colors.darkGreen,
-    paddingHorizontal:18,
-    paddingVertical:10,
-    alignSelf:"flex-end",
-    borderRadius:8,
-    shadowColor:'rgba(0, 0, 128, 0.5)',
-    marginBottom:30,
-    shadowOffset:{
-      width:0,
-      height:2
+const styles = StyleSheet.create({
+  league: {
+    backgroundColor: colors.darkGreen,
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    alignSelf: "flex-end",
+    borderRadius: 8,
+    shadowColor: 'rgba(0, 0, 128, 0.5)',
+    marginBottom: 30,
+    shadowOffset: {
+      width: 0,
+      height: 2
     }
   }
 })

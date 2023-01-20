@@ -2,7 +2,10 @@ import { View, Text, StyleSheet, Image } from "react-native"
 import React from "react"
 import Row from "../../../Components/Row"
 import { colors } from "../../../theme"
-export default function RoundCard({ item ,containerStyle}) {
+import moment from "moment"
+export default function RoundCard({ item ,containerStyle,index}) {
+  const time= moment(item.when).format('DD/MM/YYYY hh:mm a')
+  
   return (
     <View style={[styles.container,containerStyle]}>
       <Row>
@@ -19,12 +22,12 @@ export default function RoundCard({ item ,containerStyle}) {
               ]}
             >
               <Text style={[styles.text, { color: colors.white }]}>
-                {item.id}
+                {index}
               </Text>
             </View>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text}>{item.date}</Text>
+            <Text style={styles.text}>{time || ''}</Text>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
               {item.title}
             </Text>
@@ -54,8 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     paddingBottom: 20,
-    borderRadius:8,
-    marginHorizontal:5
+    borderRadius:25,
+    // marginHorizontal:5
     // marginTop: 5
   },
   numberContainer: {
