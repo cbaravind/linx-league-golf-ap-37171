@@ -9,44 +9,73 @@ import AppButton from "../../../Components/AppButton"
 import { useNavigation } from "@react-navigation/core"
 import SearchInput from "../../../Components/SearchInput"
 import { Button } from "native-base"
-import { getAllUsers } from "../../../../api"
+import { getAllUsers, makeFriends } from "../../../../api"
 import { useSelector } from "react-redux"
-export default function FindFriends({route}) {
-  const contacts = route?.params?.contacts
+import { showMessage } from "react-native-flash-message"
 
-  const navigation = useNavigation()
-  const [friendsArray, setFriendsArray] = useState([])
-  const [loading, setLoading] = useState(false)
+export default function FindFriends({ route }) {
+  
+  const contacts        = route?.params?.contacts
+  const navigation      = useNavigation()
   const { user, token } = useSelector(state => state.auth?.user)
+
+  const [friendsArray, setFriendsArray] = useState([])
+  const [knownUsers, setKnownUsers] = useState(false)
+  const [loading, setLoading]       = useState(false)
+  const [selected, setSelected]     = useState([])
+  const [btnLoading, setbtnLoading] = useState(false)
+
   const searchFriends = searchText => {
     if (searchText.length && friends.length) {
-      const filtered = friendsArray.filter(e => e.name.includes(searchText))
+      const filtered = friendsArray.filter(e => e.user?.name.includes(searchText))
       setFriendsArray(filtered)
     }
-
   }
 
-  useEffect( () => {
+  useEffect(() => {
     getUsersList()
   }, [])
 
-const getUsersList= async () => {
-  setLoading(true)
-  const response = await getAllUsers(token)
-  const res = JSON.parse(response)
-  if (res.count) {
-    setFriendsArray(res.results)
-    const friendsArray=[]
-    contacts?.map(((item)=>{
-      console.log(item,'=====')
-      // res.results.filter(e=>e.phone_number==item.phone_number)
-    }))
+  const getUsersList = async () => {
+    setLoading(true)
+    const response = await getAllUsers(token)
+    const res = JSON.parse(response)
+    if (res.count) {
+      setFriendsArray(res.results)
+      let friends = []
+      contacts?.map(((item) => {
+        const number = item.phoneNumbers.length ? item.phoneNumbers[0]['number'] : 0
+        const filtered = res.results.filter(e => e.phone_number == number)
+        if (filtered.length) {
+          friends = [...friends, ...filtered]
+        }
+      }))
+      setKnownUsers(friends)
+      setFriendsArray(friends)
+    }
+    setLoading(false)
   }
-  setLoading(false)
-}
+
+  const requestHandler = async () => {
+    setbtnLoading(true)
+    const filteredData = selected.map((item) => (item.user?.id))
+    const response = await makeFriends(user?.user?.id,filteredData, token)
+    const res = JSON.parse(response)
+    setbtnLoading(false)
+    if(res.id){
+      navigation.goBack()
+    }else {
+      if(res.detail){
+        showMessage({
+          type:'warning',
+          message:res.detail
+        })
+      }
+    }
+  }
 
   const clearResults = () => {
-    setFriendsArray(friends)
+    setFriendsArray(knownUsers)
   }
   return (
     <Container>
@@ -57,7 +86,7 @@ const getUsersList= async () => {
           clearResults={clearResults}
         />
         {loading ?
-          <View style={{alignItems:'center',justifyContent: 'center',flex:1}}>
+          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <ActivityIndicator color={colors.green} />
           </View>
           :
@@ -73,7 +102,11 @@ const getUsersList= async () => {
               }}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
-                <UserProfile name={item?.user?.name} image={item.profile_image} />
+                <UserProfile 
+                name={item?.user?.name} 
+                selected={selected.includes(item)} 
+                onPress={() => { selected.includes(item) ? setSelected(selected.filter(e => e.id != item.id)) : setSelected([...selected, item]) }} 
+                image={item.profile_image} />
               )}
             />
             :
@@ -81,7 +114,7 @@ const getUsersList= async () => {
               <Text>No Records found</Text>
             </View>
         }
-        <Button m={"7"} shadow={5} bg="#7D9E49">
+        <Button isLoading={btnLoading} onPress={requestHandler} m={"7"} shadow={5} bg="#7D9E49">
           {"Request"}
         </Button>
 

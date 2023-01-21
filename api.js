@@ -134,7 +134,6 @@ export const getTermsAndConditions = async () => {
   return response.text()
 }
 export const updateProfilePicture = async (params, id, token) => {
-  console.log(id,'user id')
   const requestOptions = {
     method: "PATCH",
     headers: {
@@ -195,6 +194,105 @@ export const getAllUsers = async token => {
   }
 
   const url = `${API_URL}/api/v1/profile/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const makeFriends =async (id,data,token) => {
+  const params={friends:data,user:id}
+  console.log(params)
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(params),
+    redirect: "follow"
+  }
+  const url=`${API_URL}/api/v1/friends/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const getFriends = async (id,token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/friends/${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const getLeagueGames = async (id,token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/schedules/leagues/?user__id=${id}`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const postLeague = async (data,token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/schedules/leagues/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const sendFeedback = async (data,token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/feedbacks/data/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const getProfile = async (id,token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/profile/${id}/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }

@@ -53,7 +53,7 @@ const CreateProfile = () => {
     lastName: user?.user?.last_name ? user?.user?.last_name : "",
     email: user?.user?.email ? user?.user?.email : "",
     ghin: user?.ghin ? user.ghin : "",
-    // zipCode: '',
+    zipCode: '',
     imageUploading: false,
     image: user?.profile_image ? { uri: user?.profile_image } : "",
     imgUploadStatus: false
@@ -88,7 +88,7 @@ const CreateProfile = () => {
   }, [valueGHIN])
 
   useEffect(() => {
-    if(formData.image){
+    if(formData.image != user?.profile_image){
 
       updateProfileImgHandler()
     }
@@ -130,6 +130,7 @@ const CreateProfile = () => {
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
+    console.log(res)
     setBtnLoading(false)
     if (res.id ) {
       dispatch(saveUser({ user: res, token: token }))

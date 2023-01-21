@@ -23,6 +23,8 @@ class RoutesKey {
   static INBOX = "Inbox"
   static CHAT = "Chat"
   static SCOREDETAIL = "Score Detail"
+  static PLAYERS = 'Players'
+
 }
 
 export default RoutesKey

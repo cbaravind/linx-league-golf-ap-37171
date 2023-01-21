@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Pressable
+  Pressable,
+  ActivityIndicator
 } from "react-native"
 import { useNavigation } from "@react-navigation/core"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
@@ -23,14 +24,17 @@ import Row from "../../Components/Row"
 import { useSelector } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { IMAGE_PLACEHOLDER } from "../../constants"
+import { getLeagueGames } from "../../../api"
 
 export default function Home() {
   const navigation = useNavigation()
-  const { user,token } = useSelector(state => state.auth?.user)
+  const [upcomingGames, setUpcomingGames] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { user, token } = useSelector(state => state.auth?.user)
   // const userObj = JSON.parse(user)
   data = [
-    { id: 1, title: "St Johns Golf & Country Club",date:'18/05/2022 8:00 am' },
-    { id: 2, title: "Johns & Country Club",date:'18/07/2022 8:00 am'  }
+    { id: 1, title: "St Johns Golf & Country Club", date: '18/05/2022 8:00 am' },
+    { id: 2, title: "Johns & Country Club", date: '18/07/2022 8:00 am' }
     // { title: 'St Johns Golf & Country Club' },
   ]
   useEffect(() => {
@@ -38,8 +42,11 @@ export default function Home() {
   }, [])
 
   const getData = async () => {
-      //  const user = await AsyncStorage.getItem('user')
-       console.log(user.profile_image,'user')
+    const response = await getLeagueGames(user?.user.id, token)
+    const res = JSON.parse(response)
+    if (res.results.length) {
+      setUpcomingGames(res.results)
+    }
   }
 
   return (
@@ -62,8 +69,8 @@ export default function Home() {
             </Pressable>
             <Pressable onPress={() => navigation.navigate(RoutesKey.PROFILE)}>
               <Image
-                source={{uri:user?.profile_image ? user?.profile_image : IMAGE_PLACEHOLDER}}
-                style={{ width: 30, height: 30, marginLeft: 15,borderRadius:20 }}
+                source={{ uri: user?.profile_image ? user?.profile_image : IMAGE_PLACEHOLDER }}
+                style={{ width: 30, height: 30, marginLeft: 15, borderRadius: 20 }}
               />
             </Pressable>
           </Row>
@@ -96,16 +103,27 @@ export default function Home() {
               <View style={{ paddingStart: 25 }}>
                 <Text style={[styles.h4]}>Upcoming Rounds </Text>
               </View>
-              <FlatList
-                data={data}
-                keyExtractor={item => item.id}
-                contentContainerStyle={{
-                  paddingBottom: 20,
-                  height: "100%",
-                  paddingTop: 5
-                }}
-                renderItem={({ item }) => <RoundCard item={item} containerStyle={{marginTop:5}} />}
-              />
+              {
+                loading ?
+                  <ActivityIndicator color={colors.white} />
+                  :
+
+                  <FlatList
+                    data={upcomingGames}
+                    ListEmptyComponent={() => (
+                      <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
+                        <Text style={{ color: colors.white }} >No Upcoming Rounds</Text>
+                      </View>
+                    )}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={{
+                      paddingBottom: 20,
+                      height: "100%",
+                      paddingTop: 5
+                    }}
+                    renderItem={({ item,index }) => <RoundCard item={item} index={index+1} containerStyle={{ marginTop: 5 }} />}
+                  />
+              }
             </View>
           </View>
         </ImageBackground>

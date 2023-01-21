@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Share,
   Linking,
   ScrollView,
   Keyboard,
@@ -18,30 +17,42 @@ import AppButton from "../../../Components/AppButton"
 import UserProfile from "../../../Components/UserProfile"
 import SearchInput from "../../../Components/SearchInput"
 import { Button, KeyboardAvoidingView } from "native-base"
+import Share from 'react-native-share'
+import { shareOptions } from "../../../constants"
+
 export default function SendReferral({ route }) {
   const contacts = route?.params?.contacts
   const [contactsArray, setContactsArray] = useState(contacts)
   const [selectedContacts, setSelectedContacts] = useState([])
+  const [selected, setSelected] = useState([])
+
   const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          "React Native | A framework for building native apps using React"
+    // try {
+    //   const result = await Share.share({
+    //     message:
+    //       "React Native | A framework for building native apps using React"
+    //   })
+    //   if (result.action === Share.sharedAction) {
+    //     // console.log(result.action)
+    //     if (result.activityType) {
+    //       // Linking.openURL()
+    //       // shared with activity type of result.activityType
+    //     } else {
+    //       // shared
+    //     }
+    //   } else if (result.action === Share.dismissedAction) {
+    //     // dismissed
+    //   }
+    // } catch (error) {
+    //   alert(error.message)
+    // }
+    Share.open(shareOptions)
+      .then((res) => {
+        console.log(res);
       })
-      if (result.action === Share.sharedAction) {
-        console.log(result.action)
-        if (result.activityType) {
-          // Linking.openURL()
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message)
-    }
+      .catch((err) => {
+        err && console.log(err);
+      })
   }
   const searchFriends = searchText => {
     if (searchText.length && contactsArray.length) {
@@ -81,7 +92,7 @@ export default function SendReferral({ route }) {
                 </Text>
                 <View style={{ padding: 10, paddingHorizontal: 35 }}>
                   <Text style={[styles.text, { fontSize: 16 }]}>
-                  When your friends play in Linx League with you, you both win!
+                    When your friends play in Linx League with you, you both win!
                     {/* <Text style={{ color: colors.green }}>
                       {" "}
                       https://www.linxleagueapp.com/app-download/6803u
@@ -106,24 +117,26 @@ export default function SendReferral({ route }) {
                       keyExtractor={item => item.id}
                       renderItem={({ item }) => (
                         <UserProfile
+                          selected={selected.includes(item)}
+                          onPress={() => { selected.includes(item) ? setSelected(selected.filter(e => e.id != item.id)) : setSelected([...selected, item]) }}
                           name={item.givenName}
                           image={
-                            item.hasThumbnail ? item.thumbnailPath  : null
+                            item.hasThumbnail ? item.thumbnailPath : null
                           }
-                          onPress={() =>
-                            setSelectedContacts([...selectedContacts, item])
-                          }
+                        // onPress={() =>
+                        //   setSelectedContacts([...selectedContacts, item])
+                        // }
                         />
                       )}
                     />
                   </>
                 ) :
-                <View style={{alignItems:"center",marginVertical:50}} >
-                  <Text>No Contacts found</Text>
-                </View>
-              }
+                  <View style={{ alignItems: "center", marginVertical: 50 }} >
+                    <Text>No Contacts found</Text>
+                  </View>
+                }
               </ScrollView>
-              <Button marginY={"3"} marginX={"7"} shadow={5} bg="#7D9E49">
+              <Button onPress={onShare} marginY={"3"} marginX={"7"} shadow={5} bg="#7D9E49">
                 {"Send"}
               </Button>
             </>

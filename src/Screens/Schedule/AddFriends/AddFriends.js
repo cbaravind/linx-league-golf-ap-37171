@@ -4,9 +4,10 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/core"
 import { colors, fonts } from "../../../theme"
 import { SwipeListView } from "react-native-swipe-list-view"
@@ -23,104 +24,196 @@ import { friends } from "../../../assets/data"
 import RoutesKey from "../../../Navigation/routesKey"
 import Contacts from "react-native-contacts"
 import { Button } from "native-base"
+import { getFriends, postLeague } from "../../../../api"
+import { useSelector } from "react-redux"
+import moment from "moment"
+import { showMessage } from "react-native-flash-message"
 
 export default function AddFriends({ route }) {
 
-  const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList]   = useState(friends)
-  const navigation = useNavigation()
   const { date, time } = route?.params
+  const selectedPlayers = route?.params?.players
+  const { user, token } = useSelector(state => state.auth?.user)
+  const navigation = useNavigation()
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const [friendsList, setFriendsList] = useState(selectedPlayers)
+  const [btnLoading, setBtnLoading] = useState(false)
+
+  useEffect(() => {
+    if (selectedPlayers) {
+      setFriendsList(selectedPlayers)
+    }
+  }, [selectedPlayers])
+
   const fetchContacts = () => {
-    if (modalVisible == "refer") {
-      Contacts.checkPermission().then(permission => {
-        // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
-        console.log("permission", permission)
-        if (permission === "undefined") {
-          Contacts.requestPermission().then(permission => {
-            // ...
-          })
-        }
-        if (permission === "authorized") {
-          // yay!
-          Contacts.getAll().then(contacts => {
-            setModalVisible(false)
-            if (contacts.length) {
+
+    Contacts.checkPermission().then(permission => {
+      console.log("permission", permission)
+      if (permission === "undefined") {
+        Contacts.requestPermission().then(permission => {
+          // ...
+        })
+      }
+      if (permission === "authorized") {
+        // yay!
+        Contacts.getAll().then(contacts => {
+          setModalVisible(false)
+          if (contacts.length) {
+            if (modalVisible && modalVisible == "refer") {
               navigation.navigate(RoutesKey.SENDREFERRAL, {
                 contacts: contacts
               })
+            } else {
+              // setModalVisible(false)
+              navigation.navigate(RoutesKey.FINDFRIENDS, {
+                contacts: contacts
+              })
             }
-
-            console.log(contacts, "Contacts")
-          })
-        }
-        if (permission === "denied") {
-          // x.x
-        }
-      })
-    } else {
-      setModalVisible(false)
-      navigation.navigate(RoutesKey.FINDFRIENDS)
-    }
+          }
+        })
+      }
+      if (permission === "denied") {
+        // x.x
+      }
+    })
   }
+
+  const leagueHandler = async () => {
+    setBtnLoading(true)
+    const selected = friendsList.map((i) => (i?.id))
+    // console.log(friendsList[0])
+    const leagueDate = ` ${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
+    const data = {
+      when: moment(leagueDate),
+      course_name: 'string',
+      city: 'city',
+      course_address: 'address',
+      user: user?.user?.id,
+      players: selected
+    }
+    const result = await postLeague(data, token)
+    const res= JSON.parse(result)
+    setBtnLoading(false)
+    if(res.id){
+      showMessage({
+        type:'success',
+        message:'Game Created'
+      })
+      navigation.navigate(RoutesKey.HOME)
+    }else{
+      showMessage({
+        type:'warning',
+        message:'Could not create game'
+      })
+    }
+
+    console.log(moment(leagueDate),'list')
+  }
+
+
   return (
     <Container>
       <AppHeader
         back
         title="Add Friends to your Tee time"
         rightIcon={
-          <TouchableOpacity onPress={()=>navigation.navigate(RoutesKey.FINDFRIENDS)} >
+          <TouchableOpacity onPress={() => fetchContacts()} >
             <Text style={styles.text}>SKIP</Text>
           </TouchableOpacity>
         }
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
-        <View
-          style={{
-            backgroundColor: colors.white,
-            marginTop: 30,
-            marginBottom: 12
-          }}
-        >
-          <SwipeListView
-            style={{
-              paddingTop: 20,
-              paddingLeft: 20
-            }}
-            data={friendsList}
-            keyExtractor={item => item.id}
-            renderItem={(data, rowMap) => (
-              <UserProfile
-                name={data.item.name}
-                image={null}
-              // item={}
-              />
-            )}
-            renderHiddenItem={(data, rowMap) => (
-              <TouchableHighlight
-                onPress={() =>
-                  setFriendsList(friendsList.filter(e => data.item.id != e.id))
-                }
-                style={styles.rowBack}
-              >
-                <Icon name="trash-outline" size={25} color={colors.white} />
-              </TouchableHighlight>
-            )}
-            leftOpenValue={0}
-            rightOpenValue={-75}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Text
-            style={[
-              styles.text,
-              { fontWeight: "400", color: colors.text1, fontSize: 14 }
-            ]}
-          >
-            Remove players by swiping left
+        {!selectedPlayers ?
+          <>
+          <Text style={{textAlign:'center',alignItems:'center',justifyContent:'space-between'}} >
+            No Friends added yet
           </Text>
-        </View>
+          </>
+          // <View style={{ justifyContent: 'center', flex: 1 }}>
+          //   <Button
+          //     style={{ margin: 20 }}
+          //     mt={4}
+          //     onPress={() => navigation.navigate(RoutesKey.PLAYERS)}
+          //     bg="#7D9E49"
+          //   >
+          //     {"ADD PLAYERS"}
+          //   </Button>
+          // </View>
+          :
+          <>
+
+            <View
+              style={{
+                backgroundColor: colors.white,
+                marginTop: 30,
+                marginBottom: 12
+              }} >
+              <SwipeListView
+                style={{
+                  paddingTop: 20,
+                  paddingLeft: 20
+                }}
+                data={friendsList}
+                keyExtractor={item => item.id}
+                renderItem={(data, rowMap) => (
+                  <UserProfile
+                    name={data.item.name}
+                    image={null}
+                    onPress={()=>navigation.navigate(RoutesKey.PROFILE,{user:data.item})}
+                  // item={}
+                  />
+                )}
+                renderHiddenItem={(data, rowMap) => (
+                  <TouchableHighlight
+                    onPress={() =>
+                      setFriendsList(friendsList.filter(e => data.item.id != e.id))
+                    }
+                    style={styles.rowBack}
+                  >
+                    <Icon name="trash-outline" size={25} color={colors.white} />
+                  </TouchableHighlight>
+                )}
+                leftOpenValue={0}
+                rightOpenValue={-75}
+              />
+            </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <Text
+                style={[
+                  styles.text,
+                  { fontWeight: "400", color: colors.text1, fontSize: 14 }
+                ]}
+              >
+                Remove players by swiping left
+              </Text>
+            </View>
+          </>
+
+        }
         <View style={styles.bottom}>
+
+          <Row style={{ marginBottom: 5 }}>
+            <Button
+              style={{ flex: 1 }}
+              mt={4}
+              onPress={() => navigation.navigate(RoutesKey.PLAYERS, { selected: selectedPlayers })}
+              bg="#7D9E49"
+            >
+              {"ADD PLAYERS"}
+            </Button>
+            <View style={{ width: 20 }} />
+
+            <AppButton
+              disabled={friendsList?.length?false:true}
+              isLoading={btnLoading}
+              style={[styles.button,{borderColor:friendsList?.length ? colors.darkGreen:colors.grey3 }]}
+              onPress={() => leagueHandler()}
+              labelStyle={{ color:friendsList?.length? colors.darkGreen:colors.grey3 }}
+              label={"CREATE GAME"}
+            />
+          </Row>
           <Row style={{ marginBottom: 15 }}>
             <Button
               style={{ flex: 1 }}
