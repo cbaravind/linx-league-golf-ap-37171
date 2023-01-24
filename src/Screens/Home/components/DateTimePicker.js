@@ -94,18 +94,24 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
             maxDate={maxDate}
             selectedStartDate={selectedDate}
             weekdays={["S", "M", "T", "W", "T", "F", "S"]}
-            // todayBackgroundColor={"#fff"}
-            // todayTextStyle={{
-            //   color: colors.green
-            // }}
-            headerWrapperStyle={{ height: 0 }}
+            todayBackgroundColor={"#fff"}
+            todayTextStyle={{
+              color: colors.green
+            }}
+            headerWrapperStyle={{
+              padding: 10
+              // height: 100,
+              // paddingTop: 50,
+              // marginBottom: 20
+              // paddingBottom: 30
+            }}
             dayLabelsWrapper={{
               borderWidth: 0,
               borderColor: "#fff"
             }}
             enableDateChange
             textStyle={{ color: colors.text2 }}
-            selectedDayStyle={{ backgroundColor: colors.green, }}
+            selectedDayStyle={{ backgroundColor: colors.green }}
             dayShape={"square"}
             // todayTextStyle={{}}
             selectedDayTextStyle={{ color: '#FFF' }}
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    height: "35%",
+    // height: "35%",
     alignSelf: "center",
     position: "absolute",
     top: "32%",
