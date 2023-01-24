@@ -1,10 +1,11 @@
-import { View, Text, FlatList, ScrollView } from "react-native"
+import { View, Text, FlatList, ScrollView, Pressable } from "react-native"
 import React, { useState } from "react"
 import RoundCard from "../../Home/components/RoundCard"
 import { getLeagueGames } from "../../../../api"
-import { useFocusEffect } from "@react-navigation/native"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { colors } from "../../../theme"
 import { useSelector } from "react-redux"
+import RoutesKey from "../../../Navigation/routesKey"
 
 const Upcoming = () => {
   const [upcomingGames, setUpcomingGames] = useState(false)
@@ -111,6 +112,7 @@ const Upcoming = () => {
       date: "20/08/2022 11:00 pm"
     }
   ]
+  const navigation = useNavigation()
   return (
     <ScrollView>
       <View>
@@ -129,11 +131,13 @@ const Upcoming = () => {
           }}
           // renderItem={({ item }) => <RoundCard item={item} />}
           renderItem={({ item, index }) => (
-            <RoundCard
-              item={item}
-              index={index + 1}
-              containerStyle={{ marginTop: 5 }}
-            />
+            <Pressable onPress={() => navigation.navigate(RoutesKey.POSTSCORE)}>
+              <RoundCard
+                item={item}
+                index={index + 1}
+                containerStyle={{ marginTop: 5 }}
+              />
+            </Pressable>
           )}
         />
       </View>
