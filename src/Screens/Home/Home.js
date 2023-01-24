@@ -32,17 +32,10 @@ import moment from "moment"
 export default function Home() {
   const navigation = useNavigation()
   const [upcomingGames, setUpcomingGames] = useState(false)
-  // const isFocused = useFocus()
   const [loading, setLoading] = useState(false)
   const { user, token } = useSelector(state => state.auth?.user)
   const [dateTimeSelected, setDateTimeSelected] = useState(false)
 
-  // const userObj = JSON.parse(user)
-  data = [
-    { id: 1, title: "St Johns Golf & Country Club", date: '18/05/2022 8:00 am' },
-    { id: 2, title: "Johns & Country Club", date: '18/07/2022 8:00 am' }
-    // { title: 'St Johns Golf & Country Club' },
-  ]
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = getData
@@ -67,10 +60,6 @@ export default function Home() {
         moment(e.when) >= today
       )
       console.log(res.results,'rounds',today)
-      // res.results.map(((i)=>{
-      //   const date = moment(i.when)
-      //   console.log(date > today ? 'big' : 'small',date)
-      // }))
       setLoading(false)
       setUpcomingGames(rounds)
 
