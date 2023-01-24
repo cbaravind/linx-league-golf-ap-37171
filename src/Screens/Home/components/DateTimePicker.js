@@ -10,13 +10,12 @@ import Modal from "react-native-modal"
 import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
-export default () => {
+const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
   const navigation = useNavigation()
   const [date, setDate] = useState(new Date())
   const [calendarVisible, setCalendarVisible] = useState(false)
   const [timePickerOpen, setTimePickerOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState("")
-  const [dateTimeSelected, setDateTimeSelected] = useState(false)
   const minDate = new Date() // Today
   const maxDate = new Date(2023, 6, 3)
   const onDateChange = (date, type) => {
@@ -27,6 +26,7 @@ export default () => {
       setTimePickerOpen(true)
     }, 500)
   }
+
   return (
     <>
       <View style={styles.container}>
@@ -104,11 +104,9 @@ export default () => {
             }}
             enableDateChange
             textStyle={{ color: colors.text2 }}
-            // selectedDayColor={colors.white}
-            selectedDayStyle={{ backgroundColor: colors.green }}
-            selectedDayTextColor={"#fff"}
+            selectedDayStyle={{ backgroundColor: colors.green, }}
             dayShape={"square"}
-            // selectedDayTextStyle={{ color: '#FFF' }}
+            selectedDayTextStyle={{ color: '#FFF' }}
             onDateChange={onDateChange}
           />
         </Modal>
@@ -132,7 +130,7 @@ export default () => {
     </>
   )
 }
-
+export default DateTimePicker
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
