@@ -102,11 +102,11 @@ export default function FindFriends({ route }) {
               }}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
-                <UserProfile 
+              <UserProfile 
                 name={item?.user?.name} 
                 selected={selected.includes(item)} 
                 onPress={() => { selected.includes(item) ? setSelected(selected.filter(e => e.id != item.id)) : setSelected([...selected, item]) }} 
-                image={item.profile_image} />
+                image={item?.profile?.profile_image} />
               )}
             />
             :

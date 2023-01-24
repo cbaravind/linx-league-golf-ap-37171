@@ -3,53 +3,64 @@ import React from "react"
 import Row from "../../../Components/Row"
 import { colors } from "../../../theme"
 import moment from "moment"
-export default function RoundCard({ item ,containerStyle,index}) {
-  const time= moment(item.when).format('DD/MM/YYYY hh:mm a')
-  
+
+export default function RoundCard({ item, containerStyle, index }) {
+
+  const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
+  const date = moment(item.when)
+  const today = new moment()
+  console.log(date > today ? 'big' : 'small',date)
   return (
-    <View style={[styles.container,containerStyle]}>
-      <Row>
-        <Row style={{ justifyContent: "flex-start" }}>
-          <View style={styles.numberContainer}>
-            <View
-              style={[
-                styles.numberContainer,
-                {
-                  backgroundColor: "rgba(192,192,192,1)",
-                  height: 22,
-                  width: 22
-                }
-              ]}
-            >
-              <Text style={[styles.text, { color: colors.white }]}>
-                {index}
+
+    date > today ?
+
+      <View style={[styles.container, containerStyle]}>
+        <Row>
+          <Row style={{ justifyContent: "flex-start" }}>
+            <View style={styles.numberContainer}>
+              <View
+                style={[
+                  styles.numberContainer,
+                  {
+                    backgroundColor: "rgba(192,192,192,1)",
+                    height: 22,
+                    width: 22
+                  }
+                ]}
+              >
+                <Text style={[styles.text, { color: colors.white }]}>
+                  {index}
+                </Text>
+              </View>
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={styles.text}>{time || ''}</Text>
+              <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
+                {item.course_name}
               </Text>
             </View>
-          </View>
-          <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text}>{time || ''}</Text>
-            <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
-              {item.title}
-            </Text>
+          </Row>
+          <View style={{ flexDirection: "row", marginRight: 7 }}>
+            {/* {item?.players?.map
+          } */}
+            <Image
+              style={[
+                styles.imgStyle,
+                { zIndex: 10, position: "absolute", left: -18, bottom: 2 }
+              ]}
+              resizeMode={"contain"}
+              source={require("../../../assets/images/user1.png")}
+            />
+            <Image
+              style={[styles.imgStyle, { zIndex: -10 }]}
+              source={require("../../../assets/images/user2.png")}
+              resizeMode={"contain"}
+            />
           </View>
         </Row>
-        <View style={{ flexDirection: "row", marginRight: 7 }}>
-          <Image
-            style={[
-              styles.imgStyle,
-              { zIndex: 10, position: "absolute", left: -18, bottom: 2 }
-            ]}
-            resizeMode={"contain"}
-            source={require("../../../assets/images/user1.png")}
-          />
-          <Image
-            style={[styles.imgStyle, { zIndex: -10 }]}
-            source={require("../../../assets/images/user2.png")}
-            resizeMode={"contain"}
-          />
-        </View>
-      </Row>
-    </View>
+      </View>
+      :
+      <></>
   )
 }
 const styles = StyleSheet.create({
@@ -57,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     paddingBottom: 20,
-    borderRadius:25,
+    borderRadius: 25,
     // marginHorizontal:5
     // marginTop: 5
   },

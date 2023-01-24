@@ -25,30 +25,44 @@ import { useSelector } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { IMAGE_PLACEHOLDER } from "../../constants"
 import { getLeagueGames } from "../../../api"
+// import { useFocus } from "native-base/lib/typescript/components/primitives"
+import { useFocusEffect } from '@react-navigation/native';
+import moment from "moment"
 
 export default function Home() {
   const navigation = useNavigation()
   const [upcomingGames, setUpcomingGames] = useState(false)
+  // const isFocused = useFocus()
   const [loading, setLoading] = useState(false)
   const { user, token } = useSelector(state => state.auth?.user)
+  const [dateTimeSelected, setDateTimeSelected] = useState(false)
+
   // const userObj = JSON.parse(user)
   data = [
     { id: 1, title: "St Johns Golf & Country Club", date: '18/05/2022 8:00 am' },
     { id: 2, title: "Johns & Country Club", date: '18/07/2022 8:00 am' }
     // { title: 'St Johns Golf & Country Club' },
   ]
-  useEffect(() => {
-    getData()
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = getData
+
+      return () => unsubscribe();
+    }, [])
+  );
+  // useEffect(() => {
+  //   getData()
+  // }, [isFocused])
 
   const getData = async () => {
+    setDateTimeSelected(false)
     const response = await getLeagueGames(user?.user.id, token)
     const res = JSON.parse(response)
+    // console.log(res.results[0])
     if (res.results.length) {
       setUpcomingGames(res.results)
     }
   }
-
   return (
     <Container title={"Home"}>
       <AppHeader
@@ -97,7 +111,7 @@ export default function Home() {
                 Add Upcoming Round{" "}
               </Text>
 
-              <DateTimePicker />
+              <DateTimePicker dateTimeSelected={dateTimeSelected} setDateTimeSelected={setDateTimeSelected} />
             </View>
             <View style={{ marginTop: 30 }}>
               <View style={{ paddingStart: 25 }}>
@@ -121,7 +135,7 @@ export default function Home() {
                       height: "100%",
                       paddingTop: 5
                     }}
-                    renderItem={({ item,index }) => <RoundCard item={item} index={index+1} containerStyle={{ marginTop: 5 }} />}
+                    renderItem={({ item,index }) =>( <RoundCard item={item} index={index+1} containerStyle={{ marginTop: 5 }} />)}
                   />
               }
             </View>
