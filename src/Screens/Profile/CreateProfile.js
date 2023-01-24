@@ -53,7 +53,7 @@ const CreateProfile = () => {
     lastName: user?.user?.last_name ? user?.user?.last_name : "",
     email: user?.user?.email ? user?.user?.email : "",
     ghin: user?.ghin ? user.ghin : "",
-    zipCode: '',
+    zipCode: "",
     imageUploading: false,
     image: user?.profile_image ? { uri: user?.profile_image } : "",
     imgUploadStatus: false
@@ -88,8 +88,7 @@ const CreateProfile = () => {
   }, [valueGHIN])
 
   useEffect(() => {
-    if(formData.image != user?.profile_image){
-
+    if (formData.image != user?.profile_image) {
       updateProfileImgHandler()
     }
   }, [formData.image])
@@ -105,7 +104,7 @@ const CreateProfile = () => {
     })
     const response = await updateProfilePicture(params, id, token)
     const res = JSON.parse(response)
-    console.log('response of uploading image', res)
+    console.log("response of uploading image", res)
     if (res.id) {
       setFormData({ ...formData, imgUploadStatus: 200 })
     } else if (res.detail) {
@@ -132,7 +131,7 @@ const CreateProfile = () => {
     const res = JSON.parse(response)
     console.log(res)
     setBtnLoading(false)
-    if (res.id ) {
+    if (res.id) {
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
       navigation.navigate(RoutesKey.BOTTOMTAB)
@@ -141,12 +140,12 @@ const CreateProfile = () => {
         message: "Profile updated"
       })
     } else {
-      if(res.detail){
+      if (res.detail) {
         showMessage({
           type: "warning",
           message: res.detail ? res.detail : formData.imgUploadStatus
         })
-      }else if(formData.imgUploadStatus && formData.imgUploadStatus !=200){
+      } else if (formData.imgUploadStatus && formData.imgUploadStatus != 200) {
         showMessage({
           type: "warning",
           message: res.detail ? res.detail : formData.imgUploadStatus
@@ -349,7 +348,7 @@ const CreateProfile = () => {
                   markedDates={startDate}
                   onDayPress={e => setService(e.dateString)}
                   width="100%"
-                  text="Start Date"
+                  text="Date of Birth"
                 />
               </Box>
               <Box mt="5">

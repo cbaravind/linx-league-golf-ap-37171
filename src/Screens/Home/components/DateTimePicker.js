@@ -10,7 +10,7 @@ import Modal from "react-native-modal"
 import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
-const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
+const DateTimePicker = ({ dateTimeSelected, setDateTimeSelected }) => {
   const navigation = useNavigation()
   const [date, setDate] = useState(new Date())
   const [calendarVisible, setCalendarVisible] = useState(false)
@@ -58,7 +58,10 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
           <TouchableOpacity
             onPress={() => {
               dateTimeSelected
-                ? navigation.navigate(RoutesKey.ADDFRIENDS,{time:date,date:selectedDate})
+                ? navigation.navigate(RoutesKey.ADDFRIENDS, {
+                    time: date,
+                    date: selectedDate
+                  })
                 : setTimePickerOpen(true)
             }}
             style={[
@@ -97,16 +100,22 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
             todayTextStyle={{
               color: colors.green
             }}
-            headerWrapperStyle={{ height: 0 }}
+            headerWrapperStyle={{
+              padding: 10
+              // height: 100,
+              // paddingTop: 50,
+              // marginBottom: 20
+              // paddingBottom: 30
+            }}
             dayLabelsWrapper={{
               borderWidth: 0,
               borderColor: "#fff"
             }}
             enableDateChange
             textStyle={{ color: colors.text2 }}
-            selectedDayStyle={{ backgroundColor: colors.green, }}
+            selectedDayStyle={{ backgroundColor: colors.green }}
             dayShape={"square"}
-            selectedDayTextStyle={{ color: '#FFF' }}
+            selectedDayTextStyle={{ color: "#FFF" }}
             onDateChange={onDateChange}
           />
         </Modal>
@@ -163,7 +172,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    height: "35%",
+    // height: "35%",
     alignSelf: "center",
     position: "absolute",
     top: "32%",

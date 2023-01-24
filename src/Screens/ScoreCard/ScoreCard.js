@@ -9,7 +9,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view"
 import { useNavigation } from "@react-navigation/core"
 import Previous from "./Previous/Previous"
 import Upcoming from "./Upcoming/Upcoming"
-import Share from 'react-native-share';
+import Share from "react-native-share"
 import { shareOptions } from "../../constants"
 
 export default function ScoreCard() {
@@ -31,13 +31,12 @@ export default function ScoreCard() {
     />
   )
   const onShare = () => {
-
     Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
+      .then(res => {
+        console.log(res)
       })
-      .catch((err) => {
-        err && console.log(err);
+      .catch(err => {
+        err && console.log(err)
       })
   }
   return (
@@ -58,8 +57,8 @@ export default function ScoreCard() {
           navigationState={{ index, routes }}
           onIndexChange={setIndex}
           renderScene={SceneMap({
-            first: () => <Previous />,
-            second: () => <Upcoming />
+            first: () => <Upcoming />,
+            second: () => <Previous />
           })}
         />
       </View>

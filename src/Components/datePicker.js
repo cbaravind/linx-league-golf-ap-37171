@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { Calendar } from "react-native-calendars"
 import CalendarPicker from "react-native-calendar-picker"
-import {colors} from '../theme'
+import { colors } from "../theme"
 const DatePicker = props => {
   const [show, setShow] = React.useState(false)
   const [selectedDate, setSelectedDate] = useState("")
@@ -14,7 +14,7 @@ const DatePicker = props => {
   const maxDate = new Date(2023, 6, 3)
   const onDateChange = (date, type) => {
     console.log(date, "date changed")
-    setSelectedDate(date)
+    setSelectedDate(date.toISOString().split("T")[0])
     // setCalendarVisible(false)
     // setTimeout(() => {
     //   setTimePickerOpen(true)
@@ -33,10 +33,10 @@ const DatePicker = props => {
           p="3"
           bg="#BDBDBD"
         >
-          {props.dateValue == "" ? (
+          {props.dateValue == "" && selectedDate == "" ? (
             <Text color="#5C6363">MM/DD/YYYY</Text>
           ) : (
-            <Text>{props.dateValue}</Text>
+            <Text>{selectedDate ? selectedDate : props.dateValue}</Text>
           )}
           <Icon
             color="#225529"
