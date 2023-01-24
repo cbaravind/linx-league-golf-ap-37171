@@ -84,9 +84,10 @@ export default function AddFriends({ route }) {
     const selected = friendsList.map((i) => (i?.id))
     // console.log(friendsList[0])
     const leagueDate = ` ${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
+    console.log(leagueDate)
     const data = {
       when: moment(leagueDate),
-      course_name: 'string',
+      course_name: 'Southern Dunes',
       city: 'city',
       course_address: 'address',
       user: user?.user?.id,

@@ -22,3 +22,7 @@ export const shareOptions={
   message: 'Invite a friend',
   title: 'Title'
 }
+export const fixTimezoneOffset = (date) => {
+  if(!date) return "";
+  return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
+}

@@ -50,19 +50,33 @@ export default function Home() {
       return () => unsubscribe();
     }, [])
   );
-  // useEffect(() => {
-  //   getData()
-  // }, [isFocused])
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   const getData = async () => {
     setDateTimeSelected(false)
+    setLoading(true)
     const response = await getLeagueGames(user?.user.id, token)
     const res = JSON.parse(response)
-    // console.log(res.results[0])
+    // console.log(res.results[0]) 
     if (res.results.length) {
-      setUpcomingGames(res.results)
+      const today  = new moment()
+      const rounds = res.results.filter(e =>
+        moment(e.when) >= today
+      )
+      console.log(res.results,'rounds',today)
+      // res.results.map(((i)=>{
+      //   const date = moment(i.when)
+      //   console.log(date > today ? 'big' : 'small',date)
+      // }))
+      setLoading(false)
+      setUpcomingGames(rounds)
+
     }
   }
+  
   return (
     <Container title={"Home"}>
       <AppHeader

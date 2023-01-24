@@ -10,10 +10,12 @@ import Modal from "react-native-modal"
 import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
+import { fixTimezoneOffset } from "../../../constants"
 const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
   const navigation = useNavigation()
   const [date, setDate] = useState(new Date())
   const [calendarVisible, setCalendarVisible] = useState(false)
+  const [time, setTime] = useState(false)
   const [timePickerOpen, setTimePickerOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState("")
   const minDate = new Date() // Today
@@ -37,8 +39,7 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
                 ? setDateTimeSelected(false)
                 : setCalendarVisible(true)
             }}
-            style={styles.button}
-          >
+            style={styles.button}>
             {dateTimeSelected ? (
               <Text style={styles.h2}>Cancel</Text>
             ) : (
@@ -58,7 +59,7 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
           <TouchableOpacity
             onPress={() => {
               dateTimeSelected
-                ? navigation.navigate(RoutesKey.ADDFRIENDS,{time:date,date:selectedDate})
+                ? navigation.navigate(RoutesKey.ADDFRIENDS,{time:time,date:selectedDate})
                 : setTimePickerOpen(true)
             }}
             style={[
@@ -93,10 +94,10 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
             maxDate={maxDate}
             selectedStartDate={selectedDate}
             weekdays={["S", "M", "T", "W", "T", "F", "S"]}
-            todayBackgroundColor={"#fff"}
-            todayTextStyle={{
-              color: colors.green
-            }}
+            // todayBackgroundColor={"#fff"}
+            // todayTextStyle={{
+            //   color: colors.green
+            // }}
             headerWrapperStyle={{ height: 0 }}
             dayLabelsWrapper={{
               borderWidth: 0,
@@ -106,6 +107,7 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
             textStyle={{ color: colors.text2 }}
             selectedDayStyle={{ backgroundColor: colors.green, }}
             dayShape={"square"}
+            // todayTextStyle={{}}
             selectedDayTextStyle={{ color: '#FFF' }}
             onDateChange={onDateChange}
           />
@@ -115,12 +117,16 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
           mode={"time"}
           open={timePickerOpen}
           date={date}
+          // timeZoneOffsetInMinutes={6}
           // textColor={colors.white}
           cancelText={""}
           onConfirm={date => {
+            console.log(date,'time')
+            
             setTimePickerOpen(false)
             setDateTimeSelected(true)
             setDate(date)
+            setTime(fixTimezoneOffset(date))
           }}
           onCancel={() => {
             setTimePickerOpen(false)

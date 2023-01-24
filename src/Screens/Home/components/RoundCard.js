@@ -3,64 +3,67 @@ import React from "react"
 import Row from "../../../Components/Row"
 import { colors } from "../../../theme"
 import moment from "moment"
+import { IMAGE_PLACEHOLDER } from "../../../constants"
 
 export default function RoundCard({ item, containerStyle, index }) {
 
   const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
   const date = moment(item.when)
   const today = new moment()
-  console.log(date > today ? 'big' : 'small',date)
+  console.log(item.players?.length)
   return (
 
-    date > today ?
+    // date > today ?
 
-      <View style={[styles.container, containerStyle]}>
-        <Row>
-          <Row style={{ justifyContent: "flex-start" }}>
-            <View style={styles.numberContainer}>
-              <View
-                style={[
-                  styles.numberContainer,
-                  {
-                    backgroundColor: "rgba(192,192,192,1)",
-                    height: 22,
-                    width: 22
-                  }
-                ]}
-              >
-                <Text style={[styles.text, { color: colors.white }]}>
-                  {index}
-                </Text>
-              </View>
-            </View>
-            <View style={{ marginLeft: 10 }}>
-              <Text style={styles.text}>{time || ''}</Text>
-              <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
-                {item.course_name}
+    <View style={[styles.container, containerStyle]}>
+      <Row>
+        <Row style={{ justifyContent: "flex-start" }}>
+          <View style={styles.numberContainer}>
+            <View
+              style={[
+                styles.numberContainer,
+                {
+                  backgroundColor: "rgba(192,192,192,1)",
+                  height: 22,
+                  width: 22
+                }
+              ]}
+            >
+              <Text style={[styles.text, { color: colors.white }]}>
+                {index}
               </Text>
             </View>
-          </Row>
-          <View style={{ flexDirection: "row", marginRight: 7 }}>
-            {/* {item?.players?.map
-          } */}
+          </View>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={styles.text}>{time || ''}</Text>
+            <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
+              {item.course_name}
+            </Text>
+          </View>
+        </Row>
+        <View style={{  marginRight: 7,paddingTop:20,backgroundColor:'red'}}>
+          {item?.players?.map((player,index) => (
+
             <Image
               style={[
                 styles.imgStyle,
-                { zIndex: 10, position: "absolute", left: -18, bottom: 2 }
+                { zIndex: 10, position: "absolute", left:-(18*(index+1)), bottom: 2 }
               ]}
               resizeMode={"contain"}
-              source={require("../../../assets/images/user1.png")}
+              source={{uri:player?.profile?.profile_image || IMAGE_PLACEHOLDER}}
             />
-            <Image
-              style={[styles.imgStyle, { zIndex: -10 }]}
-              source={require("../../../assets/images/user2.png")}
-              resizeMode={"contain"}
-            />
-          </View>
-        </Row>
-      </View>
-      :
-      <></>
+          ))
+          }
+          {/* <Image
+            style={[styles.imgStyle, { zIndex: -10 }]}
+            source={require("../../../assets/images/user2.png")}
+            resizeMode={"contain"}
+          /> */}
+        </View>
+      </Row>
+    </View>
+    // :
+    // <></>
   )
 }
 const styles = StyleSheet.create({
