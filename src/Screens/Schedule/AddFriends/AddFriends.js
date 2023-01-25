@@ -31,14 +31,14 @@ import { showMessage } from "react-native-flash-message"
 
 export default function AddFriends({ route }) {
 
-  const { date, time } = route?.params
+  const { date, time }  = route?.params
   const selectedPlayers = route?.params?.players
   const { user, token } = useSelector(state => state.auth?.user)
   const navigation = useNavigation()
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList] = useState(selectedPlayers)
-  const [btnLoading, setBtnLoading] = useState(false)
+  const [friendsList, setFriendsList]   = useState(selectedPlayers)
+  const [btnLoading, setBtnLoading]     = useState(false)
 
   useEffect(() => {
     if (selectedPlayers) {
@@ -79,20 +79,20 @@ export default function AddFriends({ route }) {
     })
   }
 
-  const leagueHandler = async () => {
+  const leagueHandler = async () => { 
     setBtnLoading(true)
     const selected = friendsList.map((i) => (i?.id))
-    // console.log(friendsList[0])
-    const leagueDate = ` ${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
-    console.log(leagueDate)
+    const leagueDate = `${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
     const data = {
       when: moment(leagueDate),
-      course_name: 'Southern Dunes',
+      course_name: 'Pinewood ',
       city: 'city',
       course_address: 'address',
       user: user?.user?.id,
       players: selected
     }
+    // console.log(data,leagueDate)
+    // return;
     const result = await postLeague(data, token)
     const res= JSON.parse(result)
     setBtnLoading(false)
@@ -109,7 +109,6 @@ export default function AddFriends({ route }) {
       })
     }
 
-    console.log(moment(leagueDate),'list')
   }
 
 
@@ -128,7 +127,7 @@ export default function AddFriends({ route }) {
         <CityInput date={date} time={time} />
         {!selectedPlayers ?
           <>
-          <Text style={{textAlign:'center',alignItems:'center',justifyContent:'space-between'}} >
+          <Text style={{textAlign:'center',alignItems:'center',justifyContent:'center'}} >
             No Friends added yet
           </Text>
           </>
@@ -185,8 +184,7 @@ export default function AddFriends({ route }) {
                 style={[
                   styles.text,
                   { fontWeight: "400", color: colors.text1, fontSize: 14 }
-                ]}
-              >
+                ]}>
                 Remove players by swiping left
               </Text>
             </View>

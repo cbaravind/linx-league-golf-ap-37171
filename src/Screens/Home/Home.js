@@ -59,7 +59,7 @@ export default function Home() {
       const rounds = res.results.filter(e =>
         moment(e.when) >= today
       )
-      console.log(res.results,'rounds',today)
+      // console.log(res.results,'rounds')
       setLoading(false)
       setUpcomingGames(rounds)
 

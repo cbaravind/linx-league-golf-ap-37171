@@ -40,7 +40,6 @@ export default function Players({ route }) {
     setLoading(true)
     const response = await getFriends(29, token)
     const res = JSON.parse(response)
-    console.log('===', res)
     if (res.id) {
       if (res.friends.length) {
         setFriendsList(res.friends)

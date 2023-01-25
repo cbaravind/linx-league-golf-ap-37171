@@ -242,7 +242,7 @@ export const getLeagueGames = async (id,token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/schedules/leagues/?user__id=${id}`
+  const url = `${API_URL}/schedules/leagues/?ordering=when&user__id=${id}`
   const response = await fetch(url, requestOptions)
   return response.text()
 }

@@ -8,12 +8,9 @@ import { IMAGE_PLACEHOLDER } from "../../../constants"
 export default function RoundCard({ item, containerStyle, index }) {
 
   const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
-  const date = moment(item.when)
-  const today = new moment()
-  console.log(item.players?.length)
+ 
   return (
 
-    // date > today ?
 
     <View style={[styles.container, containerStyle]}>
       <Row>
@@ -41,13 +38,13 @@ export default function RoundCard({ item, containerStyle, index }) {
             </Text>
           </View>
         </Row>
-        <View style={{  marginRight: 7,paddingTop:20,backgroundColor:'red'}}>
+        <View style={{  marginRight: 7,paddingTop:35}}>
           {item?.players?.map((player,index) => (
 
             <Image
               style={[
                 styles.imgStyle,
-                { zIndex: 10, position: "absolute", left:-(18*(index+1)), bottom: 2 }
+                { zIndex: 10, position: "absolute", left:-(16*(index+1)), bottom: 2 }
               ]}
               resizeMode={"contain"}
               source={{uri:player?.profile?.profile_image || IMAGE_PLACEHOLDER}}
@@ -62,8 +59,7 @@ export default function RoundCard({ item, containerStyle, index }) {
         </View>
       </Row>
     </View>
-    // :
-    // <></>
+    
   )
 }
 const styles = StyleSheet.create({

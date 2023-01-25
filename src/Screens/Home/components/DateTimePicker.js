@@ -94,12 +94,14 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
             maxDate={maxDate}
             selectedStartDate={selectedDate}
             weekdays={["S", "M", "T", "W", "T", "F", "S"]}
-            todayBackgroundColor={"#fff"}
-            todayTextStyle={{
-              color: colors.green
-            }}
+            // todayBackgroundColor={"#fff"}
+            // todayTextStyle={{
+            //   color: colors.green
+            // }}
+            
             headerWrapperStyle={{
-              padding: 10
+              paddingTop: 15,
+              paddingHorizontal:25
               // height: 100,
               // paddingTop: 50,
               // marginBottom: 20

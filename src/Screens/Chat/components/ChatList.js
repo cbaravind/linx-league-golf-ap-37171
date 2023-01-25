@@ -5,13 +5,11 @@ import { colors, fonts } from "../../../theme"
 import { useSelector } from "react-redux"
 import { Icon } from "native-base"
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import RNFetchBlob from "react-native-fetch-blob"
 import { showMessage } from "react-native-flash-message"
 import { pubnub } from "../../../constants"
 const MessageItem = ({ message, file }) => {
   const { user, token } = useSelector(state => state.auth.user)
   const isSender = message.sender == user?.id
-  // console.log(message, '===')
 
   const downloadFile = async () => {
     const file = await pubnub.downloadFile({
