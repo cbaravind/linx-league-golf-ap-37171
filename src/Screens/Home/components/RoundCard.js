@@ -6,7 +6,6 @@ import moment from "moment"
 import { IMAGE_PLACEHOLDER } from "../../../constants"
 
 export default function RoundCard({ item, containerStyle, index }) {
-
   const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
  
   return (

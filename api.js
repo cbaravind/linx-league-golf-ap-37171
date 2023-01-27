@@ -231,6 +231,7 @@ export const getFriends = async (id,token) => {
   return response.text()
 }
 export const getLeagueGames = async (id,token) => {
+  console.log(id)
   const requestOptions = {
     method: "GET",
     headers: {
@@ -258,7 +259,6 @@ export const postLeague = async (data,token) => {
     body:JSON.stringify(data),
     redirect: "follow"
   }
-
   const url = `${API_URL}/schedules/leagues/`
   const response = await fetch(url, requestOptions)
   return response.text()

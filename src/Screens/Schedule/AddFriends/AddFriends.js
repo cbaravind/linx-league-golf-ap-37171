@@ -28,6 +28,7 @@ import { getFriends, postLeague } from "../../../../api"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { showMessage } from "react-native-flash-message"
+import { fixTimezoneOffset } from "../../../constants"
 
 export default function AddFriends({ route }) {
 
@@ -79,33 +80,34 @@ export default function AddFriends({ route }) {
     })
   }
 
-  const leagueHandler = async () => { 
-    setBtnLoading(true)
-    const selected = friendsList.map((i) => (i?.id))
-    const leagueDate = `${moment(date).format('YYYY-MM-DD')}T${moment(time).format('hh:mm:ss')}`
+  const leagueHandler = async () => {
+    // setBtnLoading(true)
+    const selected   = friendsList.map((i) => (i?.id))
+    // const m1 = moment({ y: 2023 , M: 0, d: 4, hour: 15, m: 1, s: 3}); 
+    // const m2 = new Date(date).getMonth()
+    const leagueDate = `${moment(date).format('YYYY-MM-DD')}T${moment(time).format('HH:mm:ss')}`
     const data = {
-      when: moment(leagueDate),
-      course_name: 'Pinewood ',
+      when: new Date(leagueDate),
+      course_name: 'Pine',
       city: 'city',
       course_address: 'address',
       user: user?.user?.id,
       players: selected
     }
-    // console.log(data,leagueDate)
     // return;
     const result = await postLeague(data, token)
-    const res= JSON.parse(result)
+    const res = JSON.parse(result)
     setBtnLoading(false)
-    if(res.id){
+    if (res.id) {
       showMessage({
-        type:'success',
-        message:'Game Created'
+        type: 'success',
+        message: 'Game Created'
       })
       navigation.navigate(RoutesKey.HOME)
-    }else{
+    } else {
       showMessage({
-        type:'warning',
-        message:'Could not create game'
+        type: 'warning',
+        message: 'Could not create game'
       })
     }
 
@@ -127,9 +129,9 @@ export default function AddFriends({ route }) {
         <CityInput date={date} time={time} />
         {!selectedPlayers ?
           <>
-          <Text style={{textAlign:'center',alignItems:'center',justifyContent:'center'}} >
-            No Friends added yet
-          </Text>
+            <Text style={{ textAlign: 'center', alignItems: 'center', justifyContent: 'center' }} >
+              No Friends added yet
+            </Text>
           </>
           // <View style={{ justifyContent: 'center', flex: 1 }}>
           //   <Button
@@ -143,7 +145,6 @@ export default function AddFriends({ route }) {
           // </View>
           :
           <>
-
             <View
               style={{
                 backgroundColor: colors.white,
@@ -161,7 +162,7 @@ export default function AddFriends({ route }) {
                   <UserProfile
                     name={data.item.name}
                     image={null}
-                    onPress={()=>navigation.navigate(RoutesKey.PROFILE,{user:data.item})}
+                    onPress={() => navigation.navigate(RoutesKey.PROFILE, { user: data.item })}
                   // item={}
                   />
                 )}
@@ -205,11 +206,11 @@ export default function AddFriends({ route }) {
             <View style={{ width: 20 }} />
 
             <AppButton
-              disabled={friendsList?.length?false:true}
+              disabled={friendsList?.length ? false : true}
               isLoading={btnLoading}
-              style={[styles.button,{borderColor:friendsList?.length ? colors.darkGreen:colors.grey3 }]}
+              style={[styles.button, { borderColor: friendsList?.length ? colors.darkGreen : colors.grey3 }]}
               onPress={() => leagueHandler()}
-              labelStyle={{ color:friendsList?.length? colors.darkGreen:colors.grey3 }}
+              labelStyle={{ color: friendsList?.length ? colors.darkGreen : colors.grey3 }}
               label={"CREATE GAME"}
             />
           </Row>

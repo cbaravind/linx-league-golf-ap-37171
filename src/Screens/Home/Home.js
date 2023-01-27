@@ -35,7 +35,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const { user, token } = useSelector(state => state.auth?.user)
   const [dateTimeSelected, setDateTimeSelected] = useState(false)
-
+console.log(token)
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = getData
