@@ -119,6 +119,7 @@ class Profile(BaseModel):
         blank=True,
         null=True,
     )
+    friends = models.ManyToManyField('User',null=True,blank=True,related_name='user_friends')
 
     class Meta:
         verbose_name = "Profile"
