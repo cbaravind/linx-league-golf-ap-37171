@@ -77,7 +77,8 @@ LOCAL_APPS = [
     "schedules",
     "invite_users",
     "feedbacks",
-    'league'
+    'league',
+    'game'
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",

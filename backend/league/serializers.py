@@ -20,7 +20,7 @@ class LeagueSerializerPOST(serializers.ModelSerializer):
 
 class LeagueSerializerGET(serializers.ModelSerializer):
     season = SeasonSerializer()
-    golf_course = GolfCourseSerializer()
+    golf_course = GolfCourseSerializer(many=True)
 
     class Meta:
         model = models.League

@@ -24,7 +24,7 @@ class League(models.Model):
     season = models.ForeignKey(Season,on_delete=models.CASCADE)
     fee = models.FloatField()
     users_joined = models.ManyToManyField(User,null=True)
-    golf_course = models.ForeignKey(GolfCourse,on_delete=models.CASCADE)
+    golf_course = models.ManyToManyField(GolfCourse,null=True)
 
 
     def __str__(self) -> str:

@@ -43,6 +43,7 @@ urlpatterns = [
     path("invite/", include("invite_users.urls", namespace="invite-users")),
     path("feedbacks/", include("feedbacks.urls", namespace="feedbacks")),
     path("api/v1/", include("league.urls")),
+    path("api/v1/", include("game.urls")),
 ]
 
 admin.site.site_header = "Linx League Golf App"
