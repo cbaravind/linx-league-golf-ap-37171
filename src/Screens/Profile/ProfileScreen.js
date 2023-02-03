@@ -19,7 +19,7 @@ import SeasonStats from "../../Components/SeasonStats"
 import AppButton from "../../Components/AppButton"
 import { stats } from "../../assets/data"
 import Share from "react-native-share"
-import { shareOptions } from "../../constants"
+import { IMAGE_PLACEHOLDER, shareOptions } from "../../constants"
 import { useSelector } from "react-redux"
 import { getProfile } from "../../../api"
 
@@ -50,6 +50,7 @@ export default function ProfileScreen({ route }) {
   const getProfileInfo = async () => {
     setLoading(true)
     const response = await getProfile(user?.user?.id, token)
+    console.log(response, "response of profile")
     const res = JSON.parse(response)
     setLoading(false)
     if (res.id) {
@@ -116,7 +117,11 @@ export default function ProfileScreen({ route }) {
             />
           )}
           <UserStatsCard
-            image={userInfo ? userInfo?.profile_image : null}
+            image={
+              userInfo?.profile_image
+                ? userInfo?.profile_image
+                : IMAGE_PLACEHOLDER
+            }
             name={userInfo ? userInfo?.user?.first_name : null}
             city={userInfo ? userInfo?.city : null}
             stats={stats}

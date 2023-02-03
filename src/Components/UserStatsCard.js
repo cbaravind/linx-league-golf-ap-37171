@@ -7,18 +7,23 @@ import LinearGradient from "react-native-linear-gradient"
 import AppModal from "./AppModal"
 
 export default function UserStatsCard({ image, name, city, stats }) {
+  console.log(image, "image")
   const [infoModalVisible, setInfoModalVisible] = useState(false)
 
   return (
     <View>
-      {/* <View > */}
-      <LinearGradient
+      <View style={styles.linearGradient}>
+        {/* <LinearGradient
         colors={["#225529", "#7D9E49"]}
         style={styles.linearGradient}
-      >
-        <Image source={{uri:image}} resizeMode="cover" style={styles.image} />
-      </LinearGradient>
-      {/* </View> */}
+      > */}
+        <Image
+          source={{ uri: image }}
+          resizeMode="cover"
+          style={styles.image}
+        />
+        {/* </LinearGradient> */}
+      </View>
       <View style={styles.card}>
         <Text style={[styles.text, { fontWeight: "700", fontSize: 20 }]}>
           {name}
@@ -30,15 +35,15 @@ export default function UserStatsCard({ image, name, city, stats }) {
               title={item.title}
               value={item.value}
               dark={index % 2 == 0 ? true : false}
-              info={index == 4  ?
-                `When you refer 3 friends who join Linx
+              info={
+                index == 4
+                  ? `When you refer 3 friends who join Linx
                  League, you get a season free!`
-                : index == 1 ?
-                  'This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score.'
-                  :
-                  false
+                  : index == 1
+                  ? "This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score."
+                  : false
               }
-            // onPressInfo={() =>{index == 4 ?  setInfoModalVisible(4) : index == 1 ? setInfoModalVisible(1) : null}}
+              // onPressInfo={() =>{index == 4 ?  setInfoModalVisible(4) : index == 1 ? setInfoModalVisible(1) : null}}
             />
           ))}
           {/* <StatsCircle title={'Attested'} value={stats.attested} />
@@ -49,12 +54,11 @@ export default function UserStatsCard({ image, name, city, stats }) {
       </View>
       {infoModalVisible ? (
         <AppModal
-          desc={infoModalVisible == 4 ?
-            `When you refer 3 friends who join Linx
+          desc={
+            infoModalVisible == 4
+              ? `When you refer 3 friends who join Linx
                League, you get a season free!`
-            :
-            'This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score.'
-
+              : "This is the percentage of rounds you have played that a fellow Linx League member has confirmed your score."
           }
           onClose={() => setInfoModalVisible(false)}
         />
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   image: {
     width: 74,
     height: 74,
-    borderRadius: 45,
+    borderRadius: 45
   },
   card: {
     backgroundColor: colors.white,

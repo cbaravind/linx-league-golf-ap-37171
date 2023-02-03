@@ -39,6 +39,7 @@ import Row from "../../Components/Row"
 import RoutesKey from "../../Navigation/routesKey"
 import { showMessage } from "react-native-flash-message"
 import { saveUser } from "../../redux/reducers/auth"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const CreateProfile = () => {
   const route = useRoute()
@@ -87,15 +88,14 @@ const CreateProfile = () => {
     }
   }, [valueGHIN])
 
-  useEffect(() => {
-    if (user?.profile_image == null) {
-      updateProfileImgHandler()
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if (user?.profile_image == null) {
+  //     updateProfileImgHandler()
+  //   }
+  // }, [user])
 
   const updateProfileImgHandler = async () => {
     const id = user?.user?.id
-
     const params = new FormData()
     params.append("profile_image", {
       name: formData.image.fileName,
@@ -111,7 +111,6 @@ const CreateProfile = () => {
       setFormData({ ...formData, imgUploadStatus: res.detail })
     }
   }
-  console.log(user?.profile_image)
   const submitHandler = async () => {
     setBtnLoading(true)
 
@@ -130,9 +129,9 @@ const CreateProfile = () => {
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
-    console.log(res)
     setBtnLoading(false)
     if (res.id) {
+      await AsyncStorage.setItem("user", JSON.stringify(res))
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
       navigation.navigate(RoutesKey.BOTTOMTAB)
@@ -161,13 +160,32 @@ const CreateProfile = () => {
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
-          // console.log(res.assets[0])
           setFormData({
             ...formData,
             image: res.assets[0],
             imageUploading: false
           })
-          updateProfileImgHandler()
+          const id = user?.user?.id
+
+          setBtnLoading(false)
+          const params = new FormData()
+          params.append("profile_image", {
+            name: res.assets[0].fileName,
+            type: res.assets[0].type,
+            uri: res.assets[0].uri
+          })
+          const response = await updateProfilePicture(params, id, token)
+          // const res = JSON.parse(response)
+          if (response.id) {
+            setFormData({
+              ...formData,
+              imgUploadStatus: 200,
+              image: response.profile_image
+            })
+          } else if (res.detail) {
+            setFormData({ ...formData, imgUploadStatus: res.detail })
+          }
+          // updateProfileImgHandler()
         }
       }
     })
