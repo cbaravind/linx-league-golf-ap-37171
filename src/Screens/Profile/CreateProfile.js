@@ -60,7 +60,7 @@ const CreateProfile = () => {
   })
   let [phoneNumber, setPhoneNumber] = useState(user ? user?.phone_number : "")
   const [startDate, setStartDate] = useState("")
-  let [service, setService] = useState("")
+  let [service, setService] = useState(user?.birthdate ? user?.birthdate : "")
   const [value, setValue] = useState(user?.gender)
   const [valueGHIN, setValueGHIN] = useState("")
   const [diableGHIN, setDisableGHIN] = useState(true)
@@ -88,10 +88,10 @@ const CreateProfile = () => {
   }, [valueGHIN])
 
   useEffect(() => {
-    if (formData.image != user?.profile_image) {
+    if (user?.profile_image == null) {
       updateProfileImgHandler()
     }
-  }, [formData.image])
+  }, [user])
 
   const updateProfileImgHandler = async () => {
     const id = user?.user?.id
@@ -111,7 +111,7 @@ const CreateProfile = () => {
       setFormData({ ...formData, imgUploadStatus: res.detail })
     }
   }
-
+  console.log(user?.profile_image)
   const submitHandler = async () => {
     setBtnLoading(true)
 
@@ -125,7 +125,8 @@ const CreateProfile = () => {
       phone_number: phoneNumber,
       gender: value,
       ghin: formData.ghin,
-      has_ghin: valueGHIN
+      has_ghin: valueGHIN,
+      birthdate: service
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
@@ -166,6 +167,7 @@ const CreateProfile = () => {
             image: res.assets[0],
             imageUploading: false
           })
+          updateProfileImgHandler()
         }
       }
     })
@@ -344,6 +346,7 @@ const CreateProfile = () => {
               </Box>
               <Box mt="2">
                 <DatePicker
+                  profile={true}
                   dateValue={service}
                   markedDates={startDate}
                   onDayPress={e => setService(e.dateString)}

@@ -36,14 +36,13 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const { user, token } = useSelector(state => state.auth?.user)
   const [dateTimeSelected, setDateTimeSelected] = useState(false)
-  console.log(upcomingGames, 'upcomingGames')
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = getData
       return () => unsubscribe();
     }, [])
   );
-
+    console.log(user)
   useEffect(() => {
     getData()
   }, [isFocused])
