@@ -43,9 +43,10 @@ class UserProfileViewSet(ModelViewSet):
     def add_friend(self, request, user__id):
         try:
             profile = self.get_object()
-            user_profile = Profile.objects.get(id=request.data["p_id"])
-            profile.friends.add(user_profile.user)
-            user_profile.friends.add(profile.user)
+            for p_id in request.data["p_ids"]:
+                user_profile = Profile.objects.get(id=p_id)
+                profile.friends.add(user_profile.user)
+                user_profile.friends.add(profile.user)
             return Response(
                 "Successfully friend added.", status=status.HTTP_201_CREATED
             )
@@ -57,8 +58,9 @@ class UserProfileViewSet(ModelViewSet):
     def remove_friend(self, request, user__id):
         try:
             profile = self.get_object()
-            user_profile = Profile.objects.get(id=request.data["p_id"])
-            profile.friends.remove(user_profile.user)
+            for p_id in request.data["p_ids"]:
+                user_profile = Profile.objects.get(id=p_id)
+                profile.friends.remove(user_profile.user)
             return Response(
                 "Successfully friend added.", status=status.HTTP_201_CREATED
             )
