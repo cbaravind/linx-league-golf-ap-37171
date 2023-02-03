@@ -39,6 +39,7 @@ import Inbox from "../screens/Chat/Inbox"
 import Chat from "../screens/Chat/Chat"
 import ScoreDetailScreen from "../screens/ScoreCard/ScoreDetailScreen"
 import Players from "../screens/Schedule/Players/Players"
+import FriendList from "../screens/Chat/FriendList"
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
@@ -287,6 +288,11 @@ const Routes = () => {
           <Stack.Screen
             name={Routeskey.PLAYERS}
             component={Players}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={Routeskey.CHATFRIENDLIST}
+            component={FriendList}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
