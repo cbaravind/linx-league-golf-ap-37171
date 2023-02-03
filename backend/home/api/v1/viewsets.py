@@ -38,29 +38,34 @@ class UserProfileViewSet(ModelViewSet):
             return UserProfileCreateSerializer
         else:
             return UserProfileSerializer
-    
+
     @action(detail=True, url_path="add-friend", methods=["POST"])
-    def add_friend(self, request, pk):
+    def add_friend(self, request, user__id):
         try:
             profile = self.get_object()
-            user_profile = Profile.objects.get(id=request.data['p_id'])
-            profile.friends.add(user_profile)
-            user_profile.friends.add(profile)
-            return Response('Successfully friend added.', status=status.HTTP_201_CREATED)
+            user_profile = Profile.objects.get(id=request.data["p_id"])
+            profile.friends.add(user_profile.user)
+            user_profile.friends.add(profile.user)
+            return Response(
+                "Successfully friend added.", status=status.HTTP_201_CREATED
+            )
         except Exception as e:
             print(e)
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, url_path="remove-friend", methods=["POST"])
-    def remove_friend(self, request, pk):
+    def remove_friend(self, request, user__id):
         try:
             profile = self.get_object()
-            user_profile = Profile.objects.get(id=request.data['p_id'])
-            profile.friends.remove(user_profile)
-            return Response('Successfully friend added.', status=status.HTTP_201_CREATED)
+            user_profile = Profile.objects.get(id=request.data["p_id"])
+            profile.friends.remove(user_profile.user)
+            return Response(
+                "Successfully friend added.", status=status.HTTP_201_CREATED
+            )
         except Exception as e:
             print(e)
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class SignupViewSet(ModelViewSet):
     serializer_class = SignupSerializer
