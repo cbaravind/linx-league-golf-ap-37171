@@ -16,7 +16,7 @@ export default function UserStatsCard({ image, name, city, stats }) {
         colors={["#225529", "#7D9E49"]}
         style={styles.linearGradient}
       >
-        <Image source={image} resizeMode="cover" style={styles.image} />
+        <Image source={{uri:image}} resizeMode="cover" style={styles.image} />
       </LinearGradient>
       {/* </View> */}
       <View style={styles.card}>

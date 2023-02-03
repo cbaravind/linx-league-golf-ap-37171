@@ -296,3 +296,36 @@ export const getProfile = async (id,token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+export const getChatList = async (id,token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/chats/?sender__id=${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const postChatRoom = async (data,token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body:JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/chats/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}

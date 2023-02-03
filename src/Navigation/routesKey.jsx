@@ -24,6 +24,7 @@ class RoutesKey {
   static CHAT = "Chat"
   static SCOREDETAIL = "Score Detail"
   static PLAYERS = 'Players'
+  static CHATFRIENDLIST = 'Chat Friends List'
 
 }
 

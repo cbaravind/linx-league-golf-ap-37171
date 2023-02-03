@@ -24,9 +24,9 @@ import { colors } from "../theme"
 import AddFriends from "../screens/Schedule/AddFriends/AddFriends"
 import FindFriends from "../screens/Schedule/SearchFriends/FindFriends"
 import SendReferral from "../screens/Schedule/SendReferral/SendReferral"
-import FeedBack from "../screens/FeedBack/FeedBack"
+import FeedBack from "../screens/feedBack/FeedBack"
 import Notifications from "../screens/Notifications/Notifications"
-import ChangePassword from "../screens/ChangePassword/ChangePassword"
+import ChangePassword from "../screens/changePassword/ChangePassword"
 import PostScore from "../screens/ScoreCard/PostScore/PostScore"
 import ProfileScreen from "../screens/Profile/ProfileScreen"
 import RulesAndScroing from "../screens/RulesAndScoring/RulesAndScoring"
@@ -39,6 +39,7 @@ import Inbox from "../screens/Chat/Inbox"
 import Chat from "../screens/Chat/Chat"
 import ScoreDetailScreen from "../screens/ScoreCard/ScoreDetailScreen"
 import Players from "../screens/Schedule/Players/Players"
+import FriendList from "../screens/Chat/FriendList"
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
@@ -287,6 +288,11 @@ const Routes = () => {
           <Stack.Screen
             name={Routeskey.PLAYERS}
             component={Players}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={Routeskey.CHATFRIENDLIST}
+            component={FriendList}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

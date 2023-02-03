@@ -10,7 +10,7 @@ import {
   Pressable,
   ActivityIndicator
 } from "react-native"
-import { useNavigation } from "@react-navigation/core"
+import { useIsFocused, useNavigation } from "@react-navigation/core"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Container from "../../Components/Container"
 import AppHeader from "../../Components/AppHeader"
@@ -31,41 +31,39 @@ import moment from "moment"
 
 export default function Home() {
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
   const [upcomingGames, setUpcomingGames] = useState(false)
   const [loading, setLoading] = useState(false)
   const { user, token } = useSelector(state => state.auth?.user)
   const [dateTimeSelected, setDateTimeSelected] = useState(false)
-
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = getData
-
       return () => unsubscribe();
     }, [])
   );
-
+    console.log(user)
   useEffect(() => {
     getData()
-  }, [])
+  }, [isFocused])
 
   const getData = async () => {
     setDateTimeSelected(false)
     setLoading(true)
     const response = await getLeagueGames(user?.user.id, token)
     const res = JSON.parse(response)
-    // console.log(res.results[0]) 
+    console.log(res.results)
     if (res.results.length) {
-      const today  = new moment()
+      const today = new moment()
       const rounds = res.results.filter(e =>
         moment(e.when) >= today
       )
       // console.log(res.results,'rounds')
       setLoading(false)
       setUpcomingGames(rounds)
-
     }
   }
-  
+
   return (
     <Container title={"Home"}>
       <AppHeader
@@ -138,7 +136,7 @@ export default function Home() {
                       height: "100%",
                       paddingTop: 5
                     }}
-                    renderItem={({ item,index }) =>( <RoundCard item={item} index={index+1} containerStyle={{ marginTop: 5 }} />)}
+                    renderItem={({ item, index }) => (<RoundCard item={item} index={index + 1} containerStyle={{ marginTop: 5 }} />)}
                   />
               }
             </View>
