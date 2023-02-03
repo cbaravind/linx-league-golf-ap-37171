@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../Navigation/routesKey"
 import UserStatsCard from "../../Components/UserStatsCard"
 import SeasonStats from "../../Components/SeasonStats"
-import AppButton   from "../../Components/AppButton"
+import AppButton from "../../Components/AppButton"
 import { stats } from "../../assets/data"
 import Share from 'react-native-share'
 import { shareOptions } from "../../constants"
@@ -19,10 +19,10 @@ import { getProfile } from "../../../api"
 export default function ProfileScreen({ route }) {
 
   const navigation = useNavigation()
-  const otherUser  = route?.params?.user
+  const otherUser = route?.params?.user
   const { token, user } = useSelector(state => state?.auth?.user)
 
-  const [loading, setLoading]   = useState(false)
+  const [loading, setLoading] = useState(false)
   const [userInfo, setUserInfo] = useState(false)
 
   const onShare = () => {
@@ -40,7 +40,7 @@ export default function ProfileScreen({ route }) {
       getProfileInfo()
     }
   }, [otherUser])
-
+  console.log(otherUser,'porfile')
   const getProfileInfo = async () => {
     setLoading(true)
     const response = await getProfile(otherUser?.id, token)
@@ -51,7 +51,7 @@ export default function ProfileScreen({ route }) {
     }
 
   }
- 
+
   return (
     <Container>
       <AppHeader
@@ -91,8 +91,8 @@ export default function ProfileScreen({ route }) {
           }
           <UserStatsCard
             image={otherUser ? userInfo?.profile_image : user?.profile_image ? { uri: user?.profile_image } : require("../../assets/images/profileImg.png")}
-            name= {otherUser ? otherUser ? otherUser.name : user?.user?.first_name : "Tom"}
-            city= {otherUser ? otherUser?.city : user?.city}
+            name={otherUser ? otherUser ? otherUser.name : user?.user?.first_name : "user"}
+            city={otherUser ? otherUser?.city : user?.city}
             stats={stats}
           />
           <Button onPress={onShare} shadow={5} mt={4} variant={"solid"} bg="#7D9E49">
