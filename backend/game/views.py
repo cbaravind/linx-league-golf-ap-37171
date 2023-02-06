@@ -21,3 +21,17 @@ class GameModelViewSet(viewsets.ModelViewSet):
         
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class GameScoreModelViewSet(viewsets.ModelViewSet):
+
+    def get_queryset(self):
+        return models.Game.objects.all()
+
+    def get_serializer_class(self):
+        return serializers.GameScoreSerializer
+
+    def get_permissions(self):
+        return (IsAuthenticated(),)
+        
+    def perform_create(self, serializer):
+        serializer.save(given_by=self.request.user)

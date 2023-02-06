@@ -19,3 +19,9 @@ class GameSerializerPOST(serializers.ModelSerializer):
         model = models.Game
         exclude = ('user', )
         
+
+class GameScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.GameScore
+        exclude = ('given_by', )
+        

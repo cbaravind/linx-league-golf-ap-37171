@@ -10,3 +10,12 @@ class Game(models.Model):
     golf_course = models.ForeignKey(GolfCourse, on_delete=models.CASCADE)
     players = models.ManyToManyField(Profile, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class GameScore(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    score = models.FloatField()
+    putt = models.FloatField(null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    given_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_given_by',null=True)
+
