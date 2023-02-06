@@ -343,7 +343,7 @@ export const getChatList = async (id, token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/api/v1/chats/?sender__id=${id}/`
+  const url = `${API_URL}/api/v1/chats/?sender__id=${id}`
   const response = await fetch(url, requestOptions)
   return response.text()
 }

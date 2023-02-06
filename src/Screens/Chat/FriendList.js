@@ -5,14 +5,16 @@ import AppHeader from "../../Components/AppHeader"
 import { colors } from "../../theme"
 import { useSelector } from "react-redux"
 import { getFriends } from "../../../api"
-import { Box, FlatList, Image } from "native-base"
+import { Box, FlatList, Image, Pressable } from "native-base"
 import { IMAGE_PLACEHOLDER } from "../../constants"
+import { useNavigation } from "@react-navigation/native"
+import RoutesKey from "../../Navigation/routesKey"
 
 const FriendList = () => {
   const [loading, setLoading] = useState(false)
   const [friendsList, setFriendsList] = useState([])
   const { user, token } = useSelector(state => state.auth?.user)
-
+  const navigation = useNavigation()
   useEffect(() => {
     getFriendsHandler()
   }, [])
@@ -27,7 +29,7 @@ const FriendList = () => {
     }
     setLoading(false)
   }
-  console.log(friendsList)
+
   return (
     <Container>
       <AppHeader back title="Friend List" />
@@ -51,20 +53,31 @@ const FriendList = () => {
             }
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <Box mt="8" bg={colors.white} p="4" flexDirection="row">
-                <View style={styles.imgContainer}>
-                  <Image
-                    source={{ uri: IMAGE_PLACEHOLDER }}
-                    resizeMode="cover"
-                    style={styles.img}
-                    alt=''
-                  />
-                </View>
-                <Box textAlign="left">
-                  <Text style={{}}>{item.name}</Text>
-                  <Text style={{ alignSelf: "center", marginTop:5 }}>{item.email}</Text>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate(RoutesKey.CHAT, {
+                    user: item,
+                    apiHit: true
+                  })
+                }
+              >
+                <Box mt="4" bg={colors.white} p="4" flexDirection="row">
+                  <View style={styles.imgContainer}>
+                    <Image
+                      source={{ uri: IMAGE_PLACEHOLDER }}
+                      resizeMode="cover"
+                      style={styles.img}
+                      alt=""
+                    />
+                  </View>
+                  <Box textAlign="left">
+                    <Text style={{}}>{item.name}</Text>
+                    <Text style={{ alignSelf: "center", marginTop: 5 }}>
+                      {item.email}
+                    </Text>
+                  </Box>
                 </Box>
-              </Box>
+              </Pressable>
             )}
           />
         ) : (
