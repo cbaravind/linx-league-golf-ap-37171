@@ -45,7 +45,7 @@ export default function FindFriends({ route }) {
       let friends = []
       contacts?.map(((item) => {
         const number = item.phoneNumbers.length ? item.phoneNumbers[0]['number'] : 0
-        const filtered = res.results.filter(e => e.phone_number == number)
+        let filtered = res.results.filter(e => e.phone_number == number)
         if (filtered.length) {
           friends = [...friends, ...filtered]
         }
@@ -58,11 +58,12 @@ export default function FindFriends({ route }) {
 
   const requestHandler = async () => {
     setbtnLoading(true)
-    const filteredData = selected.map((item) => (item.user?.id))
-    const response = await makeFriends(user?.user?.id,filteredData, token)
+    const filteredData = selected.map((item) => (item.id))
+    const response = await makeFriends(user?.id,filteredData, token)
     const res = JSON.parse(response)
+    console.log(res,'response of friendsss')
     setbtnLoading(false)
-    if(res.id){
+    if(res.includes('Success')){
       navigation.goBack()
     }else {
       if(res.detail){

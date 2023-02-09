@@ -23,9 +23,8 @@ const Upcoming = () => {
 
   const getData = async () => {
     setLoading(true)
-    const response = await getLeagueGames(user?.user.id, token)
+    const response = await getLeagueGames(user?.id, token)
     const res = JSON.parse(response)
-
     if (res.results.length) {
       const today = new moment()
       const todayGames = res.results.filter(e =>
@@ -33,7 +32,7 @@ const Upcoming = () => {
       )
 
       const rounds = res.results.filter(e =>
-        moment(e.when) >= today
+        moment(e.round_date) >= today 
       )
 
       setLoading(false)
@@ -63,7 +62,7 @@ const Upcoming = () => {
               paddingTop: 5
             }}
             renderItem={({ item, index }) => (
-              <Pressable onPress={() => navigation.navigate(RoutesKey.POSTSCORE)}>
+              <Pressable onPress={() => navigation.navigate(RoutesKey.POSTSCORE,{details:item})}>
                 <RoundCard
                   item={item}
                   index={index + 1}

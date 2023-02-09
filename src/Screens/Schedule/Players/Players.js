@@ -9,7 +9,7 @@ import AppButton from "../../../Components/AppButton"
 import SearchInput from "../../../Components/SearchInput"
 import { useNavigation } from "@react-navigation/core"
 import { Button } from "native-base"
-import { getAllUsers, getFriends, makeFriends } from "../../../../api"
+import { getAllUsers, getFriends, getProfile, getUserProfile, makeFriends } from "../../../../api"
 import { useSelector } from "react-redux"
 import RoutesKey from "../../../Navigation/routesKey"
 import { showMessage } from "react-native-flash-message"
@@ -38,8 +38,9 @@ export default function Players({ route }) {
 
   const getFriendsHandler = async () => {
     setLoading(true)
-    const response = await getFriends(29, token)
-    const res = JSON.parse(response)
+    // const response = await getFriends(user?.id, token)
+    const profile = await getProfile(user?.id, token)
+    const res = JSON.parse(profile)
     if (res.id) {
       if (res.friends.length) {
         setFriendsList(res.friends)

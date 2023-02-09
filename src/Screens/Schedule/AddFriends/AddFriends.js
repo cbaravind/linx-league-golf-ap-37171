@@ -28,6 +28,7 @@ import { createGame, getFriends, postLeague } from "../../../../api"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { showMessage } from "react-native-flash-message"
+import { fixTimezoneOffset } from "../../../constants"
 
 export default function AddFriends({ route }) {
   const { date, time } = route?.params
@@ -100,11 +101,10 @@ export default function AddFriends({ route }) {
     }
     // console.log(data,leagueDate)
     // return;
-    const result = await postLeague(data, token)
+    // const result = await postLeague(data, token)
     const resultGame = await createGame(dataGame, token)
-    const resGame = JSON.parse(resultGame)
-    console.log(resGame, "response of game")
-    const res = JSON.parse(result)
+    // const resGame = JSON.parse(resultGame)
+    const res = JSON.parse(resultGame)
     setBtnLoading(false)
     if (res.id) {
       showMessage({

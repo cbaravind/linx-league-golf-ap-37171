@@ -59,7 +59,7 @@ export default function ScoreDetail({ item }) {
           <Avatar source={item.image} />
           <Box ml="2">
             <Text fontWeight="700" fontSize="16" color={colors.text1}>
-              {item.name}
+              {item.user?.name}
             </Text>
             <Box flexDirection="row">
               <Image
@@ -68,7 +68,7 @@ export default function ScoreDetail({ item }) {
                 h="2.5"
                 w="17%"
                 source={require("../../../assets/images/lineVector.png")}
-                alt=""
+                alt="image"
               />
               <Text fontSize="14">23(+7)</Text>
             </Box>

@@ -42,7 +42,6 @@ export default function Home() {
       return () => unsubscribe();
     }, [])
   );
-    console.log(user)
   useEffect(() => {
     getData()
   }, [isFocused])
@@ -52,11 +51,10 @@ export default function Home() {
     setLoading(true)
     const response = await getLeagueGames(user?.user.id, token)
     const res = JSON.parse(response)
-    console.log(res.results)
     if (res.results.length) {
       const today = new moment()
       const rounds = res.results.filter(e =>
-        moment(e.when) >= today
+        moment(e.round_date) >= today
       )
       // console.log(res.results,'rounds')
       setLoading(false)
