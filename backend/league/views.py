@@ -2,6 +2,9 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from league import serializers,models
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class SeasonModelViewSet(viewsets.ModelViewSet):
@@ -41,3 +44,16 @@ class LeagueModelViewSet(viewsets.ModelViewSet):
             return (IsAuthenticated(),)
         return (IsAdminUser(),)
 
+
+class GetLeagueGolfCourse(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            league = models.League.objects.get(id=request.data['league_id'])
+            serializer = serializers.GolfCourseSerializer(league.golf_course.all(),many=True)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print(e)
+            return Response({'msg':e},status=status.HTTP_400_BAD_REQUEST)

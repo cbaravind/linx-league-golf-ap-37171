@@ -8,6 +8,7 @@ router.register('golf-course', views.GolfCourseModelViewSet,basename='golf-cours
 router.register('leagues', views.LeagueModelViewSet,basename='leagues')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('league-golf-course/',views.GetLeagueGolfCourse.as_view())
 
 ]

@@ -19,3 +19,4 @@ class GameScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     given_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_given_by',null=True)
 
+        
