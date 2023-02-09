@@ -89,6 +89,7 @@ class UserProfileCreateSerializer(WritableNestedModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    friends = UserSerializer(many=True)
 
     class Meta:
         model = Profile
