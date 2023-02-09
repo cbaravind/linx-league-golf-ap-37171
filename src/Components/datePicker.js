@@ -53,36 +53,39 @@ const DatePicker = props => {
             <Modal.Content borderRadius="30" w="95%" justifyContent="center">
               <Modal.Body bg="#fff">
                 <Box mt="4">
-                  <CalendarPicker
-                    // startFromMonday={true}
-                    // allowRangeSelection={true}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    selectedStartDate={selectedDate}
-                    weekdays={["S", "M", "T", "W", "T", "F", "S"]}
-                    todayBackgroundColor={"#fff"}
-                    todayTextStyle={{
-                      color: colors.green
-                    }}
-                    headerWrapperStyle={{ height: 0 }}
-                    dayLabelsWrapper={{
-                      borderWidth: 0,
-                      borderColor: "#fff"
-                    }}
-                    enableDateChange
-                    textStyle={{ color: colors.text2 }}
-                    // selectedDayColor={colors.white}
-                    selectedDayStyle={{ backgroundColor: colors.green }}
-                    selectedDayTextColor={"#fff"}
-                    dayShape={"square"}
-                    // selectedDayTextStyle={{ color: '#FFF' }}
-                    onDateChange={onDateChange}
-                  />
-                  {/* <Calendar
-                    onMonthChange={props?.onMonthChange}
-                    markedDates={props?.markedDates}
-                    onDayPress={props?.onDayPress}
-                  /> */}
+                  {props.profile == true ? (
+                    <Calendar
+                      onMonthChange={props?.onMonthChange}
+                      markedDates={props?.markedDates}
+                      onDayPress={props?.onDayPress}
+                    />
+                  ) : (
+                    <CalendarPicker
+                      // startFromMonday={true}
+                      // allowRangeSelection={true}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      selectedStartDate={selectedDate}
+                      weekdays={["S", "M", "T", "W", "T", "F", "S"]}
+                      todayBackgroundColor={"#fff"}
+                      todayTextStyle={{
+                        color: colors.green
+                      }}
+                      headerWrapperStyle={{ height: 0 }}
+                      dayLabelsWrapper={{
+                        borderWidth: 0,
+                        borderColor: "#fff"
+                      }}
+                      enableDateChange
+                      textStyle={{ color: colors.text2 }}
+                      // selectedDayColor={colors.white}
+                      selectedDayStyle={{ backgroundColor: colors.green }}
+                      selectedDayTextColor={"#fff"}
+                      dayShape={"square"}
+                      // selectedDayTextStyle={{ color: '#FFF' }}
+                      onDateChange={onDateChange}
+                    />
+                  )}
                 </Box>
                 <Button
                   // style={styles.btn}

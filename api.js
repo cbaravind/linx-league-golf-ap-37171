@@ -153,13 +153,14 @@ export const updateProfile = async (params, id, token) => {
   const requestOptions = {
     method: "PUT",
     headers: {
-      "Content-Type":"application/json",
+      "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Token ${token}`
     },
-    body:JSON.stringify(params),
+    body: JSON.stringify(params),
     redirect: "follow"
   }
+  console.log(params, id, token)
   const url = `${API_URL}/api/v1/profile/${id}/`
   const response = await fetch(url, requestOptions)
   return response.text()
@@ -197,8 +198,8 @@ export const getAllUsers = async token => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const makeFriends =async (id,data,token) => {
-  const params={friends:data,user:id}
+export const makeFriends = async (id, data, token) => {
+  const params = { friends: data, user: id }
   console.log(params)
   const requestOptions = {
     method: "POST",
@@ -207,14 +208,14 @@ export const makeFriends =async (id,data,token) => {
       Accept: "application/json",
       Authorization: `Token ${token}`
     },
-    body:JSON.stringify(params),
+    body: JSON.stringify(params),
     redirect: "follow"
   }
-  const url=`${API_URL}/api/v1/friends/`
+  const url = `${API_URL}/api/v1/friends/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const getFriends = async (id,token) => {
+export const getFriends = async (id, token) => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -230,8 +231,12 @@ export const getFriends = async (id,token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+<<<<<<< HEAD
 export const getLeagueGames = async (id,token) => {
   console.log(id)
+=======
+export const getLeagueGames = async (id, token) => {
+>>>>>>> refs/remotes/origin/master
   const requestOptions = {
     method: "GET",
     headers: {
@@ -247,7 +252,26 @@ export const getLeagueGames = async (id,token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const postLeague = async (data,token) => {
+export const getGolfCourses = async (id, token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+<<<<<<< HEAD
+=======
+
+  const url = `${API_URL}/api/v1/golf-course/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+
+export const postLeague = async (data, token) => {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -256,14 +280,17 @@ export const postLeague = async (data,token) => {
       // apikey: API_KEY,
       Authorization: `Token ${token}`
     },
-    body:JSON.stringify(data),
+    body: JSON.stringify(data),
     redirect: "follow"
   }
+  console.log(data, "hi data")
+>>>>>>> refs/remotes/origin/master
   const url = `${API_URL}/schedules/leagues/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const sendFeedback = async (data,token) => {
+
+export const createGame = async (data, token) => {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -272,7 +299,23 @@ export const sendFeedback = async (data,token) => {
       // apikey: API_KEY,
       Authorization: `Token ${token}`
     },
-    body:JSON.stringify(data),
+    body: JSON.stringify(data),
+    redirect: "follow"
+  }
+  const url = `${API_URL}/api/v1/game/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const sendFeedback = async (data, token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify(data),
     redirect: "follow"
   }
 
@@ -280,7 +323,7 @@ export const sendFeedback = async (data,token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-export const getProfile = async (id,token) => {
+export const getProfile = async (id, token) => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -293,6 +336,39 @@ export const getProfile = async (id,token) => {
   }
 
   const url = `${API_URL}/api/v1/profile/${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const getChatList = async (id, token) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/chats/?sender__id=${id}`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
+export const postChatRoom = async (data, token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify(data),
+    redirect: "follow"
+  }
+
+  const url = `${API_URL}/api/v1/chats/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }

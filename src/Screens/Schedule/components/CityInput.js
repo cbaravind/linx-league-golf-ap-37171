@@ -5,20 +5,60 @@ import { colors, fonts } from "../../../theme"
 import Row from "../../../Components/Row"
 import Icon from "react-native-vector-icons/Ionicons"
 import moment from "moment"
+import { CheckIcon, Select } from "native-base"
 
-export default function CityInput({date,time}) {
+export default function CityInput({ date, time }) {
+  let [golfCourse, setGolfCourse] = React.useState("linxleague")
 
   return (
     <View style={{ padding: 20 }}>
       <Row style={styles.container}>
-        <Icon name="location-outline" size={25} color={colors.green} />
+        {/* <Icon name="location-outline" size={25} color={colors.green} />
         <TextInput
           placeholder={"Course, City"}
           style={styles.input}
-          placeholderTextColor={'#828282'}
-        />
+          placeholderTextColor={"#828282"}
+        /> */}
+        <View
+          style={{
+            alignItems: "center",
+            // justifyContent: "center",
+            flexDirection: "row",
+            paddingVertical: 10,
+            width: "100%"
+            // backgroundColor: "orange"
+          }}
+        >
+          <Icon name="location-outline" size={25} color={colors.green} />
+          <View style={{ width: "100%", paddingRight: 10 }}>
+            <Select
+              selectedValue={golfCourse}
+              minWidth={150}
+              style={
+                {
+                  // display: "flex",
+                  // flexDirection: "row",
+                  // justifyContent: "space-between",
+                  // width: "100%"
+                }
+              }
+              onValueChange={itemValue => setGolfCourse(itemValue)}
+              _selectedItem={{
+                bg: colors.white,
+                endIcon: <CheckIcon size={4} />
+              }}
+            >
+              <Select.Item label="Golf Course 1" value="linxleague" />
+              <Select.Item label="Golf Course 2" value="ArizonaC" />
+              <Select.Item label="Golf Course 3" value="League1" />
+            </Select>
+          </View>
+        </View>
       </Row>
-      <Text style={[styles.text]}>{moment(date).format('DD/MM/YYYY')}, {moment(time,'YYYYMMDDHHmm').format('hh:mm A')}</Text>
+      <Text style={[styles.text]}>
+        {moment(date).format("DD/MM/YYYY")},{" "}
+        {moment(time, "YYYYMMDDHHmm").format("hh:mm A")}
+      </Text>
     </View>
   )
 }

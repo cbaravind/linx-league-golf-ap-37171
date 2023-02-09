@@ -13,7 +13,6 @@ target 'linx_league_golf_ap_37171' do
   )
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
-  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
   pod 'react-native-pager-view', :path => '../node_modules/react-native-pager-view'
 
   target 'linx_league_golf_ap_37171Tests' do

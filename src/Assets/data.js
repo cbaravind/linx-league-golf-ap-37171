@@ -2,17 +2,17 @@ const friends = [
   {
     id: 1,
     name: "Allen",
-    image: require("../assets/images/profileImg.png")
+    image: require("./images/profileImg.png")
   },
   {
     id: 2,
     name: "Betty",
-    image: require("../assets/images/user3.png")
+    image: require("./images/user3.png")
   },
   {
     id: 3,
     name: "Tom",
-    image: require("../assets/images/user1.png")
+    image: require("./images/user1.png")
   },
   { id: 4, name: "Zak", image: "" }
 ]
@@ -22,7 +22,7 @@ const notifications = [
     title: "Welcome to Linx. Check your standing",
     time: "3h",
     isRead: false,
-    image: require("../assets/images/profileImg.png")
+    image: require("./images/profileImg.png")
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const notifications = [
       "Michael invited you to play!",
     time: "3h",
     isRead: true,
-    image: require("../assets/images/user1.png")
+    image: require("./images/user1.png")
   }
 ]
 const stats = [

@@ -4,6 +4,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.decorators import action
+
 
 from home.api.v1.serializers import (
     SignupSerializer,
@@ -36,6 +38,35 @@ class UserProfileViewSet(ModelViewSet):
             return UserProfileCreateSerializer
         else:
             return UserProfileSerializer
+
+    @action(detail=True, url_path="add-friend", methods=["POST"])
+    def add_friend(self, request, user__id):
+        try:
+            profile = self.get_object()
+            for p_id in request.data["p_ids"]:
+                user_profile = Profile.objects.get(id=p_id)
+                profile.friends.add(user_profile.user)
+                user_profile.friends.add(profile.user)
+            return Response(
+                "Successfully friend added.", status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            print(e)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, url_path="remove-friend", methods=["POST"])
+    def remove_friend(self, request, user__id):
+        try:
+            profile = self.get_object()
+            for p_id in request.data["p_ids"]:
+                user_profile = Profile.objects.get(id=p_id)
+                profile.friends.remove(user_profile.user)
+            return Response(
+                "Successfully friend added.", status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            print(e)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SignupViewSet(ModelViewSet):

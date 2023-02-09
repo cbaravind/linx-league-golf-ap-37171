@@ -24,22 +24,21 @@ import { friends } from "../../../assets/data"
 import RoutesKey from "../../../Navigation/routesKey"
 import Contacts from "react-native-contacts"
 import { Button } from "native-base"
-import { getFriends, postLeague } from "../../../../api"
+import { createGame, getFriends, postLeague } from "../../../../api"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { showMessage } from "react-native-flash-message"
 import { fixTimezoneOffset } from "../../../constants"
 
 export default function AddFriends({ route }) {
-
-  const { date, time }  = route?.params
+  const { date, time } = route?.params
   const selectedPlayers = route?.params?.players
   const { user, token } = useSelector(state => state.auth?.user)
   const navigation = useNavigation()
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [friendsList, setFriendsList]   = useState(selectedPlayers)
-  const [btnLoading, setBtnLoading]     = useState(false)
+  const [friendsList, setFriendsList] = useState(selectedPlayers)
+  const [btnLoading, setBtnLoading] = useState(false)
 
   useEffect(() => {
     if (selectedPlayers) {
@@ -48,7 +47,6 @@ export default function AddFriends({ route }) {
   }, [selectedPlayers])
 
   const fetchContacts = () => {
-
     Contacts.checkPermission().then(permission => {
       console.log("permission", permission)
       if (permission === "undefined") {
@@ -81,38 +79,47 @@ export default function AddFriends({ route }) {
   }
 
   const leagueHandler = async () => {
-    // setBtnLoading(true)
-    const selected   = friendsList.map((i) => (i?.id))
-    // const m1 = moment({ y: 2023 , M: 0, d: 4, hour: 15, m: 1, s: 3}); 
-    // const m2 = new Date(date).getMonth()
-    const leagueDate = `${moment(date).format('YYYY-MM-DD')}T${moment(time).format('HH:mm:ss')}`
+    setBtnLoading(true)
+    const selected = friendsList.map(i => i?.id)
+    const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
+      time
+    ).format("hh:mm:ss")}`
     const data = {
-      when: new Date(leagueDate),
-      course_name: 'Pine',
-      city: 'city',
-      course_address: 'address',
+      when: moment(leagueDate),
+      course_name: "Pinewood ",
+      city: "city",
+      course_address: "address",
       user: user?.user?.id,
       players: selected
     }
+    const dataGame = {
+      round_date: moment(date).format("YYYY-MM-DD"),
+      round_time: moment(time).format("hh:mm:ss"),
+      league: 1,
+      golf_course: 1,
+      players: selected
+    }
+    // console.log(data,leagueDate)
     // return;
     const result = await postLeague(data, token)
+    const resultGame = await createGame(dataGame, token)
+    const resGame = JSON.parse(resultGame)
+    console.log(resGame, "response of game")
     const res = JSON.parse(result)
     setBtnLoading(false)
     if (res.id) {
       showMessage({
-        type: 'success',
-        message: 'Game Created'
+        type: "success",
+        message: "Game Created"
       })
       navigation.navigate(RoutesKey.HOME)
     } else {
       showMessage({
-        type: 'warning',
-        message: 'Could not create game'
+        type: "warning",
+        message: "Could not create game"
       })
     }
-
   }
-
 
   return (
     <Container>
@@ -120,19 +127,26 @@ export default function AddFriends({ route }) {
         back
         title="Add Friends to your Tee time"
         rightIcon={
-          <TouchableOpacity onPress={() => fetchContacts()} >
+          <TouchableOpacity onPress={() => fetchContacts()}>
             <Text style={styles.text}>SKIP</Text>
           </TouchableOpacity>
         }
       />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <CityInput date={date} time={time} />
-        {!selectedPlayers ?
+        {!selectedPlayers ? (
           <>
-            <Text style={{ textAlign: 'center', alignItems: 'center', justifyContent: 'center' }} >
+            <Text
+              style={{
+                textAlign: "center",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
               No Friends added yet
             </Text>
           </>
+        ) : (
           // <View style={{ justifyContent: 'center', flex: 1 }}>
           //   <Button
           //     style={{ margin: 20 }}
@@ -143,14 +157,14 @@ export default function AddFriends({ route }) {
           //     {"ADD PLAYERS"}
           //   </Button>
           // </View>
-          :
           <>
             <View
               style={{
                 backgroundColor: colors.white,
                 marginTop: 30,
                 marginBottom: 12
-              }} >
+              }}
+            >
               <SwipeListView
                 style={{
                   paddingTop: 20,
@@ -162,14 +176,20 @@ export default function AddFriends({ route }) {
                   <UserProfile
                     name={data.item.name}
                     image={null}
-                    onPress={() => navigation.navigate(RoutesKey.PROFILE, { user: data.item })}
-                  // item={}
+                    onPress={() =>
+                      navigation.navigate(RoutesKey.PROFILE, {
+                        user: data.item
+                      })
+                    }
+                    // item={}
                   />
                 )}
                 renderHiddenItem={(data, rowMap) => (
                   <TouchableHighlight
                     onPress={() =>
-                      setFriendsList(friendsList.filter(e => data.item.id != e.id))
+                      setFriendsList(
+                        friendsList.filter(e => data.item.id != e.id)
+                      )
                     }
                     style={styles.rowBack}
                   >
@@ -185,20 +205,23 @@ export default function AddFriends({ route }) {
                 style={[
                   styles.text,
                   { fontWeight: "400", color: colors.text1, fontSize: 14 }
-                ]}>
+                ]}
+              >
                 Remove players by swiping left
               </Text>
             </View>
           </>
-
-        }
+        )}
         <View style={styles.bottom}>
-
           <Row style={{ marginBottom: 5 }}>
             <Button
               style={{ flex: 1 }}
               mt={4}
-              onPress={() => navigation.navigate(RoutesKey.PLAYERS, { selected: selectedPlayers })}
+              onPress={() =>
+                navigation.navigate(RoutesKey.PLAYERS, {
+                  selected: selectedPlayers
+                })
+              }
               bg="#7D9E49"
             >
               {"ADD PLAYERS"}
@@ -208,9 +231,18 @@ export default function AddFriends({ route }) {
             <AppButton
               disabled={friendsList?.length ? false : true}
               isLoading={btnLoading}
-              style={[styles.button, { borderColor: friendsList?.length ? colors.darkGreen : colors.grey3 }]}
+              style={[
+                styles.button,
+                {
+                  borderColor: friendsList?.length
+                    ? colors.darkGreen
+                    : colors.grey3
+                }
+              ]}
               onPress={() => leagueHandler()}
-              labelStyle={{ color: friendsList?.length ? colors.darkGreen : colors.grey3 }}
+              labelStyle={{
+                color: friendsList?.length ? colors.darkGreen : colors.grey3
+              }}
               label={"CREATE GAME"}
             />
           </Row>

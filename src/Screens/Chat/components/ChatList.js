@@ -61,10 +61,10 @@ const MessageItem = ({ message, file }) => {
           :
           <TouchableOpacity onPress={downloadFile} style={styles.row}>
             <Icon name={'file'} as={FontAwesome} size={7} color={'#eee'} style={{ marginRight: 7 }} />
-            <Text style={styles.text}>{message.name}</Text>
+            <Text style={styles.text}>{message.content}</Text>
           </TouchableOpacity>
         :
-        <Text style={styles.text}>{message.description}</Text>
+        <Text style={styles.text}>{message.content}</Text>
       }
       <Image
         style={[styles.tail, isSender ? { right: -3 } : { left: -3 }]}
