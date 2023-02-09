@@ -24,10 +24,12 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { shareOptions } from "../../../constants"
 import { friends } from "../../../assets/data"
 
-const PostScore = () => {
+const PostScore = ({route}) => {
   const [holeNumber, setHoleNumber] = useState(1)
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
+  const details = route?.params?.details
+  const golf_course = details?.golf_course
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -71,7 +73,7 @@ const PostScore = () => {
                     Hole {holeNumber}
                   </Text>
                   <IconButton
-                    onPress={() => { setHoleNumber(holeNumber + 1) }}
+                    onPress={() => {holeNumber < golf_course?.hole_wise ? setHoleNumber(holeNumber + 1) : null}}
                     size={10}
                     icon={
                       <Icon
@@ -84,7 +86,7 @@ const PostScore = () => {
                   />
                 </Box>
                 <Box mt="3" flexDirection="row" alignSelf="center">
-                  <Text style={[styles.text]}>Par 3</Text>
+                  <Text style={[styles.text]}>Par {golf_course?.par || 0}</Text>
                   <Divider
                     bg="#414042"
                     thickness="2"
@@ -115,7 +117,7 @@ const PostScore = () => {
               </Box>
               <Box mb="2" px={"3"} h={data.length == 9 ? "500" : "550"}>
                 <ScrollView  showsVerticalScrollIndicator={false}>
-                  {friends.map((item, index) => (
+                  {details?.players?.map((item, index) => (
                     <ScoreDetail item={item} />
                   ))}
                 </ScrollView>

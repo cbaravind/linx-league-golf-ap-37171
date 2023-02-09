@@ -160,7 +160,6 @@ export const updateProfile = async (params, id, token) => {
     body: JSON.stringify(params),
     redirect: "follow"
   }
-  console.log(params, id, token)
   const url = `${API_URL}/api/v1/profile/${id}/`
   const response = await fetch(url, requestOptions)
   return response.text()
@@ -199,8 +198,7 @@ export const getAllUsers = async token => {
   return response.text()
 }
 export const makeFriends = async (id, data, token) => {
-  const params = { friends: data, user: id }
-  console.log(params)
+  const params = { p_ids: data }
   const requestOptions = {
     method: "POST",
     headers: {
@@ -211,7 +209,7 @@ export const makeFriends = async (id, data, token) => {
     body: JSON.stringify(params),
     redirect: "follow"
   }
-  const url = `${API_URL}/api/v1/friends/`
+  const url = `${API_URL}/api/v1/profile/${id}/add-friend/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -243,7 +241,7 @@ export const getLeagueGames = async (id, token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/schedules/leagues/?ordering=when&user__id=${id}`
+  const url = `${API_URL}/api/v1/game/?ordering=round_date`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -276,7 +274,6 @@ export const postLeague = async (data, token) => {
     body: JSON.stringify(data),
     redirect: "follow"
   }
-  console.log(data, "hi data")
   const url = `${API_URL}/schedules/leagues/`
   const response = await fetch(url, requestOptions)
   return response.text()

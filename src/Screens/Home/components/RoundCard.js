@@ -7,7 +7,6 @@ import { IMAGE_PLACEHOLDER } from "../../../constants"
 
 export default function RoundCard({ item, containerStyle, index }) {
   const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
- 
   return (
 
 
@@ -31,9 +30,9 @@ export default function RoundCard({ item, containerStyle, index }) {
             </View>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text}>{time || ''}</Text>
+            <Text style={styles.text}>{item?.round_date + ' ' + item.round_time || ''}</Text>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
-              {item.course_name}
+              {item.golf_course.name}
             </Text>
           </View>
         </Row>
