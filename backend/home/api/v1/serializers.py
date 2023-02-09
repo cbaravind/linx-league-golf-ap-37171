@@ -87,13 +87,38 @@ class UserProfileCreateSerializer(WritableNestedModelSerializer):
         fields = "__all__"
 
 
+class UserFriendsSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "name",
+            "first_name",
+            "last_name",
+            "profile",
+        ]
+
+    def get_profile(self, obj):
+        try:
+            query = Profile.objects.get(user=obj)
+        except Profile.DoesNotExist:
+            return None
+        return UserProfileCreateSerializer(query).data
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    friends = UserSerializer(many=True)
+    friends = UserFriendsSerializer(
+        many=True,
+    )
 
     class Meta:
         model = Profile
         fields = "__all__"
+        depth = 2
 
     def create(self, validated_data):
         # breakpoint()
