@@ -231,12 +231,7 @@ export const getFriends = async (id, token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
-<<<<<<< HEAD
-export const getLeagueGames = async (id,token) => {
-  console.log(id)
-=======
 export const getLeagueGames = async (id, token) => {
->>>>>>> refs/remotes/origin/master
   const requestOptions = {
     method: "GET",
     headers: {
@@ -263,8 +258,6 @@ export const getGolfCourses = async (id, token) => {
     },
     redirect: "follow"
   }
-<<<<<<< HEAD
-=======
 
   const url = `${API_URL}/api/v1/golf-course/`
   const response = await fetch(url, requestOptions)
@@ -284,7 +277,6 @@ export const postLeague = async (data, token) => {
     redirect: "follow"
   }
   console.log(data, "hi data")
->>>>>>> refs/remotes/origin/master
   const url = `${API_URL}/schedules/leagues/`
   const response = await fetch(url, requestOptions)
   return response.text()
