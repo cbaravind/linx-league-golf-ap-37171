@@ -67,10 +67,25 @@ class SignupSerializer(serializers.ModelSerializer):
         return super().save()
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer2(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
+    def get_profile(self, obj):
+        try:
+            profile = Profile.objects.get(user=obj)
+            return ProfileSerializer(profile).data
+        except Exception as e:
+            print(e)
+            return None
     class Meta:
         model = User
-        fields = ["id", "email", "name", "first_name", "last_name"]
+        fields = ["id", "email", "name", "profile"]
+
+class UserSerializer(serializers.ModelSerializer):
+     class Meta:
+        model = User
+        fields = ["id", "email"]
+
 
 
 class PasswordSerializer(PasswordResetSerializer):
@@ -87,12 +102,48 @@ class UserProfileCreateSerializer(WritableNestedModelSerializer):
         fields = "__all__"
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+class UserFriendsSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "name",
+            "first_name",
+            "last_name",
+            "profile",
+        ]
+
+    def get_profile(self, obj):
+        try:
+            query = Profile.objects.get(user=obj)
+        except Profile.DoesNotExist:
+            return None
+        return UserProfileCreateSerializer(query).data
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+
+    friends = UserFriendsSerializer(
+        many=True,
+    )
 
     class Meta:
         model = Profile
         fields = "__all__"
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    friends = UserFriendsSerializer(
+        many=True,
+    )
+
+    class Meta:
+        model = Profile
+        fields = "__all__"
+        depth = 2
 
     def create(self, validated_data):
         # breakpoint()

@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import User
 from core.utils import get_file_path
-
+from django.contrib.postgres.fields import JSONField
 
 class Season(models.Model):
     name = models.CharField(max_length=255)
@@ -17,7 +17,10 @@ class GolfCourse(models.Model):
     address = models.CharField(max_length=255)
     longitude = models.CharField(max_length=255, null=True, blank=True)
     latitude = models.CharField(max_length=255, null=True, blank=True)
-
+    hole = JSONField(null=True)
+    red_distance = JSONField(null=True)
+    hdcp = JSONField(null=True)
+    par = JSONField(null=True)
 
 class League(models.Model):
     name = models.CharField(max_length=255)

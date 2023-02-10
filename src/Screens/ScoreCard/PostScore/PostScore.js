@@ -24,18 +24,19 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { shareOptions } from "../../../constants"
 import { friends } from "../../../assets/data"
 
-const PostScore = () => {
+const PostScore = ({ route }) => {
   const [holeNumber, setHoleNumber] = useState(1)
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
+  const details = route?.params?.details
+  const golf_course = details?.golf_course
   const onShare = () => {
-
     Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
+      .then(res => {
+        console.log(res)
       })
-      .catch((err) => {
-        err && console.log(err);
+      .catch(err => {
+        err && console.log(err)
       })
   }
   return (
@@ -52,11 +53,13 @@ const PostScore = () => {
       <Box mb="30%">
         <SafeAreaView>
           <Center>
-            <Box w="100%" pb={'1'} p="1px">
+            <Box w="100%" pb={"1"} p="1px">
               <Box mt="5" mb="3">
                 <Box flexDirection="row" alignSelf="center">
                   <IconButton
-                    onPress={() => { holeNumber > 1 ? setHoleNumber(holeNumber - 1) : null }}
+                    onPress={() => {
+                      holeNumber > 1 ? setHoleNumber(holeNumber - 1) : null
+                    }}
                     size={10}
                     icon={
                       <Icon
@@ -71,7 +74,11 @@ const PostScore = () => {
                     Hole {holeNumber}
                   </Text>
                   <IconButton
-                    onPress={() => { setHoleNumber(holeNumber + 1) }}
+                    onPress={() => {
+                      holeNumber < golf_course?.hole_wise
+                        ? setHoleNumber(holeNumber + 1)
+                        : null
+                    }}
                     size={10}
                     icon={
                       <Icon
@@ -84,7 +91,7 @@ const PostScore = () => {
                   />
                 </Box>
                 <Box mt="3" flexDirection="row" alignSelf="center">
-                  <Text style={[styles.text]}>Par 3</Text>
+                  <Text style={[styles.text]}>Par {golf_course?.par || 0}</Text>
                   <Divider
                     bg="#414042"
                     thickness="2"
@@ -109,23 +116,26 @@ const PostScore = () => {
                     name="clockcircleo"
                     as={AntDesign}
                   />
-                  <Text  style={styles.text} mr="2">Hole: 08:17</Text>
-                  <Text  style={styles.text}>Round: 08:17</Text>
+                  <Text style={styles.text} mr="2">
+                    Hole: 08:17
+                  </Text>
+                  <Text style={styles.text}>Round: 08:17</Text>
                 </Box>
               </Box>
               <Box mb="2" px={"3"} h={data.length == 9 ? "500" : "550"}>
-                <ScrollView  showsVerticalScrollIndicator={false}>
-                  {friends.map((item, index) => (
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {details?.players?.map((item, index) => (
                     <ScoreDetail item={item} />
                   ))}
                 </ScrollView>
               </Box>
             </Box>
-            {//data.length == 9 ? (
-              <View  style={styles.button}>
+            {
+              //data.length == 9 ? (
+              <View style={styles.button}>
                 <Button
                   // style={{}}
-                  width={'50%'}
+                  width={"50%"}
                   onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL)}
                 >
                   SCORECARD
@@ -146,16 +156,17 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 20,
     paddingVertical: 10,
     // paddingTop:5,
-    position: 'absolute',
-    bottom: -30, 
-    left: 0, 
-    right: 0, alignItems: 'center'
+    position: "absolute",
+    bottom: -30,
+    left: 0,
+    right: 0,
+    alignItems: "center"
   },
-  text:{
-    color:colors.text1,
-    fontSize:14,
-    fontFamily:fonts.PROXIMA_BOLD,
-    fontWeight:'400'
+  text: {
+    color: colors.text1,
+    fontSize: 14,
+    fontFamily: fonts.PROXIMA_BOLD,
+    fontWeight: "400"
   }
 })
 

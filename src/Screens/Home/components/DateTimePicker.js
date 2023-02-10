@@ -127,6 +127,8 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
           date={date}
           // timeZoneOffsetInMinutes={6}
           // textColor={colors.white}
+          // locale={'en_GB'}
+
           cancelText={""}
           onConfirm={date => {
             console.log(date,'time')

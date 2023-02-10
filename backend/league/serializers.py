@@ -26,4 +26,3 @@ class LeagueSerializerGET(serializers.ModelSerializer):
         model = models.League
         fields = '__all__'
 
-

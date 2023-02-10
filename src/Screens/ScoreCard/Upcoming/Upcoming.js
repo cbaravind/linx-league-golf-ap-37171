@@ -1,5 +1,11 @@
-import { Text, FlatList, ScrollView, Pressable, ActivityIndicator } from "react-native"
-import { View } from 'native-base'
+import {
+  Text,
+  FlatList,
+  ScrollView,
+  Pressable,
+  ActivityIndicator
+} from "react-native"
+import { View } from "native-base"
 import React, { useEffect, useState } from "react"
 import RoundCard from "../../Home/components/RoundCard"
 import { getLeagueGames } from "../../../../api"
@@ -10,7 +16,6 @@ import RoutesKey from "../../../Navigation/routesKey"
 import moment from "moment"
 
 const Upcoming = () => {
-
   const { user, token } = useSelector(state => state.auth?.user)
   const navigation = useNavigation()
 
@@ -23,18 +28,13 @@ const Upcoming = () => {
 
   const getData = async () => {
     setLoading(true)
-    const response = await getLeagueGames(user?.user.id, token)
+    const response = await getLeagueGames(user?.id, token)
     const res = JSON.parse(response)
-
     if (res.results.length) {
       const today = new moment()
-      const todayGames = res.results.filter(e =>
-        moment(e.when).isBefore(today)
-      )
+      const todayGames = res.results.filter(e => moment(e.when).isBefore(today))
 
-      const rounds = res.results.filter(e =>
-        moment(e.when) >= today
-      )
+      const rounds = res.results.filter(e => moment(e.round_date) >= today)
 
       setLoading(false)
       setUpcomingGames(rounds)
@@ -44,11 +44,11 @@ const Upcoming = () => {
   return (
     <ScrollView>
       <View>
-        {loading ?
-          <View mt='50%'>
+        {loading ? (
+          <View mt="50%">
             <ActivityIndicator color={colors.green} />
           </View>
-          :
+        ) : (
           <FlatList
             data={upcomingGames}
             ListEmptyComponent={() => (
@@ -63,7 +63,11 @@ const Upcoming = () => {
               paddingTop: 5
             }}
             renderItem={({ item, index }) => (
-              <Pressable onPress={() => navigation.navigate(RoutesKey.POSTSCORE)}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate(RoutesKey.POSTSCORE, { details: item })
+                }
+              >
                 <RoundCard
                   item={item}
                   index={index + 1}
@@ -72,7 +76,7 @@ const Upcoming = () => {
               </Pressable>
             )}
           />
-        }
+        )}
       </View>
     </ScrollView>
   )

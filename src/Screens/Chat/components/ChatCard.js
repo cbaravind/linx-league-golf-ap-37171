@@ -11,21 +11,21 @@ export default function ChatCard({ chat }) {
   const navigation = useNavigation()
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(RoutesKey.CHAT, { user: chat })}
+      onPress={() => navigation.navigate(RoutesKey.CHAT, { user: chat?.receiver, apiHit: false })}
       style={{
         paddingLeft: 8,
         paddingVertical: 15,
-        backgroundColor: chat.isRead
+        backgroundColor: !chat.isRead
           ? colors.background
           : "rgba(125, 158, 73, 0.4)"
       }}
     >
       <View style={{ paddingRight: 14 }}>
-        <Text style={[styles.title, { textAlign: "right" }]}>{chat.time}</Text>
+        <Text style={[styles.title, { textAlign: "right" }]}>{chat.created_at}</Text>
       </View>
       <Row>
         <Row style={{ justifyContent: "flex-start", flex: 1 }}>
-          {chat.isRead ? (
+          {!chat.isRead ? (
             <View style={{ width: 18, height: 18 }} />
           ) : (
             <View style={styles.badge}>
@@ -43,10 +43,10 @@ export default function ChatCard({ chat }) {
           </LinearGradient>
           <View style={{ flex: 1 }}>
             <Text style={[styles.title, { fontWeight: "700" }]}>
-              {chat.name}
+              {chat.meta_data}
             </Text>
             <Text numberOfLines={2} ellipsizeMode={"tail"} style={styles.title}>
-              {chat.message}
+              {/* {chat.message} */}
             </Text>
           </View>
         </Row>

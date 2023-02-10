@@ -19,12 +19,12 @@ const Previous = () => {
 
   const getData = async () => {
     setLoading(true)
-    const response = await getLeagueGames(user?.user.id, token)
+    const response = await getLeagueGames(user?.id, token)
     const res = JSON.parse(response)
     if (res.results.length) {
       const today = new moment()
       const rounds = res.results.filter(e =>
-        moment(e.when) < today
+        moment(e.round_date) < today
       )
       setLoading(false)
       setPreviousGames(rounds)

@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import AppHeader from "../../Components/AppHeader"
 import { colors } from "../../theme"
 import Container from "../../Components/Container"
@@ -11,9 +11,12 @@ import { Fab, Icon } from "native-base"
 import  AntDesign from "react-native-vector-icons/AntDesign"
 import { useNavigation } from "@react-navigation/native"
 import RoutesKey from "../../Navigation/routesKey"
+import { getChatList } from "../../../api"
+import { useSelector } from "react-redux"
 export default function Inbox() {
   const [chats, setChats] = useState(data)
   const navigation = useNavigation()
+  const [chatList, setChatList] = useState([])
   const data = [
     {
       id: 54,
@@ -46,17 +49,28 @@ export default function Inbox() {
       setChats(filtered)
     }
   }
+  const { user, token } = useSelector(state => state.auth?.user)
+
   const clearResults = () => {
     setChats(data)
   }
+  useEffect(() => {
+    getChat()
+  }, [])
+  const getChat = async () => {
+    const chatList = await getChatList(user.user.id, token)
+    const newRes = JSON.parse(chatList)
+    setChatList(newRes.results)
+  }
+  console.log(chatList, "chatList")
   return (
     <Container>
       <AppHeader back title="Messages" />
       <View style={{ backgroundColor: colors.background, flex: 1 }}>
         <SearchInput onSearchSubmit={searchChats} clearResults={clearResults} />
-        {chats ? (
+        {chatList ? (
           <FlatList
-            data={chats}
+            data={chatList}
             renderItem={({ item }) => <ChatCard chat={item} />}
             keyExtractor={item => item.id}
           />

@@ -160,7 +160,6 @@ export const updateProfile = async (params, id, token) => {
     body: JSON.stringify(params),
     redirect: "follow"
   }
-  console.log(params, id, token)
   const url = `${API_URL}/api/v1/profile/${id}/`
   const response = await fetch(url, requestOptions)
   return response.text()
@@ -199,8 +198,7 @@ export const getAllUsers = async token => {
   return response.text()
 }
 export const makeFriends = async (id, data, token) => {
-  const params = { friends: data, user: id }
-  console.log(params)
+  const params = { p_ids: data }
   const requestOptions = {
     method: "POST",
     headers: {
@@ -211,7 +209,7 @@ export const makeFriends = async (id, data, token) => {
     body: JSON.stringify(params),
     redirect: "follow"
   }
-  const url = `${API_URL}/api/v1/friends/`
+  const url = `${API_URL}/api/v1/profile/${id}/add-friend/`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -227,7 +225,7 @@ export const getFriends = async (id, token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/api/v1/friends/${id}/`
+  const url = `${API_URL}/api/v1/friends/?user__id=${id}`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -243,7 +241,7 @@ export const getLeagueGames = async (id, token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/schedules/leagues/?ordering=when&user__id=${id}`
+  const url = `${API_URL}/api/v1/game/?ordering=round_date`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -276,7 +274,6 @@ export const postLeague = async (data, token) => {
     body: JSON.stringify(data),
     redirect: "follow"
   }
-  console.log(data, "hi data")
   const url = `${API_URL}/schedules/leagues/`
   const response = await fetch(url, requestOptions)
   return response.text()
@@ -343,7 +340,7 @@ export const getChatList = async (id, token) => {
     redirect: "follow"
   }
 
-  const url = `${API_URL}/api/v1/chats/?sender__id=${id}/`
+  const url = `${API_URL}/api/v1/chats/?sender__id=${id}`
   const response = await fetch(url, requestOptions)
   return response.text()
 }
@@ -362,5 +359,33 @@ export const postChatRoom = async (data, token) => {
 
   const url = `${API_URL}/api/v1/chats/`
   const response = await fetch(url, requestOptions)
+  return response.text()
+}
+
+export const postGameScore = async (data, token) => {
+  const response = await fetch(`${API_URL}/api/v1/game-score/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify(data),
+    redirect: "follow"
+  })
+  return response.text()
+}
+
+export const leagueGolfCourses = async (id, token) => {
+  const response = await fetch(`${API_URL}/api/v1/league-golf-course/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify({ league_id: id }),
+    redirect: "follow"
+  })
   return response.text()
 }
