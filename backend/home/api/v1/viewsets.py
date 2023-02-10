@@ -16,6 +16,7 @@ from home.api.v1.serializers import (
 from users.models import Profile
 
 
+
 class UserProfileAPIView(APIView):
     def get(self, request):
         try:
