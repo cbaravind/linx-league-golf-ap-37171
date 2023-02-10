@@ -9,7 +9,7 @@ from rest_framework.decorators import action
 
 from home.api.v1.serializers import (
     SignupSerializer,
-    UserSerializer,
+    UserSerializer2,
     UserProfileSerializer,
     UserProfileCreateSerializer,
 )
@@ -87,5 +87,5 @@ class LoginViewSet(ViewSet):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        user_serializer = UserSerializer(user)
+        user_serializer = UserSerializer2(user)
         return Response({"token": token.key, "user": user_serializer.data})
