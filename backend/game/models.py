@@ -15,6 +15,7 @@ class Game(models.Model):
 class GameScore(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     score = models.FloatField()
+    hole = models.CharField(max_length=255,null=True)
     putt = models.FloatField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     given_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_given_by',null=True)
