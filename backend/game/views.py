@@ -3,6 +3,9 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from game import serializers,models
 
 
@@ -40,3 +43,25 @@ class GameScoreModelViewSet(viewsets.ModelViewSet):
         
     def perform_create(self, serializer):
         serializer.save(given_by=self.request.user)
+
+
+
+class GetGameStats(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            player_id = request.data['player_id']
+            golf_course = request.data['course_id']
+            games = models.Game.objects.filter(players__id__in=[player_id],
+            golf_course__id=golf_course)
+            data = []
+            for game in games:
+                game_score = models.GameScore.objects.filter(game=game)
+                serializer = serializers.GameScoreSerializer(game_score,many=True)
+                data.append(serializer.data)
+            return Response(data,status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print(e)
+            return Response({'msg':e},status=status.HTTP_400_BAD_REQUEST)

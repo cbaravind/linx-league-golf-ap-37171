@@ -7,6 +7,7 @@ router.register('game', views.GameModelViewSet,basename='game')
 router.register('game-score', views.GameScoreModelViewSet,basename='game-score')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('get-game-stats/',views.GetGameStats.as_view())
 
 ]
