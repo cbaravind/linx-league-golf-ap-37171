@@ -1,14 +1,27 @@
 import { View, Text, TextInput } from "react-native"
-import React from "react"
+import React, { useEffect } from "react"
 import { StyleSheet } from "react-native"
 import { colors, fonts } from "../../../theme"
 import Row from "../../../Components/Row"
 import Icon from "react-native-vector-icons/Ionicons"
 import moment from "moment"
 import { CheckIcon, Select } from "native-base"
+import { useSelector } from "react-redux"
+import { leagueGolfCourses } from "../../../../api"
 
 export default function CityInput({ date, time }) {
+  const { token } = useSelector(state => state.auth?.user)
   let [golfCourse, setGolfCourse] = React.useState("linxleague")
+
+  // useEffect(() => getGolfCourses(1), [])
+
+  // const getGolfCourses = async id => {
+  //   const response = await leagueGolfCourses(id, token)
+  //   const res = JSON.parse(response)
+  //   console.log("res", res)
+  //   if (res?.length) console.log("res", res)
+  //   else console.log("failed", res)
+  // }
 
   return (
     <View style={{ padding: 20 }}>

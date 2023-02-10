@@ -16,7 +16,8 @@ import {
   Text,
   View,
   Modal,
-  FormControl
+  FormControl,
+  useToast
 } from "native-base"
 import {
   SafeAreaView,
@@ -42,6 +43,7 @@ import { saveUser } from "../../redux/reducers/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const CreateProfile = () => {
+  const toast = useToast()
   const route = useRoute()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -112,6 +114,16 @@ const CreateProfile = () => {
     }
   }
   const submitHandler = async () => {
+    let checkValidate = ""
+    if (formData?.firstName) checkValidate = "First Name"
+    if (formData?.last) checkValidate = "Last Name"
+    if (formData?.zipCode) checkValidate = "Zip Code"
+    if (!phoneNumber) checkValidate = "Phone Number"
+    if (!service) checkValidate = "Date of Birth"
+    if (checkValidate !== "") {
+      toast.show({ description: `${checkValidate} is required` })
+      return
+    }
     setBtnLoading(true)
 
     const id = user?.user?.id
@@ -125,7 +137,8 @@ const CreateProfile = () => {
       gender: value,
       ghin: formData.ghin,
       has_ghin: valueGHIN,
-      birthdate: service
+      birthdate: service,
+      friends: user?.friends
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
@@ -367,7 +380,9 @@ const CreateProfile = () => {
                   profile={true}
                   dateValue={service}
                   markedDates={startDate}
-                  onDayPress={e => setService(e.dateString)}
+                  onDayPress={e => {
+                    setService(e.dateString)
+                  }}
                   width="100%"
                   text="Date of Birth"
                 />
