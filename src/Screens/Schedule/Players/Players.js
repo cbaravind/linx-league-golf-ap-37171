@@ -47,6 +47,7 @@ export default function Players({ route }) {
     const profile = await getProfile(user?.user?.id, token)
     const res = JSON.parse(profile)
     if (res.id) {
+      console.log(res)
       if (res.friends.length) {
         setFriendsList(res.friends)
       }
@@ -76,7 +77,7 @@ export default function Players({ route }) {
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <UserProfile
-                name={item?.name}
+                name={item?.name || item.first_name }
                 selected={selected.includes(item)}
                 onPress={() => {
                   selected.includes(item)

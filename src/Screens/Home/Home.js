@@ -49,7 +49,7 @@ export default function Home() {
   const getData = async () => {
     setDateTimeSelected(false)
     setLoading(true)
-    const response = await getLeagueGames(user?.user.id, token)
+    const response = await getLeagueGames(user?.id, token)
     const res = JSON.parse(response)
     if (res.results.length) {
       const today = new moment()

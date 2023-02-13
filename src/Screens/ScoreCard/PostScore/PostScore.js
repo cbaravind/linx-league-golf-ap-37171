@@ -23,9 +23,14 @@ import Share from "react-native-share"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { shareOptions } from "../../../constants"
 import { friends } from "../../../assets/data"
+import { useSelector } from "react-redux"
+import ScoreTracker from "../components/ScoreTracker"
 
 const PostScore = ({ route }) => {
+
+  const { token, user } = useSelector(state => state?.auth?.user)
   const [holeNumber, setHoleNumber] = useState(1)
+
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
   const details = route?.params?.details
@@ -39,6 +44,7 @@ const PostScore = ({ route }) => {
         err && console.log(err)
       })
   }
+
   return (
     <>
       <AppHeader
@@ -125,8 +131,14 @@ const PostScore = ({ route }) => {
               <Box mb="2" px={"3"} h={data.length == 9 ? "500" : "550"}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {details?.players?.map((item, index) => (
-                    <ScoreDetail item={item} />
+                    item.id == user?.id &&
+                    <ScoreDetail gameId={details?.id} game={details} setHole={setHoleNumber} hole={holeNumber} item={item} />
                   ))}
+                  {details?.players?.length ?
+                    <ScoreTracker players={details?.players} />
+                    :
+                    <></>
+                  }
                 </ScrollView>
               </Box>
             </Box>
@@ -136,7 +148,7 @@ const PostScore = ({ route }) => {
                 <Button
                   // style={{}}
                   width={"50%"}
-                  onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL)}
+                  onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL,{gameId:details?.id,holes:golf_course?.hole_wise})}
                 >
                   SCORECARD
                 </Button>
