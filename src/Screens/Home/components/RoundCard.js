@@ -6,10 +6,8 @@ import moment from "moment"
 import { IMAGE_PLACEHOLDER } from "../../../constants"
 
 export default function RoundCard({ item, containerStyle, index }) {
-  const time = moment(item.when).format('DD/MM/YYYY hh:mm a')
+  const time = moment(item.when).format("DD/MM/YYYY hh:mm a")
   return (
-
-
     <View style={[styles.container, containerStyle]}>
       <Row>
         <Row style={{ justifyContent: "flex-start" }}>
@@ -30,25 +28,32 @@ export default function RoundCard({ item, containerStyle, index }) {
             </View>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text}>{item?.round_date + ' ' + item.round_time || ''}</Text>
+            <Text style={styles.text}>
+              {item?.round_date + " " + item.round_time || ""}
+            </Text>
             <Text style={[styles.text, { fontWeight: "700", fontSize: 16 }]}>
               {item.golf_course.name}
             </Text>
           </View>
         </Row>
-        <View style={{  marginRight: 7,paddingTop:35}}>
-          {item?.players?.map((player,index) => (
-
+        <View style={{ marginRight: 7, paddingTop: 35 }}>
+          {item?.players?.map((player, index) => (
             <Image
               style={[
                 styles.imgStyle,
-                { zIndex: 10, position: "absolute", left:-(16*(index+1)), bottom: 2 }
+                {
+                  zIndex: 10,
+                  position: "absolute",
+                  left: -(16 * (index + 1)),
+                  bottom: 2
+                }
               ]}
               resizeMode={"contain"}
-              source={{uri:player?.profile?.profile_image || IMAGE_PLACEHOLDER}}
+              source={{
+                uri: player?.profile?.profile_image || IMAGE_PLACEHOLDER
+              }}
             />
-          ))
-          }
+          ))}
           {/* <Image
             style={[styles.imgStyle, { zIndex: -10 }]}
             source={require("../../../assets/images/user2.png")}
@@ -57,7 +62,6 @@ export default function RoundCard({ item, containerStyle, index }) {
         </View>
       </Row>
     </View>
-    
   )
 }
 const styles = StyleSheet.create({
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     paddingBottom: 20,
-    borderRadius: 25,
+    borderRadius: 25
     // marginHorizontal:5
     // marginTop: 5
   },

@@ -1,21 +1,34 @@
-import { View, ImageBackground, StyleSheet } from "react-native"
-import React, { useState } from "react"
+import { View, ImageBackground, StyleSheet, Pressable } from "react-native"
+import React, { useEffect, useState } from "react"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { colors, fonts } from "../../../theme"
-import {
-  Box,
-  Text,
-  Avatar,
-  Image,
-  Button
-} from "native-base"
+import { Box, Text, Avatar, Image, Button } from "native-base"
 import Row from "../../../Components/Row"
 import Counter from "../../../Components/Counter"
-export default function ScoreDetail({ item }) {
+import { useSelector } from "react-redux"
+import { postGameScore } from "../../../../api"
+const ScoreDetail = ({ item }) => {
+  const { token, user } = useSelector(state => state.auth?.user)
   const [addScoreClicked, setAddScoreClicked] = useState(false)
   const [putts, setPutts] = useState(0)
   const [score, setScore] = useState(1)
+  const gameScore = async () => {
+    const obj = {
+      score: score,
+      putt: putts,
+      game: item?.id,
+      user: user?.id
+    }
+    const response = await postGameScore(obj, token)
+    const res = JSON.parse(response)
+    if (res?.results?.length) setAddScoreClicked(false)
+    // else {
+    //   console.log(res)
+    //   console.log(obj)
+    //   console.log(item)
+    // }
+  }
   return (
     <View style={styles.container}>
       <View
@@ -30,7 +43,17 @@ export default function ScoreDetail({ item }) {
         }}
       >
         <Button
-          onPress={() => { addScoreClicked ? setAddScoreClicked(false) : setAddScoreClicked(true) }}
+          onPress={() => {
+            // addScoreClicked
+            //   ? setAddScoreClicked(false)
+            //   : setAddScoreClicked(true)
+            if (addScoreClicked) {
+              // setAddScoreClicked(false)
+              gameScore()
+            } else {
+              setAddScoreClicked(true)
+            }
+          }}
           style={{
             backgroundColor: addScoreClicked ? colors.darkGreen : colors.green,
             borderTopRightRadius: 0,
@@ -39,7 +62,6 @@ export default function ScoreDetail({ item }) {
             width: 78
           }}
           colorScheme="green"
-
         >
           <Text
             textAlign="center"
@@ -47,10 +69,7 @@ export default function ScoreDetail({ item }) {
             fontWeight={"700"}
             color={colors.white}
           >
-            {addScoreClicked ?
-              'Enter' :
-              'ADD Score'
-            }
+            {addScoreClicked ? "Enter" : "ADD Score"}
           </Text>
         </Button>
       </View>
@@ -77,20 +96,32 @@ export default function ScoreDetail({ item }) {
             [21]
           </Text>
         </Box>
-        {!addScoreClicked ?
-          <Text fontWeight="700" fontSize="16" textAlign={"center"} mt="6" mb="2">
+        {!addScoreClicked ? (
+          <Text
+            fontWeight="700"
+            fontSize="16"
+            textAlign={"center"}
+            mt="6"
+            mb="2"
+          >
             Hole Stats History
           </Text>
-          :
+        ) : (
           <View style={{ height: 30 }} />
-        }
+        )}
         <Box style={styles.row}>
-          {addScoreClicked ?
+          {addScoreClicked ? (
             <Box style={styles.box} h="100%">
-              <Text fontWeight="400" fontSize="10" textAlign={"center"} mt="2" mb="2">
+              <Text
+                fontWeight="400"
+                fontSize="10"
+                textAlign={"center"}
+                mt="2"
+                mb="2"
+              >
                 Scoretracker
               </Text>
-              <Row >
+              <Row>
                 <View style={{ alignItems: "center" }}>
                   <Text style={styles.text}>Score</Text>
                   <Counter value={score} setValue={setScore} />
@@ -100,9 +131,8 @@ export default function ScoreDetail({ item }) {
                   <Counter value={putts} setValue={setPutts} />
                 </View>
               </Row>
-
             </Box>
-            :
+          ) : (
             <Box style={styles.box} h="100%">
               <Box bg="#7D9E4950" pl="1" pr="5">
                 <Row>
@@ -129,9 +159,7 @@ export default function ScoreDetail({ item }) {
                 </Row>
               </Box>
             </Box>
-
-
-          }
+          )}
           <Box
             style={[styles.box]}
             // alignSelf='center'
@@ -139,10 +167,133 @@ export default function ScoreDetail({ item }) {
             py={2}
             ml="auto"
           >
-            <Text style={[styles.text, { fontSize: 12, }]}>Tee Accuracy</Text>
-            <Image source={require('../../../assets/images/chart.png')} style={{ width: 80, height: 80 }} />
+            <Text style={[styles.text, { fontSize: 12 }]}>Tee Accuracy</Text>
+            <View
+              style={{
+                position: "relative",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 105,
+                width: 105,
+                alignSelf: "center"
+              }}
+            >
+              <View
+                style={{
+                  width: 60,
+                  height: 60,
+                  position: "absolute",
+                  backgroundColor: "#7D9E49",
+                  zIndex: 1,
+                  borderRadius: 50
+                }}
+              ></View>
+              <Pressable
+                onPress={() => console.log("asdfghj")}
+                style={{
+                  position: "absolute",
+                  bottom: 0
+                }}
+              >
+                <ImageBackground
+                  source={require("../../../assets/images/bottomChart.png")}
+                  style={{
+                    width: 70,
+                    height: 35,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingTop: 10
+                  }}
+                  alt="image"
+                >
+                  <Text style={styles?.chartText(false)}>short</Text>
+                  <Text style={styles?.chartText(false)}>-</Text>
+                </ImageBackground>
+              </Pressable>
+              <Pressable
+                onPress={() => console.log("asdfghj")}
+                style={{
+                  position: "absolute",
+                  top: 0
+                }}
+              >
+                <ImageBackground
+                  source={require("../../../assets/images/bottomChart.png")}
+                  style={{
+                    width: 70,
+                    height: 35,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    transform: [{ rotate: "180deg" }],
+                    paddingTop: 12,
+                    paddingBottom: 5
+                  }}
+                  alt="image"
+                >
+                  <Text style={styles?.chartText(true)}>-</Text>
+                  <Text style={styles?.chartText(true)}>long</Text>
+                </ImageBackground>
+              </Pressable>
+              {/* <Image
+                source={require("../../../assets/images/leftChart.png")}
+                style={{ width: 30, height: 60, position: "absolute", left: 0 }}
+                alt="image"
+              /> */}
+              <Pressable
+                onPress={() => console.log("asdfghj")}
+                style={{
+                  position: "absolute",
+                  left: 0
+                }}
+              >
+                <ImageBackground
+                  source={require("../../../assets/images/leftChart.png")}
+                  style={{
+                    width: 35,
+                    height: 70,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    paddingVertical: 25,
+                    paddingRight: 10
+                  }}
+                  alt="image"
+                >
+                  <Text style={styles?.chartText(false)}>left</Text>
+                  <Text style={styles?.chartText(false)}>-</Text>
+                </ImageBackground>
+              </Pressable>
+              <Pressable
+                onPress={() => console.log("asdfghj")}
+                style={{
+                  position: "absolute",
+                  right: 0
+                }}
+              >
+                <ImageBackground
+                  source={require("../../../assets/images/leftChart.png")}
+                  style={{
+                    width: 35,
+                    height: 70,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    transform: [{ rotate: "180deg" }],
+                    paddingVertical: 25,
+                    paddingRight: 10
+                  }}
+                  alt="image"
+                >
+                  <Text style={styles?.chartText(true)}>-</Text>
+                  <Text style={styles?.chartText(true)}>right</Text>
+                </ImageBackground>
+              </Pressable>
+            </View>
+            {/* <Image
+              source={require("../../../assets/images/chart.png")}
+              style={{ width: 80, height: 80 }}
+              alt="image"
+            /> */}
 
-            {/*   <Box alignSelf="center" ml="1" pt="5" pr="-10">
+            {/* <Box alignSelf="center" ml="1" pt="5" pr="-10">
               <ImageBackground
                 style={[styles.verticalImg, { top: 2, right: -21 }]}
                 source={require("../../../assets/images/topChart.png")}
@@ -204,19 +355,20 @@ export default function ScoreDetail({ item }) {
     </View>
   )
 }
+export default ScoreDetail
 const styles = StyleSheet.create({
   container: {
-    shadowColor: 'rgba(125, 158, 73, 0.15)',
+    shadowColor: "rgba(125, 158, 73, 0.15)",
     borderRadius: 8,
     shadowOffset: {
       width: 0,
       height: 4
     },
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     marginBottom: 10
   },
   box: {
-    borderWidth: 1,
+    borderWidth: 5,
     borderColor: colors.background,
     borderRadius: 10,
     width: "45%",
@@ -230,6 +382,15 @@ const styles = StyleSheet.create({
     color: colors.text1,
     textAlign: "center"
   },
+  chartText: bool => ({
+    fontFamily: fonts.PROXIMA_REGULAR,
+    fontSize: 8,
+    fontWeight: "400",
+    color: colors.text1,
+    textAlign: "center",
+    transform: [{ rotate: bool ? "180deg" : "0deg" }],
+    marginVertical: -6
+  }),
   row: {
     flex: 1,
     flexDirection: "row",
