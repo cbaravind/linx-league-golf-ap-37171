@@ -87,25 +87,18 @@ export default function AddFriends({ route }) {
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`
-    const data = {
-      when: moment(leagueDate),
-      course_name: "Pinewood ",
-      city: "city",
-      course_address: "address",
-      user: user?.id,
-      players: [...selected,user?.id]
-    }
+   
     const dataGame = {
       round_date: moment(date).format("YYYY-MM-DD"),
-      round_time: moment(time).format("hh:mm:ss"),
+      round_time: moment.utc(time).format("HH:mm:ss"),
       league: 1,
       golf_course: 1,
       players: [...selected,user?.id]
     }
+    // console.log(dataGame,)
     // return
     const resultGame = await createGame(dataGame, token)
     const res = JSON.parse(resultGame)
-    console.log(resultGame)
     setBtnLoading(false)
     if (res.id) {
       showMessage({

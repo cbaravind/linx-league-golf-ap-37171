@@ -23,9 +23,10 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
       putt: putts,
       game: gameId,
       user: user?.user?.id,
-      hole: hole
+      hole: hole,
+      fir:FIR
     }
-    const response = await postGameScore(obj, token)
+    const response = await postGameScore(obj, token,"POST",0)
     const res = JSON.parse(response)
     setBtnLoading(false)
     if(res.game){
@@ -39,14 +40,14 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
 
     
   }
-  useEffect(() => {
-    scoreHandler()
-  }, [])
-  const scoreHandler = async () => {
-    const response = await getGameScore(gameId, token)
-    const res = JSON.parse(response)
-    console.log(res,'response of scores')
-  }
+  // useEffect(() => {
+  //   scoreHandler()
+  // }, [])
+  // const scoreHandler = async () => {
+  //   const response = await getGameScore(gameId, token)
+  //   const res = JSON.parse(response)
+  //   console.log(res,'response of scores')
+  // }
   return (
     <View style={styles.container}>
       <View
@@ -97,10 +98,10 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
       </View>
       <Box p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
         <Box flexDirection="row">
-          <Avatar source={item.image} />
+          <Avatar source={{uri:user.profile_image}} />
           <Box ml="2">
             <Text fontWeight="700" fontSize="16" color={colors.text1}>
-              {item.user?.name || item?.first_name}
+              {user?.user.name || user?.first_name}
             </Text>
             {/* <Box flexDirection="row">
               <Image
@@ -200,7 +201,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
               }}
             >
               <TouchableOpacity
-                onPress={() => setFIR(true)}
+                onPress={() => setFIR('center')}
                 activeOpacity={.6}
                 style={{
                   width: 60,
@@ -213,12 +214,12 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                   justifyContent: "center"
                 }}
               >
-                <Text style={styles?.chartText(false)}>Hit</Text>
-                <Text style={styles?.chartText(false)}>-</Text>
+                <Text style={[styles?.chartText(false),{color:'#fff'}]}>Hit</Text>
+                <Text style={[styles?.chartText(false),{color:'#fff'}]}>-</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => console.log("asdfghj")}
+                onPress={() => setFIR('short')}
                 style={{
                   position: "absolute",
                   bottom: 0
@@ -240,7 +241,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                 </ImageBackground>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => console.log("asdfghj")}
+                onPress={() => setFIR('long')}
                 style={{
                   position: "absolute",
                   top: 0
@@ -259,8 +260,8 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                   }}
                   alt="image"
                 >
-                  <Text style={styles?.chartText(false)}>-</Text>
-                  <Text style={styles?.chartText(false)}>long</Text>
+                  <Text style={styles?.chartText(true)}>-</Text>
+                  <Text style={styles?.chartText(true)}>long</Text>
                 </ImageBackground>
               </TouchableOpacity>
               {/* <Image
@@ -269,7 +270,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                 alt="image"
               /> */}
               <TouchableOpacity
-                onPress={() => console.log("asdfghj")}
+                onPress={() =>setFIR('left')}
                 style={{
                   position: "absolute",
                   left: 0
@@ -292,7 +293,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                 </ImageBackground>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => console.log("asdfghj")}
+                onPress={() => setFIR('right')}
                 style={{
                   position: "absolute",
                   right: 0
@@ -311,8 +312,8 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                   }}
                   alt="image"
                 >
-                  <Text style={styles?.chartText(false)}>-</Text>
-                  <Text style={styles?.chartText(false)}>right</Text>
+                  <Text style={styles?.chartText(true)}>-</Text>
+                  <Text style={styles?.chartText(true)}>right</Text>
                 </ImageBackground>
               </TouchableOpacity>
             </View>
@@ -322,62 +323,6 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
               alt="image"
             /> */}
 
-            {/* <Box alignSelf="center" ml="1" pt="5" pr="-10">
-              <ImageBackground
-                style={[styles.verticalImg, { top: 2, right: -21 }]}
-                source={require("../../../assets/images/topChart.png")}
-              >
-                <Box pb={"1"}>
-                  <Text style={styles.smallText}>Over</Text>
-                  <Text style={styles.smallText}>-</Text>
-                </Box>
-              </ImageBackground>
-              <Row style={{ marginTop: -10, justifyContent: "center" }}>
-                <ImageBackground
-                  style={styles.horizontalImg}
-                  source={require("../../../assets/images/leftChart.png")}
-                >
-                  <Box pr={"2"}>
-                    <Text style={styles.smallText}>Left</Text>
-                    <Text style={styles.smallText}>-</Text>
-                  </Box>
-                </ImageBackground>
-                <Box style={styles.circle}>
-                  <Text style={[styles.smallText, { color: colors.white }]}>
-                    Hit
-                  </Text>
-                  <Text style={[styles.smallText, { color: colors.white }]}>
-                    -
-                  </Text>
-                </Box>
-                <ImageBackground
-                  style={[styles.horizontalImg, { left: -5 }]}
-                  source={require("../../../assets/images/rightChart.png")}
-                >
-                  <Box pl={"2"}>
-                    <Text style={styles.smallText}>Right</Text>
-                    <Text style={styles.smallText}>-</Text>
-                  </Box>
-                </ImageBackground>
-              </Row>
-              <ImageBackground
-                style={[
-                  styles.verticalImg,
-                  {
-                    position: "absolute",
-                    bottom: -14,
-                    right: 11,
-                    zIndex: -1
-                  }
-                ]}
-                source={require("../../../assets/images/bottomChart.png")}
-              >
-                <Box pt="2">
-                  <Text style={styles.smallText}>Short</Text>
-                  <Text style={styles.smallText}>-</Text>
-                </Box>
-              </ImageBackground>
-            </Box> */}
           </Box>
         </Box>
       </Box>
@@ -415,7 +360,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PROXIMA_REGULAR,
     fontSize: 8,
     fontWeight: "400",
-    color: bool ? '#fff' : colors.text1,
+    color: colors.text1,
     textAlign: "center",
     transform: [{ rotate: bool ? "180deg" : "0deg" }],
     marginVertical: -6

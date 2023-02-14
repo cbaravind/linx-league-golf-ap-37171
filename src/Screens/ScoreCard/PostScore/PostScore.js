@@ -44,7 +44,7 @@ const PostScore = ({ route }) => {
         err && console.log(err)
       })
   }
-
+console.log(details)
   return (
     <>
       <AppHeader
@@ -135,7 +135,7 @@ const PostScore = ({ route }) => {
                     <ScoreDetail gameId={details?.id} game={details} setHole={setHoleNumber} hole={holeNumber} item={item} />
                   ))}
                   {details?.players?.length ?
-                    <ScoreTracker players={details?.players} />
+                    <ScoreTracker hole={holeNumber} players={details?.players} gameId={details?.id} />
                     :
                     <></>
                   }
@@ -148,7 +148,13 @@ const PostScore = ({ route }) => {
                 <Button
                   // style={{}}
                   width={"50%"}
-                  onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL,{gameId:details?.id,holes:golf_course?.hole_wise})}
+                  onPress={() => navigation.navigate(RoutesKey.SCOREDETAIL, {
+                    gameId: details?.id,
+                    holes: golf_course?.hole_wise,
+                    roundDate: details?.round_date,
+                    roundTime: details.round_time,
+                    leagueName:details?.league?.name
+                  })}
                 >
                   SCORECARD
                 </Button>

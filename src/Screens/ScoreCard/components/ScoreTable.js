@@ -116,11 +116,11 @@ export default function ScoreTable() {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 16,
-    paddingTop: 60,
+    paddingTop: 40,
     backgroundColor: colors.background,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   header: {
     height: 50,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.PROXIMA_REGULAR
   },
-  dataWrapper: { marginTop: -1 },
+  dataWrapper: { marginTop: -1, },
   row: { height: 40, backgroundColor: "#E7E6E1", paddingHorizontal: 6 },
   title: { flex: 1 },
   wrapper: { flexDirection: "row" }

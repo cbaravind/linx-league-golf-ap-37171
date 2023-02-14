@@ -59,7 +59,7 @@ export default function FindFriends({ route }) {
   const requestHandler = async () => {
     setbtnLoading(true)
     const filteredData = selected.map((item) => (item.id))
-    const response = await makeFriends(user?.id,filteredData, token)
+    const response = await makeFriends(user?.user.id,filteredData, token)
     const res = JSON.parse(response)
     console.log(res,'response of friendsss')
     setbtnLoading(false)
