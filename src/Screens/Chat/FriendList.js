@@ -4,7 +4,7 @@ import Container from "../../Components/Container"
 import AppHeader from "../../Components/AppHeader"
 import { colors } from "../../theme"
 import { useSelector } from "react-redux"
-import { getFriends } from "../../../api"
+import { getFriends, getProfile } from "../../../api"
 import { Box, FlatList, Image, Pressable } from "native-base"
 import { IMAGE_PLACEHOLDER } from "../../constants"
 import { useNavigation } from "@react-navigation/native"
@@ -15,14 +15,17 @@ const FriendList = () => {
   const [friendsList, setFriendsList] = useState([])
   const { user, token } = useSelector(state => state.auth?.user)
   const navigation = useNavigation()
+
   useEffect(() => {
+    // setFriendsList(user?.friends)
     getFriendsHandler()
   }, [])
   const getFriendsHandler = async () => {
     setLoading(true)
-    const response = await getFriends(29, token)
-    const res = JSON.parse(response)
+    const profile = await getProfile(user?.user?.id, token)
+    const res = JSON.parse(profile)
     if (res.id) {
+      console.log(res)
       if (res.friends.length) {
         setFriendsList(res.friends)
       }

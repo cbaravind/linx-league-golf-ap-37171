@@ -9,8 +9,8 @@ import { showMessage } from "react-native-flash-message"
 import { pubnub } from "../../../constants"
 const MessageItem = ({ message, file }) => {
   const { user, token } = useSelector(state => state.auth.user)
-  const isSender = message.sender == user?.id
-
+  const isSender = message.sender == user?.user.id
+console.log(message)
   const downloadFile = async () => {
     const file = await pubnub.downloadFile({
       channel: 'test_channel',

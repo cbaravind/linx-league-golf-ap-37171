@@ -150,6 +150,7 @@ export const updateProfilePicture = async (params, id, token) => {
 }
 
 export const updateProfile = async (params, id, token) => {
+  console.log(params,token,id)
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -406,3 +407,4 @@ export const leagueGolfCourses = async (id, token) => {
   })
   return response.text()
 }
+
