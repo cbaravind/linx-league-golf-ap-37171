@@ -11,10 +11,11 @@ import Share from 'react-native-share'
 import { getGameScore } from "../../../api"
 import { useSelector } from "react-redux"
 import MyScoreTable from "./components/MyScoreTable"
+import ProfileImage from "../../Components/ProfileImage"
 export default function ScoreDetailScreen({ route }) {
   const { token, user } = useSelector(state => state.auth?.user)
   const [gameScores, setGameScores] = useState(false)
-  const { gameId, holes,roundDate,roundTime,leagueName } = route?.params
+  const { gameId, holes, roundDate, roundTime, leagueName, players } = route?.params
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -31,7 +32,7 @@ export default function ScoreDetailScreen({ route }) {
   const scoreHandler = async () => {
     const response = await getGameScore(gameId, token)
     const res = JSON.parse(response)
-    if(res.results?.length){
+    if (res.results?.length) {
       setGameScores(res.results)
     }
   }
@@ -56,8 +57,34 @@ export default function ScoreDetailScreen({ route }) {
         <ScoreTable />
         <MyScoreTable scores={gameScores} />
         <View style={styles.divider} />
-        <View>
-          
+        <View style={styles.card}>
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
+            {players?.map((player) => (
+              <View style={styles.row}>
+                <View style={[styles.cell, { width: 70 }]}>
+                  <ProfileImage
+                    image={{ uri: player?.profile_image }}
+                    width={30} height={30}
+                  />
+                  <Text style={styles.text}>
+                    {player?.user?.name || player?.user?.first_name}
+                  </Text>
+                </View>
+                {gameScores ?
+                  gameScores?.map((item) => (
+                    item.user == player?.user?.id &&
+                    <View style={styles.cell}>
+                      <Text style={styles.text}>{item.score}</Text>
+                    </View>
+                  ))
+                  :
+                  <></>
+                }
+              </View>
+
+            ))}
+
+          </ScrollView>
         </View>
       </View>
     </>
@@ -85,5 +112,43 @@ const styles = StyleSheet.create({
     backgroundColor: "green"
     // backgroundColor: '#fff'
   },
-  divider:{height:1, width:'88%',backgroundColor:colors.green,alignSelf:"center",marginVertical:5}
+  divider: { height: 1, width: '88%', backgroundColor: colors.green, alignSelf: "center", marginVertical: 5 },
+  card: {
+    backgroundColor: colors.white,
+    margin: 15,
+    borderRadius: 15,
+    paddingVertical: 15
+  },
+  row: {
+    height: 50,
+    backgroundColor: "#fff",
+    flexDirection: 'row',
+    paddingHorizontal: 6,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  title: { flex: 1 },
+  wrapper: { flexDirection: "row" },
+  // card: {
+  //   borderRadius: 20,
+  //   backgroundColor: '#fff',
+  //   overflow: "hidden",
+  //   flex: 1,
+  //   paddingVertical: 10,
+
+  // },
+  cell: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 45
+    // paddingHorizontal: 17,
+    // paddingVertical: 15
+  },
+  text: {
+    textAlign: "center",
+    fontWeight: "400",
+    fontSize: 16,
+    color: colors.text1,
+    fontFamily: fonts.PROXIMA_REGULAR,
+  },
 })

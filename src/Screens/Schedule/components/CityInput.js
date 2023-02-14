@@ -12,16 +12,17 @@ import { leagueGolfCourses } from "../../../../api"
 export default function CityInput({ date, time }) {
   const { token } = useSelector(state => state.auth?.user)
   let [golfCourse, setGolfCourse] = React.useState("linxleague")
+  let [golfCourses, setGolfCourses] = React.useState(false)
 
-  // useEffect(() => getGolfCourses(1), [])
+  useEffect(() => getGolfCourses(1), [])
 
-  // const getGolfCourses = async id => {
-  //   const response = await leagueGolfCourses(id, token)
-  //   const res = JSON.parse(response)
-  //   console.log("res", res)
-  //   if (res?.length) console.log("res", res)
-  //   else console.log("failed", res)
-  // }
+  const getGolfCourses = async id => {
+    const response = await leagueGolfCourses(id, token)
+    const res = JSON.parse(response)
+    console.log("res", res)
+    if (res?.length) setGolfCourses(res)
+    else console.log("failed", res)
+  }
 
   return (
     <View style={{ padding: 20 }}>
@@ -61,9 +62,16 @@ export default function CityInput({ date, time }) {
                 endIcon: <CheckIcon size={4} />
               }}
             >
-              <Select.Item label="Golf Course 1" value="linxleague" />
-              <Select.Item label="Golf Course 2" value="ArizonaC" />
-              <Select.Item label="Golf Course 3" value="League1" />
+              {golfCourses ?
+                golfCourses.map((course) => (
+
+                  <Select.Item label={course.name} value={course.id} />
+                ))
+                :
+                <></>
+              }
+              {/* <Select.Item label="Golf Course 1" value="linxleague" />
+              <Select.Item label="Golf Course 3" value="League1" /> */}
             </Select>
           </View>
         </View>

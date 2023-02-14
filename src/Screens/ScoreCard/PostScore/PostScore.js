@@ -153,7 +153,8 @@ console.log(details)
                     holes: golf_course?.hole_wise,
                     roundDate: details?.round_date,
                     roundTime: details.round_time,
-                    leagueName:details?.league?.name
+                    leagueName:details?.league?.name,
+                    players:details?.players
                   })}
                 >
                   SCORECARD

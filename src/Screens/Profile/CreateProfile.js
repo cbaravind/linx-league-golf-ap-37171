@@ -129,6 +129,7 @@ const CreateProfile = () => {
     const id = user?.user?.id
     const data = {
       user: {
+        name:formData.firstName,
         email: user?.user?.email,
         first_name: formData.firstName,
         last_name: formData.lastName
@@ -142,10 +143,10 @@ const CreateProfile = () => {
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
-    console.log(user)
+    console.log(res,'response of profile')
     setBtnLoading(false)
     if (res.id) {
-      // await AsyncStorage.setItem("user", JSON.stringify(res))
+      await AsyncStorage.setItem("user", JSON.stringify(res))
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
       navigation.navigate(RoutesKey.BOTTOMTAB)

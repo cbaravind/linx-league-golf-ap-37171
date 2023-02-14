@@ -22,7 +22,7 @@ export default function Chat({ route }) {
   const [chatList, setChatList] = useState([])
 
   // const [files, setFiles] = useState(false)
-  console.log(chatList, "otherUser")
+  console.log(otherUser, "otherUser")
   useEffect(() => {
     const showMessage = msg => {
       setMessages(messages => [...messages, msg])

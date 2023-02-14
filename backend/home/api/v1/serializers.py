@@ -77,15 +77,16 @@ class UserSerializer2(serializers.ModelSerializer):
         except Exception as e:
             print(e)
             return None
+
     class Meta:
         model = User
         fields = ["id", "email", "name", "profile"]
 
-class UserSerializer(serializers.ModelSerializer):
-     class Meta:
-        model = User
-        fields = ["id", "email","name"]
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email", "name"]
 
 
 class PasswordSerializer(PasswordResetSerializer):
@@ -94,12 +95,32 @@ class PasswordSerializer(PasswordResetSerializer):
     password_reset_form_class = ResetPasswordForm
 
 
-class UserProfileCreateSerializer(WritableNestedModelSerializer):
+class UserProfileCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
         model = Profile
         fields = "__all__"
+
+    def update(self, instance, validated_data):
+        user = validated_data.pop("user", None)
+        if user:
+            try:
+                _user = User.objects.get(id=instance.user.id)
+                if "name" in user:
+                    _user.name = user.get("name")
+                if "last_name" in user:
+                    _user.last_name = user.get("last_name")
+                if "first_name" in user:
+                    _user.first_name = user.get("first_name")
+                _user.save()
+                instance.user = _user
+            except User.DoesNotExist:
+                print("User does not exist")
+
+        instance.save()
+        instance = super().update(instance, validated_data)
+        return instance
 
 
 class UserFriendsSerializer(serializers.ModelSerializer):
@@ -133,6 +154,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = "__all__"
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
