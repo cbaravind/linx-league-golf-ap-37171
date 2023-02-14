@@ -16,7 +16,6 @@ from home.api.v1.serializers import (
 from users.models import Profile
 
 
-
 class UserProfileAPIView(APIView):
     def get(self, request):
         try:
@@ -35,7 +34,7 @@ class UserProfileViewSet(ModelViewSet):
     filterset_fields = ("user__id",)
 
     def get_serializer_class(self):
-        if self.request.method in ("POST"):
+        if self.request.method in ("POST", "PUT", "PATCH"):
             return UserProfileCreateSerializer
         else:
             return UserProfileSerializer
