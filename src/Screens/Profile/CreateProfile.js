@@ -115,9 +115,9 @@ const CreateProfile = () => {
   }
   const submitHandler = async () => {
     let checkValidate = ""
-    if (formData?.firstName) checkValidate = "First Name"
-    if (formData?.last) checkValidate = "Last Name"
-    if (formData?.zipCode) checkValidate = "Zip Code"
+    if (!formData?.firstName) checkValidate = "First Name"
+    if (!formData?.lastName) checkValidate = "Last Name"
+    if (!formData?.zipCode) checkValidate = "Zip Code"
     if (!phoneNumber) checkValidate = "Phone Number"
     if (!service) checkValidate = "Date of Birth"
     if (checkValidate !== "") {
@@ -138,13 +138,14 @@ const CreateProfile = () => {
       ghin: formData.ghin,
       has_ghin: valueGHIN,
       birthdate: service,
-      friends: user?.friends
+      friends: user?.friends 
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
+    console.log(user)
     setBtnLoading(false)
     if (res.id) {
-      await AsyncStorage.setItem("user", JSON.stringify(res))
+      // await AsyncStorage.setItem("user", JSON.stringify(res))
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
       navigation.navigate(RoutesKey.BOTTOMTAB)

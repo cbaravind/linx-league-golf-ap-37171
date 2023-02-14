@@ -8,8 +8,13 @@ import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
 import { shareOptions } from "../../constants"
 import Share from 'react-native-share'
-export default function ScoreDetailScreen({route}) {
-  const {gameId,holes}=route?.params
+import { getGameScore } from "../../../api"
+import { useSelector } from "react-redux"
+import MyScoreTable from "./components/MyScoreTable"
+export default function ScoreDetailScreen({ route }) {
+  const { token, user } = useSelector(state => state.auth?.user)
+  const [gameScores, setGameScores] = useState(false)
+  const { gameId, holes,roundDate,roundTime,leagueName } = route?.params
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -20,7 +25,16 @@ export default function ScoreDetailScreen({route}) {
         err && console.log(err);
       })
   }
-
+  useEffect(() => {
+    scoreHandler()
+  }, [])
+  const scoreHandler = async () => {
+    const response = await getGameScore(gameId, token)
+    const res = JSON.parse(response)
+    if(res.results?.length){
+      setGameScores(res.results)
+    }
+  }
   return (
     <>
       <AppHeader
@@ -35,11 +49,16 @@ export default function ScoreDetailScreen({route}) {
       <View
         style={{ backgroundColor: colors.background, flex: 1, paddingTop: 30 }}
       >
-        <Text style={styles.h1}>Linx League</Text>
+        <Text style={styles.h1}>{leagueName}</Text>
         <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
-          <Text style={styles.text}>dd/mm/yyyy, 08:00am</Text>
+          <Text style={styles.text}>{roundDate}, {roundTime}</Text>
         </View>
         <ScoreTable />
+        <MyScoreTable scores={gameScores} />
+        <View style={styles.divider} />
+        <View>
+          
+        </View>
       </View>
     </>
   )
@@ -65,5 +84,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     backgroundColor: "green"
     // backgroundColor: '#fff'
-  }
+  },
+  divider:{height:1, width:'88%',backgroundColor:colors.green,alignSelf:"center",marginVertical:5}
 })

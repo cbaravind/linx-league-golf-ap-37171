@@ -200,6 +200,7 @@ export const getAllUsers = async token => {
 }
 export const makeFriends = async (id, data, token) => {
   const params = { p_ids: data }
+  console.log(params)
   const requestOptions = {
     method: "POST",
     headers: {
@@ -363,9 +364,10 @@ export const postChatRoom = async (data, token) => {
   return response.text()
 }
 
-export const postGameScore = async (data, token) => {
-  const response = await fetch(`${API_URL}/api/v1/game-score/`, {
-    method: "POST",
+export const postGameScore = async (data, token ,method,id) => {
+  const  url = method=='POST'?`${API_URL}/api/v1/game-score/`:`${API_URL}/api/v1/game-score/${id}/`
+  const response = await fetch(url, {
+    method: method,
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
