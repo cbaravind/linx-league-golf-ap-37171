@@ -28,7 +28,6 @@ class UserProfileAPIView(APIView):
 
 
 class UserProfileViewSet(ModelViewSet):
-    serializer_class = UserProfileSerializer
     queryset = Profile.objects.all()
     lookup_field = "user__id"
     filterset_fields = ("user__id",)
