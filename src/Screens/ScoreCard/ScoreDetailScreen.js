@@ -8,7 +8,8 @@ import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
 import { shareOptions } from "../../constants"
 import Share from 'react-native-share'
-export default function ScoreDetailScreen() {
+export default function ScoreDetailScreen({route}) {
+  const {gameId,holes}=route?.params
   const onShare = () => {
 
     Share.open(shareOptions)

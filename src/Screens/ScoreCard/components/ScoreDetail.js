@@ -1,4 +1,4 @@
-import { View, ImageBackground, StyleSheet, Pressable } from "react-native"
+import { View, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
 import React, { useEffect, useState } from "react"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
@@ -7,27 +7,45 @@ import { Box, Text, Avatar, Image, Button } from "native-base"
 import Row from "../../../Components/Row"
 import Counter from "../../../Components/Counter"
 import { useSelector } from "react-redux"
-import { postGameScore } from "../../../../api"
-const ScoreDetail = ({ item }) => {
+import { getGameScore, postGameScore } from "../../../../api"
+const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
   const { token, user } = useSelector(state => state.auth?.user)
   const [addScoreClicked, setAddScoreClicked] = useState(false)
   const [putts, setPutts] = useState(0)
   const [score, setScore] = useState(1)
+  const [FIR, setFIR] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false)
+
   const gameScore = async () => {
+    setBtnLoading(true)
     const obj = {
       score: score,
       putt: putts,
-      game: item?.id,
-      user: user?.id
+      game: gameId,
+      user: user?.user?.id,
+      hole: hole
     }
     const response = await postGameScore(obj, token)
     const res = JSON.parse(response)
+    setBtnLoading(false)
+    if(res.game){
+
+      setAddScoreClicked(false)
+      setHole(hole+1)
+      setScore(0)
+      setPutts(0)
+    }
     if (res?.results?.length) setAddScoreClicked(false)
-    // else {
-    //   console.log(res)
-    //   console.log(obj)
-    //   console.log(item)
-    // }
+
+    
+  }
+  useEffect(() => {
+    scoreHandler()
+  }, [])
+  const scoreHandler = async () => {
+    const response = await getGameScore(gameId, token)
+    const res = JSON.parse(response)
+    console.log(res,'response of scores')
   }
   return (
     <View style={styles.container}>
@@ -63,14 +81,18 @@ const ScoreDetail = ({ item }) => {
           }}
           colorScheme="green"
         >
+          {btnLoading?
+          <ActivityIndicator/>
+          :
           <Text
-            textAlign="center"
-            fontSize={16}
-            fontWeight={"700"}
-            color={colors.white}
+          textAlign="center"
+          fontSize={16}
+          fontWeight={"700"}
+          color={colors.white}
           >
             {addScoreClicked ? "Enter" : "ADD Score"}
           </Text>
+          }
         </Button>
       </View>
       <Box p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
@@ -78,9 +100,9 @@ const ScoreDetail = ({ item }) => {
           <Avatar source={item.image} />
           <Box ml="2">
             <Text fontWeight="700" fontSize="16" color={colors.text1}>
-              {item.user?.name}
+              {item.user?.name || item?.first_name}
             </Text>
-            <Box flexDirection="row">
+            {/* <Box flexDirection="row">
               <Image
                 mr="1"
                 mt="1.5"
@@ -90,11 +112,11 @@ const ScoreDetail = ({ item }) => {
                 alt="image"
               />
               <Text fontSize="14">23(+7)</Text>
-            </Box>
+            </Box> */}
           </Box>
-          <Text fontSize="14" mt="0.5" ml="20%">
+          {/* <Text fontSize="14" mt="0.5" ml="20%">
             [21]
-          </Text>
+          </Text> */}
         </Box>
         {!addScoreClicked ? (
           <Text
@@ -117,8 +139,7 @@ const ScoreDetail = ({ item }) => {
                 fontSize="10"
                 textAlign={"center"}
                 mt="2"
-                mb="2"
-              >
+                mb="2">
                 Scoretracker
               </Text>
               <Row>
@@ -178,17 +199,25 @@ const ScoreDetail = ({ item }) => {
                 alignSelf: "center"
               }}
             >
-              <View
+              <TouchableOpacity
+                onPress={() => setFIR(true)}
+                activeOpacity={.6}
                 style={{
                   width: 60,
                   height: 60,
                   position: "absolute",
                   backgroundColor: "#7D9E49",
                   zIndex: 1,
-                  borderRadius: 50
+                  borderRadius: 50,
+                  alignItems: "center",
+                  justifyContent: "center"
                 }}
-              ></View>
-              <Pressable
+              >
+                <Text style={styles?.chartText(false)}>Hit</Text>
+                <Text style={styles?.chartText(false)}>-</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
                 onPress={() => console.log("asdfghj")}
                 style={{
                   position: "absolute",
@@ -209,8 +238,8 @@ const ScoreDetail = ({ item }) => {
                   <Text style={styles?.chartText(false)}>short</Text>
                   <Text style={styles?.chartText(false)}>-</Text>
                 </ImageBackground>
-              </Pressable>
-              <Pressable
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => console.log("asdfghj")}
                 style={{
                   position: "absolute",
@@ -230,16 +259,16 @@ const ScoreDetail = ({ item }) => {
                   }}
                   alt="image"
                 >
-                  <Text style={styles?.chartText(true)}>-</Text>
-                  <Text style={styles?.chartText(true)}>long</Text>
+                  <Text style={styles?.chartText(false)}>-</Text>
+                  <Text style={styles?.chartText(false)}>long</Text>
                 </ImageBackground>
-              </Pressable>
+              </TouchableOpacity>
               {/* <Image
                 source={require("../../../assets/images/leftChart.png")}
                 style={{ width: 30, height: 60, position: "absolute", left: 0 }}
                 alt="image"
               /> */}
-              <Pressable
+              <TouchableOpacity
                 onPress={() => console.log("asdfghj")}
                 style={{
                   position: "absolute",
@@ -261,8 +290,8 @@ const ScoreDetail = ({ item }) => {
                   <Text style={styles?.chartText(false)}>left</Text>
                   <Text style={styles?.chartText(false)}>-</Text>
                 </ImageBackground>
-              </Pressable>
-              <Pressable
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => console.log("asdfghj")}
                 style={{
                   position: "absolute",
@@ -282,10 +311,10 @@ const ScoreDetail = ({ item }) => {
                   }}
                   alt="image"
                 >
-                  <Text style={styles?.chartText(true)}>-</Text>
-                  <Text style={styles?.chartText(true)}>right</Text>
+                  <Text style={styles?.chartText(false)}>-</Text>
+                  <Text style={styles?.chartText(false)}>right</Text>
                 </ImageBackground>
-              </Pressable>
+              </TouchableOpacity>
             </View>
             {/* <Image
               source={require("../../../assets/images/chart.png")}
@@ -386,7 +415,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PROXIMA_REGULAR,
     fontSize: 8,
     fontWeight: "400",
-    color: colors.text1,
+    color: bool ? '#fff' : colors.text1,
     textAlign: "center",
     transform: [{ rotate: bool ? "180deg" : "0deg" }],
     marginVertical: -6

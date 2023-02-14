@@ -79,10 +79,11 @@ export default function AddFriends({ route }) {
   }
 
   const leagueHandler = async () => {
-    setBtnLoading(true)
+    // setBtnLoading(true)
     const selected = friendsList.map(i => {
-      return i?.id
+      return i?.profile?.id
     })
+    console.log(selected)
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`
@@ -91,18 +92,20 @@ export default function AddFriends({ route }) {
       course_name: "Pinewood ",
       city: "city",
       course_address: "address",
-      user: user?.user?.id,
-      players: selected
+      user: user?.id,
+      players: [...selected,user?.id]
     }
     const dataGame = {
       round_date: moment(date).format("YYYY-MM-DD"),
       round_time: moment(time).format("hh:mm:ss"),
       league: 1,
       golf_course: 1,
-      players: selected
+      players: [...selected,user?.id]
     }
+    // return
     const resultGame = await createGame(dataGame, token)
     const res = JSON.parse(resultGame)
+    console.log(resultGame)
     setBtnLoading(false)
     if (res.id) {
       showMessage({
@@ -117,7 +120,7 @@ export default function AddFriends({ route }) {
       })
     }
   }
-
+console.log(user,'friend')
   return (
     <Container>
       <AppHeader
@@ -171,7 +174,7 @@ export default function AddFriends({ route }) {
                 keyExtractor={item => item.id}
                 renderItem={(data, rowMap) => (
                   <UserProfile
-                    name={data.item.name}
+                    name={data.item.name || data.item.first_name || data.item?.profile?.phone_number}
                     image={null}
                     onPress={() =>
                       navigation.navigate(RoutesKey.PROFILE, {

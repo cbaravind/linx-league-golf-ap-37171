@@ -6,14 +6,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 from game import serializers,models
 
 
 class GameModelViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
-        return models.Game.objects.all()
-
+        return models.Game.objects.filter(Q(user = self.request.user)
+            | Q(players__user = self.request.user))
     def get_serializer_class(self):
         if self.action == 'list':
             return serializers.GameSerializerGET

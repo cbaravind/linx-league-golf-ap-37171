@@ -182,6 +182,7 @@ export const getUserProfile = async token => {
   return response.text()
 }
 export const getAllUsers = async token => {
+  console.log(token,'token---')
   const requestOptions = {
     method: "GET",
     headers: {
@@ -371,6 +372,20 @@ export const postGameScore = async (data, token) => {
       Authorization: `Token ${token}`
     },
     body: JSON.stringify(data),
+    redirect: "follow"
+  })
+  return response.text()
+}
+
+export const getGameScore = async (id, token) => {
+  const response = await fetch(`${API_URL}/api/v1/game-score/?game_id=${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    // body: JSON.stringify(data),
     redirect: "follow"
   })
   return response.text()
