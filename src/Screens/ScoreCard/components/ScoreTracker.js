@@ -1,4 +1,4 @@
-import { View, ImageBackground, StyleSheet, TouchableOpacity } from "react-native"
+import { View, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
 import React, { useEffect, useState } from "react"
 import { colors, fonts } from "../../../theme"
 import { Box, Text, Avatar, Image, Button } from "native-base"
@@ -7,10 +7,35 @@ import Counter from "../../../Components/Counter"
 import { useSelector } from "react-redux"
 import { postGameScore } from "../../../../api"
 import ScoreCounter from "./ScoreCounter"
-const ScoreTracker = ({ players,gameId ,hole}) => {
-    const { token, user } = useSelector(state => state.auth?.user)
-  
 
+const ScoreTracker = ({ players, gameId, hole }) => {
+    const { token, user } = useSelector(state => state.auth?.user)
+    const [scores, setScores] = useState([])
+    const [btnLoading, setBtnLoading] = useState(false)
+    const [scoreUpdated, setScoreUpdated] = useState(false)
+
+    const gameScore = async () => {
+        setBtnLoading(true)
+      
+        let data=[]
+        scores.map(async(i)=>{
+
+            let obj = {
+                score: i.score,
+                // putt: putts,
+                game: gameId,
+                user: i.user,
+                hole: hole
+            }
+            data.push(obj)
+        })
+        const response = await postGameScore({data:data}, token, scoreUpdated ? "PUT" : 'POST', gameId)
+        const res = JSON.parse(response)
+        console.log(res)
+        setBtnLoading(false)
+       
+
+    }
     return (
         <View style={styles.container}>
             <View
@@ -26,10 +51,11 @@ const ScoreTracker = ({ players,gameId ,hole}) => {
             >
                 <Button
                     onPress={() => {
+                        gameScore()
                         // addScoreClicked
                         //   ? setAddScoreClicked(false)
                         //   : setAddScoreClicked(true)
-                       null
+                        
                     }}
                     style={{
                         backgroundColor: colors.darkGreen,
@@ -40,18 +66,22 @@ const ScoreTracker = ({ players,gameId ,hole}) => {
                     }}
                     colorScheme="green"
                 >
-                    <Text
-                        textAlign="center"
-                        fontSize={16}
-                        fontWeight={"700"}
-                        color={colors.white}
-                    >
-                        {"Enter"}
-                    </Text>
+                    {btnLoading ?
+                        <ActivityIndicator />
+                        :
+                        <Text
+                            textAlign="center"
+                            fontSize={16}
+                            fontWeight={"700"}
+                            color={colors.white}
+                        >
+                            {"Enter"}
+                        </Text>
+                    }
                 </Button>
             </View>
             <Box borderRadius={10} zIndex={0} pb={"3"}>
-                <Box  pl={'5'} flexDirection="row">
+                <Box pl={'5'} flexDirection="row">
                     <Text
                         fontWeight="700"
                         fontSize="16"
@@ -63,24 +93,24 @@ const ScoreTracker = ({ players,gameId ,hole}) => {
                     </Text>
                     {/* <Avatar source={item.image} /> */}
                 </Box>
-                <Box  p="2" mt="4" ml="2">
+                <Box p="2" mt="4" ml="2">
                     {players?.map((item) =>
                         item.id != user?.id &&
                         <Box style={styles.row} flexDirection="row"   >
-                            <Box  flexDirection="row" >
-                                <Avatar source={{uri:item.image}} />
+                            <Box flexDirection="row" >
+                                <Avatar source={{ uri: item.image }} />
                                 <Text
                                     fontWeight="700"
                                     fontSize="16"
                                     textAlign={"center"}
                                     mt="3"
                                     ml={'2'}
-                                    // mb="2"
+                                // mb="2"
                                 >
                                     {item?.user?.name || item?.first_name}
                                 </Text>
                             </Box>
-                            <ScoreCounter hole={hole} gameId={gameId} item={item} />
+                            <ScoreCounter scores={scores} setScores={setScores} hole={hole} gameId={gameId} item={item} />
                         </Box>
                     )}
 

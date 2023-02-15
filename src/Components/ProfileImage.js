@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from "react-native"
 import React from "react"
 import LinearGradient from "react-native-linear-gradient"
 import { colors } from "../theme"
-export default function ProfileImage({ image, style, height, width }) {
+export default function ProfileImage({ image, style, height, width,imgStyle }) {
   return (
     
     <LinearGradient
@@ -17,7 +17,7 @@ export default function ProfileImage({ image, style, height, width }) {
         style
       ]}
     >
-      <Image source={image} resizeMode="contain" style={styles.image} />
+      <Image source={image} resizeMode="contain" style={[styles.image,imgStyle]} />
     </LinearGradient>
   )
 }
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   image: {
     width: "93%",
     height: "93%",
+   
     //alignSelf:'center'
     // borderRadius: 30,
   }

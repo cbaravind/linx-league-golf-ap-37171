@@ -16,8 +16,8 @@ export default function MyScoreTable({ scores }) {
           {/* <View style={styles.row}> */}
           <View style={styles.row}>
             <View style={[styles.cell, { width: 70 }]}>
-              <ProfileImage image={{ uri: user?.profile_image }} width={30} height={30} />
-              <Text style={styles.text}>{user?.user?.name || user?.user?.first_name}</Text>
+              <ProfileImage imgStyle={{borderRadius:30}} image={{ uri: user?.profile_image }} width={30} height={30} />
+              <Text  adjustsFontSizeToFit numberOfLines={1} style={styles.text}>{user?.user?.name || user?.user?.first_name}</Text>
             </View>
             {scores ?
               scores?.map((item) => (
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   dataWrapper: { marginTop: -1 },
   row: {
-    height: 50,
+    height: 54,
     backgroundColor: "#fff",
     flexDirection: 'row',
     paddingHorizontal: 6,

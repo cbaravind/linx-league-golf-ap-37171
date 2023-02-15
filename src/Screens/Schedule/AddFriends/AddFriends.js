@@ -80,10 +80,10 @@ export default function AddFriends({ route }) {
 
   const leagueHandler = async () => {
     // setBtnLoading(true)
-    const selected = friendsList.map(i => {
+    const selected =friendsList?.length? friendsList.map(i => {
       return i?.profile?.id
-    })
-    console.log(selected)
+    }) :[]
+    console.log(selected,'selected')
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`
@@ -222,19 +222,20 @@ console.log(user,'friend')
             <View style={{ width: 20 }} />
 
             <AppButton
-              disabled={friendsList?.length ? false : true}
+              // disabled={friendsList?.length ? false : true}
               isLoading={btnLoading}
               style={[
                 styles.button,
                 {
-                  borderColor: friendsList?.length
-                    ? colors.darkGreen
-                    : colors.grey3
+                  borderColor:
+                  //  friendsList?.length?
+                     colors.darkGreen
+                    // : colors.grey3
                 }
               ]}
               onPress={() => leagueHandler()}
               labelStyle={{
-                color: friendsList?.length ? colors.darkGreen : colors.grey3
+                color: friendsList?.length ? colors.darkGreen : colors.darkGreen
               }}
               label={"CREATE GAME"}
             />

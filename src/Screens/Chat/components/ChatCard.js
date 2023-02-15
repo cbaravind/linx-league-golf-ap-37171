@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
 export default function ChatCard({ chat }) {
   const navigation = useNavigation()
+  console.log(chat,'chat')
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate(RoutesKey.CHAT, { user: chat?.receiver, apiHit: false })}

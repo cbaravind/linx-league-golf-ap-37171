@@ -12,10 +12,12 @@ import { getGameScore } from "../../../api"
 import { useSelector } from "react-redux"
 import MyScoreTable from "./components/MyScoreTable"
 import ProfileImage from "../../Components/ProfileImage"
+
 export default function ScoreDetailScreen({ route }) {
+
+  const { gameId, holes, roundDate, roundTime, leagueName, players } = route?.params
   const { token, user } = useSelector(state => state.auth?.user)
   const [gameScores, setGameScores] = useState(false)
-  const { gameId, holes, roundDate, roundTime, leagueName, players } = route?.params
   const onShare = () => {
 
     Share.open(shareOptions)
@@ -58,21 +60,23 @@ export default function ScoreDetailScreen({ route }) {
         <MyScoreTable scores={gameScores} />
         <View style={styles.divider} />
         <View style={styles.card}>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
-            {players?.map((player) => (
+          {players?.map((player) => (
+             player.user?.id != user?.user.id &&
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
               <View style={styles.row}>
                 <View style={[styles.cell, { width: 70 }]}>
                   <ProfileImage
+                    imgStyle={{ borderRadius: 30 }}
                     image={{ uri: player?.profile_image }}
                     width={30} height={30}
                   />
-                  <Text style={styles.text}>
+                  <Text adjustsFontSizeToFit numberOfLines={1} style={styles.text}>
                     {player?.user?.name || player?.user?.first_name}
                   </Text>
                 </View>
                 {gameScores ?
                   gameScores?.map((item) => (
-                    item.user == player?.user?.id &&
+                    item.user == player?.user?.id && 
                     <View style={styles.cell}>
                       <Text style={styles.text}>{item.score}</Text>
                     </View>
@@ -82,9 +86,9 @@ export default function ScoreDetailScreen({ route }) {
                 }
               </View>
 
-            ))}
+            </ScrollView>
+          ))}
 
-          </ScrollView>
         </View>
       </View>
     </>
@@ -98,20 +102,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: fonts.PROXIMA_REGULAR
   },
-  text: {
-    color: colors.text1,
-    fontSize: 14,
-    fontFamily: fonts.PROXIMA_REGULAR,
-    fontWeight: "400",
-    textAlign: "center"
-  },
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 30,
-    backgroundColor: "green"
-    // backgroundColor: '#fff'
-  },
+ 
   divider: { height: 1, width: '88%', backgroundColor: colors.green, alignSelf: "center", marginVertical: 5 },
   card: {
     backgroundColor: colors.white,
@@ -120,7 +111,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15
   },
   row: {
-    height: 50,
+    height: 54,
     backgroundColor: "#fff",
     flexDirection: 'row',
     paddingHorizontal: 6,
@@ -128,15 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   title: { flex: 1 },
-  wrapper: { flexDirection: "row" },
-  // card: {
-  //   borderRadius: 20,
-  //   backgroundColor: '#fff',
-  //   overflow: "hidden",
-  //   flex: 1,
-  //   paddingVertical: 10,
 
-  // },
   cell: {
     alignItems: "center",
     justifyContent: "center",
