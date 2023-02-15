@@ -14,20 +14,21 @@ import { useSelector } from "react-redux"
 import { showMessage } from "react-native-flash-message"
 
 export default function FindFriends({ route }) {
-  
-  const contacts        = route?.params?.contacts
-  const navigation      = useNavigation()
+  const contacts = route?.params?.contacts
+  const navigation = useNavigation()
   const { user, token } = useSelector(state => state.auth?.user)
 
   const [friendsArray, setFriendsArray] = useState([])
   const [knownUsers, setKnownUsers] = useState(false)
-  const [loading, setLoading]       = useState(false)
-  const [selected, setSelected]     = useState([])
+  const [loading, setLoading] = useState(false)
+  const [selected, setSelected] = useState([])
   const [btnLoading, setbtnLoading] = useState(false)
 
   const searchFriends = searchText => {
     if (searchText.length && friends.length) {
-      const filtered = friendsArray.filter(e => e.user?.name.includes(searchText))
+      const filtered = friendsArray.filter(e =>
+        e.user?.name.includes(searchText)
+      )
       setFriendsArray(filtered)
     }
   }
@@ -40,16 +41,26 @@ export default function FindFriends({ route }) {
     setLoading(true)
     const response = await getAllUsers(token)
     const res = JSON.parse(response)
+    // console.log(res, "getting all users")
     if (res.count) {
       setFriendsArray(res.results)
       let friends = []
-      contacts?.map(((item) => {
-        const number = item.phoneNumbers.length ? item.phoneNumbers[0]['number'] : 0
-        let filtered = res.results.filter(e => e.phone_number == number)
+      contacts?.map(item => {
+        // console.log(item.phoneNumbers[0]["number"].replace(/[^0-9]/g, ""))
+        const number = item.phoneNumbers.length
+          ? item.phoneNumbers[0]["number"].replace(/[^0-9]/g, "")
+          : 0
+
+        // let filtered = res.results.filter(e => e.phone_number == number)
+        let filtered = res.results.filter(
+          e =>
+            e?.phone_number?.replace(/[^0-9]/g, "").includes(number) ||
+            number.includes(e?.phone_number?.replace(/[^0-9]/g, ""))
+        )
         if (filtered.length) {
           friends = [...friends, ...filtered]
         }
-      }))
+      })
       setKnownUsers(friends)
       setFriendsArray(friends)
     }
@@ -58,18 +69,18 @@ export default function FindFriends({ route }) {
 
   const requestHandler = async () => {
     setbtnLoading(true)
-    const filteredData = selected.map((item) => (item.id))
-    const response = await makeFriends(user?.user.id,filteredData, token)
+    const filteredData = selected.map(item => item.id)
+    const response = await makeFriends(user?.user.id, filteredData, token)
     const res = JSON.parse(response)
-    console.log(res,'response of friendsss')
+    console.log(res, "response of friendsss")
     setbtnLoading(false)
-    if(res.includes('Success')){
+    if (res.includes("Success")) {
       navigation.goBack()
-    }else {
-      if(res.detail){
+    } else {
+      if (res.detail) {
         showMessage({
-          type:'warning',
-          message:res.detail
+          type: "warning",
+          message: res.detail
         })
       }
     }
@@ -86,36 +97,49 @@ export default function FindFriends({ route }) {
           onSearchSubmit={searchFriends}
           clearResults={clearResults}
         />
-        {loading ?
-          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        {loading ? (
+          <View
+            style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+          >
             <ActivityIndicator color={colors.green} />
           </View>
-          :
-          friendsArray.length ?
-
-            <FlatList
-              data={friendsArray}
-              contentContainerStyle={{
-                backgroundColor: colors.white,
-                padding: 20,
-                marginTop: 20,
-                marginBottom: 12
-              }}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-              <UserProfile 
-                name={item?.user?.name} 
-                selected={selected.includes(item)} 
-                onPress={() => { selected.includes(item) ? setSelected(selected.filter(e => e.id != item.id)) : setSelected([...selected, item]) }} 
-                image={item?.profile?.profile_image} />
-              )}
-            />
-            :
-            <View style={{ alignItems: "center", flex: 1, justifyContent: 'center' }} >
-              <Text>No Records found</Text>
-            </View>
-        }
-        <Button isLoading={btnLoading} onPress={requestHandler} m={"7"} shadow={5} bg="#7D9E49">
+        ) : friendsArray.length ? (
+          <FlatList
+            data={friendsArray}
+            contentContainerStyle={{
+              backgroundColor: colors.white,
+              padding: 20,
+              marginTop: 20,
+              marginBottom: 12
+            }}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <UserProfile
+                name={item?.user?.name}
+                selected={selected.includes(item)}
+                onPress={() => {
+                  selected.includes(item)
+                    ? setSelected(selected.filter(e => e.id != item.id))
+                    : setSelected([...selected, item])
+                }}
+                image={item?.profile?.profile_image}
+              />
+            )}
+          />
+        ) : (
+          <View
+            style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+          >
+            <Text>No Records found</Text>
+          </View>
+        )}
+        <Button
+          isLoading={btnLoading}
+          onPress={requestHandler}
+          m={"7"}
+          shadow={5}
+          bg="#7D9E49"
+        >
           {"Request"}
         </Button>
 

@@ -14,115 +14,128 @@ import { postGameScore } from "../../../../api"
 import ScoreCounter from "./ScoreCounter"
 
 const ScoreTracker = ({ players, gameId, hole }) => {
-    const { token, user } = useSelector(state => state.auth?.user)
-    const [scores, setScores] = useState([])
-    const [btnLoading, setBtnLoading] = useState(false)
-    const [scoreUpdated, setScoreUpdated] = useState(false)
+  const { token, user } = useSelector(state => state.auth?.user)
+  const [scores, setScores] = useState([])
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [scoreUpdated, setScoreUpdated] = useState(false)
 
-    const gameScore = async () => {
-        setBtnLoading(true)
-      
-        let data=[]
-        scores.map(async(i)=>{
+  const gameScore = async () => {
+    setBtnLoading(true)
 
-            let obj = {
-                score: i.score,
-                // putt: putts,
-                game: gameId,
-                user: i.user,
-                hole: hole
-            }
-            data.push(obj)
-        })
-        const response = await postGameScore({data:data}, token, scoreUpdated ? "PUT" : 'POST', gameId)
-        const res = JSON.parse(response)
-        console.log(res)
-        setBtnLoading(false)
-       
-
-    }
-    return (
-        <View style={styles.container}>
-            <View
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    backgroundColor: colors.background,
-                    padding: 5,
-                    borderBottomLeftRadius: 10,
-                    zIndex: 10
-                }}
-            >
-                <Button
-                    onPress={() => {
-                        gameScore()
-                        // addScoreClicked
-                        //   ? setAddScoreClicked(false)
-                        //   : setAddScoreClicked(true)
-                        
-                    }}
-                    style={{
-                        backgroundColor: colors.darkGreen,
-                        borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0,
-                        height: 68,
-                        width: 78
-                    }}
-                    colorScheme="green"
-                >
-                    {btnLoading ?
-                        <ActivityIndicator />
-                        :
-                        <Text
-                            textAlign="center"
-                            fontSize={16}
-                            fontWeight={"700"}
-                            color={colors.white}
-                        >
-                            {"Enter"}
-                        </Text>
-                    }
-                </Button>
-            </View>
-            <Box borderRadius={10} zIndex={0} pb={"3"}>
-                <Box pl={'5'} flexDirection="row">
-                    <Text
-                        fontWeight="700"
-                        fontSize="16"
-                        textAlign={"center"}
-                        mt="6"
-                        mb="2"
-                    >
-                        Scoretracker
-                    </Text>
-                    {/* <Avatar source={item.image} /> */}
-                </Box>
-                <Box p="2" mt="4" ml="2">
-                    {players?.map((item) =>
-                        item.id != user?.id &&
-                        <Box style={styles.row} flexDirection="row"   >
-                            <Box flexDirection="row" >
-                                <Avatar source={{ uri: item.image }} />
-                                <Text
-                                    fontWeight="700"
-                                    fontSize="16"
-                                    textAlign={"center"}
-                                    mt="3"
-                                    ml={'2'}
-                                // mb="2"
-                                >
-                                    {item?.user?.name || item?.first_name}
-                                </Text>
-                            </Box>
-                            <ScoreCounter scores={scores} setScores={setScores} hole={hole} gameId={gameId} item={item} />
-                        </Box>
-                    )}
-
-                </Box>
-            </Box>
-        </View>
+    let data = []
+    scores.map(async i => {
+      let obj = {
+        score: i.score,
+        // putt: putts,
+        game: gameId,
+        user: i.user,
+        hole: hole
+      }
+      data.push(obj)
+    })
+    const response = await postGameScore(
+      { data: data },
+      token,
+      scoreUpdated ? "PUT" : "POST",
+      gameId
     )
+    const res = JSON.parse(response)
+    console.log(res)
+    setBtnLoading(false)
+  }
+  return (
+    <View style={styles.container}>
+      {players.length > 1 && (
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              backgroundColor: colors.background,
+              padding: 5,
+              borderBottomLeftRadius: 10,
+              zIndex: 10
+            }}
+          >
+            <Button
+              onPress={() => {
+                gameScore()
+                // addScoreClicked
+                //   ? setAddScoreClicked(false)
+                //   : setAddScoreClicked(true)
+              }}
+              style={{
+                backgroundColor: colors.darkGreen,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                height: 68,
+                width: 78
+              }}
+              colorScheme="green"
+            >
+              {btnLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <Text
+                  textAlign="center"
+                  fontSize={16}
+                  fontWeight={"700"}
+                  color={colors.white}
+                >
+                  {"Enter"}
+                </Text>
+              )}
+            </Button>
+          </View>
+
+          <Box borderRadius={10} zIndex={0} pb={"3"}>
+            <Box pl={"5"} flexDirection="row">
+              <Text
+                fontWeight="700"
+                fontSize="16"
+                textAlign={"center"}
+                mt="6"
+                mb="2"
+              >
+                Scoretracker
+              </Text>
+              {/* <Avatar source={item.image} /> */}
+            </Box>
+            <Box p="2" mt="4" ml="2">
+              {players?.map(
+                item =>
+                  item.id != user?.id && (
+                    <Box style={styles.row} flexDirection="row">
+                      <Box flexDirection="row">
+                        <Avatar source={{ uri: item.image }} />
+                        <Text
+                          fontWeight="700"
+                          fontSize="16"
+                          textAlign={"center"}
+                          mt="3"
+                          ml={"2"}
+                          // mb="2"
+                        >
+                          {item?.user?.name || item?.first_name}
+                        </Text>
+                      </Box>
+                      <ScoreCounter
+                        scores={scores}
+                        setScores={setScores}
+                        hole={hole}
+                        gameId={gameId}
+                        item={item}
+                      />
+                    </Box>
+                  )
+              )}
+            </Box>
+          </Box>
+        </View>
+      )}
+    </View>
+  )
 }
 export default ScoreTracker
 const styles = StyleSheet.create({
