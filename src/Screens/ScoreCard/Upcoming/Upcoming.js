@@ -38,6 +38,8 @@ const Upcoming = () => {
 
       setLoading(false)
       setUpcomingGames(rounds)
+    } else {
+      setLoading(false)
     }
   }
 
