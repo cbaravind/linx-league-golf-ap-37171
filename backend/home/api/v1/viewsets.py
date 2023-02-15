@@ -20,6 +20,7 @@ class UserProfileAPIView(APIView):
     def get(self, request):
         try:
             profile = Profile.objects.get(user=request.user)
+            print(profile)
             profile_serializer = UserProfileSerializer(profile)
             return Response(data=profile_serializer.data)
         except Exception as e:
