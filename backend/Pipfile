@@ -37,6 +37,7 @@ psycopg2-binary = "~=2.8.6"
 black = "*"
 drf-spectacular = "*"
 stripe = "==2.60.0"
+django-cors-headers = "==3.10.1"
 
 [pipenv]
 allow_prereleases = true
