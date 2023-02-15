@@ -46,11 +46,9 @@ export default function ProfileScreen({ route }) {
       getProfileInfo()
     }
   }, [token])
-  console.log(userInfo, "porfile")
   const getProfileInfo = async () => {
     setLoading(true)
     const response = await getProfile(user?.user?.id, token)
-    console.log(response, "response of profile")
     const res = JSON.parse(response)
     setLoading(false)
     if (res.id) {

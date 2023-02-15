@@ -80,13 +80,13 @@ class UserSerializer2(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "email", "name", "profile"]
+        fields = ["id", "email", "name", "profile","first_name","last_name"]
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "email", "name"]
+        fields = ["id", "email", "name","first_name","last_name"]
 
 
 class PasswordSerializer(PasswordResetSerializer):

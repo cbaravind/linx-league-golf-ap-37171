@@ -1,4 +1,9 @@
-import { View, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native"
 import React, { useEffect, useState } from "react"
 import { colors, fonts } from "../../../theme"
 import { Box, Text, Avatar, Image, Button } from "native-base"
@@ -121,77 +126,77 @@ const ScoreTracker = ({ players, gameId, hole }) => {
 }
 export default ScoreTracker
 const styles = StyleSheet.create({
-    container: {
-        shadowColor: "rgba(125, 158, 73, 0.15)",
-        borderRadius: 8,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
-        marginBottom: 10
+  container: {
+    shadowColor: "rgba(125, 158, 73, 0.15)",
+    borderRadius: 8,
+    shadowOffset: {
+      width: 0,
+      height: 4
     },
-    box: {
-        borderWidth: 5,
-        borderColor: colors.background,
-        borderRadius: 10,
-        width: "45%",
-        // alignItems:"center",
-        justifyContent: "center"
-    },
-    text: {
-        fontFamily: fonts.PROXIMA_REGULAR,
-        fontSize: 10,
-        fontWeight: "400",
-        color: colors.text1,
-        textAlign: "center"
-    },
-    chartText: bool => ({
-        fontFamily: fonts.PROXIMA_REGULAR,
-        fontSize: 8,
-        fontWeight: "400",
-        color: colors.text1,
-        textAlign: "center",
-        transform: [{ rotate: bool ? "180deg" : "0deg" }],
-        marginVertical: -6
-    }),
-    row: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: 5,
-        paddingVertical: 7
-    },
-    horizontalImg: {
-        height: 52,
-        width: 26,
-        right: -11,
-        alignItems: "center",
-        justifyContent: "center"
-        //   marginTop: -27, marginLeft: -28,
-    },
-    verticalImg: {
-        height: 26,
-        width: 52,
-        marginRight: 3,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    circle: {
-        zIndex: 1,
-        backgroundColor: "#7D9E49",
-        height: 45,
-        width: 45,
-        borderRadius: 50,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    smallText: {
-        fontSize: 5,
-        color: colors.text1,
-        fontFamily: fonts.PROXIMA_REGULAR,
-        textAlign: "center",
-        fontWeight: "400",
-        lineHeight: 5.5
-    }
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    marginBottom: 10
+  },
+  box: {
+    borderWidth: 5,
+    borderColor: colors.background,
+    borderRadius: 10,
+    width: "45%",
+    // alignItems:"center",
+    justifyContent: "center"
+  },
+  text: {
+    fontFamily: fonts.PROXIMA_REGULAR,
+    fontSize: 10,
+    fontWeight: "400",
+    color: colors.text1,
+    textAlign: "center"
+  },
+  chartText: bool => ({
+    fontFamily: fonts.PROXIMA_REGULAR,
+    fontSize: 8,
+    fontWeight: "400",
+    color: colors.text1,
+    textAlign: "center",
+    transform: [{ rotate: bool ? "180deg" : "0deg" }],
+    marginVertical: -6
+  }),
+  row: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 5,
+    paddingVertical: 7
+  },
+  horizontalImg: {
+    height: 52,
+    width: 26,
+    right: -11,
+    alignItems: "center",
+    justifyContent: "center"
+    //   marginTop: -27, marginLeft: -28,
+  },
+  verticalImg: {
+    height: 26,
+    width: 52,
+    marginRight: 3,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  circle: {
+    zIndex: 1,
+    backgroundColor: "#7D9E49",
+    height: 45,
+    width: 45,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  smallText: {
+    fontSize: 5,
+    color: colors.text1,
+    fontFamily: fonts.PROXIMA_REGULAR,
+    textAlign: "center",
+    fontWeight: "400",
+    lineHeight: 5.5
+  }
 })
