@@ -37,7 +37,7 @@ class GameScoreModelViewSet(viewsets.ModelViewSet):
         return models.GameScore.objects.all()
 
     def get_serializer_class(self):
-        return serializers.GameScoreSerializer
+        return serializers.GameScoreSerializerList
 
     def get_permissions(self):
         return (IsAuthenticated(),)
