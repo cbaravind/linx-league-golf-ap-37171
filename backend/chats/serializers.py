@@ -16,7 +16,7 @@ class ChatUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "username", "profile"]
+        fields = ["id", "email", "username", "profile"]
 
     def get_profile(self, obj):
         try:
