@@ -7,23 +7,24 @@ import ScoreTable from "./components/ScoreTable"
 import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
 import { shareOptions } from "../../constants"
-import Share from 'react-native-share'
+import Share from "react-native-share"
 import { getGameScore } from "../../../api"
 import { useSelector } from "react-redux"
 import MyScoreTable from "./components/MyScoreTable"
 import ProfileImage from "../../Components/ProfileImage"
+
 export default function ScoreDetailScreen({ route }) {
+  const { gameId, holes, roundDate, roundTime, leagueName, players } =
+    route?.params
   const { token, user } = useSelector(state => state.auth?.user)
   const [gameScores, setGameScores] = useState(false)
-  const { gameId, holes, roundDate, roundTime, leagueName, players } = route?.params
   const onShare = () => {
-
     Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
+      .then(res => {
+        console.log(res)
       })
-      .catch((err) => {
-        err && console.log(err);
+      .catch(err => {
+        err && console.log(err)
       })
   }
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function ScoreDetailScreen({ route }) {
   }, [])
   const scoreHandler = async () => {
     const response = await getGameScore(gameId, token)
+    console.log(response, "response of gameee")
     const res = JSON.parse(response)
     if (res.results?.length) {
       setGameScores(res.results)
@@ -52,39 +54,53 @@ export default function ScoreDetailScreen({ route }) {
       >
         <Text style={styles.h1}>{leagueName}</Text>
         <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
-          <Text style={styles.text}>{roundDate}, {roundTime}</Text>
+          <Text style={styles.text}>
+            {roundDate}, {roundTime}
+          </Text>
         </View>
         <ScoreTable />
         <MyScoreTable scores={gameScores} />
         <View style={styles.divider} />
         <View style={styles.card}>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
-            {players?.map((player) => (
-              <View style={styles.row}>
-                <View style={[styles.cell, { width: 70 }]}>
-                  <ProfileImage
-                    image={{ uri: player?.profile_image }}
-                    width={30} height={30}
-                  />
-                  <Text style={styles.text}>
-                    {player?.user?.name || player?.user?.first_name}
-                  </Text>
-                </View>
-                {gameScores ?
-                  gameScores?.map((item) => (
-                    item.user == player?.user?.id &&
-                    <View style={styles.cell}>
-                      <Text style={styles.text}>{item.score}</Text>
+          {players?.map(
+            player =>
+              player.user?.id != user?.user.id && (
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}
+                >
+                  <View style={styles.row}>
+                    <View style={[styles.cell, { width: 70 }]}>
+                      <ProfileImage
+                        imgStyle={{ borderRadius: 30 }}
+                        image={{ uri: player?.profile_image }}
+                        width={30}
+                        height={30}
+                      />
+                      <Text
+                        adjustsFontSizeToFit
+                        numberOfLines={1}
+                        style={styles.text}
+                      >
+                        {player?.user?.name || player?.user?.first_name}
+                      </Text>
                     </View>
-                  ))
-                  :
-                  <></>
-                }
-              </View>
-
-            ))}
-
-          </ScrollView>
+                    {gameScores ? (
+                      gameScores?.map(
+                        item =>
+                          item.user == player?.user?.id && (
+                            <View style={styles.cell}>
+                              <Text style={styles.text}>{item.score}</Text>
+                            </View>
+                          )
+                      )
+                    ) : (
+                      <></>
+                    )}
+                  </View>
+                </ScrollView>
+              )
+          )}
         </View>
       </View>
     </>
@@ -98,21 +114,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: fonts.PROXIMA_REGULAR
   },
-  text: {
-    color: colors.text1,
-    fontSize: 14,
-    fontFamily: fonts.PROXIMA_REGULAR,
-    fontWeight: "400",
-    textAlign: "center"
+
+  divider: {
+    height: 1,
+    width: "88%",
+    backgroundColor: colors.green,
+    alignSelf: "center",
+    marginVertical: 5
   },
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 30,
-    backgroundColor: "green"
-    // backgroundColor: '#fff'
-  },
-  divider: { height: 1, width: '88%', backgroundColor: colors.green, alignSelf: "center", marginVertical: 5 },
   card: {
     backgroundColor: colors.white,
     margin: 15,
@@ -120,23 +129,15 @@ const styles = StyleSheet.create({
     paddingVertical: 15
   },
   row: {
-    height: 50,
+    height: 54,
     backgroundColor: "#fff",
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 6,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "flex-start"
   },
   title: { flex: 1 },
-  wrapper: { flexDirection: "row" },
-  // card: {
-  //   borderRadius: 20,
-  //   backgroundColor: '#fff',
-  //   overflow: "hidden",
-  //   flex: 1,
-  //   paddingVertical: 10,
 
-  // },
   cell: {
     alignItems: "center",
     justifyContent: "center",
@@ -149,6 +150,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     color: colors.text1,
-    fontFamily: fonts.PROXIMA_REGULAR,
-  },
+    fontFamily: fonts.PROXIMA_REGULAR
+  }
 })

@@ -150,7 +150,6 @@ export const updateProfilePicture = async (params, id, token) => {
 }
 
 export const updateProfile = async (params, id, token) => {
-  console.log(params,token,id)
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -183,7 +182,7 @@ export const getUserProfile = async token => {
   return response.text()
 }
 export const getAllUsers = async token => {
-  console.log(token,'token---')
+  console.log(token, "token---")
   const requestOptions = {
     method: "GET",
     headers: {
@@ -201,7 +200,6 @@ export const getAllUsers = async token => {
 }
 export const makeFriends = async (id, data, token) => {
   const params = { p_ids: data }
-  console.log(params)
   const requestOptions = {
     method: "POST",
     headers: {
@@ -283,6 +281,7 @@ export const postLeague = async (data, token) => {
 }
 
 export const createGame = async (data, token) => {
+  console.log(data, "data")
   const requestOptions = {
     method: "POST",
     headers: {
@@ -365,10 +364,9 @@ export const postChatRoom = async (data, token) => {
   return response.text()
 }
 
-export const postGameScore = async (data, token ,method,id) => {
-  const  url = method=='POST'?`${API_URL}/api/v1/game-score/`:`${API_URL}/api/v1/game-score/${id}/`
-  const response = await fetch(url, {
-    method: method,
+export const postGameScore = async (data, token) => {
+  const response = await fetch(`${API_URL}/api/v1/game-score/`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
@@ -407,4 +405,3 @@ export const leagueGolfCourses = async (id, token) => {
   })
   return response.text()
 }
-

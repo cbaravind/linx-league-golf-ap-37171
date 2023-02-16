@@ -7,11 +7,23 @@ import { colors, fonts } from "../../../theme"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { useNavigation } from "@react-navigation/core"
 import RoutesKey from "../../../Navigation/routesKey"
+import { useSelector } from "react-redux"
 export default function ChatCard({ chat }) {
   const navigation = useNavigation()
+  const { user } = useSelector(state => state.auth?.user)
+
+  const otherUser =
+    chat?.receiver?.profile?.user?.id == user?.user?.id
+      ? chat.sender
+      : chat.receiver
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(RoutesKey.CHAT, { user: chat?.receiver, apiHit: false })}
+      onPress={() =>
+        navigation.navigate(RoutesKey.CHAT, {
+          user: chat?.receiver,
+          apiHit: false
+        })
+      }
       style={{
         paddingLeft: 8,
         paddingVertical: 15,
@@ -21,7 +33,9 @@ export default function ChatCard({ chat }) {
       }}
     >
       <View style={{ paddingRight: 14 }}>
-        <Text style={[styles.title, { textAlign: "right" }]}>{chat.created_at}</Text>
+        <Text style={[styles.title, { textAlign: "right" }]}>
+          {chat.created_at}
+        </Text>
       </View>
       <Row>
         <Row style={{ justifyContent: "flex-start", flex: 1 }}>
@@ -37,7 +51,12 @@ export default function ChatCard({ chat }) {
             style={styles.linearGradient}
           >
             <Image
-              source={require("../../../assets/images/profileImg.png")}
+              // source={require("../../../assets/images/profileImg.png")}
+              source={
+                otherUser?.profile?.profile_image
+                  ? { uri: otherUser?.profile.profile_image }
+                  : require("../../../assets/images/profile_default.png")
+              }
               style={styles.img}
             />
           </LinearGradient>

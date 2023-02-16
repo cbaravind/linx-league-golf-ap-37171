@@ -96,6 +96,7 @@ THIRD_PARTY_APPS = [
     "storages",
     "django_filters",
     "drf_spectacular",
+    "corsheaders",
 ]
 MODULES_APPS = get_modules()
 
@@ -104,6 +105,7 @@ INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS + MODULES_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -317,3 +319,5 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
+
+CORS_ALLOW_ALL_ORIGINS = True

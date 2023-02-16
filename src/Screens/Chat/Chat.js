@@ -18,7 +18,7 @@ export default function Chat({ route }) {
   const hitApi = route?.params?.apiHit
   const [text, setText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
-  const currentChannel = otherUser.id + user?.user.id.toString()
+  const currentChannel = otherUser?.id + user?.user.id.toString()
   const [chatList, setChatList] = useState([])
 
   // const [files, setFiles] = useState(false)
@@ -81,7 +81,7 @@ export default function Chat({ route }) {
   const createRoom = async () => {
     let data = {
       room: currentChannel,
-      meta_data: otherUser.name,
+      meta_data: otherUser?.name,
       sender: user?.user.id,
       receiver: otherUser?.id
     }
@@ -184,12 +184,17 @@ export default function Chat({ route }) {
       }
     }
   }
+  console.log(otherUser?.profile?.profile_image, "other user")
   return (
     <Container>
       <AppHeader
         leftIcon={
           <ProfileImage
-            image={require("../../assets/images/profileImg.png")}
+            image={
+              otherUser?.profile?.profile_image
+                ? { uri: otherUser.profile.profile_image }
+                : require("../../assets/images/profile_default.png")
+            }
             style={{ marginRight: 8 }}
             height={34}
             width={34}
