@@ -11,7 +11,7 @@ const DatePicker = props => {
   const [selectedDate, setSelectedDate] = useState("")
   // const [dateTimeSelected, setDateTimeSelected] = useState(false)
   const minDate = new Date() // Today
-  const maxDate = new Date(2023, 6, 3)
+  const maxDate = new Date()
   const onDateChange = (date, type) => {
     console.log(date, "date changed")
     setSelectedDate(date.toISOString().split("T")[0])
@@ -55,6 +55,7 @@ const DatePicker = props => {
                 <Box mt="4">
                   {props.profile == true ? (
                     <Calendar
+                    maxDate={new Date()}
                       onMonthChange={props?.onMonthChange}
                       markedDates={props?.markedDates}
                       onDayPress={props?.onDayPress}

@@ -5,6 +5,7 @@ export const CSRF_Token =
   "0SZF0SKGN2qB1WzJ15Bhl9zCfAZnvGr3nB6enUgIqpgHmdPPeH20io2EeAQRD41E"
 export const IMAGE_PLACEHOLDER =
   "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+  export const LEAGUE_URL="https://www.usga.org/content/usga/home-page/get-handicap.html"
 export const publishKey = "pub-c-004f2c89-9136-4cf8-bcbf-fceb8b9ef2f0"
 export const subscribekey = "sub-c-f9ce9ceb-c608-4bcd-a862-f59490a11a39"
 export const imagePickerOptions = {

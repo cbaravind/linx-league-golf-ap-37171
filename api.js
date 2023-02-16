@@ -379,7 +379,7 @@ export const postGameScore = async (data, token) => {
 }
 
 export const getGameScore = async (id, token) => {
-  const response = await fetch(`${API_URL}/api/v1/game-score/?game_id=${id}`, {
+  const response = await fetch(`${API_URL}/api/v1/game-score/?game__id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -155,25 +155,23 @@ const Signup = () => {
                       fontFamily={fonts.PROXIMA_REGULAR}
                     >
                       {" "}
-                      I have read the
+                      I have read the {" "}
                       <Link
                         onPress={() =>
                           navigation.navigate(RoutesKey.TERMSANDCONDITIONS)
-                        }
-                      >
-                        <Text mt={"0.5"} style={styles.greenText}>
-                          {"  "}
+                        }>
+                        <Text  mt={"0.5"} style={styles.greenText}>
                           Terms and Conditions
                         </Text>
                       </Link>
-                      {"  and"}
+                      {"  and "}
                       <Link
                         onPress={() =>
                           navigation.navigate(RoutesKey.PRIVACYPOLICY)
                         }
                       >
-                        <Text mt={"0.5"} style={styles.greenText}>
-                          {"  "}
+                        <Text  style={styles.greenText}>
+                          
                           Privacy Policy
                         </Text>
                       </Link>
@@ -270,14 +268,16 @@ const styles = StyleSheet.create({
   greenText: {
     color: colors.green,
     fontSize: 14,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     textDecorationLine: "underline",
-    fontWeight: "400"
+    fontWeight: "700",
+    fontFamily: fonts.PROXIMA_REGULAR,
+
   },
   text: {
     fontSize: 12,
     fontWeight: "500",
-    fontFamily: fonts.PROXIMA_REGULAR
+    fontFamily: fonts.PROXIMA_REGULAR,
 
     // color: "red",
   }

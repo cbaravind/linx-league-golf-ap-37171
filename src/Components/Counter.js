@@ -12,7 +12,7 @@ export default function Counter({ value, setValue }) {
             <View style={styles.counter} >
                 <Text style={styles.text}>{value}</Text>
             </View>
-            <TouchableOpacity style={styles.iconContainer} onPress={() => setValue(value + 1)} >
+            <TouchableOpacity style={styles.iconContainer} onPress={() =>{value >=1 ? setValue(value - 1):null}} >
                 <Icon name="minus" size={5}  as={Entypo} color={colors.white} />
             </TouchableOpacity>
         </View>

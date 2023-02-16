@@ -44,7 +44,7 @@ const PostScore = ({ route }) => {
         err && console.log(err)
       })
   }
-console.log(details)
+console.log(details,'details')
   return (
     <>
       <AppHeader

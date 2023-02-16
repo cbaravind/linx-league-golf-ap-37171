@@ -9,11 +9,12 @@ import Counter from "../../../Components/Counter"
 import { useSelector } from "react-redux"
 import { getGameScore, postGameScore } from "../../../../api"
 const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
+
   const { token, user } = useSelector(state => state.auth?.user)
   const [addScoreClicked, setAddScoreClicked] = useState(false)
   const [putts, setPutts] = useState(0)
   const [score, setScore] = useState(1)
-  const [FIR, setFIR] = useState(false)
+  const [FIR, setFIR] = useState('right')
   const [btnLoading, setBtnLoading] = useState(false)
 
   const gameScore = async () => {
@@ -26,20 +27,22 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
       hole: hole,
       fir:FIR
     }
-    const response = await postGameScore(obj, token,"POST",0)
+    const response = await postGameScore({data:[obj]}, token,"POST",0)
     const res = JSON.parse(response)
+    console.log(res)
     setBtnLoading(false)
-    if(res.game){
+    // if(res.data){
 
       setAddScoreClicked(false)
       setHole(hole+1)
       setScore(0)
       setPutts(0)
-    }
-    if (res?.results?.length) setAddScoreClicked(false)
+    // }
+    // if (res?.results?.length) setAddScoreClicked(false)
 
     
   }
+  console.log(user)
   // useEffect(() => {
   //   scoreHandler()
   // }, [])
@@ -83,7 +86,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
           colorScheme="green"
         >
           {btnLoading?
-          <ActivityIndicator/>
+          <ActivityIndicator color={'#fff'} />
           :
           <Text
           textAlign="center"

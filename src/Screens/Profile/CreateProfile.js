@@ -23,7 +23,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
+  Linking,
 } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
@@ -34,13 +35,14 @@ import { useRoute, useNavigation } from "@react-navigation/native"
 import { colors } from "../../theme"
 import { updateProfile, updateProfilePicture } from "../../../api"
 import { useDispatch, useSelector } from "react-redux"
-import { imagePickerOptions, IMAGE_PLACEHOLDER } from "../../constants"
+import { imagePickerOptions, IMAGE_PLACEHOLDER, LEAGUE_URL, shareOptions } from "../../constants"
 import { launchCamera, launchImageLibrary } from "react-native-image-picker"
 import Row from "../../Components/Row"
 import RoutesKey from "../../Navigation/routesKey"
 import { showMessage } from "react-native-flash-message"
 import { saveUser } from "../../redux/reducers/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import Share from "react-native-share"
 
 const CreateProfile = () => {
   const toast = useToast()
@@ -56,7 +58,7 @@ const CreateProfile = () => {
     lastName: user?.user?.last_name ? user?.user?.last_name : "",
     email: user?.user?.email ? user?.user?.email : "",
     ghin: user?.ghin ? user.ghin : "",
-    zipCode: "",
+    zipCode: user?.zip_code ? user.zip_code : "",
     imageUploading: false,
     image: user?.profile_image ? { uri: user?.profile_image } : "",
     imgUploadStatus: false
@@ -139,7 +141,8 @@ const CreateProfile = () => {
       ghin: formData.ghin,
       has_ghin: valueGHIN,
       birthdate: service,
-      friends: user?.friends 
+      friends: user?.friends ,
+      zip_code:formData.zipCode
     }
     const response = await updateProfile(data, id, token)
     const res = JSON.parse(response)
@@ -149,7 +152,7 @@ const CreateProfile = () => {
       await AsyncStorage.setItem("user", JSON.stringify(res))
       dispatch(saveUser({ user: res, token: token }))
       // navigation.goBack()
-      navigation.navigate(RoutesKey.BOTTOMTAB)
+      navigation.navigate(RoutesKey.HOME)
       showMessage({
         type: "success",
         message: "Profile updated"
@@ -212,15 +215,55 @@ const CreateProfile = () => {
       if (res.assets) {
         setFormData({ ...formData, imageUploading: true })
         if (res.assets[0] && res.assets[0].base64) {
+
           setFormData({
             ...formData,
             image: res.assets[0].base64,
             imageUploading: false
           })
+          const id = user?.user?.id
+
+          setBtnLoading(false)
+          const params = new FormData()
+          params.append("profile_image", {
+            name: res.assets[0].fileName,
+            type: res.assets[0].type,
+            uri: res.assets[0].uri
+          })
+          const result = await updateProfilePicture(params, id, token)
+          
+          const response = JSON.parse(result)
+          console.log(response.id,'image')
+          if (response.id) {
+            setFormData({
+              ...formData,
+              imgUploadStatus: 200,
+              image: {uri:response.profile_image}
+            })
+          } else if (res.detail) {
+            setFormData({ ...formData, imgUploadStatus: res.detail })
+          }
         }
       }
     })
   }
+  
+  const onShare = () => {
+    setShowModal(false)
+    Share.open(shareOptions)
+      .then(res => {
+        setContinueWithoutGHIN(false)
+        setDisableGHIN(false)
+        console.log(res)
+      })
+      .catch(err => {
+        err && console.log(err)
+      })
+  }
+  const openLeagueURL=()=>{
+    Linking.openURL(LEAGUE_URL)
+  }
+  console.log(formData.image)
   return (
     <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
       {route?.params?.setting == true ? (
@@ -501,7 +544,7 @@ const CreateProfile = () => {
                         but when you’re ready to compete for cash & prizes,
                         please sign up for yours!
                       </Text>
-                      <Button shadow={5} mt="5" bg="#7D9E49">
+                      <Button onPress={onShare} shadow={5} mt="5" bg="#7D9E49">
                         INVITE YOUR FRIENDS
                       </Button>
                     </>
@@ -531,7 +574,7 @@ const CreateProfile = () => {
                         </Text>{" "}
                         web app.
                       </Text>
-                      <Button shadow={5} mt="5" bg="#7D9E49">
+                      <Button onPress={openLeagueURL} shadow={5} mt="5" bg="#7D9E49">
                         OK
                       </Button>
                       <Button
@@ -562,11 +605,12 @@ const CreateProfile = () => {
                       >
                         Find a local league to compete in!
                       </Text>
-                      <Button shadow={5} mt="5" bg="#7D9E49">
+                      <Button onPress={openLeagueURL} shadow={5} mt="5" bg="#7D9E49">
                         FIND MY LEAGUE
                       </Button>
                       <Button
-                        onPress={() => navigation.navigate(RoutesKey.HOME)}
+                        isLoading={btnLoading}
+                        onPress={() => submitHandler()}
                         bg="#fff"
                         borderColor="black"
                         variant="outline"
