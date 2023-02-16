@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  PermissionsAndroid,
+  Platform
 } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useNavigation } from "@react-navigation/core"
@@ -47,12 +49,27 @@ export default function AddFriends({ route }) {
   }, [selectedPlayers])
 
   const fetchContacts = () => {
+  
     Contacts.checkPermission().then(permission => {
       console.log("permission", permission)
       if (permission === "undefined") {
-        Contacts.requestPermission().then(permission => {
-          // ...
-        })
+        if (Platform.OS == 'android') {
+
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+            {
+              'title': 'Contacts',
+              'message': 'This app would like to view your contacts.',
+              'buttonPositive': 'Please accept bare mortal'
+            }
+          )
+        }else{
+
+          Contacts.requestPermission().then(permission => {
+            // ...
+            
+          })
+        }
       }
       if (permission === "authorized") {
         // yay!
@@ -80,20 +97,20 @@ export default function AddFriends({ route }) {
 
   const leagueHandler = async () => {
     // setBtnLoading(true)
-    const selected =friendsList?.length? friendsList.map(i => {
+    const selected = friendsList?.length ? friendsList.map(i => {
       return i?.profile?.id
-    }) :[]
-    console.log(selected,'selected')
+    }) : []
+    console.log(selected, 'selected')
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`
-   
+
     const dataGame = {
       round_date: moment(date).format("YYYY-MM-DD"),
       round_time: moment.utc(time).format("HH:mm:ss"),
       league: 1,
       golf_course: 1,
-      players: [...selected,user?.id]
+      players: [...selected, user?.id]
     }
     // console.log(dataGame,)
     // return
@@ -113,7 +130,7 @@ export default function AddFriends({ route }) {
       })
     }
   }
-console.log(user,'friend')
+  console.log(user, 'friend')
   return (
     <Container>
       <AppHeader
@@ -168,13 +185,13 @@ console.log(user,'friend')
                 renderItem={(data, rowMap) => (
                   <UserProfile
                     name={data.item.name || data.item.first_name || data.item?.profile?.phone_number}
-                    image={null}
+                    image={data.item?.profile?.profile_image}
                     onPress={() =>
                       navigation.navigate(RoutesKey.PROFILE, {
                         user: data.item
                       })
                     }
-                    // item={}
+                  // item={}
                   />
                 )}
                 renderHiddenItem={(data, rowMap) => (
@@ -228,9 +245,9 @@ console.log(user,'friend')
                 styles.button,
                 {
                   borderColor:
-                  //  friendsList?.length?
-                     colors.darkGreen
-                    // : colors.grey3
+                    //  friendsList?.length?
+                    colors.darkGreen
+                  // : colors.grey3
                 }
               ]}
               onPress={() => leagueHandler()}

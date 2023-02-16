@@ -125,7 +125,6 @@ const DateTimePicker= ({dateTimeSelected,setDateTimeSelected}) => {
           mode={"time"}
           open={timePickerOpen}
           date={date}
-          maximumDate={new Date()}
           // timeZoneOffsetInMinutes={6}
           // textColor={colors.white}
           // locale={'en_GB'}

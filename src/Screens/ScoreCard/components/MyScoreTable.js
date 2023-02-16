@@ -8,7 +8,6 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 export default function MyScoreTable({ scores }) {
   const { token, user } = useSelector(state => state.auth?.user)
-  console.log(scores, '====')
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ flex: 1 }} horizontal={true}>
@@ -16,7 +15,7 @@ export default function MyScoreTable({ scores }) {
           {/* <View style={styles.row}> */}
           <View style={styles.row}>
             <View style={[styles.cell, { width: 70 }]}>
-              <ProfileImage imgStyle={{borderRadius:30}} image={{ uri: user?.profile_image }} width={30} height={30} />
+              <ProfileImage imgStyle={{borderRadius:20}} image={{ uri: user?.profile_image }} width={30} height={30} />
               <Text  adjustsFontSizeToFit numberOfLines={1} style={styles.text}>{user?.user?.name || user?.user?.first_name}</Text>
             </View>
             {scores ?

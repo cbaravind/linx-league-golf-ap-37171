@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import {
   Avatar,
   Box,
@@ -45,33 +45,35 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import Share from "react-native-share"
 
 const CreateProfile = () => {
-  const toast = useToast()
-  const route = useRoute()
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
+
+  const toast         = useToast()
+  const route         = useRoute()
+  const navigation    = useNavigation()
+  const initialRender  = useRef(true);
+  const dispatch       = useDispatch()
   const { token, user } = useSelector(state => state?.auth?.user)
 
-  const [show, setShow] = useState(false)
+  const [startDate, setStartDate]     = useState("")
   const [countryCode, setCountryCode] = useState("+1")
-  const [formData, setFormData] = useState({
-    firstName: user?.user?.first_name ? user?.user?.first_name : "",
-    lastName: user?.user?.last_name ? user?.user?.last_name : "",
-    email: user?.user?.email ? user?.user?.email : "",
-    ghin: user?.ghin ? user.ghin : "",
-    zipCode: user?.zip_code ? user.zip_code : "",
-    imageUploading: false,
-    image: user?.profile_image ? { uri: user?.profile_image } : "",
+  const [diableGHIN, setDisableGHIN]  = useState(true)
+  const [show, setShow]               = useState(false)
+  const [showModal, setShowModal]     = useState(false)
+  const [btnLoading, setBtnLoading]   = useState(false)
+  const [value, setValue]             = useState(user?.gender)
+  let [phoneNumber, setPhoneNumber]   = useState(user ? user?.phone_number : "")
+  let [service, setService]           = useState(user?.birthdate ? user?.birthdate : "")
+  const [valueGHIN, setValueGHIN]     = useState(user? user.has_ghin ? 'Yes' : "No":"")
+  const [formData, setFormData]       = useState({
+    firstName      : user?.user?.first_name ? user?.user?.first_name : "",
+    lastName       : user?.user?.last_name ? user?.user?.last_name : "",
+    email          : user?.user?.email ? user?.user?.email : "",
+    ghin           : user?.ghin ? user.ghin : "",
+    zipCode        : user?.zip_code ? user.zip_code : "",
+    imageUploading : false,
+    image          : user?.profile_image ? { uri: user?.profile_image } : "",
     imgUploadStatus: false
   })
-  let [phoneNumber, setPhoneNumber] = useState(user ? user?.phone_number : "")
-  const [startDate, setStartDate] = useState("")
-  let [service, setService] = useState(user?.birthdate ? user?.birthdate : "")
-  const [value, setValue] = useState(user?.gender)
-  const [valueGHIN, setValueGHIN] = useState("")
-  const [diableGHIN, setDisableGHIN] = useState(true)
-  const [showModal, setShowModal] = useState(false)
-  const [showPickerModal, setShowPickerModal] = useState(false)
-  const [btnLoading, setBtnLoading] = useState(false)
+  const [showPickerModal, setShowPickerModal]         = useState(false)
   const [continueWithoutGHIN, setContinueWithoutGHIN] = useState(false)
 
   useEffect(() => {
@@ -81,14 +83,19 @@ const CreateProfile = () => {
   }, [service])
 
   useEffect(() => {
-    if (valueGHIN == "Yes") {
-      setDisableGHIN(false)
-      setShowModal(true)
+    if (initialRender.current) {
+      initialRender.current = false;
     } else {
-      setDisableGHIN(true)
-    }
-    if (valueGHIN == "No") {
-      setShowModal(true)
+      if (valueGHIN == "Yes") {
+        setContinueWithoutGHIN(false)
+        setDisableGHIN(false)
+        setShowModal(true)
+      } else {
+        setDisableGHIN(true)
+      }
+      if (valueGHIN == "No") {
+        setShowModal(true)
+      }
     }
   }, [valueGHIN])
 
@@ -247,7 +254,7 @@ const CreateProfile = () => {
       }
     })
   }
-  
+
   const onShare = () => {
     setShowModal(false)
     Share.open(shareOptions)
@@ -263,7 +270,6 @@ const CreateProfile = () => {
   const openLeagueURL=()=>{
     Linking.openURL(LEAGUE_URL)
   }
-  console.log(formData.image)
   return (
     <View style={{ flex: 0, backgroundColor: "#F1F2F2", height: "100%" }}>
       {route?.params?.setting == true ? (

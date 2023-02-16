@@ -84,7 +84,7 @@ export default function Players({ route }) {
                     ? setSelected(selected.filter(e => e.id != item.id))
                     : setSelected([...selected, item])
                 }}
-                image={item.profile_image}
+                image={item.profile?.profile_image}
               />
             )}
           />

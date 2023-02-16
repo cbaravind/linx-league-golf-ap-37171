@@ -18,6 +18,7 @@ export default function ScoreDetailScreen({ route }) {
     route?.params
   const { token, user } = useSelector(state => state.auth?.user)
   const [gameScores, setGameScores] = useState(false)
+  
   const onShare = () => {
     Share.open(shareOptions)
       .then(res => {
@@ -49,8 +50,8 @@ export default function ScoreDetailScreen({ route }) {
           </Pressable>
         }
       />
-      <View
-        style={{ backgroundColor: colors.background, flex: 1, paddingTop: 30 }}
+      <ScrollView
+        contentContainerStyle={{ backgroundColor: colors.background, paddingVertical: 30 }}
       >
         <Text style={styles.h1}>{leagueName}</Text>
         <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
@@ -102,7 +103,7 @@ export default function ScoreDetailScreen({ route }) {
               )
           )}
         </View>
-      </View>
+      </ScrollView>
     </>
   )
 }
@@ -126,7 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 15,
     borderRadius: 15,
-    paddingVertical: 15
+    paddingTop: 15,paddingBottom:25,
+    marginBottom:20
   },
   row: {
     height: 54,

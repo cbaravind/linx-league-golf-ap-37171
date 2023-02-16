@@ -17,7 +17,7 @@ export default function ProfileImage({ image, style, height, width,imgStyle }) {
         style
       ]}
     >
-      <Image source={image} resizeMode="contain" style={[styles.image,imgStyle]} />
+      <Image source={image} resizeMode="cover" style={[styles.image,imgStyle]} />
     </LinearGradient>
   )
 }

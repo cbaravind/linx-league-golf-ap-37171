@@ -45,12 +45,12 @@ export default function RoundCard({ item, containerStyle, index }) {
                   zIndex: 10,
                   position: "absolute",
                   left: -(16 * (index + 1)),
-                  bottom: 2
+                  bottom: 2,
                 }
               ]}
-              resizeMode={"contain"}
+              resizeMode={"cover"}
               source={{
-                uri: player?.profile?.profile_image || IMAGE_PLACEHOLDER
+                uri: player?.profile_image || IMAGE_PLACEHOLDER
               }}
             />
           ))}

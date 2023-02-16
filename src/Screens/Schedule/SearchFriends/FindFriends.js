@@ -41,6 +41,7 @@ export default function FindFriends({ route }) {
     setLoading(true)
     const response = await getAllUsers(token)
     const res = JSON.parse(response)
+    setLoading(false)
     // console.log(res, "getting all users")
     if (res.count) {
       setFriendsArray(res.results)
@@ -64,7 +65,7 @@ export default function FindFriends({ route }) {
       setKnownUsers(friends)
       setFriendsArray(friends)
     }
-    setLoading(false)
+    
   }
 
   const requestHandler = async () => {
@@ -122,7 +123,7 @@ export default function FindFriends({ route }) {
                     ? setSelected(selected.filter(e => e.id != item.id))
                     : setSelected([...selected, item])
                 }}
-                image={item?.profile?.profile_image}
+                image={item?.profile_image}
               />
             )}
           />

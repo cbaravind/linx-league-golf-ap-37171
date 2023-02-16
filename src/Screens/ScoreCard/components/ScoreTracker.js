@@ -2,7 +2,8 @@ import {
   View,
   ImageBackground,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native"
 import React, { useEffect, useState } from "react"
 import { colors, fonts } from "../../../theme"
@@ -15,8 +16,8 @@ import ScoreCounter from "./ScoreCounter"
 
 const ScoreTracker = ({ players, gameId, hole }) => {
   const { token, user } = useSelector(state => state.auth?.user)
-  const [scores, setScores] = useState([])
-  const [btnLoading, setBtnLoading] = useState(false)
+  const [scores, setScores]             = useState([])
+  const [btnLoading, setBtnLoading]     = useState(false)
   const [scoreUpdated, setScoreUpdated] = useState(false)
 
   const gameScore = async () => {
@@ -75,7 +76,7 @@ const ScoreTracker = ({ players, gameId, hole }) => {
               colorScheme="green"
             >
               {btnLoading ? (
-                <ActivityIndicator />
+                <ActivityIndicator color={'#fff'} />
               ) : (
                 <Text
                   textAlign="center"
@@ -107,13 +108,13 @@ const ScoreTracker = ({ players, gameId, hole }) => {
                 item =>
                   item.id != user?.id && (
                     <Box style={styles.row} flexDirection="row">
-                      <Box flexDirection="row">
-                        <Avatar source={{ uri: item.image }} />
+                      <Box alignItems={'center'} flexDirection="row">
+                        <Avatar width={37} height={37} source={{ uri: item.profile_image }} />
                         <Text
                           fontWeight="700"
                           fontSize="16"
                           textAlign={"center"}
-                          mt="3"
+                        //   mt="3"
                           ml={"2"}
                           // mb="2"
                         >
@@ -176,9 +177,10 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
     flexDirection: "row",
+    alignItems:"center",
     justifyContent: "space-between",
     paddingHorizontal: 5,
-    paddingVertical: 7
+    paddingVertical: 10,
   },
   horizontalImg: {
     height: 52,
