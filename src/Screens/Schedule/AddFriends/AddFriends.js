@@ -49,25 +49,21 @@ export default function AddFriends({ route }) {
   }, [selectedPlayers])
 
   const fetchContacts = () => {
-  
     Contacts.checkPermission().then(permission => {
       console.log("permission", permission)
-      if (permission === "undefined") {
-        if (Platform.OS == 'android') {
-
+      if (permission === "undefined" || permission === "denied") {
+        if (Platform.OS == "android") {
           PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
             {
-              'title': 'Contacts',
-              'message': 'This app would like to view your contacts.',
-              'buttonPositive': 'Please accept bare mortal'
+              title: "Contacts",
+              message: "This app would like to view your contacts.",
+              buttonPositive: "Allow access"
             }
           )
-        }else{
-
+        } else {
           Contacts.requestPermission().then(permission => {
             // ...
-            
           })
         }
       }
@@ -90,6 +86,7 @@ export default function AddFriends({ route }) {
         })
       }
       if (permission === "denied") {
+        console.log("deniedd")
         // x.x
       }
     })
@@ -97,10 +94,12 @@ export default function AddFriends({ route }) {
 
   const leagueHandler = async () => {
     // setBtnLoading(true)
-    const selected = friendsList?.length ? friendsList.map(i => {
-      return i?.profile?.id
-    }) : []
-    console.log(selected, 'selected')
+    const selected = friendsList?.length
+      ? friendsList.map(i => {
+          return i?.profile?.id
+        })
+      : []
+    console.log(selected, "selected")
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`
@@ -130,7 +129,7 @@ export default function AddFriends({ route }) {
       })
     }
   }
-  console.log(user, 'friend')
+  console.log(user, "friend")
   return (
     <Container>
       <AppHeader
@@ -184,14 +183,18 @@ export default function AddFriends({ route }) {
                 keyExtractor={item => item.id}
                 renderItem={(data, rowMap) => (
                   <UserProfile
-                    name={data.item.name || data.item.first_name || data.item?.profile?.phone_number}
+                    name={
+                      data.item.name ||
+                      data.item.first_name ||
+                      data.item?.profile?.phone_number
+                    }
                     image={data.item?.profile?.profile_image}
                     onPress={() =>
                       navigation.navigate(RoutesKey.PROFILE, {
                         user: data.item
                       })
                     }
-                  // item={}
+                    // item={}
                   />
                 )}
                 renderHiddenItem={(data, rowMap) => (

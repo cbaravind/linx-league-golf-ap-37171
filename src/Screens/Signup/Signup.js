@@ -148,34 +148,37 @@ const Signup = () => {
                       setGroupValues(!groupValues)
                     }}
                   />
-                  <Box overflow={"hidden"} width={"90%"} mt={"1.5"}>
+                  <Box
+                    overflow={"hidden"}
+                    width={"90%"}
+                    mt={"1.5"}
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap"
+                    }}
+                  >
                     <Text
                       fontSize={14}
                       fontWeight={"400"}
                       fontFamily={fonts.PROXIMA_REGULAR}
                     >
-                      {" "}
-                      I have read the {" "}
-                      <Link
-                        onPress={() =>
-                          navigation.navigate(RoutesKey.TERMSANDCONDITIONS)
-                        }>
-                        <Text  mt={"0.5"} style={styles.greenText}>
-                          Terms and Conditions
-                        </Text>
-                      </Link>
-                      {"  and "}
-                      <Link
-                        onPress={() =>
-                          navigation.navigate(RoutesKey.PRIVACYPOLICY)
-                        }
-                      >
-                        <Text  style={styles.greenText}>
-                          
-                          Privacy Policy
-                        </Text>
-                      </Link>
+                      I have read the{" "}
                     </Text>
+                    <Link
+                      onPress={() =>
+                        navigation.navigate(RoutesKey.TERMSANDCONDITIONS)
+                      }
+                    >
+                      <Text style={styles.greenText}>Terms and Conditions</Text>
+                    </Link>
+                    {"  and "}
+                    <Link
+                      onPress={() =>
+                        navigation.navigate(RoutesKey.PRIVACYPOLICY)
+                      }
+                    >
+                      <Text style={styles.greenText}>Privacy Policy</Text>
+                    </Link>
                   </Box>
                 </Box>
               </Box>
@@ -271,13 +274,12 @@ const styles = StyleSheet.create({
     // fontFamily: "Roboto",
     textDecorationLine: "underline",
     fontWeight: "700",
-    fontFamily: fonts.PROXIMA_REGULAR,
-
+    fontFamily: fonts.PROXIMA_REGULAR
   },
   text: {
     fontSize: 12,
     fontWeight: "500",
-    fontFamily: fonts.PROXIMA_REGULAR,
+    fontFamily: fonts.PROXIMA_REGULAR
 
     // color: "red",
   }
