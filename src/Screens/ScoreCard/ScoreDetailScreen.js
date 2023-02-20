@@ -12,13 +12,17 @@ import { getGameScore } from "../../../api"
 import { useSelector } from "react-redux"
 import MyScoreTable from "./components/MyScoreTable"
 import ProfileImage from "../../Components/ProfileImage"
+import { Button } from "native-base"
+import AppModal from "../../Components/AppModal"
 
 export default function ScoreDetailScreen({ route }) {
   const { gameId, holes, roundDate, roundTime, leagueName, players } =
     route?.params
   const { token, user } = useSelector(state => state.auth?.user)
+
   const [gameScores, setGameScores] = useState(false)
-  
+  const [roundFinished, setRoundFinished] = useState(false)
+
   const onShare = () => {
     Share.open(shareOptions)
       .then(res => {
@@ -51,7 +55,7 @@ export default function ScoreDetailScreen({ route }) {
         }
       />
       <ScrollView
-        contentContainerStyle={{ backgroundColor: colors.background, paddingVertical: 30 }}
+        contentContainerStyle={{ backgroundColor: colors.background, paddingVertical: 30, flex: 1 }}
       >
         <Text style={styles.h1}>{leagueName}</Text>
         <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
@@ -62,10 +66,10 @@ export default function ScoreDetailScreen({ route }) {
         <ScoreTable />
         <MyScoreTable scores={gameScores} />
         <View style={styles.divider} />
-        <View style={styles.card}>
-          {players?.map(
-            player =>
-              player.user?.id != user?.user.id && (
+        {players?.map(
+          player =>
+            player.user?.id != user?.user.id && (
+              <View style={styles.card}>
                 <ScrollView
                   showsHorizontalScrollIndicator={false}
                   horizontal={true}
@@ -100,10 +104,30 @@ export default function ScoreDetailScreen({ route }) {
                     )}
                   </View>
                 </ScrollView>
-              )
-          )}
+              </View>
+            )
+
+        )}
+        <View style={styles.button}>
+          <Button
+            // style={{ alignSelf: "center" }}
+            width={"60%"}
+          onPress={() => setRoundFinished(true)}
+          >
+            SUBMIT SCORECARD
+          </Button>
         </View>
       </ScrollView>
+      {roundFinished ? (
+        <AppModal
+          heading="Round is finished"
+          onClose={() => setRoundFinished(false)}
+          button
+          onPress={() => setRoundFinished(false)}
+        />
+      ) : (
+        <></>
+      )}
     </>
   )
 }
@@ -127,8 +151,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     margin: 15,
     borderRadius: 15,
-    paddingTop: 15,paddingBottom:25,
-    marginBottom:20
+    paddingTop: 15, paddingBottom: 25,
+    marginBottom: 20
   },
   row: {
     height: 54,
@@ -153,5 +177,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text1,
     fontFamily: fonts.PROXIMA_REGULAR
-  }
+  },
+  button: {
+    backgroundColor: colors.background,
+    // paddingHorizontal: 20,
+    paddingVertical: 10,
+    // paddingTop:5,
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+
+  },
 })

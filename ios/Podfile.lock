@@ -207,13 +207,13 @@ PODS:
   - React-jsinspector (0.64.0)
   - react-native-contacts (7.0.5):
     - React-Core
-  - react-native-date-picker (4.2.6):
+  - react-native-date-picker (4.2.8):
     - React-Core
   - react-native-document-picker (3.4.0):
     - React
   - react-native-image-picker (4.4.0):
     - React-Core
-  - react-native-pager-view (6.1.2):
+  - react-native-pager-view (6.1.4):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -317,7 +317,7 @@ PODS:
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
-  - RNShare (8.0.1):
+  - RNShare (8.2.0):
     - React-Core
   - RNSVG (12.1.1):
     - React
@@ -483,10 +483,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-contacts: 0aa99963d8f29099d4725cd0d2f8b6ef5f0d9a2d
-  react-native-date-picker: 93e43b3084cea595b4d68b1405d6d99849663bd6
+  react-native-date-picker: f9cc1c37e8db8e393d87d7b7227c2cbf164e6f11
   react-native-document-picker: d694111879537cec2c258a1dcd2243d9df746824
   react-native-image-picker: 14910ea6b6a38bd45d1a69cb643b157e6ac142cb
-  react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
+  react-native-pager-view: b58cb9e9f42f64e50cab3040815772c1d119a2e2
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
@@ -505,7 +505,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 58e7b950e0172235ff8296dd39ec145f9577e301
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
-  RNShare: d93e00e906e6174657f6370b480437e4702bc86e
+  RNShare: b089c33619bbfb0a32bc4069c858b9274e694187
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf

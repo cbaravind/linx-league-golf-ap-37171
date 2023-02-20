@@ -8,7 +8,8 @@ import Row from "../../../Components/Row"
 import Counter from "../../../Components/Counter"
 import { useSelector } from "react-redux"
 import { getGameScore, postGameScore } from "../../../../api"
-const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
+
+const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
 
   const { token, user } = useSelector(state => state.auth?.user)
   const [addScoreClicked, setAddScoreClicked] = useState(false)
@@ -25,24 +26,24 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
       game: gameId,
       user: user?.user?.id,
       hole: hole,
-      fir:FIR
+      fir: FIR
     }
-    const response = await postGameScore({data:[obj]}, token,"POST",0)
+    const response = await postGameScore({ data: [obj] }, token, "POST", 0)
     const res = JSON.parse(response)
-    console.log(res)
+    console.log(res, '==')
     setBtnLoading(false)
     // if(res.data){
 
-      setAddScoreClicked(false)
-      setHole(hole+1)
-      setScore(0)
-      setPutts(0)
+    setAddScoreClicked(false)
+    setHole(hole + 1)
+    setScore(0)
+    setPutts(0)
     // }
     // if (res?.results?.length) setAddScoreClicked(false)
 
-    
+
   }
-  console.log(user)
+  console.log(stats)
   // useEffect(() => {
   //   scoreHandler()
   // }, [])
@@ -66,18 +67,15 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
       >
         <Button
           onPress={() => {
-            // addScoreClicked
-            //   ? setAddScoreClicked(false)
-            //   : setAddScoreClicked(true)
-            if (addScoreClicked) {
-              // setAddScoreClicked(false)
-              gameScore()
-            } else {
-              setAddScoreClicked(true)
+            stats.avScore ? null
+            :
+            addScoreClicked ? gameScore() 
+            : setAddScoreClicked(true)
+            
             }
-          }}
+          }
           style={{
-            backgroundColor: addScoreClicked ? colors.darkGreen : colors.green,
+            backgroundColor: stats.avScore ? 'rgba(125, 158, 73,0.6)' : addScoreClicked ? colors.darkGreen : colors.green,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
             height: 68,
@@ -85,23 +83,23 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
           }}
           colorScheme="green"
         >
-          {btnLoading?
-          <ActivityIndicator color={'#fff'} />
-          :
-          <Text
-          textAlign="center"
-          fontSize={16}
-          fontWeight={"700"}
-          color={colors.white}
-          >
-            {addScoreClicked ? "Enter" : "ADD Score"}
-          </Text>
+          {btnLoading ?
+            <ActivityIndicator color={'#fff'} />
+            :
+            <Text
+              textAlign="center"
+              fontSize={16}
+              fontWeight={"700"}
+              color={colors.white}
+            >
+              {addScoreClicked ? "Enter" : "ADD Score"}
+            </Text>
           }
         </Button>
       </View>
       <Box p="2" borderRadius={10} mt="4" zIndex={0} pb={"5"}>
         <Box flexDirection="row">
-          <Avatar source={{uri:user.profile_image}} />
+          <Avatar source={{ uri: user.profile_image }} />
           <Box ml="2">
             <Text fontWeight="700" fontSize="16" color={colors.text1}>
               {user?.user.name || user?.first_name}
@@ -153,7 +151,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                 </View>
                 <View style={{ alignItems: "center" }}>
                   <Text style={styles.text}>Putts</Text>
-                  <Counter value={putts} setValue={setPutts} />
+                  <Counter maxValue={score} value={putts} setValue={setPutts} />
                 </View>
               </Row>
             </Box>
@@ -162,25 +160,25 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
               <Box bg="#7D9E4950" pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Recorded Plays </Text>
-                  <Text style={styles.text}> 4</Text>
+                  <Text style={styles.text}> {stats?.plays}</Text>
                 </Row>
               </Box>
               <Box pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Av. Score</Text>
-                  <Text style={styles.text}>3.4</Text>
+                  <Text style={styles.text}>{stats?.avScore}</Text>
                 </Row>
               </Box>
               <Box bg="#7D9E4950" pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>Av. Putts </Text>
-                  <Text style={styles.text}>1.2</Text>
+                  <Text style={styles.text}>{stats?.avPutts}</Text>
                 </Row>
               </Box>
               <Box pl="1" pr="5">
                 <Row>
                   <Text style={styles.text}>FIR% </Text>
-                  <Text style={styles.text}>-</Text>
+                  <Text style={styles.text}>{stats?.fir}%</Text>
                 </Row>
               </Box>
             </Box>
@@ -217,8 +215,8 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                   justifyContent: "center"
                 }}
               >
-                <Text style={[styles?.chartText(false),{color:'#fff'}]}>Hit</Text>
-                <Text style={[styles?.chartText(false),{color:'#fff'}]}>-</Text>
+                <Text style={[styles?.chartText(false), { color: '#fff' }]}>Hit</Text>
+                <Text style={[styles?.chartText(false), { color: '#fff' }]}>-</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -273,7 +271,7 @@ const ScoreDetail = ({ item, hole,setHole,gameId,game }) => {
                 alt="image"
               /> */}
               <TouchableOpacity
-                onPress={() =>setFIR('left')}
+                onPress={() => setFIR('left')}
                 style={{
                   position: "absolute",
                   left: 0

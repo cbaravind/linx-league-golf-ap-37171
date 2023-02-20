@@ -3,10 +3,10 @@ import React from 'react'
 import { Icon } from 'native-base'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { colors, fonts } from '../theme'
-export default function Counter({ value, setValue }) {
+export default function Counter({ value, setValue,maxValue }) {
     return (
         <View style={{ marginHorizontal:15,paddingBottom:6}} >
-            <TouchableOpacity style={styles.iconContainer} onPress={() => setValue(value + 1)} >
+            <TouchableOpacity style={styles.iconContainer} onPress={() =>{maxValue?value<maxValue?setValue(value+1):null :setValue(value + 1)} } >
                 <Icon name="plus" size={5} as={Entypo} color={colors.white} />
             </TouchableOpacity>
             <View style={styles.counter} >

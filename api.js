@@ -392,6 +392,21 @@ export const getGameScore = async (id, token) => {
   return response.text()
 }
 
+export const getGameStats = async (data, token) => {
+  // console.log(data,token)
+  const response = await fetch(`${API_URL}/api/v1/get-game-stats/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify(data),
+    redirect: "follow"
+  })
+  return response.text()
+}
+
 export const leagueGolfCourses = async (id, token) => {
   const response = await fetch(`${API_URL}/api/v1/league-golf-course/`, {
     method: "POST",

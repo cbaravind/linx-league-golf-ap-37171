@@ -1,5 +1,5 @@
 import { View, SafeAreaView, StyleSheet, ImageBackground } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import AppHeader from "../../../Components/AppHeader"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
@@ -25,15 +25,73 @@ import { shareOptions } from "../../../constants"
 import { friends } from "../../../assets/data"
 import { useSelector } from "react-redux"
 import ScoreTracker from "../components/ScoreTracker"
+import { getGameStats } from "../../../../api"
 
 const PostScore = ({ route }) => {
 
   const { token, user } = useSelector(state => state?.auth?.user)
   const [holeNumber, setHoleNumber] = useState(1)
-
+  const [gamStats, setGamStats] = useState({
+    plays: 0,
+    avScore: 0,
+    avPutts: 0,
+    fir: false
+  })
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
   const details = route?.params?.details
+
+  useEffect(() => {
+
+    getStats()
+  }, [holeNumber])
+
+  const getStats = async () => {
+    const data = {
+      player_id: user?.id,
+      course_id: details?.golf_course?.id
+    }
+    const response = await getGameStats(data, token)
+    const res      = JSON.parse(response)
+    if (res.length) {
+      let scoreArray = [];
+      let puttsArray = [];
+      let firArray=[]
+      res.map(i => {
+        i.map(obj => {
+          if (obj.hole == holeNumber) scoreArray.push(obj.score)
+          else return 0
+        })
+      })
+      res.map(i => {
+        i.map(obj => {
+          if (obj.hole == holeNumber) puttsArray.push(obj.putt)
+          else return 0
+        })
+      })
+      res.map(i => {
+        i.map(obj => {
+          if (obj.hole == holeNumber) obj.fir === "center" &&  firArray.push(1)
+          else return 0
+        })
+      })
+
+      let sumScore = scoreArray.reduce((partialSum, a) => partialSum + a, 0) 
+      let avgScore = scoreArray.length ?  parseFloat(sumScore / scoreArray.length).toFixed(2): 0;
+      let sumPutt  = puttsArray.reduce((partialSum, a) => partialSum + a, 0);
+      let avgPutt  = puttsArray.length ?  parseFloat(sumPutt / puttsArray.length ).toFixed(2):0
+      let fir      = firArray.length && parseFloat((firArray.length/scoreArray.length)*100).toFixed(2)
+      //  
+      setGamStats({
+        ...gamStats,
+        plays   :res.length,
+        avScore : avgScore || 0,
+        avPutts : avgPutt || 0,
+        fir     :fir || 0
+      })
+    }
+    // const results =
+  }
   const golf_course = details?.golf_course
   const onShare = () => {
     Share.open(shareOptions)
@@ -44,7 +102,6 @@ const PostScore = ({ route }) => {
         err && console.log(err)
       })
   }
-console.log(details,'details')
   return (
     <>
       <AppHeader
@@ -104,7 +161,7 @@ console.log(details,'details')
                     mx="2"
                     orientation="vertical"
                   />
-                  <Text style={styles.text}>144 Yards</Text>
+                  <Text style={styles.text}>{golf_course.red_distance || 0} Yards</Text>
                   <Divider
                     bg="#414042"
                     thickness="2"
@@ -113,7 +170,7 @@ console.log(details,'details')
                   />
                   <Text style={styles.text}>1</Text>
                 </Box>
-                <Box mt="3" flexDirection="row" alignSelf="center">
+                {/* <Box mt="3" flexDirection="row" alignSelf="center">
                   <Icon
                     mr="2"
                     alignSelf="center"
@@ -126,13 +183,19 @@ console.log(details,'details')
                     Hole: 08:17
                   </Text>
                   <Text style={styles.text}>Round: 08:17</Text>
-                </Box>
+                </Box> */}
               </Box>
               <Box mb="2" px={"3"} h={data.length == 9 ? "500" : "550"}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {details?.players?.map((item, index) => (
                     item.id == user?.id &&
-                    <ScoreDetail gameId={details?.id} game={details} setHole={setHoleNumber} hole={holeNumber} item={item} />
+                    <ScoreDetail
+                      gameId={details?.id}
+                      game={details}
+                      setHole={setHoleNumber}
+                      hole={holeNumber}
+                      stats={gamStats}
+                      item={item} />
                   ))}
                   {details?.players?.length ?
                     <ScoreTracker hole={holeNumber} players={details?.players} gameId={details?.id} />
@@ -153,8 +216,8 @@ console.log(details,'details')
                     holes: golf_course?.hole_wise,
                     roundDate: details?.round_date,
                     roundTime: details.round_time,
-                    leagueName:details?.league?.name,
-                    players:details?.players
+                    leagueName: details?.league?.name,
+                    players: details?.players
                   })}
                 >
                   SCORECARD

@@ -49,27 +49,21 @@ export default function AddFriends({ route }) {
   }, [selectedPlayers])
 
   const fetchContacts = () => {
-  
-    Contacts.checkPermission().then(permission => {
-      console.log("permission", permission)
-      if (permission === "undefined") {
-        if (Platform.OS == 'android') {
+ 
+    if (Platform.OS == 'android') {
 
-          PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-            {
-              'title': 'Contacts',
-              'message': 'This app would like to view your contacts.',
-              'buttonPositive': 'Please accept bare mortal'
-            }
-          )
-        }else{
-
-          Contacts.requestPermission().then(permission => {
-            // ...
-            
-          })
+       PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+        {
+          'title': 'Contacts',
+          'message': 'This app would like to view your contacts.',
+          'buttonPositive': 'Please accept bare mortal'
         }
+      )
+    }
+    Contacts.checkPermission().then(permission => {
+      if (permission === "undefined") {
+         Contacts.requestPermission().then(permission => {})   
       }
       if (permission === "authorized") {
         // yay!
@@ -96,11 +90,11 @@ export default function AddFriends({ route }) {
   }
 
   const leagueHandler = async () => {
-    // setBtnLoading(true)
+    setBtnLoading(true)
     const selected = friendsList?.length ? friendsList.map(i => {
       return i?.profile?.id
     }) : []
-    console.log(selected, 'selected')
+    console.log(selected, '=selected=')
     const leagueDate = `${moment(date).format("YYYY-MM-DD")}T${moment(
       time
     ).format("hh:mm:ss")}`

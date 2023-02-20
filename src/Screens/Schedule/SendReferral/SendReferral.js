@@ -6,7 +6,8 @@ import {
   Linking,
   ScrollView,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Platform
 } from "react-native"
 import React, { useState } from "react"
 import Container from "../../../Components/Container"
@@ -26,34 +27,16 @@ export default function SendReferral({ route }) {
   const [selectedContacts, setSelectedContacts] = useState([])
   const [selected, setSelected] = useState([])
 
-  const onShare = async () => {
-    // try {
-    //   const result = await Share.share({
-    //     message:
-    //       "React Native | A framework for building native apps using React"
-    //   })
-    //   if (result.action === Share.sharedAction) {
-    //     // console.log(result.action)
-    //     if (result.activityType) {
-    //       // Linking.openURL()
-    //       // shared with activity type of result.activityType
-    //     } else {
-    //       // shared
-    //     }
-    //   } else if (result.action === Share.dismissedAction) {
-    //     // dismissed
-    //   }
-    // } catch (error) {
-    //   alert(error.message)
-    // }
-    Share.open(shareOptions)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        err && console.log(err);
-      })
-  }
+  // const onShare = async () => {
+   
+  //   Share.open(shareOptions)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       err && console.log(err);
+  //     })
+  // }
   const searchFriends = searchText => {
     if (searchText.length && contactsArray.length) {
       const filtered = contactsArray.filter(e =>
@@ -65,6 +48,14 @@ export default function SendReferral({ route }) {
   const clearResults = () => {
     console.log("clear")
     setContactsArray(contacts)
+  }
+  const onSendSMSMessage = async () => {
+    const numbers=selected.map((i)=>i.phoneNumbers[0]['number'])
+    const numberArray=numbers.map((i)=>i+';')
+    const separator = Platform.OS === 'ios' ? '&' : '?'
+    const url = `sms:${numbers}${separator}body=${'message'}`
+    await Linking.openURL(url)
+ 
   }
   return (
     <Container>
@@ -136,7 +127,7 @@ export default function SendReferral({ route }) {
                   </View>
                 }
               </ScrollView>
-              <Button onPress={onShare} marginY={"3"} marginX={"7"} shadow={5} bg="#7D9E49">
+              <Button disabled={!selected.length} onPress={()=>onSendSMSMessage()} marginY={"3"} marginX={"7"} shadow={5} bg="#7D9E49">
                 {"Send"}
               </Button>
             </>
