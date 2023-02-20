@@ -48,15 +48,15 @@ export default function FindFriends({ route }) {
       let friends = []
       contacts?.map(item => {
         // console.log(item.phoneNumbers[0]["number"].replace(/[^0-9]/g, ""))
-        const number = item.phoneNumbers.length
+        const number = item?.phoneNumbers?.length
           ? item.phoneNumbers[0]["number"].replace(/[^0-9]/g, "")
-          : 0
+          : null
 
         // let filtered = res.results.filter(e => e.phone_number == number)
         let filtered = res.results.filter(
           e =>
             e?.phone_number?.replace(/[^0-9]/g, "").includes(number) ||
-            number.includes(e?.phone_number?.replace(/[^0-9]/g, ""))
+            number?.includes(e?.phone_number?.replace(/[^0-9]/g, ""))
         )
         if (filtered.length) {
           friends = [...friends, ...filtered]
@@ -65,7 +65,6 @@ export default function FindFriends({ route }) {
       setKnownUsers(friends)
       setFriendsArray(friends)
     }
-    
   }
 
   const requestHandler = async () => {

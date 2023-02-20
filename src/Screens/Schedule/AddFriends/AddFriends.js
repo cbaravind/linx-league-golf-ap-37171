@@ -84,6 +84,7 @@ export default function AddFriends({ route }) {
         })
       }
       if (permission === "denied") {
+        console.log("deniedd")
         // x.x
       }
     })
@@ -124,7 +125,7 @@ export default function AddFriends({ route }) {
       })
     }
   }
-  console.log(user, 'friend')
+  console.log(user, "friend")
   return (
     <Container>
       <AppHeader
@@ -178,14 +179,18 @@ export default function AddFriends({ route }) {
                 keyExtractor={item => item.id}
                 renderItem={(data, rowMap) => (
                   <UserProfile
-                    name={data.item.name || data.item.first_name || data.item?.profile?.phone_number}
+                    name={
+                      data.item.name ||
+                      data.item.first_name ||
+                      data.item?.profile?.phone_number
+                    }
                     image={data.item?.profile?.profile_image}
                     onPress={() =>
                       navigation.navigate(RoutesKey.PROFILE, {
                         user: data.item
                       })
                     }
-                  // item={}
+                    // item={}
                   />
                 )}
                 renderHiddenItem={(data, rowMap) => (
