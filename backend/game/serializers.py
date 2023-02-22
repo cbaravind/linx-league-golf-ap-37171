@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from game import models
-from league.serializers import LeagueSerializerGET,GolfCourseSerializer
+from league.serializers import LeagueSerializerGET,GolfCourseSerializer,SeasonSerializer
 from home.api.v1.serializers import UserProfileSerializer
 
 
 class GameSerializerGET(serializers.ModelSerializer):
     league = LeagueSerializerGET()
+    season = SeasonSerializer()
     golf_course = GolfCourseSerializer()
     players = UserProfileSerializer(many=True)
 
