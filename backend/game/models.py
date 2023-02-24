@@ -12,7 +12,8 @@ class Game(models.Model):
     golf_course = models.ForeignKey(GolfCourse, on_delete=models.CASCADE)
     players = models.ManyToManyField(Profile, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    status = models.CharField(max_length=255, null=True,default='Playing')
+    score_data = JSONField(null=True)
 
 class GameScore(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -20,7 +21,6 @@ class GameScore(models.Model):
     hole = models.CharField(max_length=255, null=True)
     putt = models.FloatField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255, null=True,default='Playing')
     given_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -32,5 +32,5 @@ class GameScore(models.Model):
         null=True,
         blank=True,
     )
-    score_data = JSONField(null=True)
+
 
