@@ -297,6 +297,23 @@ export const createGame = async (data, token) => {
   const response = await fetch(url, requestOptions)
   return response.text()
 }
+export const getGameDetails = async ( token,id) => {
+  console.log(token)
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      // apikey: API_KEY,
+      Authorization: `Token ${token}`
+    },
+    // body: JSON.stringify(data),
+    redirect: "follow"
+  }
+  const url = `${API_URL}/api/v1/game/${id}/`
+  const response = await fetch(url, requestOptions)
+  return response.text()
+}
 export const sendFeedback = async (data, token) => {
   const requestOptions = {
     method: "POST",
@@ -367,6 +384,19 @@ export const postChatRoom = async (data, token) => {
 export const postGameScore = async (data, token) => {
   const response = await fetch(`${API_URL}/api/v1/game-score/`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${token}`
+    },
+    body: JSON.stringify(data),
+    redirect: "follow"
+  })
+  return response.text()
+}
+export const updateGame = async (data, token,id) => {
+  const response = await fetch(`${API_URL}/api/v1/game/${id}/`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",

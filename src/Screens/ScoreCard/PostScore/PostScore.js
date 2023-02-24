@@ -31,11 +31,12 @@ const PostScore = ({ route }) => {
 
   const { token, user } = useSelector(state => state?.auth?.user)
   const [holeNumber, setHoleNumber] = useState(1)
-  const [gamStats, setGamStats] = useState({
+  const [gameStats, setGameStats] = useState({
     plays: 0,
     avScore: 0,
     avPutts: 0,
-    fir: false
+    fir: false,
+    currGameScore:0
   })
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
@@ -51,15 +52,22 @@ const PostScore = ({ route }) => {
       player_id: user?.id,
       course_id: details?.golf_course?.id
     }
+    
     const response = await getGameStats(data, token)
     const res      = JSON.parse(response)
+    console.log(response,details.id,'game')
     if (res.length) {
       let scoreArray = [];
       let puttsArray = [];
       let firArray=[]
+      let thisGameScore=0
       res.map(i => {
         i.map(obj => {
-          if (obj.hole == holeNumber) scoreArray.push(obj.score)
+          
+          if (obj.hole == holeNumber){
+             scoreArray.push(obj.score)
+             obj.game==details?.id ? thisGameScore=obj.score : null
+          }
           else return 0
         })
       })
@@ -82,12 +90,13 @@ const PostScore = ({ route }) => {
       let avgPutt  = puttsArray.length ?  parseFloat(sumPutt / puttsArray.length ).toFixed(2):0
       let fir      = firArray.length && parseFloat((firArray.length/scoreArray.length)*100).toFixed(2)
       //  
-      setGamStats({
-        ...gamStats,
+      setGameStats({
+        ...gameStats,
         plays   :res.length,
         avScore : avgScore || 0,
         avPutts : avgPutt || 0,
-        fir     :fir || 0
+        fir     :fir || 0,
+        currGameScore:thisGameScore
       })
     }
     // const results =
@@ -194,7 +203,7 @@ const PostScore = ({ route }) => {
                       game={details}
                       setHole={setHoleNumber}
                       hole={holeNumber}
-                      stats={gamStats}
+                      stats={gameStats}
                       item={item} />
                   ))}
                   {details?.players?.length ?

@@ -34,14 +34,11 @@ const ScoreTracker = ({ players, gameId, hole }) => {
       }
       data.push(obj)
     })
-    const response = await postGameScore(
-      { data: data },
-      token,
-      scoreUpdated ? "PUT" : "POST",
-      gameId
-    )
+    const response = await postGameScore({ data: data }, token  )
+      // scoreUpdated ? "PUT" : "POST",
+      // gameId
     const res = JSON.parse(response)
-    console.log(res)
+    console.log(res,'response')
     setBtnLoading(false)
   }
   return (

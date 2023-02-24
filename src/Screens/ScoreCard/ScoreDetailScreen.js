@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator } from "react-native"
 import React, { useEffect, useState } from "react"
 import AppHeader from "../../Components/AppHeader"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -8,21 +8,26 @@ import { Table } from "react-native-table-component"
 import Row from "../../Components/Row"
 import { shareOptions } from "../../constants"
 import Share from "react-native-share"
-import { getGameScore } from "../../../api"
+import { getGameDetails, getGameScore, updateGame } from "../../../api"
 import { useSelector } from "react-redux"
 import MyScoreTable from "./components/MyScoreTable"
 import ProfileImage from "../../Components/ProfileImage"
 import { Button } from "native-base"
 import AppModal from "../../Components/AppModal"
+import { useNavigation } from "@react-navigation/core"
+import RoutesKey from "../../Navigation/routesKey"
 
 export default function ScoreDetailScreen({ route }) {
   const { gameId, holes, roundDate, roundTime, leagueName, players } =
     route?.params
   const { token, user } = useSelector(state => state.auth?.user)
-
+  const navigation = useNavigation()
   const [gameScores, setGameScores] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [completedPlayers, setCompletedPlayers] = useState(false)
   const [roundFinished, setRoundFinished] = useState(false)
-
+  const [scoresSubmitted, setScoresSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
   const onShare = () => {
     Share.open(shareOptions)
       .then(res => {
@@ -32,16 +37,60 @@ export default function ScoreDetailScreen({ route }) {
         err && console.log(err)
       })
   }
+
   useEffect(() => {
+    setLoading(true)
     scoreHandler()
+    setLoading(false)
   }, [])
   const scoreHandler = async () => {
     const response = await getGameScore(gameId, token)
-    console.log(response, "response of gameee")
+    const details = await getGameDetails(token, gameId)
     const res = JSON.parse(response)
+    const game = JSON.parse(details)
     if (res.results?.length) {
       setGameScores(res.results)
     }
+    setCompletedPlayers(game.score_data)
+    let completed = []
+    if (game.score_data) {
+      console.log(game)
+      Object.values(game.score_data).map(obj => {
+        let parsedObject = JSON.parse(obj)
+        parsedObject.status === 'completed' ?
+          (parsedObject.playerId == user?.user?.id ? setScoresSubmitted(true) : null,
+            completed.push(parsedObject)) : null
+      })
+    }
+    setCompletedPlayers(completed)
+  }
+  const submitScore = async () => {
+    setBtnLoading(true)
+
+    const player = { playerId: user?.user?.id, status: 'completed' }
+    const obj = {
+      round_date: roundDate,
+      round_time: roundTime,
+      golf_course: 1,
+      season: 1,
+      status: players.length ==  completedPlayers?.length+1 ? "completed" : "playing",
+      score_data: {
+        player1: JSON.stringify(player)
+      },
+
+    }
+    const response = await updateGame(obj, token, gameId)
+    const res = JSON.parse(response)
+    console.log(res,'response of game')
+    setBtnLoading(false)
+    setRoundFinished(true)
+  }
+  if (loading) {
+    return (
+      <View >
+        <ActivityIndicator color={colors.green} />
+      </View>
+    )
   }
   return (
     <>
@@ -111,19 +160,21 @@ export default function ScoreDetailScreen({ route }) {
         <View style={styles.button}>
           <Button
             // style={{ alignSelf: "center" }}
+            isDisabled={btnLoading || scoresSubmitted}
+            isLoading={btnLoading}
             width={"60%"}
-          onPress={() => setRoundFinished(true)}
+            onPress={submitScore}
           >
-            SUBMIT SCORECARD
+            {scoresSubmitted ? "SUBMITTED" : "SUBMIT SCORECARD"}
           </Button>
         </View>
       </ScrollView>
       {roundFinished ? (
         <AppModal
           heading="Round is finished"
-          onClose={() => setRoundFinished(false)}
+          onClose={() => { setRoundFinished(false); navigation.navigate(RoutesKey.SCORECARD) }}
           button
-          onPress={() => setRoundFinished(false)}
+          onPress={() => { setRoundFinished(false); navigation.navigate(RoutesKey.SCORECARD) }}
         />
       ) : (
         <></>

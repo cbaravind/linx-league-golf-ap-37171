@@ -9,7 +9,7 @@ export default function ScoreCounter({ item, gameId, hole, scores, setScores }) 
     const { token, user } = useSelector(state => state.auth?.user)
     const currentScores = scores.filter(i => i.user == item?.user.id)
     const updatedArray=currentScores?.length ? scores.filter((i)=>i.user != item?.user.id):scores
-    console.log(currentScores,'==',updatedArray,scores)
+    console.log(scores,'scores')
     const [value, setValue] = useState(currentScores.score || 0)
     // const gameScore = async (sign) => {
     //     setBtnLoading(sign)

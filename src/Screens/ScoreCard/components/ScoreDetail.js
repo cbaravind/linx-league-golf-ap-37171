@@ -28,7 +28,7 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
       hole: hole,
       fir: FIR
     }
-    const response = await postGameScore({ data: [obj] }, token, "POST", 0)
+    const response = await postGameScore({ data: [obj] }, token)
     const res = JSON.parse(response)
     console.log(res, '==')
     setBtnLoading(false)
@@ -43,7 +43,7 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
 
 
   }
-  console.log(stats)
+  console.log(stats,'mystats')
   // useEffect(() => {
   //   scoreHandler()
   // }, [])
@@ -67,7 +67,7 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
       >
         <Button
           onPress={() => {
-            stats.avScore ? null
+            stats.currGameScore ? null
             :
             addScoreClicked ? gameScore() 
             : setAddScoreClicked(true)
@@ -75,7 +75,7 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
             }
           }
           style={{
-            backgroundColor: stats.avScore ? 'rgba(125, 158, 73,0.6)' : addScoreClicked ? colors.darkGreen : colors.green,
+            backgroundColor: stats.currGameScore ? 'rgba(125, 158, 73,0.6)' : addScoreClicked ? colors.darkGreen : colors.green,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
             height: 68,
