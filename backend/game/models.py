@@ -13,7 +13,7 @@ class Game(models.Model):
     players = models.ManyToManyField(Profile, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, null=True,default='Playing')
-    score_data = JSONField(null=True)
+    score_data = JSONField(null=True,blank=True)
 
 class GameScore(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

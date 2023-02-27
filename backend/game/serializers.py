@@ -13,12 +13,26 @@ class GameSerializerGET(serializers.ModelSerializer):
     class Meta:
         model = models.Game
         exclude = ('user', )
-        
+    
 
 class GameSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = models.Game
         exclude = ('user', )
+    
+    def create(self,validated_data):
+        request = self.context.get('request', None)
+        user = request.user
+        players = validated_data.pop('players')
+        data = []
+        for player in players:
+            game = models.Game.objects.create(
+                **validated_data
+            )
+            game.players.add(player)
+            data.append(game)
+        return game
+        
         
 
 class GameScoreSerializer(serializers.ModelSerializer):
