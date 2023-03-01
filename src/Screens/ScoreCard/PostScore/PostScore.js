@@ -36,7 +36,7 @@ const PostScore = ({ route }) => {
     avScore: 0,
     avPutts: 0,
     fir: false,
-    currGameScore:0
+    currGameScore: 0
   })
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const navigation = useNavigation()
@@ -52,21 +52,27 @@ const PostScore = ({ route }) => {
       player_id: user?.id,
       course_id: details?.golf_course?.id
     }
-    
+
     const response = await getGameStats(data, token)
-    const res      = JSON.parse(response)
-    console.log(response,details.id,'game')
+    const res = JSON.parse(response)
     if (res.length) {
       let scoreArray = [];
       let puttsArray = [];
-      let firArray=[]
-      let thisGameScore=0
+      let firArray = []
+      let thisGameScore = 0
+      let recPlays = 0
       res.map(i => {
         i.map(obj => {
-          
-          if (obj.hole == holeNumber){
-             scoreArray.push(obj.score)
-             obj.game==details?.id ? thisGameScore=obj.score : null
+
+          obj.hole == holeNumber ? recPlays = recPlays + 1 : null
+        })
+      })
+      res.map(i => {
+        i.map(obj => {
+
+          if (obj.hole == holeNumber) {
+            scoreArray.push(obj.score)
+            obj.game == details?.id ? thisGameScore = obj.score : null
           }
           else return 0
         })
@@ -79,24 +85,24 @@ const PostScore = ({ route }) => {
       })
       res.map(i => {
         i.map(obj => {
-          if (obj.hole == holeNumber) obj.fir === "center" &&  firArray.push(1)
+          if (obj.hole == holeNumber) obj.fir === "center" && firArray.push(1)
           else return 0
         })
       })
 
-      let sumScore = scoreArray.reduce((partialSum, a) => partialSum + a, 0) 
-      let avgScore = scoreArray.length ?  parseFloat(sumScore / scoreArray.length).toFixed(2): 0;
-      let sumPutt  = puttsArray.reduce((partialSum, a) => partialSum + a, 0);
-      let avgPutt  = puttsArray.length ?  parseFloat(sumPutt / puttsArray.length ).toFixed(2):0
-      let fir      = firArray.length && parseFloat((firArray.length/scoreArray.length)*100).toFixed(2)
+      let sumScore = scoreArray.reduce((partialSum, a) => partialSum + a, 0)
+      let avgScore = scoreArray.length ? parseFloat(sumScore / scoreArray.length).toFixed(2) : 0;
+      let sumPutt = puttsArray.reduce((partialSum, a) => partialSum + a, 0);
+      let avgPutt = puttsArray.length ? parseFloat(sumPutt / puttsArray.length).toFixed(2) : 0
+      let fir = firArray.length && parseFloat((firArray.length / scoreArray.length) * 100).toFixed(2)
       //  
       setGameStats({
         ...gameStats,
-        plays   :res.length,
-        avScore : avgScore || 0,
-        avPutts : avgPutt || 0,
-        fir     :fir || 0,
-        currGameScore:thisGameScore
+        plays: recPlays,
+        avScore: avgScore || 0,
+        avPutts: avgPutt || 0,
+        fir: fir || 0,
+        currGameScore: thisGameScore
       })
     }
     // const results =
@@ -170,7 +176,7 @@ const PostScore = ({ route }) => {
                     mx="2"
                     orientation="vertical"
                   />
-                  <Text style={styles.text}>{golf_course.red_distance || 0} Yards</Text>
+                  <Text style={styles.text}>{golf_course?.red_distance || 0} Yards</Text>
                   <Divider
                     bg="#414042"
                     thickness="2"

@@ -41,7 +41,7 @@ export default function ScoreDetailScreen({ route }) {
   useEffect(() => {
     setLoading(true)
     scoreHandler()
-    setLoading(false)
+
   }, [])
   const scoreHandler = async () => {
     const response = await getGameScore(gameId, token)
@@ -54,7 +54,6 @@ export default function ScoreDetailScreen({ route }) {
     setCompletedPlayers(game.score_data)
     let completed = []
     if (game.score_data) {
-      console.log(game)
       Object.values(game.score_data).map(obj => {
         let parsedObject = JSON.parse(obj)
         parsedObject.status === 'completed' ?
@@ -62,6 +61,7 @@ export default function ScoreDetailScreen({ route }) {
             completed.push(parsedObject)) : null
       })
     }
+    setLoading(false)
     setCompletedPlayers(completed)
   }
   const submitScore = async () => {
@@ -73,27 +73,21 @@ export default function ScoreDetailScreen({ route }) {
       round_time: roundTime,
       golf_course: 1,
       season: 1,
-      status: players.length ==  completedPlayers?.length+1 ? "completed" : "playing",
+      status: players.length == completedPlayers?.length + 1 ? "completed" : "playing",
       score_data: {
-        player1: JSON.stringify(player)
+        // ...completedPlayers,
+        [user?.user?.id] : JSON.stringify(player)
       },
 
     }
     const response = await updateGame(obj, token, gameId)
     const res = JSON.parse(response)
-    console.log(res,'response of game')
     setBtnLoading(false)
     setRoundFinished(true)
   }
-  if (loading) {
-    return (
-      <View >
-        <ActivityIndicator color={colors.green} />
-      </View>
-    )
-  }
+
   return (
-    <>
+    <View style={{ flex: 1, paddingBottom: 60 }}>
       <AppHeader
         showLogo
         back
@@ -103,72 +97,82 @@ export default function ScoreDetailScreen({ route }) {
           </Pressable>
         }
       />
-      <ScrollView
-        contentContainerStyle={{ backgroundColor: colors.background, paddingVertical: 30, flex: 1 }}
-      >
-        <Text style={styles.h1}>{leagueName}</Text>
-        <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
-          <Text style={styles.text}>
-            {roundDate}, {roundTime}
-          </Text>
+      {loading ?
+        <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }}>
+          <ActivityIndicator color={colors.green} />
         </View>
-        <ScoreTable />
-        <MyScoreTable scores={gameScores} />
-        <View style={styles.divider} />
-        {players?.map(
-          player =>
-            player.user?.id != user?.user.id && (
-              <View style={styles.card}>
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  horizontal={true}
-                >
-                  <View style={styles.row}>
-                    <View style={[styles.cell, { width: 70 }]}>
-                      <ProfileImage
-                        imgStyle={{ borderRadius: 30 }}
-                        image={{ uri: player?.profile_image }}
-                        width={30}
-                        height={30}
-                      />
-                      <Text
-                        adjustsFontSizeToFit
-                        numberOfLines={1}
-                        style={styles.text}
-                      >
-                        {player?.user?.name || player?.user?.first_name}
-                      </Text>
-                    </View>
-                    {gameScores ? (
-                      gameScores?.map(
-                        item =>
-                          item.user == player?.user?.id && (
-                            <View style={styles.cell}>
-                              <Text style={styles.text}>{item.score}</Text>
-                            </View>
-                          )
-                      )
-                    ) : (
-                      <></>
-                    )}
-                  </View>
-                </ScrollView>
-              </View>
-            )
-
-        )}
-        <View style={styles.button}>
-          <Button
-            // style={{ alignSelf: "center" }}
-            isDisabled={btnLoading || scoresSubmitted}
-            isLoading={btnLoading}
-            width={"60%"}
-            onPress={submitScore}
+        :
+        <>
+          <ScrollView
+            contentContainerStyle={{ backgroundColor: colors.background, paddingVertical: 30 }}
           >
-            {scoresSubmitted ? "SUBMITTED" : "SUBMIT SCORECARD"}
-          </Button>
-        </View>
-      </ScrollView>
+            <Text style={styles.h1}>{leagueName}</Text>
+            <View style={{ paddingTop: 10, backgroundColor: colors.background }}>
+              <Text style={styles.text}>
+                {roundDate}, {roundTime}
+              </Text>
+            </View>
+            <ScoreTable />
+            <MyScoreTable scores={gameScores} />
+
+            <View style={styles.divider} />
+            {players?.map(
+              player =>
+                player.user?.id != user?.user.id && (
+                  <View style={styles.card}>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      horizontal={true}
+                    >
+                      <View style={styles.row}>
+                        <View style={[styles.cell, { width: 70 }]}>
+                          <ProfileImage
+                            imgStyle={{ borderRadius: 30 }}
+                            image={{ uri: player?.profile_image }}
+                            width={30}
+                            height={30}
+                          />
+                          <Text
+                            adjustsFontSizeToFit
+                            numberOfLines={1}
+                            style={styles.text}
+                          >
+                            {player?.user?.name || player?.user?.first_name}
+                          </Text>
+                        </View>
+                        {gameScores ? (
+                          gameScores?.map(
+                            item =>
+                              item.user == player?.user?.id && (
+                                <View style={styles.cell}>
+                                  <Text style={styles.text}>{item.score}</Text>
+                                </View>
+                              )
+                          )
+                        ) : (
+                          <></>
+                        )}
+                      </View>
+                    </ScrollView>
+                  </View>
+                )
+
+            )}
+          </ScrollView>
+          <View style={styles.button}>
+            <Button
+              // style={{ alignSelf: "center" }}
+              isDisabled={btnLoading || scoresSubmitted}
+              isLoading={btnLoading}
+              width={"60%"}
+              onPress={submitScore}
+            >
+              {scoresSubmitted ? "SUBMITTED" : "SUBMIT SCORECARD"}
+            </Button>
+          </View>
+        </>
+      }
+
       {roundFinished ? (
         <AppModal
           heading="Round is finished"
@@ -179,7 +183,7 @@ export default function ScoreDetailScreen({ route }) {
       ) : (
         <></>
       )}
-    </>
+    </View>
   )
 }
 const styles = StyleSheet.create({
@@ -200,10 +204,10 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.white,
-    margin: 15,
+    marginHorizontal: 15,
     borderRadius: 15,
-    paddingTop: 15, paddingBottom: 25,
-    marginBottom: 20
+    padding: 15,
+    marginTop: 10
   },
   row: {
     height: 54,
@@ -211,7 +215,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 6,
     alignItems: "center",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+
   },
   title: { flex: 1 },
 
