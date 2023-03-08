@@ -15,7 +15,28 @@ class Game(models.Model):
     status = models.CharField(max_length=255, null=True,default='Playing')
     score_data = JSONField(null=True,blank=True)
 
+
 class GameScore(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    score = models.FloatField()
+    hole = models.CharField(max_length=255, null=True)
+    putt = models.FloatField(null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    given_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="game_score_user_given_by",
+        null=True,
+    )
+    fir = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    round = models.IntegerField(null=True, blank=True)
+
+
+class CollectScore(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     score = models.FloatField()
     hole = models.CharField(max_length=255, null=True)
@@ -32,5 +53,5 @@ class GameScore(models.Model):
         null=True,
         blank=True,
     )
-
+    round = models.IntegerField(null=True, blank=True)
 

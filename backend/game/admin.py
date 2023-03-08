@@ -3,3 +3,4 @@ from game import models
 
 admin.site.register(models.Game)
 admin.site.register(models.GameScore)
+admin.site.register(models.CollectScore)
