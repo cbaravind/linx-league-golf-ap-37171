@@ -50,3 +50,37 @@ class GameScoreSerializerList(serializers.Serializer):
         res = serializers.ValidationError({'message':'Successfully created'})
         res.status_code = 201
         raise res
+
+class CollectScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CollectScore
+        exclude = ('given_by', )
+
+    def create(self,validated_data):
+        request = self.context.get('request', None)
+        user = request.user
+        game = validated_data['game']
+        data = models.CollectScore.objects.filter(user=validated_data['user'], game=game,round=validated_data['round'])
+        collect_score = models.CollectScore.objects.create(**validated_data)
+        if data.exists():
+            print(game.players.all().count())
+            if game.players.all().count() ==  data.count():
+                print('#########')
+                dic = {}
+                for d in data:
+                    if d.score in dic:
+                        dic[d.score] += 1
+                    else:
+                        dic[d.score] = 1
+                score = 0
+                for key,value in dic.items():
+                    if score < value:
+                        score = key
+                score_create = models.CollectScore.objects.filter(score=score,
+                game=game,round=validated_data['round'])
+                if score_create.exists():
+                    models.GameScore.objects.create(**score_create.values()[0])
+        return collect_score
+        
+                
+        

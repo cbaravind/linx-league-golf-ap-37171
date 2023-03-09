@@ -70,3 +70,20 @@ class GetGameStats(APIView):
         except Exception as e:
             print(e)
             return Response({'msg':e},status=status.HTTP_400_BAD_REQUEST)
+
+class CollectScoreModelViewSet(viewsets.ModelViewSet):
+    filter_backends = [filters.SearchFilter,DjangoFilterBackend]
+    search_fields = ['game__id']
+    filterset_fields = ['game__id']
+    
+    def get_queryset(self):
+        return models.CollectScore.objects.all()
+
+    def get_serializer_class(self):
+        return serializers.CollectScoreSerializer
+
+    def get_permissions(self):
+        return (IsAuthenticated(),)
+        
+    def perform_create(self, serializer):
+        serializer.save(given_by=self.request.user)
