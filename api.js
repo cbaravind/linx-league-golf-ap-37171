@@ -382,7 +382,7 @@ export const postChatRoom = async (data, token) => {
 }
 
 export const postGameScore = async (data, token) => {
-  const response = await fetch(`${API_URL}/api/v1/game-score/`, {
+  const response = await fetch(`${API_URL}/api/v1/collect-score/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -409,7 +409,7 @@ export const updateGame = async (data, token,id) => {
 }
 
 export const getGameScore = async (id, token) => {
-  const response = await fetch(`${API_URL}/api/v1/game-score/?game__id=${id}`, {
+  const response = await fetch(`${API_URL}/api/v1/collect-score/?game__id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

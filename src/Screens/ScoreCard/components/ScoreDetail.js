@@ -26,11 +26,11 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
       game: gameId,
       user: user?.user?.id,
       hole: hole,
-      fir: FIR
+      fir: FIR,
+      round:2147483647
     }
-    const response = await postGameScore({ data: [obj] }, token)
+    const response = await postGameScore(obj, token)
     const res = JSON.parse(response)
-    console.log(res, '==')
     setBtnLoading(false)
     // if(res.data){
 
@@ -43,7 +43,6 @@ const ScoreDetail = ({ item, hole, setHole, gameId, game, stats }) => {
 
 
   }
-  console.log(stats,'mystats')
   // useEffect(() => {
   //   scoreHandler()
   // }, [])

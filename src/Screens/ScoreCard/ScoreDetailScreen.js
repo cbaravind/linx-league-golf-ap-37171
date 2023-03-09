@@ -27,6 +27,7 @@ export default function ScoreDetailScreen({ route }) {
   const [completedPlayers, setCompletedPlayers] = useState(false)
   const [roundFinished, setRoundFinished] = useState(false)
   const [scoresSubmitted, setScoresSubmitted] = useState(false)
+  const [gameScoreData, setGameScoreData] = useState(false)
   const [loading, setLoading] = useState(false)
   const onShare = () => {
     Share.open(shareOptions)
@@ -51,7 +52,8 @@ export default function ScoreDetailScreen({ route }) {
     if (res.results?.length) {
       setGameScores(res.results)
     }
-    setCompletedPlayers(game.score_data)
+    setGameScoreData(game.score_data)
+    
     let completed = []
     if (game.score_data) {
       Object.values(game.score_data).map(obj => {
@@ -75,7 +77,7 @@ export default function ScoreDetailScreen({ route }) {
       season: 1,
       status: players.length == completedPlayers?.length + 1 ? "completed" : "playing",
       score_data: {
-        // ...completedPlayers,
+        ...gameScoreData,
         [user?.user?.id] : JSON.stringify(player)
       },
 

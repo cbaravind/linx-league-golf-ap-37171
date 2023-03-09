@@ -16,13 +16,12 @@ import ScoreCounter from "./ScoreCounter"
 
 const ScoreTracker = ({ players, gameId, hole }) => {
   const { token, user } = useSelector(state => state.auth?.user)
-  const [scores, setScores]             = useState([])
-  const [btnLoading, setBtnLoading]     = useState(false)
+  const [scores, setScores] = useState([])
+  const [btnLoading, setBtnLoading] = useState(false)
   const [scoreUpdated, setScoreUpdated] = useState(false)
 
   const gameScore = async () => {
     setBtnLoading(true)
-
     let data = []
     scores.map(async i => {
       let obj = {
@@ -30,16 +29,17 @@ const ScoreTracker = ({ players, gameId, hole }) => {
         // putt: putts,
         game: gameId,
         user: i.user,
-        hole: hole
+        hole: hole,
+        round:2147483647
       }
-      data.push(obj)
+      // data.push(obj)
+      const response = await postGameScore(obj, token)
+      const res = JSON.parse(response)
+      setBtnLoading(false)
     })
-    const response = await postGameScore({ data: data }, token  )
-      // scoreUpdated ? "PUT" : "POST",
-      // gameId
-    const res = JSON.parse(response)
-    console.log(res,'response')
-    setBtnLoading(false)
+    // const response = await postGameScore({ data: data }, token  )
+    // scoreUpdated ? "PUT" : "POST",
+    // gameId
   }
   return (
     <View style={styles.container}>
@@ -57,6 +57,7 @@ const ScoreTracker = ({ players, gameId, hole }) => {
             }}
           >
             <Button
+            isLoading={btnLoading}
               onPress={() => {
                 gameScore()
                 // addScoreClicked
@@ -111,9 +112,9 @@ const ScoreTracker = ({ players, gameId, hole }) => {
                           fontWeight="700"
                           fontSize="16"
                           textAlign={"center"}
-                        //   mt="3"
+                          //   mt="3"
                           ml={"2"}
-                          // mb="2"
+                        // mb="2"
                         >
                           {item?.user?.name || item?.first_name}
                         </Text>
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
     flexDirection: "row",
-    alignItems:"center",
+    alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 5,
     paddingVertical: 10,
