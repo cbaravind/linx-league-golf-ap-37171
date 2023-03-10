@@ -42,7 +42,7 @@ export default function FindFriends({ route }) {
     const response = await getAllUsers(token)
     const res = JSON.parse(response)
     setLoading(false)
-    // console.log(res, "getting all users")
+    console.log(res, "getting all users")
     if (res.count) {
       setFriendsArray(res.results)
       let friends = []
@@ -55,10 +55,12 @@ export default function FindFriends({ route }) {
         // let filtered = res.results.filter(e => e.phone_number == number)
         let filtered = res.results.filter(
           e =>
-            e?.phone_number?.replace(/[^0-9]/g, "").includes(number) ||
-            number?.includes(e?.phone_number?.replace(/[^0-9]/g, ""))
+            e?.phone_number?.replace(/[^0-9]/g, "") === number
+
         )
         if (filtered.length) {
+          console.log(filtered, 'testing uniqueness-------')
+          uniqueArray = [...new Set(filtered)]
           friends = [...friends, ...filtered]
         }
       })
