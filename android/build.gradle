@@ -3,10 +3,10 @@ def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs')
 buildscript {
     ext {
         buildToolsVersion = "29.0.3"
-        minSdkVersion = 21
-        compileSdkVersion = 29
+        minSdkVersion = 24
+        compileSdkVersion = 31
         targetSdkVersion = 29
-        ndkVersion = "21.1.5948944"
+        ndkVersion = "25.2.9519653"
     }
     repositories {
         google()
