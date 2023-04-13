@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- <item android:drawable="@color/bootsplash_background" /> -->
      <item>
         <bitmap
             android:scaleType="centerCrop"
             android:src="@drawable/golfball"/>
     </item>
-     <item>
+     <item android:bottom="110dp" android:height="100dp" android:width="250dp"  android:gravity="center">
         <bitmap
-         android:src="@mipmap/bootsplash_logo" android:gravity="center_vertical"
+         android:src="@mipmap/bootsplash_logo" android:gravity="fill"
          />
     </item>
 </layer-list>

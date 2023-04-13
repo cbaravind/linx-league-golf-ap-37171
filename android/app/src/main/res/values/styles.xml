@@ -12,7 +12,7 @@
   </style>
 
    <style name="SplashScreenTheme" parent="AppTheme">
-        <item name ="android:background"> @drawable/golfball</item>
+        <item  name ="android:background"> @drawable/golfball</item>
     </style>
 
 </resources>
