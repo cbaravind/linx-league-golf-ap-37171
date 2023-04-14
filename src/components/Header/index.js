@@ -10,7 +10,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {MainLogo} from '../../assets/Fonts/svg';
+import {MainLogo} from '../../assets/svg';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Header({leftComponent, onPressHandler}) {

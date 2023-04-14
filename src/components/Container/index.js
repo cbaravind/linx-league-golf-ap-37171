@@ -5,7 +5,7 @@ import colors from '../../themes/colors';
 export default function Container({children}) {
   return (
     <LinearGradient
-      start={{x: 0, y: 0.4}}
+      start={{x: 0, y: 0}}
       end={{x: 0, y: 1}}
       colors={[colors.gradientTop, colors.gradientMid, colors.gradientBottom]}
       style={styles.linearGradient}>
