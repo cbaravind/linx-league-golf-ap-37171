@@ -11,9 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		86885D861C39E54190902137 /* libPods-linx_league_golf_ap_37171.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC82E644E94D848678E2EB69 /* libPods-linx_league_golf_ap_37171.a */; };
 		A4C231F6F34CDA129E0772D0 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F923F77AF87286A2BB3CD4 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a */; };
+		A570EEB229E810B6000EE8F2 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A570EEB129E810B6000EE8F2 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +39,9 @@
 		18EA69A8E3C2875DBD571430 /* Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		51F923F77AF87286A2BB3CD4 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CAE497E0A0995009DF1CE4B /* Pods-linx_league_golf_ap_37171.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171.release.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171/Pods-linx_league_golf_ap_37171.release.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = linx_league_golf_ap_37171/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86579E50284C478C626FC72B /* Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig"; sourceTree = "<group>"; };
 		98F07D0D93E68C16A0EE7EAB /* Pods-linx_league_golf_ap_37171.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171.debug.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171/Pods-linx_league_golf_ap_37171.debug.xcconfig"; sourceTree = "<group>"; };
+		A570EEB129E810B6000EE8F2 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = linx_league_golf_ap_37171/BootSplash.storyboard; sourceTree = "<group>"; };
 		EC82E644E94D848678E2EB69 /* libPods-linx_league_golf_ap_37171.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linx_league_golf_ap_37171.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -87,10 +87,10 @@
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				A570EEB129E810B6000EE8F2 /* BootSplash.storyboard */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = linx_league_golf_ap_37171;
@@ -248,7 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				A570EEB229E810B6000EE8F2 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
