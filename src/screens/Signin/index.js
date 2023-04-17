@@ -18,7 +18,7 @@ import {
   GoogleLogo,
 } from '../../assets/svg';
 // import AIcon from 'react-native-vector-icons/AntDesign';
-export default function Signin() {
+export default function Signin({navigation}) {
   const [hidePassword, setHidePassword] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -28,6 +28,9 @@ export default function Signin() {
   };
   const handleRemember = () => {
     setRememberMe(prevState => !prevState);
+  };
+  const handleForgotPass = () => {
+    navigation.navigate('ForgotPassword');
   };
   return (
     <Container>
@@ -60,12 +63,13 @@ export default function Signin() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={handleForgotPass}
             hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
             activeOpacity={0.8}>
             <Text style={styles.textElements}>Forgot Password</Text>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: hp('4%')}}>
+        <View style={styles.buttonContainer}>
           <Button buttonLabel="Sign In" />
           <View style={styles.socialLoginWrap}>
             <View style={styles.lineStyle} />
@@ -90,6 +94,7 @@ export default function Signin() {
         </View>
       </View>
       <TouchableOpacity
+        onPress={() => alert('opens web view')}
         hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
         activeOpacity={0.8}
         style={styles.endTextWrap}>
@@ -103,6 +108,7 @@ export default function Signin() {
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {marginTop: hp('4%')},
   dummyText: {
     fontFamily: fonts.type.proximaRegular,
     fontSize: fonts.size.font1,

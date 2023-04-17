@@ -13,12 +13,12 @@ import {
 import {MainLogo} from '../../assets/svg';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Header({leftComponent, onPressHandler}) {
+export default function Header({leftComponent, onPressLeftComponent}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={onPressHandler}
+        onPress={onPressLeftComponent}
         style={styles.leftButton}>
         {leftComponent ? leftComponent : null}
         {/* <Icon
@@ -44,7 +44,7 @@ Header.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingLeft: wp('6%'),
+    paddingLeft: wp('5%'),
     backgroundColor: 'transparent',
     paddingBottom: hp('1%'),
   },
