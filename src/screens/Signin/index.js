@@ -117,6 +117,7 @@ export default function Signin({navigation}) {
         )}
       </Formik>
       <TouchableOpacity
+        onPress={() => alert('opens web view')}
         hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
         activeOpacity={0.8}
         style={styles.endTextWrap}>
@@ -130,6 +131,7 @@ export default function Signin({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {marginTop: hp('4%')},
   dummyText: {
     fontFamily: fonts.type.proximaRegular,
     fontSize: fonts.size.font1,
