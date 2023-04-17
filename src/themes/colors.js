@@ -10,5 +10,6 @@ const colors = {
   gradientMid: '#272B28',
   gradientBottom: '#0F100F',
   mediumGrey: '#A1A1A1',
+  errorRed: '#FF9494',
 };
 export default colors;
