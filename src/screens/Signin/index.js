@@ -17,6 +17,9 @@ import {
   FbLogo,
   GoogleLogo,
 } from '../../assets/svg';
+import {Formik} from 'formik';
+import {signinValidationSchema} from '../../services/validations/signinValidationSchema';
+import ValidationText from '../../components/ValidationText';
 // import AIcon from 'react-native-vector-icons/AntDesign';
 export default function Signin() {
   const [hidePassword, setHidePassword] = useState(true);
@@ -32,63 +35,83 @@ export default function Signin() {
   return (
     <Container>
       <Header />
-      <View style={styles.mainView}>
-        <Text style={styles.pageTitle}>Sign In</Text>
-        <InputField
-          fieldName="Email"
-          placeHolderText="abc@xyz.com"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <InputField
-          fieldName="Password"
-          placeHolderText="••••••••"
-          isPassword={true}
-          hidePassword={hidePassword}
-          togglePasswordView={togglePasswordView}
-        />
-        <View style={styles.beforeSigninWrap}>
-          <TouchableOpacity
-            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
-            onPress={handleRemember}
-            activeOpacity={0.8}
-            style={styles.rememberMe}>
-            {!rememberMe ? <CheckSquare /> : <Checked />}
-            {/* <AIcon name="checksquare" color={colors.pureWhite} /> */}
-            <Text style={[styles.textElements, styles.margin]}>
-              Remember me
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
-            activeOpacity={0.8}>
-            <Text style={styles.textElements}>Forgot Password</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{marginTop: hp('4%')}}>
-          <Button buttonLabel="Sign In" />
-          <View style={styles.socialLoginWrap}>
-            <View style={styles.lineStyle} />
-            <Text style={styles.midText}>Or</Text>
-            <View style={styles.lineStyle} />
-          </View>
-          <Button
-            iconComponent={<GoogleLogo width={27} height={30} />}
-            buttonLabel="Continue with Google"
-            buttonColor={colors.darkGrey}
-          />
-          <Button
-            iconComponent={<AppleLogo width={27} height={30} />}
-            buttonLabel="Continue with Apple"
-            buttonColor={colors.darkGrey}
-          />
-          <Button
-            iconComponent={<FbLogo width={27} height={30} />}
-            buttonLabel="Continue with Facebook"
-            buttonColor={colors.darkGrey}
-          />
-        </View>
-      </View>
+      <Formik
+        validationSchema={signinValidationSchema}
+        initialValues={{email: '', password: ''}}
+        onSubmit={values => console.log(values)}>
+        {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+          <>
+            <View style={styles.mainView}>
+              <Text style={styles.pageTitle}>Sign In</Text>
+
+              <InputField
+                fieldName="Email"
+                placeHolderText="abc@xyz.com"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={values.email}
+                handleOnChange={handleChange('email')}
+                handleBlur={handleBlur('email')}
+              />
+              {errors.email ? <ValidationText label={errors.email} /> : null}
+              <InputField
+                fieldName="Password"
+                placeHolderText="••••••••"
+                isPassword={true}
+                hidePassword={hidePassword}
+                togglePasswordView={togglePasswordView}
+                value={values.password}
+                handleOnChange={handleChange('password')}
+                handleBlur={handleBlur('password')}
+              />
+              {errors.password ? (
+                <ValidationText label={errors.password} />
+              ) : null}
+              <View style={styles.beforeSigninWrap}>
+                <TouchableOpacity
+                  hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                  onPress={handleRemember}
+                  activeOpacity={0.8}
+                  style={styles.rememberMe}>
+                  {!rememberMe ? <CheckSquare /> : <Checked />}
+                  {/* <AIcon name="checksquare" color={colors.pureWhite} /> */}
+                  <Text style={[styles.textElements, styles.margin]}>
+                    Remember me
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                  activeOpacity={0.8}>
+                  <Text style={styles.textElements}>Forgot Password</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{marginTop: hp('4%')}}>
+                <Button onPress={handleSubmit} buttonLabel="Sign In" />
+                <View style={styles.socialLoginWrap}>
+                  <View style={styles.lineStyle} />
+                  <Text style={styles.midText}>Or</Text>
+                  <View style={styles.lineStyle} />
+                </View>
+                <Button
+                  iconComponent={<GoogleLogo width={27} height={30} />}
+                  buttonLabel="Continue with Google"
+                  buttonColor={colors.darkGrey}
+                />
+                <Button
+                  iconComponent={<AppleLogo width={27} height={30} />}
+                  buttonLabel="Continue with Apple"
+                  buttonColor={colors.darkGrey}
+                />
+                <Button
+                  iconComponent={<FbLogo width={27} height={30} />}
+                  buttonLabel="Continue with Facebook"
+                  buttonColor={colors.darkGrey}
+                />
+              </View>
+            </View>
+          </>
+        )}
+      </Formik>
       <TouchableOpacity
         hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
         activeOpacity={0.8}

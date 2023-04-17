@@ -32,6 +32,7 @@
     "@screens/signup": "file:./screens/signup/",
     "@screens/support-send-feedback": "file:./screens/support-send-feedback/",
     "axios": "^0.21.1",
+    "formik": "^2.2.9",
     "moment": "^2.29.4",
     "native-base": "^3.4.22",
     "pubnub": "^7.2.1",
@@ -74,7 +75,8 @@
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "redux-saga": "^1.2.3"
+    "redux-saga": "^1.2.3",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
