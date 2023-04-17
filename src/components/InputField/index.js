@@ -26,6 +26,7 @@ export default function InputField(props) {
     autoCorrect,
     hidePassword,
     togglePasswordView,
+    handleBlur,
   } = props;
   return (
     <View style={styles.container}>
@@ -42,6 +43,7 @@ export default function InputField(props) {
           autoComplete={autoComplete || undefined}
           autoCapitalize={autoCapitalize || undefined}
           autoCorrect={autoCorrect || true}
+          onBlur={handleBlur || undefined}
         />
         {isPassword ? (
           <TouchableOpacity

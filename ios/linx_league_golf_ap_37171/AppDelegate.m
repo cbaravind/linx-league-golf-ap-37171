@@ -1,4 +1,7 @@
 #import "AppDelegate.h"
+#if RCT_DEV
+#import <React/RCTDevLoadingView.h>
+#endif
 #import "RNBootSplash.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -42,6 +45,9 @@ static void InitializeFlipper(UIApplication *application) {
   }
   
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+#if RCT_DEV
+    [bridge moduleForClass:[RCTDevLoadingView class]];
+  #endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"linx_league_golf_ap_37171"
                                             initialProperties:nil];
