@@ -11,6 +11,9 @@ import {
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Formik} from 'formik';
+import {passwordConfirmationSchema} from '../../services/validations/passwordConfirmation';
+import ValidationText from '../../components/ValidationText';
 
 export default function ResetPassword({navigation}) {
   const [hidePassword, setHidePassword] = useState(true);
@@ -41,24 +44,43 @@ export default function ResetPassword({navigation}) {
       />
       <View style={styles.mainView}>
         <Text style={styles.pageTitle}>Reset Password</Text>
-        <InputField
-          fieldName="New Password"
-          placeHolderText="••••••••"
-          isPassword={true}
-          hidePassword={hidePassword}
-          togglePasswordView={togglePasswordView}
-        />
-        <InputField
-          fieldName="Confirm New Password"
-          placeHolderText="••••••••"
-          isPassword={true}
-          hidePassword={hideConfirmPassword}
-          togglePasswordView={toggleConfirmPasswordView}
-        />
+        <Formik
+          validationSchema={passwordConfirmationSchema}
+          initialValues={{password: '', passwordConfirmation: ''}}
+          onSubmit={values => navigation.navigate('ResetPassword')}>
+          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+            <>
+              <InputField
+                fieldName="New Password"
+                placeHolderText="••••••••"
+                isPassword={true}
+                hidePassword={hidePassword}
+                togglePasswordView={togglePasswordView}
+                handleOnChange={handleChange('password')}
+                handleBlur={handleBlur('password')}
+              />
+              {errors.password ? (
+                <ValidationText label={errors.password} />
+              ) : null}
 
-        <View style={styles.buttonContainer}>
-          <Button buttonLabel="Reset Password" />
-        </View>
+              <InputField
+                fieldName="Confirm New Password"
+                placeHolderText="••••••••"
+                isPassword={true}
+                hidePassword={hideConfirmPassword}
+                togglePasswordView={toggleConfirmPasswordView}
+                handleOnChange={handleChange('passwordConfirmation')}
+                handleBlur={handleBlur('passwordConfirmation')}
+              />
+              {errors.passwordConfirmation ? (
+                <ValidationText label={errors.passwordConfirmation} />
+              ) : null}
+              <View style={styles.buttonContainer}>
+                <Button onPress={handleSubmit} buttonLabel="Reset Password" />
+              </View>
+            </>
+          )}
+        </Formik>
       </View>
     </Container>
   );
