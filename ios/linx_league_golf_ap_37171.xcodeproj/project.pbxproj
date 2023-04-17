@@ -11,9 +11,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		30B8EF3595EC4400812DA714 /* Proxima-Nova-ExtraCondensed-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 614FFB92EC094B4DB8219AAC /* Proxima-Nova-ExtraCondensed-Regular.otf */; };
 		86885D861C39E54190902137 /* libPods-linx_league_golf_ap_37171.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC82E644E94D848678E2EB69 /* libPods-linx_league_golf_ap_37171.a */; };
+		96E5D3517C874D038FEC2276 /* Proxima-Nova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEC6240BB1094592A5E331BB /* Proxima-Nova.ttf */; };
 		A4C231F6F34CDA129E0772D0 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F923F77AF87286A2BB3CD4 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a */; };
 		A570EEB229E810B6000EE8F2 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A570EEB129E810B6000EE8F2 /* BootSplash.storyboard */; };
+		BD04962889C44C2882BBFF18 /* Proxima-Nova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC4F365C93AA48E38EA211AA /* Proxima-Nova-Bold.ttf */; };
+		F3324F5D66994F46AEFC0EBB /* Proxima-Nova-Cond-Reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = A664403AA4054698A2FAAE44 /* Proxima-Nova-Cond-Reg.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,11 +43,15 @@
 		18EA69A8E3C2875DBD571430 /* Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		51F923F77AF87286A2BB3CD4 /* libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CAE497E0A0995009DF1CE4B /* Pods-linx_league_golf_ap_37171.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171.release.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171/Pods-linx_league_golf_ap_37171.release.xcconfig"; sourceTree = "<group>"; };
+		614FFB92EC094B4DB8219AAC /* Proxima-Nova-ExtraCondensed-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-ExtraCondensed-Regular.otf"; path = "../src/assets/Fonts/Proxima-Nova-ExtraCondensed-Regular.otf"; sourceTree = "<group>"; };
 		86579E50284C478C626FC72B /* Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests/Pods-linx_league_golf_ap_37171-linx_league_golf_ap_37171Tests.release.xcconfig"; sourceTree = "<group>"; };
 		98F07D0D93E68C16A0EE7EAB /* Pods-linx_league_golf_ap_37171.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-linx_league_golf_ap_37171.debug.xcconfig"; path = "Target Support Files/Pods-linx_league_golf_ap_37171/Pods-linx_league_golf_ap_37171.debug.xcconfig"; sourceTree = "<group>"; };
 		A570EEB129E810B6000EE8F2 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = linx_league_golf_ap_37171/BootSplash.storyboard; sourceTree = "<group>"; };
+		A664403AA4054698A2FAAE44 /* Proxima-Nova-Cond-Reg.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Cond-Reg.otf"; path = "../src/assets/Fonts/Proxima-Nova-Cond-Reg.otf"; sourceTree = "<group>"; };
+		AC4F365C93AA48E38EA211AA /* Proxima-Nova-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Bold.ttf"; path = "../src/assets/Fonts/Proxima-Nova-Bold.ttf"; sourceTree = "<group>"; };
 		EC82E644E94D848678E2EB69 /* libPods-linx_league_golf_ap_37171.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-linx_league_golf_ap_37171.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FEC6240BB1094592A5E331BB /* Proxima-Nova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova.ttf"; path = "../src/assets/Fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +160,10 @@
 		DA9D52E0EB4241AA90591153 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AC4F365C93AA48E38EA211AA /* Proxima-Nova-Bold.ttf */,
+				A664403AA4054698A2FAAE44 /* Proxima-Nova-Cond-Reg.otf */,
+				FEC6240BB1094592A5E331BB /* Proxima-Nova.ttf */,
+				614FFB92EC094B4DB8219AAC /* Proxima-Nova-ExtraCondensed-Regular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -250,6 +262,10 @@
 			files = (
 				A570EEB229E810B6000EE8F2 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BD04962889C44C2882BBFF18 /* Proxima-Nova-Bold.ttf in Resources */,
+				F3324F5D66994F46AEFC0EBB /* Proxima-Nova-Cond-Reg.otf in Resources */,
+				96E5D3517C874D038FEC2276 /* Proxima-Nova.ttf in Resources */,
+				30B8EF3595EC4400812DA714 /* Proxima-Nova-ExtraCondensed-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

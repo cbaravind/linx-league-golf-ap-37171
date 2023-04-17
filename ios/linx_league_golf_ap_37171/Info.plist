@@ -64,6 +64,10 @@
 		<string>Proxima-Regular.ttf</string>
 		<string>Proxima-SemiBold.ttf</string>
 		<string>Roboto.ttf</string>
+		<string>Proxima-Nova-Bold.ttf</string>
+		<string>Proxima-Nova-Cond-Reg.otf</string>
+		<string>Proxima-Nova.ttf</string>
+		<string>Proxima-Nova-ExtraCondensed-Regular.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash.storyboard</string>
