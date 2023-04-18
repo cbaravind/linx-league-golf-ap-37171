@@ -1,2 +1,3 @@
-import * as cardActions from "./homeActions"
-export const ActionCreators = Object.assign({}, cardActions)
+import * as signinActions from './signinActions';
+
+export const ActionCreators = Object.assign({}, signinActions);

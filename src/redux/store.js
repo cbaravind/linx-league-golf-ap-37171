@@ -1,38 +1,38 @@
-import { createStore, compose, applyMiddleware } from "redux"
-import { persistStore, persistCombineReducers } from "redux-persist"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { createLogger } from "redux-logger"
-import createSagaMiddleware from "redux-saga"
-import rootReducers from "./reducers" // where reducers is a object of reducers
-import sagas from "./sagas"
+import {createStore, compose, applyMiddleware} from 'redux';
+import {persistStore, persistCombineReducers} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createLogger} from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import rootReducers from './reducers'; // where reducers is a object of reducers
+import sagas from './sagas';
 
 const config = {
-  key: "root",
+  key: 'root',
   storage: AsyncStorage,
-  whitelist: ["homeReducer"],
-  debug: true //to get useful logging
-}
+  whitelist: ['signinReducer'],
+  debug: true, //to get useful logging
+};
 
-const middleware = []
-const sagaMiddleware = createSagaMiddleware()
-middleware.push(sagaMiddleware)
+const middleware = [];
+const sagaMiddleware = createSagaMiddleware();
+middleware.push(sagaMiddleware);
 
 if (__DEV__) {
-  middleware.push(createLogger())
+  middleware.push(createLogger());
 }
 
-const reducers = persistCombineReducers(config, rootReducers)
-const enhancers = [applyMiddleware(...middleware)]
+const reducers = persistCombineReducers(config, rootReducers);
+const enhancers = [applyMiddleware(...middleware)];
 // const initialState = {};
-const persistConfig = { enhancers }
-export const store = createStore(reducers, undefined, compose(...enhancers))
+const persistConfig = {enhancers};
+export const store = createStore(reducers, undefined, compose(...enhancers));
 const persistor = persistStore(store, persistConfig, () => {
   //   // console.log('Test', store.getState());
-})
+});
 const configureStore = () => {
-  return { persistor, store }
-}
+  return {persistor, store};
+};
 
-sagaMiddleware.run(sagas)
+sagaMiddleware.run(sagas);
 
-export default configureStore
+export default configureStore;
