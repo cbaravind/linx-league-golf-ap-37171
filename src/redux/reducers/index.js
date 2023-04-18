@@ -2,6 +2,6 @@
  * combines all the existing reducers
  */
 
-import * as homeReducer from "./homeReducer"
+import * as signinReducer from './signinReducer';
 
-export default Object.assign({}, homeReducer)
+export default Object.assign({}, signinReducer);
