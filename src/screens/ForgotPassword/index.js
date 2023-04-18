@@ -11,6 +11,9 @@ import {
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Formik} from 'formik';
+import {emailValidationSchema} from '../../services/validations/emailValidation';
+import ValidationText from '../../components/ValidationText';
 
 export default function ForgotPassword({navigation}) {
   const navigateToBack = () => {
@@ -35,18 +38,28 @@ export default function ForgotPassword({navigation}) {
           Please enter your email address and we will send you a link to reset
           your password.
         </Text>
-        <InputField
-          fieldName="Email"
-          placeHolderText="Enter email address"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={() => navigation.navigate('ResetPassword')}
-            buttonLabel="Reset Password"
-          />
-        </View>
+        <Formik
+          validationSchema={emailValidationSchema}
+          initialValues={{email: ''}}
+          onSubmit={values => navigation.navigate('ResetPassword')}>
+          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+            <>
+              <InputField
+                fieldName="Email"
+                placeHolderText="Enter email address"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={values.email}
+                handleOnChange={handleChange('email')}
+                handleBlur={handleBlur('email')}
+              />
+              {errors.email ? <ValidationText label={errors.email} /> : null}
+              <View style={styles.buttonContainer}>
+                <Button onPress={handleSubmit} buttonLabel="Reset Password" />
+              </View>
+            </>
+          )}
+        </Formik>
       </View>
     </Container>
   );
