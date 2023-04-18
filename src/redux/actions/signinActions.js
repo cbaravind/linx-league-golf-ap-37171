@@ -12,9 +12,10 @@ export function signin() {
     type: types.SIGNIN_USER,
   };
 }
-export function signinSuccess() {
+export function signinSuccess(data) {
   return {
     type: types.SIGNIN_SUCCESS,
+    data,
   };
 }
 export function signinError() {

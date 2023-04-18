@@ -1,18 +1,19 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import Container from '../../components/Container';
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import fonts from '../../themes/fonts';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import colors from '../../themes/colors';
-export default function Home({navigation}) {
+
+export default function Rankings() {
   return (
     <Container>
       <Header />
-      <Text style={styles.pageTitle}>Home screen will be here</Text>
+      <Text style={styles.pageTitle}>Rankings screen will be here</Text>
     </Container>
   );
 }
