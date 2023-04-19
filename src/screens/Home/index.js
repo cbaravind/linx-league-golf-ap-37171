@@ -8,10 +8,15 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import colors from '../../themes/colors';
+import {NotifBell, SettingsIcon} from '../../assets/svg';
 export default function Home({navigation}) {
   return (
     <Container>
-      <Header />
+      <Header
+        logoAlignment={'left'}
+        rightIcon1={<NotifBell />}
+        rightIcon2={<SettingsIcon />}
+      />
       <Text style={styles.pageTitle}>Home screen will be here</Text>
     </Container>
   );

@@ -30,7 +30,7 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="ResetPassword"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
