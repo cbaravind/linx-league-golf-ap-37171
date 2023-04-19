@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import fonts from '../../themes/fonts';
 import Header from '../../components/Header';
 import Container from '../../components/Container';
@@ -20,11 +20,17 @@ import {
 import {Formik} from 'formik';
 import {signinValidationSchema} from '../../services/validations/signinValidationSchema';
 import ValidationText from '../../components/ValidationText';
+import {useDispatch} from 'react-redux';
+import * as signinActions from '../../redux/actions/signinActions';
 // import AIcon from 'react-native-vector-icons/AntDesign';
 export default function Signin({navigation}) {
   const [hidePassword, setHidePassword] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const data = {user: {id: 12}, token: 123};
+    dispatch(signinActions.signinSuccess(data));
+  });
   //handle password show/hide
   const togglePasswordView = () => {
     setHidePassword(prevState => !prevState);
