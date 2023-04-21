@@ -8,6 +8,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import GradientWrapper from '../../../../components/GradientWrapper';
+import RectangleBox from '../../../../components/RectangleBox';
+import {GolfPlayGreen, PrizeIcon} from '../../../../assets/svg';
+import PlainLine from '../../../../components/PlainLine';
 
 export default function UserStatCard({data}) {
   const {name, handiCap, location, rank, userImage, score} = data;
@@ -20,20 +24,16 @@ export default function UserStatCard({data}) {
           <Text style={styles.subTitle1}>Handicap: {handiCap} </Text>
           <Text style={[styles.subTitle2]}>{location}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            // backgroundColor: 'red',
-
-            justifyContent: 'space-between',
-            width: wp('35%'),
-            position: 'absolute',
-            right: 0,
-          }}>
+        <View style={styles.valueWrapper}>
           <RoundText value={score} title="Score" />
           <RoundText fontEffects="th" value={rank} title="Ranking" />
         </View>
       </View>
+      <View style={styles.rectangleBoxWrapper}>
+        <RectangleBox iconComponent={<GolfPlayGreen />} text={'3/6 Rounds'} />
+        <RectangleBox iconComponent={<PrizeIcon />} text={'$2000'} />
+      </View>
+      <PlainLine />
     </View>
   );
 }
@@ -68,5 +68,17 @@ const styles = StyleSheet.create({
   textWrapper: {
     marginLeft: wp('4%'),
     marginTop: hp('1.5%'),
+  },
+  valueWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: wp('35%'),
+    position: 'absolute',
+    right: 0,
+  },
+  rectangleBoxWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: hp('2%'),
   },
 });

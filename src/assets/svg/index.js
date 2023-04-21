@@ -11,3 +11,6 @@ export {default as ScoreCardIcon} from './ScoreCardIcon.svg';
 export {default as ProfileIcon} from './ProfileIcon.svg';
 export {default as NotifBell} from './NotifBell.svg';
 export {default as SettingsIcon} from './SettingsIcon.svg';
+export {default as GolfPlayGreen} from './GolfPlayGreen.svg';
+export {default as PrizeIcon} from './PrizeIcon.svg';
+export {default as GolfBackground} from './GolfBackground.svg';

@@ -13,6 +13,8 @@ import CarouselView from '../../components/Carousel';
 import Button from '../../components/Button';
 import UserStatCard from './components/UserStatCard';
 import images from '../../assets/png';
+import TextButton from '../../components/TextButton';
+import RoundsCard from '../../components/RoundsCard';
 
 export default function Home({navigation}) {
   const userData = {
@@ -34,7 +36,24 @@ export default function Home({navigation}) {
         <View style={styles.wrapper}>
           <CarouselView />
           <UserStatCard data={userData} />
-          <Button buttonLabel="Go To Web" buttonColor={colors.lightGreen} />
+          <View style={styles.textButtonWrap}>
+            <TextButton
+              disabled
+              textColor={colors.pureWhite}
+              buttonText="Upcoming Round"
+            />
+            <TextButton
+              textColor={colors.lightGreen}
+              buttonText="Schedule A Round"
+              onButtonPress={() => alert('Schedule A Round')}
+            />
+          </View>
+          {/* todo: carousel for showing upcoming rounds */}
+          <View style={styles.emptyView} />
+          <RoundsCard />
+
+          {/* button to be displayed when no content */}
+          {/* <Button buttonLabel="Go To Web" buttonColor={colors.lightGreen} /> */}
         </View>
       </>
     </Container>
@@ -45,4 +64,9 @@ const styles = StyleSheet.create({
   wrapper: {
     marginHorizontal: wp('5%'),
   },
+  textButtonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  emptyView: {marginTop: hp('2%')},
 });
