@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../themes/colors';
@@ -9,7 +9,7 @@ export default function Container({children}) {
       end={{x: 0, y: 1}}
       colors={[colors.gradientTop, colors.gradientMid, colors.gradientBottom]}
       style={styles.linearGradient}>
-      {children}
+      <>{children}</>
     </LinearGradient>
   );
 }

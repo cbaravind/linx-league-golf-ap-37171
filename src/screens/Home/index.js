@@ -9,27 +9,40 @@ import {
 } from 'react-native-responsive-screen';
 import colors from '../../themes/colors';
 import {NotifBell, SettingsIcon} from '../../assets/svg';
+import CarouselView from '../../components/Carousel';
+import Button from '../../components/Button';
+import UserStatCard from './components/UserStatCard';
+import images from '../../assets/png';
+
 export default function Home({navigation}) {
+  const userData = {
+    name: 'Jacob Dylan',
+    handiCap: 2.85,
+    rank: 17,
+    location: 'Scottsdale,Arizona',
+    userImage: images.dummyUser,
+    score: 3.0,
+  };
   return (
     <Container>
-      <Header
-        logoAlignment={'left'}
-        rightIcon1={<NotifBell />}
-        rightIcon2={<SettingsIcon />}
-      />
-      <Text style={styles.pageTitle}>Home screen will be here</Text>
+      <>
+        <Header
+          logoAlignment={'left'}
+          rightIcon1={<NotifBell />}
+          rightIcon2={<SettingsIcon />}
+        />
+        <View style={styles.wrapper}>
+          <CarouselView />
+          <UserStatCard data={userData} />
+          <Button buttonLabel="Go To Web" buttonColor={colors.lightGreen} />
+        </View>
+      </>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  pageTitle: {
-    fontFamily: fonts.type.proximaExtraCondensed,
-    fontSize: wp('8%'),
-    color: colors.pureWhite,
-    lineHeight: 39,
-    fontWeight: fonts.weight.semi,
-    alignSelf: 'center',
-    marginTop: 100,
+  wrapper: {
+    marginHorizontal: wp('5%'),
   },
 });
