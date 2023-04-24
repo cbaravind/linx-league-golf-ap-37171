@@ -2,7 +2,10 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../themes/colors';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 export default function GradientWrapper({children}) {
   return (
     <LinearGradient
@@ -19,5 +22,6 @@ const styles = StyleSheet.create({
   linearGradient: {
     padding: 1.5,
     borderRadius: 12,
+    maxWidth: wp('91%'),
   },
 });

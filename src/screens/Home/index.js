@@ -15,7 +15,32 @@ import UserStatCard from './components/UserStatCard';
 import images from '../../assets/png';
 import TextButton from '../../components/TextButton';
 import RoundsCard from '../../components/RoundsCard';
+import RoundsSwipe from '../../components/RoundsSwipe';
 
+const dummyData = [
+  {
+    id: 1,
+    title: 'Alta Sierra Country Club',
+    subTitle: 'Scottsdale, Arizona',
+    date: '12/01/2023',
+    time: '12:00pm',
+    isActive: true,
+    memberImages: [images.member_dummy1, images.member_dummy3],
+  },
+  {
+    id: 1,
+    title: 'Louis Vitton Country Club',
+    subTitle: 'Texas, Arizona',
+    date: '12/01/2023',
+    time: '12:00pm',
+    isActive: false,
+    memberImages: [
+      images.member_dummy3,
+      images.member_dummy2,
+      images.member_dummy1,
+    ],
+  },
+];
 export default function Home({navigation}) {
   const userData = {
     name: 'Jacob Dylan',
@@ -50,7 +75,7 @@ export default function Home({navigation}) {
           </View>
           {/* todo: carousel for showing upcoming rounds */}
           <View style={styles.emptyView} />
-          <RoundsCard />
+          <RoundsSwipe data={dummyData} />
 
           {/* button to be displayed when no content */}
           {/* <Button buttonLabel="Go To Web" buttonColor={colors.lightGreen} /> */}

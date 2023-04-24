@@ -12,17 +12,20 @@ import HighlightedNumber from './HighlightedNumber';
 import TextButton from '../TextButton';
 import UserImage from '../UserImage';
 
-export default function RoundsCard({
-  title = 'N/A',
-  subTitle = 'N/A',
-  date = 'DD/MM/YYY',
-  time = '00:00',
-  images = [],
-}) {
+export default function RoundsCard({order, data}) {
+  let {
+    title = 'N/A',
+    subTitle = 'N/A',
+    date = 'DD/MM/YYY',
+    time = '00:00',
+    memberImages = [],
+    isActive = true,
+  } = data;
+  console.log('test data', data);
   return (
     <GradientWrapper>
       <View style={styles.container}>
-        <HighlightedNumber />
+        <HighlightedNumber number={order + 1} />
         <View style={{marginLeft: wp('3%'), marginTop: hp('0.5%')}}>
           <Text numberOfLines={2} style={styles.titleTextStyle}>
             {title}
@@ -34,8 +37,8 @@ export default function RoundsCard({
             <Text style={styles.dateTimeText}>{time}</Text>
           </View>
           <View style={styles.playersImageWrapper}>
-            {images.map(data => (
-              <UserImage />
+            {memberImages.map((url, i) => (
+              <UserImage imgSize={wp('9.5%')} key={i} imgurl={url} />
             ))}
             {/* <UserImage />
             <UserImage />
@@ -45,9 +48,9 @@ export default function RoundsCard({
         </View>
         <TextButton
           containerStyles={styles.customTextStyle}
-          textColor={colors.lightGreen}
+          textColor={isActive ? colors.lightGreen : colors.errorRed}
           disabled
-          buttonText="Active"
+          buttonText={isActive ? 'Active' : 'InActive'}
         />
       </View>
     </GradientWrapper>
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.rectangeBoxGrey,
     borderRadius: 12,
     flexDirection: 'row',
-    paddingVertical: hp('3%'),
+    paddingVertical: hp('2%'),
     width: wp('90%'),
     paddingHorizontal: wp('2%'),
   },
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: wp('35%'),
+    width: wp('30%'),
     marginTop: hp('1%'),
   },
   dateTimeText: {
@@ -97,12 +100,10 @@ const styles = StyleSheet.create({
   customTextStyle: {
     position: 'absolute',
     right: wp('5%'),
-    top: hp('3.5%'),
+    top: hp('2.5%'),
   },
   playersImageWrapper: {
     flexDirection: 'row',
-
-    justifyContent: 'space-between',
     width: wp('55%'),
     marginTop: hp('2%'),
   },

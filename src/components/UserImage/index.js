@@ -7,13 +7,16 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export default function UserImage() {
+export default function UserImage({imgurl, hasBorder, imgSize}) {
   return (
-    <View style={styles.imageWrapper}>
+    <View style={[styles.imageWrapper, {borderWidth: !hasBorder ? 0 : 2}]}>
       <Image
         resizeMode="cover"
-        style={styles.imageStyle}
-        source={images.dummyUser}
+        style={[
+          styles.imageStyle,
+          {width: imgSize || wp('11%'), height: imgSize || wp('11%')},
+        ]}
+        source={imgurl || images.dummyUser}
       />
     </View>
   );

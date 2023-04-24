@@ -18,7 +18,7 @@ export default function UserStatCard({data}) {
   return (
     <View style={styles.container}>
       <View style={styles.mainWrapper}>
-        <UserImage image={userImage} />
+        <UserImage hasBorder={true} image={userImage} />
         <View style={styles.textWrapper}>
           <Text style={styles.titleText}>{name}</Text>
           <Text style={styles.subTitle1}>Handicap: {handiCap} </Text>
@@ -79,6 +79,6 @@ const styles = StyleSheet.create({
   rectangleBoxWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: hp('2%'),
+    marginTop: hp('2.8%'),
   },
 });
