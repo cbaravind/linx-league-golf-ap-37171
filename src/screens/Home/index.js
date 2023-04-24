@@ -8,23 +8,90 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import colors from '../../themes/colors';
+import {NotifBell, SettingsIcon} from '../../assets/svg';
+import CarouselView from '../../components/Carousel';
+import Button from '../../components/Button';
+import UserStatCard from './components/UserStatCard';
+import images from '../../assets/png';
+import TextButton from '../../components/TextButton';
+import RoundsCard from '../../components/RoundsCard';
+import RoundsSwipe from '../../components/RoundsSwipe';
+
+const dummyData = [
+  {
+    id: 1,
+    title: 'Alta Sierra Country Club',
+    subTitle: 'Scottsdale, Arizona',
+    date: '12/01/2023',
+    time: '12:00pm',
+    isActive: true,
+    memberImages: [images.member_dummy1, images.member_dummy3],
+  },
+  {
+    id: 1,
+    title: 'Louis Vitton Country Club',
+    subTitle: 'Texas, Arizona',
+    date: '12/01/2023',
+    time: '12:00pm',
+    isActive: false,
+    memberImages: [
+      images.member_dummy3,
+      images.member_dummy2,
+      images.member_dummy1,
+    ],
+  },
+];
 export default function Home({navigation}) {
+  const userData = {
+    name: 'Jacob Dylan',
+    handiCap: 2.85,
+    rank: 17,
+    location: 'Scottsdale,Arizona',
+    userImage: images.dummyUser,
+    score: 3.0,
+  };
   return (
     <Container>
-      <Header />
-      <Text style={styles.pageTitle}>Home screen will be here</Text>
+      <>
+        <Header
+          logoAlignment={'left'}
+          rightIcon1={<NotifBell />}
+          rightIcon2={<SettingsIcon />}
+        />
+        <View style={styles.wrapper}>
+          <CarouselView />
+          <UserStatCard data={userData} />
+          <View style={styles.textButtonWrap}>
+            <TextButton
+              disabled
+              textColor={colors.pureWhite}
+              buttonText="Upcoming Round"
+            />
+            <TextButton
+              textColor={colors.lightGreen}
+              buttonText="Schedule A Round"
+              onButtonPress={() => alert('Schedule A Round')}
+            />
+          </View>
+          {/* todo: carousel for showing upcoming rounds */}
+          <View style={styles.emptyView} />
+          <RoundsSwipe data={dummyData} />
+
+          {/* button to be displayed when no content */}
+          {/* <Button buttonLabel="Go To Web" buttonColor={colors.lightGreen} /> */}
+        </View>
+      </>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  pageTitle: {
-    fontFamily: fonts.type.proximaExtraCondensed,
-    fontSize: wp('8%'),
-    color: colors.pureWhite,
-    lineHeight: 39,
-    fontWeight: fonts.weight.semi,
-    alignSelf: 'center',
-    marginTop: 100,
+  wrapper: {
+    marginHorizontal: wp('5%'),
   },
+  textButtonWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  emptyView: {marginTop: hp('2%')},
 });

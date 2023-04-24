@@ -13,25 +13,35 @@ import {
 import {MainLogo} from '../../assets/svg';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Header({leftComponent, onPressLeftComponent}) {
+export default function Header({
+  leftComponent,
+  onPressLeftComponent,
+  logoAlignment = 'center',
+  rightIcon1,
+  rightIcon2,
+}) {
   return (
     <View style={styles.container}>
+      {logoAlignment === 'left' ? (
+        <View style={styles.leftLogoContainer}>
+          <MainLogo width={wp('38%')} height={hp('6%')} />
+        </View>
+      ) : null}
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onPressLeftComponent}
         style={styles.leftButton}>
         {leftComponent ? leftComponent : null}
-        {/* <Icon
-          name={'chevron-back'}
-          size={22}
-          style={{marginHorizontal: 5}}
-          color={'white'}
-        /> */}
       </TouchableOpacity>
-      <View style={styles.centerLogoContainer}>
-        <MainLogo width={wp('35%')} height={hp('6%')} />
+      {logoAlignment === 'center' ? (
+        <View style={styles.centerLogoContainer}>
+          <MainLogo width={wp('38%')} height={hp('6%')} />
+        </View>
+      ) : null}
+      <View style={styles.rightContainer}>
+        {rightIcon2 || null}
+        {rightIcon1 || null}
       </View>
-      <View style={styles.rightContainer} />
     </View>
   );
 }
@@ -44,14 +54,24 @@ Header.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingLeft: wp('5%'),
     backgroundColor: 'transparent',
     paddingBottom: hp('1%'),
   },
   leftButton: {
+    paddingLeft: wp('5%'),
     flex: 0.4,
     justifyContent: 'center',
   },
-  centerLogoContainer: {flex: 1, alignItems: 'center'},
-  rightContainer: {flex: 0.5},
+  centerLogoContainer: {flex: 1, alignItems: 'center', paddingLeft: wp('5%')},
+  leftLogoContainer: {flex: 1, paddingLeft: wp('5%'), justifyContent: 'center'},
+
+  rightContainer: {
+    // flex: 0.5,
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+    width: wp('18%'),
+    marginLeft: wp('5%'),
+    alignItems: 'center',
+  },
 });
