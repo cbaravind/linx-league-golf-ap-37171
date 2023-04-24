@@ -38,7 +38,7 @@ export default function RoundsCard({order, data}) {
           </View>
           <View style={styles.playersImageWrapper}>
             {memberImages.map((url, i) => (
-              <UserImage imgSize={wp('9.5%')} key={i} imgurl={url} />
+              <UserImage imgSize="small" key={i} imgurl={url} />
             ))}
             {/* <UserImage />
             <UserImage />
