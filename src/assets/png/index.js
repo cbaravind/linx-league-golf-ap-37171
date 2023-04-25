@@ -5,6 +5,7 @@ const images = {
   member_dummy1: require('./member_dummy1.png'),
   member_dummy2: require('./member_dummy2.png'),
   member_dummy3: require('./member_dummy3.png'),
+  profileDummyBg: require('./profileDummyBg.png'),
 };
 
 export default images;
