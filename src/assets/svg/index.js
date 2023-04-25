@@ -14,3 +14,5 @@ export {default as SettingsIcon} from './SettingsIcon.svg';
 export {default as GolfPlayGreen} from './GolfPlayGreen.svg';
 export {default as PrizeIcon} from './PrizeIcon.svg';
 export {default as GolfBackground} from './GolfBackground.svg';
+export {default as PencilLine} from './PencilLine.svg';
+export {default as USGALogo} from './USGALogo.svg';
